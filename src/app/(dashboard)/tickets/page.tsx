@@ -6,8 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS } from "@/types";
-import { Plus, Search, Filter } from "lucide-react";
+import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS, MEMBER_ROLE_LABELS } from "@/types";
+import { Plus, Search, Users } from "lucide-react";
 
 type Ticket = {
   id: string;
@@ -17,8 +17,9 @@ type Ticket = {
   type: string;
   createdAt: string;
   updatedAt: string;
-  creator: { displayName: string };
+  creator: { id: string; displayName: string };
   assignee: { displayName: string } | null;
+  members: Array<{ role: string; user: { id: string } }>;
   _count: { comments: number };
 };
 
@@ -29,10 +30,21 @@ export default function TicketsPage() {
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [keyword, setKeyword] = useState("");
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Get current user ID from session
+    fetch("/api/auth/session")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.user?.id) setCurrentUserId(data.user.id);
+      })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     fetchTickets();
-  }, [scope, status, priority]);
+  }, [scope, status, priority, currentUserId]);
 
   async function fetchTickets() {
     setLoading(true);
@@ -140,30 +152,37 @@ export default function TicketsPage() {
             <p className="text-center py-8 text-gray-500">暂无工单</p>
           ) : (
             <div className="space-y-4">
-              {tickets.map((ticket) => (
-                <Link
-                  key={ticket.id}
-                  href={`/tickets/${ticket.id}`}
-                  className="block p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h3 className="font-medium">{ticket.title}</h3>
-                        <Badge status={ticket.status}>{STATUS_LABELS[ticket.status]}</Badge>
-                        <Badge priority={ticket.priority}>{PRIORITY_LABELS[ticket.priority]}</Badge>
-                        <Badge variant="outline">{TYPE_LABELS[ticket.type]}</Badge>
-                      </div>
-                      <div className="mt-2 flex items-center gap-4 text-sm text-gray-500">
-                        <span>发起人：{ticket.creator.displayName}</span>
-                        {ticket.assignee && <span>负责人：{ticket.assignee.displayName}</span>}
-                        <span>评论：{ticket._count.comments}</span>
-                        <span>更新：{new Date(ticket.updatedAt).toLocaleDateString()}</span>
+              {tickets.map((ticket) => {
+                const myRole = ticket.members.find((m) => m.user.id === currentUserId)?.role;
+                return (
+                  <Link
+                    key={ticket.id}
+                    href={`/tickets/${ticket.id}`}
+                    className="block p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="font-medium">{ticket.title}</h3>
+                          <Badge status={ticket.status}>{STATUS_LABELS[ticket.status]}</Badge>
+                          <Badge priority={ticket.priority}>{PRIORITY_LABELS[ticket.priority]}</Badge>
+                          <Badge variant="outline">{TYPE_LABELS[ticket.type]}</Badge>
+                          {myRole && <Badge memberRole={myRole}>{MEMBER_ROLE_LABELS[myRole]}</Badge>}
+                        </div>
+                        <div className="mt-2 flex items-center gap-4 text-sm text-gray-500">
+                          <span>发起人：{ticket.creator.displayName}</span>
+                          {ticket.assignee && <span>负责人：{ticket.assignee.displayName}</span>}
+                          <span className="flex items-center gap-1">
+                            <Users className="w-3 h-3" />
+                            {ticket.members.length}
+                          </span>
+                          <span>评论：{ticket._count.comments}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           )}
         </CardContent>

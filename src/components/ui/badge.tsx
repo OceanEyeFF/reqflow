@@ -36,17 +36,27 @@ const priorityStyles: Record<string, string> = {
   urgent: "bg-red-100 text-red-800",
 };
 
+// Role-specific styles
+const roleStyles: Record<string, string> = {
+  owner: "bg-violet-100 text-violet-800",
+  collaborator: "bg-green-100 text-green-800",
+  watcher: "bg-gray-100 text-gray-600",
+};
+
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "secondary" | "destructive" | "outline";
   status?: string;
   priority?: string;
+  memberRole?: string;
 }
 
-function Badge({ className, variant, status, priority, ...props }: BadgeProps) {
+function Badge({ className, variant, status, priority, memberRole, ...props }: BadgeProps) {
   let style = "";
 
-  if (status && statusStyles[status]) {
+  if (memberRole && roleStyles[memberRole]) {
+    style = roleStyles[memberRole];
+  } else if (status && statusStyles[status]) {
     style = statusStyles[status];
   } else if (priority && priorityStyles[priority]) {
     style = priorityStyles[priority];

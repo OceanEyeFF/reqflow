@@ -1,71 +1,86 @@
-import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+"use client";
+
+import { useState, useEffect } from "react";
+import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS } from "@/types";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS, MEMBER_ROLE_LABELS } from "@/types";
+import { Plus, Users } from "lucide-react";
 
-async function getStats(userId: string, isAdmin: boolean) {
-  const whereClause = isAdmin
-    ? {}
-    : {
-        OR: [
-          { creatorId: userId },
-          { assigneeId: userId },
-          { members: { some: { userId } } },
-        ],
-      };
+type Ticket = {
+  id: string;
+  title: string;
+  status: string;
+  priority: string;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
+  creator: { id: string; displayName: string };
+  assignee: { displayName: string } | null;
+  members: Array<{ role: string; user: { id: string } }>;
+  _count: { comments: number };
+};
 
-  const [assigned, created, waiting, urgent] = await Promise.all([
-    prisma.ticket.count({
-      where: { ...whereClause, assigneeId: userId, status: { notIn: ["closed", "completed"] } },
-    }),
-    prisma.ticket.count({ where: { ...whereClause, creatorId: userId } }),
-    prisma.ticket.count({
-      where: { ...whereClause, assigneeId: userId, status: "waiting_feedback" },
-    }),
-    prisma.ticket.count({
-      where: { ...whereClause, assigneeId: userId, priority: "urgent", status: { notIn: ["closed", "completed"] } },
-    }),
-  ]);
+type Stats = {
+  assigned: number;
+  created: number;
+  waiting: number;
+  urgent: number;
+  involved: number;
+};
 
-  return { assigned, created, waiting, urgent };
-}
+export default function DashboardPage() {
+  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [stats, setStats] = useState<Stats>({ assigned: 0, created: 0, waiting: 0, urgent: 0, involved: 0 });
+  const [activeTab, setActiveTab] = useState<"assigned" | "created" | "involved">("assigned");
+  const [loading, setLoading] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
-async function getRecentTickets(userId: string, isAdmin: boolean) {
-  const whereClause = isAdmin
-    ? {}
-    : {
-        OR: [
-          { creatorId: userId },
-          { assigneeId: userId },
-          { members: { some: { userId } } },
-        ],
-      };
+  useEffect(() => {
+    // Get current user ID
+    fetch("/api/auth/session")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.user?.id) setCurrentUserId(data.user.id);
+      })
+      .catch(() => {});
+  }, []);
 
-  return prisma.ticket.findMany({
-    where: whereClause,
-    include: {
-      creator: { select: { displayName: true } },
-      assignee: { select: { displayName: true } },
-      _count: { select: { comments: true } },
-    },
-    orderBy: { updatedAt: "desc" },
-    take: 10,
-  });
-}
+  useEffect(() => {
+    fetchData();
+  }, [activeTab]);
 
-export default async function DashboardPage() {
-  const session = await auth();
-  if (!session?.user) return null;
+  async function fetchData() {
+    setLoading(true);
+    
+    // Map tab to scope
+    const scopeMap = {
+      assigned: "assigned_to_me",
+      created: "created_by_me",
+      involved: "joined",
+    };
 
-  const isAdmin = session.user.role === "admin";
-  const [stats, tickets] = await Promise.all([
-    getStats(session.user.id, isAdmin),
-    getRecentTickets(session.user.id, isAdmin),
-  ]);
+    const [ticketsRes, statsRes] = await Promise.all([
+      fetch(`/api/tickets?scope=${scopeMap[activeTab]}&status=`),
+      fetch("/api/tickets/stats"),
+    ]);
+
+    const ticketsData = await ticketsRes.json();
+    const statsData = await statsRes.json();
+
+    setTickets(ticketsData.tickets || []);
+    if (statsData.stats) {
+      setStats(statsData.stats);
+    }
+    setLoading(false);
+  }
+
+  const tabLabels = {
+    assigned: "待我处理",
+    created: "我发起的",
+    involved: "我参与的",
+  };
 
   return (
     <div className="space-y-8">
@@ -73,7 +88,6 @@ export default async function DashboardPage() {
       <div className="flex justify-between items-center">
         <div>
           <h2 className="text-2xl font-bold">工作台</h2>
-          <p className="text-gray-500">欢迎回来，{session.user.name}</p>
         </div>
         <Link href="/tickets/new">
           <Button>
@@ -84,8 +98,11 @@ export default async function DashboardPage() {
       </div>
 
       {/* Stats cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card>
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <Card
+          className="cursor-pointer hover:border-primary transition-colors"
+          onClick={() => setActiveTab("assigned")}
+        >
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">待我处理</CardTitle>
           </CardHeader>
@@ -93,12 +110,26 @@ export default async function DashboardPage() {
             <p className="text-3xl font-bold">{stats.assigned}</p>
           </CardContent>
         </Card>
-        <Card>
+        <Card
+          className="cursor-pointer hover:border-primary transition-colors"
+          onClick={() => setActiveTab("created")}
+        >
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">我发起的</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-bold">{stats.created}</p>
+          </CardContent>
+        </Card>
+        <Card
+          className="cursor-pointer hover:border-primary transition-colors"
+          onClick={() => setActiveTab("involved")}
+        >
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-medium text-gray-500">我参与的</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-3xl font-bold">{stats.involved}</p>
           </CardContent>
         </Card>
         <Card>
@@ -119,39 +150,63 @@ export default async function DashboardPage() {
         </Card>
       </div>
 
-      {/* Recent tickets */}
+      {/* Tab buttons */}
+      <div className="flex gap-2">
+        {(["assigned", "created", "involved"] as const).map((tab) => (
+          <Button
+            key={tab}
+            variant={activeTab === tab ? "default" : "outline"}
+            size="sm"
+            onClick={() => setActiveTab(tab)}
+          >
+            {tabLabels[tab]}
+          </Button>
+        ))}
+      </div>
+
+      {/* Ticket list */}
       <Card>
         <CardHeader>
-          <CardTitle>最近工单</CardTitle>
+          <CardTitle>{tabLabels[activeTab]} ({tickets.length})</CardTitle>
         </CardHeader>
         <CardContent>
-          {tickets.length === 0 ? (
+          {loading ? (
+            <p className="text-center py-8 text-gray-500">加载中...</p>
+          ) : tickets.length === 0 ? (
             <p className="text-gray-500 text-center py-8">暂无工单</p>
           ) : (
             <div className="space-y-4">
-              {tickets.map((ticket) => (
-                <Link
-                  key={ticket.id}
-                  href={`/tickets/${ticket.id}`}
-                  className="block p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <h3 className="font-medium truncate">{ticket.title}</h3>
-                        <Badge status={ticket.status}>{STATUS_LABELS[ticket.status]}</Badge>
-                        <Badge priority={ticket.priority}>{PRIORITY_LABELS[ticket.priority]}</Badge>
-                        <Badge variant="outline">{TYPE_LABELS[ticket.type]}</Badge>
-                      </div>
-                      <div className="mt-2 flex items-center gap-4 text-sm text-gray-500">
-                        <span>发起人：{ticket.creator.displayName}</span>
-                        {ticket.assignee && <span>负责人：{ticket.assignee.displayName}</span>}
-                        <span>评论：{ticket._count.comments}</span>
+              {tickets.map((ticket) => {
+                const myRole = ticket.members.find((m) => m.user.id === currentUserId)?.role;
+                return (
+                  <Link
+                    key={ticket.id}
+                    href={`/tickets/${ticket.id}`}
+                    className="block p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="font-medium truncate">{ticket.title}</h3>
+                          <Badge status={ticket.status}>{STATUS_LABELS[ticket.status]}</Badge>
+                          <Badge priority={ticket.priority}>{PRIORITY_LABELS[ticket.priority]}</Badge>
+                          <Badge variant="outline">{TYPE_LABELS[ticket.type]}</Badge>
+                          {myRole && <Badge memberRole={myRole}>{MEMBER_ROLE_LABELS[myRole]}</Badge>}
+                        </div>
+                        <div className="mt-2 flex items-center gap-4 text-sm text-gray-500">
+                          <span>发起人：{ticket.creator.displayName}</span>
+                          {ticket.assignee && <span>负责人：{ticket.assignee.displayName}</span>}
+                          <span className="flex items-center gap-1">
+                            <Users className="w-3 h-3" />
+                            {ticket.members.length}
+                          </span>
+                          <span>评论：{ticket._count.comments}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </div>
           )}
         </CardContent>

@@ -360,7 +360,7 @@ export default function TicketDetailPage() {
                   <div key={member.id} className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium">{member.user.displayName}</p>
-                      <p className="text-xs text-gray-400">{MEMBER_ROLE_LABELS[member.role]}</p>
+                      <Badge memberRole={member.role}>{MEMBER_ROLE_LABELS[member.role]}</Badge>
                     </div>
                     <Button
                       variant="ghost"
