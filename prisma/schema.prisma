@@ -23,13 +23,14 @@ model User {
   updatedAt    DateTime @updatedAt
 
   // relations
-  createdTickets   Ticket[]        @relation("TicketCreator")
-  assignedTickets  Ticket[]        @relation("TicketAssignee")
+  createdTickets   Ticket[]           @relation("TicketCreator")
+  assignedTickets  Ticket[]           @relation("TicketAssignee")
   comments         TicketComment[]
   logs             TicketLog[]
   memberships      TicketMember[]
   accounts         Account[]
   sessions         Session[]
+  attachments      TicketAttachment[]
 }
 
 // ─── NextAuth ───────────────────────────────────────────
@@ -89,6 +90,7 @@ model Ticket {
   members     TicketMember[]
   comments    TicketComment[]
   logs        TicketLog[]
+  attachments TicketAttachment[]
 }
 
 // ─── 工单协作者 ─────────────────────────────────────────
@@ -119,6 +121,21 @@ model TicketComment {
 }
 
 // ─── 工单日志 ───────────────────────────────────────────
+// ─── 工单附件 ────────────────────────────────────────────
+model TicketAttachment {
+  id        String   @id @default(cuid())
+  ticketId  String
+  userId    String
+  filename  String
+  fileUrl   String
+  fileSize  Int
+  mimeType  String
+  createdAt DateTime @default(now())
+
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id])
+}
+
 model TicketLog {
   id        String   @id @default(cuid())
   ticketId  String
