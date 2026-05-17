@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { notifyNewComment } from "@/lib/notifications";
 
 export async function GET(
   request: NextRequest,
@@ -57,6 +58,29 @@ export async function POST(
     where: { id },
     data: { updatedAt: new Date() },
   });
+
+  // Get ticket info for notifications
+  const ticket = await prisma.ticket.findUnique({
+    where: { id },
+    select: {
+      title: true,
+      creatorId: true,
+      assigneeId: true,
+      members: { select: { userId: true } },
+    },
+  });
+
+  // Notify creator, assignee, and all members (excluding commenter)
+  if (ticket) {
+    await notifyNewComment(
+      id,
+      ticket.title,
+      session.user.id,
+      ticket.creatorId,
+      ticket.assigneeId,
+      ticket.members.map((m) => m.userId)
+    );
+  }
 
   return Response.json({ comment });
 }

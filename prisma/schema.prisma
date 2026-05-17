@@ -28,6 +28,7 @@ model User {
   comments         TicketComment[]
   logs             TicketLog[]
   memberships      TicketMember[]
+  notifications    Notification[]
   accounts         Account[]
   sessions         Session[]
   attachments      TicketAttachment[]
@@ -87,10 +88,11 @@ model Ticket {
   // relations
   creator     User             @relation("TicketCreator", fields: [creatorId], references: [id])
   assignee    User?            @relation("TicketAssignee", fields: [assigneeId], references: [id])
-  members     TicketMember[]
-  comments    TicketComment[]
-  logs        TicketLog[]
-  attachments TicketAttachment[]
+  members        TicketMember[]
+  comments       TicketComment[]
+  logs           TicketLog[]
+  attachments    TicketAttachment[]
+  notifications  Notification[]
 }
 
 // ─── 工单协作者 ─────────────────────────────────────────
@@ -120,7 +122,21 @@ model TicketComment {
   user   User   @relation(fields: [userId], references: [id])
 }
 
-// ─── 工单日志 ───────────────────────────────────────────
+// ─── 通知 ────────────────────────────────────────────────
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String // ticket_assigned | mentioned | status_changed | new_comment | member_added
+  title     String
+  content   String?
+  ticketId  String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id])
+  ticket Ticket? @relation(fields: [ticketId], references: [id])
+}
+
 // ─── 工单附件 ────────────────────────────────────────────
 model TicketAttachment {
   id        String   @id @default(cuid())
@@ -136,6 +152,7 @@ model TicketAttachment {
   user   User   @relation(fields: [userId], references: [id])
 }
 
+// ─── 工单日志 ───────────────────────────────────────────
 model TicketLog {
   id        String   @id @default(cuid())
   ticketId  String
