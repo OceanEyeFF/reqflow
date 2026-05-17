@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { notifyTicketAssigned, notifyStatusChanged } from "@/lib/notifications";
 
 export async function GET(
   request: NextRequest,
@@ -107,6 +108,17 @@ export async function PATCH(
   // Create log entries
   if (logs.length > 0) {
     await prisma.ticketLog.createMany({ data: logs });
+  }
+
+  // Send notifications
+  // Notify new assignee when assigned
+  if (body.assigneeId !== undefined && body.assigneeId !== ticket.assigneeId && body.assigneeId) {
+    await notifyTicketAssigned(id, body.assigneeId, ticket.title);
+  }
+
+  // Notify on status change
+  if (body.status && body.status !== ticket.status) {
+    await notifyStatusChanged(id, ticket.title, body.status, ticket.creatorId, ticket.assigneeId, session.user.id);
   }
 
   return Response.json({ ticket: updatedTicket });

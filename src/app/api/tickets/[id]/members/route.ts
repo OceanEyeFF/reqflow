@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { notifyMemberAdded } from "@/lib/notifications";
 
 export async function GET(
   request: NextRequest,
@@ -49,6 +50,12 @@ export async function POST(
     return Response.json({ error: "该用户已是协作者" }, { status: 400 });
   }
 
+  // Get ticket title for notification
+  const ticket = await prisma.ticket.findUnique({
+    where: { id },
+    select: { title: true },
+  });
+
   const member = await prisma.ticketMember.create({
     data: {
       ticketId: id,
@@ -69,6 +76,11 @@ export async function POST(
       newValue: `${member.user.displayName} (${role || "collaborator"})`,
     },
   });
+
+  // Notify the added member
+  if (ticket) {
+    await notifyMemberAdded(id, userId, ticket.title);
+  }
 
   return Response.json({ member });
 }

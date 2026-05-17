@@ -28,6 +28,7 @@ model User {
   comments         TicketComment[]
   logs             TicketLog[]
   memberships      TicketMember[]
+  notifications    Notification[]
   accounts         Account[]
   sessions         Session[]
 }
@@ -86,9 +87,10 @@ model Ticket {
   // relations
   creator     User             @relation("TicketCreator", fields: [creatorId], references: [id])
   assignee    User?            @relation("TicketAssignee", fields: [assigneeId], references: [id])
-  members     TicketMember[]
-  comments    TicketComment[]
-  logs        TicketLog[]
+  members        TicketMember[]
+  comments       TicketComment[]
+  logs           TicketLog[]
+  notifications  Notification[]
 }
 
 // ─── 工单协作者 ─────────────────────────────────────────
@@ -116,6 +118,21 @@ model TicketComment {
 
   ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
   user   User   @relation(fields: [userId], references: [id])
+}
+
+// ─── 通知 ────────────────────────────────────────────────
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  type      String // ticket_assigned | mentioned | status_changed | new_comment | member_added
+  title     String
+  content   String?
+  ticketId  String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user   User    @relation(fields: [userId], references: [id])
+  ticket Ticket? @relation(fields: [ticketId], references: [id])
 }
 
 // ─── 工单日志 ───────────────────────────────────────────

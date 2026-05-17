@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { notifyTicketAssigned } from "@/lib/notifications";
 
 export async function GET(request: NextRequest) {
   const session = await auth();
@@ -94,6 +95,11 @@ export async function POST(request: NextRequest) {
       newValue: "待处理",
     },
   });
+
+  // Notify assignee if assigned
+  if (assigneeId) {
+    await notifyTicketAssigned(ticket.id, assigneeId, title);
+  }
 
   return Response.json({ ticket });
 }
