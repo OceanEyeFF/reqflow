@@ -1,0 +1,133 @@
+// Prisma schema for ReqFlow - 轻量工单需求协作系统
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ─── 用户 ──────────────────────────────────────────────
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  displayName  String
+  email        String   @unique
+  passwordHash String
+  avatarUrl    String?
+  role         String   @default("user") // admin | manager | user
+  department   String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // relations
+  createdTickets   Ticket[]        @relation("TicketCreator")
+  assignedTickets  Ticket[]        @relation("TicketAssignee")
+  comments         TicketComment[]
+  logs             TicketLog[]
+  memberships      TicketMember[]
+  accounts         Account[]
+  sessions         Session[]
+}
+
+// ─── NextAuth ───────────────────────────────────────────
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─── 工单 ────────────────────────────────────────────────
+model Ticket {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  type        String    @default("需求") // 需求 | Bug | 设计 | 文案 | 数据 | 运营 | 其他
+  priority   String    @default("medium") // low | medium | high | urgent
+  status     String    @default("pending") // pending | processing | waiting_feedback | completed | closed | rejected
+  creatorId  String
+  assigneeId String?
+  dueDate    DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  closedAt   DateTime?
+
+  // relations
+  creator     User             @relation("TicketCreator", fields: [creatorId], references: [id])
+  assignee    User?            @relation("TicketAssignee", fields: [assigneeId], references: [id])
+  members     TicketMember[]
+  comments    TicketComment[]
+  logs        TicketLog[]
+}
+
+// ─── 工单协作者 ─────────────────────────────────────────
+model TicketMember {
+  id        String   @id @default(cuid())
+  ticketId  String
+  userId    String
+  role      String   @default("collaborator") // owner | collaborator | watcher
+  createdAt DateTime @default(now())
+
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([ticketId, userId])
+}
+
+// ─── 工单评论 ───────────────────────────────────────────
+model TicketComment {
+  id        String   @id @default(cuid())
+  ticketId  String
+  userId    String
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+// ─── 工单日志 ───────────────────────────────────────────
+model TicketLog {
+  id        String   @id @default(cuid())
+  ticketId  String
+  userId    String
+  action    String // created | status_changed | assignee_changed | member_added | member_removed | priority_changed | closed
+  oldValue  String?
+  newValue  String?
+  createdAt DateTime @default(now())
+
+  ticket Ticket @relation(fields: [ticketId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id])
+}
