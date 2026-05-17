@@ -29,7 +29,8 @@ export async function GET(request: NextRequest) {
     orderBy: { createdAt: "desc" },
   });
 
-  return Response.json({ notifications });
+  const unreadCount = notifications.filter((n) => !n.isRead).length;
+  return Response.json({ notifications, unreadCount });
 }
 
 export async function PATCH(request: NextRequest) {
