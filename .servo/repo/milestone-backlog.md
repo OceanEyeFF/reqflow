@@ -1,7 +1,7 @@
 ---
 title: "Milestone Backlog"
 artifact_type: "milestone-backlog"
-updated: "2026-05-22"
+updated: "2026-05-23"
 owner: "servo-kernel"
 ---
 
@@ -9,12 +9,12 @@ owner: "servo-kernel"
 
 ## Pipeline Summary
 
-- active_milestone: MS-20260522-002
-- planned_count: 2
+- active_milestone: MS-20260522-003
+- planned_count: 1
 - active_count: 1
-- completed_count: 1
+- completed_count: 2
 - superseded_count: 0
-- updated: 2026-05-22
+- updated: 2026-05-23
 
 ## Milestones
 
@@ -34,7 +34,7 @@ owner: "servo-kernel"
 - created_by: programmer-confirmed-harness
 - created_at: 2026-05-22
 - updated_by: harness-skill
-- updated: 2026-05-22
+- updated: 2026-05-23
 - activation_rules: active_immediately
 
 ### MS-20260522-002
@@ -42,7 +42,7 @@ owner: "servo-kernel"
 - milestone_id: MS-20260522-002
 - title: Runtime Usability And Smoke Acceptance
 - purpose: Turn the newly verified baseline into a manually usable application by adding repeatable runtime smoke coverage and fixing the first layer of blocking UX/runtime defects.
-- status: active
+- status: completed
 - milestone_kind: goal-driven
 - priority: 2
 - depends_on_milestones: MS-20260522-001
@@ -54,7 +54,7 @@ owner: "servo-kernel"
 - created_by: programmer-confirmed-harness
 - created_at: 2026-05-22
 - updated_by: harness-skill
-- updated: 2026-05-22
+- updated: 2026-05-23
 - activation_rules: active_immediately
 
 ### MS-20260522-003
@@ -62,7 +62,7 @@ owner: "servo-kernel"
 - milestone_id: MS-20260522-003
 - title: Collaboration Surface Acceptance
 - purpose: Close the gap between existing collaboration-related models/APIs and a user-visible, tested collaboration experience for attachments, notifications, members, and comments.
-- status: planned
+- status: active
 - milestone_kind: goal-driven
 - priority: 3
 - depends_on_milestones: MS-20260522-002

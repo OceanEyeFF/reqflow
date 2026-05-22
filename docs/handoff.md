@@ -14,8 +14,8 @@
 
 - 基线 worktree: `E:\repos\personal\reqflow\.worktrees\develop-aw`
 - 最新已验证业务 checkpoint: `d59e734213a57502e174fdf35b58fc128f21f522`
-- 最新 MS-002 closeout merge checkpoint: `a78cc4b85a618a035e466fdb6e541c815f2daf66`
-- 当前 Milestone 计划基准: `80621eabd29e5d6232fa6f9db461ed0c1d036449`
+- 最新已验收 checkpoint: `4179629cdb71cd00c0e52c09dc346035d8147f82`
+- 当前 Milestone: `MS-20260522-003` - Collaboration Surface Acceptance
 - 已完成 worktrack:
   - `WT-20260522-001-validation-environment-baseline`: 建立 `.env.example`、`db:validate`、Turbopack worktree root 和验证说明。
   - `WT-20260522-002-lint-quality-baseline`: 修复当前 ESLint errors/warnings，使 lint/build/db validate 在基线 worktree 通过。
@@ -25,8 +25,8 @@
   - `WT-20260522-005-dashboard-ticket-flow-fixes`: 修复 admin 个人 scope 列表语义和新建工单优先级标签显示。
   - `WT-20260522-006-runtime-docs-catch-up`: 追平 runtime smoke 和本地运行边界文档。
   - `WT-20260522-015-ms002-final-handoff-refresh`: 修正 MS-002 收尾交接状态，避免 handoff 指向已关闭 worktrack。
-- 当前 milestone: `MS-20260522-002` - Runtime Usability And Smoke Acceptance。
-- 当前 worktrack: N/A；`MS-20260522-002` Milestone Gate 已通过，等待用户画面验收和最终确认。
+- 当前 milestone: `MS-20260522-003` - Collaboration Surface Acceptance。
+- 当前 worktrack: N/A；下一步候选为 `WT-20260522-007-attachment-end-to-end-validation`。
 
 ---
 

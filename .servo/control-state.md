@@ -13,7 +13,7 @@ owner: "servo-kernel"
 
 ## Metadata
 
-- updated: 2026-05-22
+- updated: 2026-05-23
 - owner: servo-kernel
 
 ## Current Control Level
@@ -27,9 +27,9 @@ owner: "servo-kernel"
 
 ## Active Milestone
 
-- active_milestone: MS-20260522-002
+- active_milestone: MS-20260522-003
 - milestone_status: active
-- milestone_pipeline_summary: active=1 planned=2 completed=1 superseded=0
+- milestone_pipeline_summary: active=1 planned=1 completed=2 superseded=0
 
 ## Baseline Branch
 
@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- Hand back `MS-20260522-002` Gate evidence for programmer visual/final acceptance; do not activate `MS-20260522-003` until acceptance is confirmed.
+- Observe active `MS-20260522-003`, then schedule the first worktrack `WT-20260522-007-attachment-end-to-end-validation`.
 
 ## Linked Formal Documents
 
@@ -82,8 +82,8 @@ owner: "servo-kernel"
 
 ## Handback Guard
 
-- handoff_state: ms-002-final-acceptance-required
-- last_stop_reason: Milestone Gate passed and programmer-owned visual/final acceptance is required.
+- handoff_state: none
+- last_stop_reason: MS-002 accepted by programmer on 2026-05-23; MS-003 activated.
 - last_handback_signature: N/A
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
@@ -95,13 +95,13 @@ owner: "servo-kernel"
 > 记录最近一次 worktrack 关闭后的已验证基线，供后续续跑时快速定位。
 > `latest_observed_checkpoint` 与 `last_doc_catch_up_checkpoint` 是 git hash 幂等性锚点，用于避免对同一代码基线重复执行 repo-refresh 和 doc-catch-up。空值表示锚点尚未建立，首次观察必须完整刷新；harness-skill 启动时通过 git rev-parse HEAD 对比这两个字段决定是否跳过重复刷新。
 
-- last_verified_checkpoint: a78cc4b85a618a035e466fdb6e541c815f2daf66
-- latest_observed_checkpoint: a78cc4b85a618a035e466fdb6e541c815f2daf66
-- last_doc_catch_up_checkpoint: a78cc4b85a618a035e466fdb6e541c815f2daf66
-- milestone_input_checkpoint: sha256:a79e59fa501ed5b39072e0ed9f3a0d82c51bc75806295585478f9cb64c46c48d
+- last_verified_checkpoint: 4179629cdb71cd00c0e52c09dc346035d8147f82
+- latest_observed_checkpoint: 4179629cdb71cd00c0e52c09dc346035d8147f82
+- last_doc_catch_up_checkpoint: 4179629cdb71cd00c0e52c09dc346035d8147f82
+- milestone_input_checkpoint: sha256:d69ec2fc0ab9aed4c17469575f52685bd68c32ef3de36d1863362cab4b5a4e4c
 - checkpoint_type: git-commit
-- checkpoint_ref: a78cc4b85a618a035e466fdb6e541c815f2daf66
-- verified_at: 2026-05-22
+- checkpoint_ref: 4179629cdb71cd00c0e52c09dc346035d8147f82
+- verified_at: 2026-05-23
 - if_no_commit_reason: N/A
 - alternative_traceability: N/A
 
@@ -130,3 +130,4 @@ owner: "servo-kernel"
 - Worktrack `WT-20260522-006-runtime-docs-catch-up` closed and merged into `develop-aw` at `d59e734213a57502e174fdf35b58fc128f21f522`; final CodeReview then found stale handoff current-worktrack wording.
 - Review-added worktrack `WT-20260522-015-ms002-final-handoff-refresh` closed and merged into `develop-aw` at `a78cc4b85a618a035e466fdb6e541c815f2daf66`; all `MS-20260522-002` worktracks are closed and milestone gate/final acceptance is required.
 - Milestone Gate for `MS-20260522-002` passed on 2026-05-22 with black-box smoke, white-box review, and anti-cheat checks; pipeline advancement is held for programmer visual/final acceptance.
+- Programmer accepted `MS-20260522-002` on 2026-05-23 after visual validation; `MS-20260522-003` is activated with first candidate `WT-20260522-007-attachment-end-to-end-validation`.

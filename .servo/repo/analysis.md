@@ -15,7 +15,7 @@ owner: "servo-kernel"
 - repo: reqflow
 - baseline_branch: develop-aw
 - baseline_ref: e8f380a84dbcdcb335256ee28e866a3788fecc2e
-- updated: 2026-05-22
+- updated: 2026-05-23
 - analysis_status: initial-adoption
 
 ## Facts
@@ -42,7 +42,8 @@ owner: "servo-kernel"
 ## Inferences
 
 - The immediate governance-baseline milestone is complete.
-- The runtime smoke acceptance milestone has all declared and review-added closeout worktracks closed; Milestone Gate passed and it now needs programmer visual/final acceptance.
+- The runtime smoke acceptance milestone is accepted and complete.
+- The collaboration surface milestone is now active and should begin with attachment end-to-end validation.
 - Future feature work should be narrow and branch-scoped because the repo has meaningful auth/data/UI coupling and limited automated tests.
 
 ## Unknowns
@@ -54,26 +55,26 @@ owner: "servo-kernel"
 
 ## Main Contradiction
 
-- current_main_contradiction: MS-002 automated Gate is satisfied, but user-owned visual/final acceptance is still pending.
-- main_aspect: Hand back MS-002 evidence for final acceptance before advancing the pipeline.
+- current_main_contradiction: Collaboration-related APIs/models exist, but the user-visible attachment, notification, member, and comment workflows are not yet proven end-to-end.
+- main_aspect: Start MS-003 with the attachment workflow because it has local storage/runtime risk and should be validated before broader collaboration UI work.
 
 ## Priority Judgment
 
-- current_highest_priority: Hand back MS-002 Gate evidence for programmer visual/final acceptance.
+- current_highest_priority: Initialize `WT-20260522-007-attachment-end-to-end-validation`.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 
 ## Routing Projection
 
 - recommended_repo_action: enter_worktrack
-- recommended_next_route: handback
-- suggested_node_type: N/A
-- continuation_ready: false_until_programmer_acceptance
-- continuation_blockers: goal-driven milestone closeout requires programmer final acceptance
+- recommended_next_route: RepoScope.Observe -> milestone-status-skill -> schedule-worktrack-skill
+- suggested_node_type: bugfix
+- continuation_ready: true_for_next_worktrack
+- continuation_blockers: N/A
 
 ## Writeback Eligibility
 
-- writeback_eligibility: next three milestones planned; `MS-20260522-002` is active
+- writeback_eligibility: `MS-20260522-003` is active; `MS-20260522-004` remains planned
 
 ## Notes
 

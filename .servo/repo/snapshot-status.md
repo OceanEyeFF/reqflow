@@ -14,14 +14,14 @@ owner: "servo-kernel"
 
 - repo: reqflow
 - baseline_branch: develop-aw
-- updated: 2026-05-22
-- status: runtime-smoke-gate-passed-awaiting-user-acceptance
+- updated: 2026-05-23
+- status: collaboration-surface-milestone-active
 
 ## Mainline Status
 
 - baseline_branch: develop-aw
-- last_verified_checkpoint: a78cc4b85a618a035e466fdb6e541c815f2daf66
-- checkpoint_ref: a78cc4b85a618a035e466fdb6e541c815f2daf66
+- last_verified_checkpoint: 4179629cdb71cd00c0e52c09dc346035d8147f82
+- checkpoint_ref: 4179629cdb71cd00c0e52c09dc346035d8147f82
 - checkpoint_type: git-commit
 
 ## Architecture And Module Map
@@ -45,7 +45,8 @@ owner: "servo-kernel"
 
 - Harness artifacts initialized under `.servo/` in existing-code-adoption mode.
 - Completed milestone: `MS-20260522-001` (`Establish Verifiable Governance Baseline`).
-- Active milestone: `MS-20260522-002` (`Runtime Usability And Smoke Acceptance`), progress 4/4 worktracks complete; Milestone Gate passed; pending programmer visual/final acceptance.
+- Completed milestone: `MS-20260522-002` (`Runtime Usability And Smoke Acceptance`), accepted by programmer on 2026-05-23 after visual validation.
+- Active milestone: `MS-20260522-003` (`Collaboration Surface Acceptance`), progress 0/4 worktracks complete.
 - Closed worktracks:
   - `WT-20260522-001-validation-environment-baseline` merged at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
   - `WT-20260522-002-lint-quality-baseline` merged at `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`.
@@ -79,3 +80,4 @@ owner: "servo-kernel"
 - Dashboard/ticket flow fixes are now established: admin personal scopes stay personal unless `scope=all`, unknown ticket scopes fall back to assigned-to-me, and new-ticket priority select displays user-facing labels.
 - Runtime operator docs are now caught up: README and `docs/handoff.md` describe setup, smoke coverage, Chrome channel caveat, worktree workflow, and verified WT-005 fixes.
 - Final handoff freshness is now caught up: `docs/handoff.md` no longer points to closed WT-006 as the current worktrack and now marks MS-002 at Gate / user visual acceptance.
+- MS-002 was accepted by the programmer on 2026-05-23; MS-003 is now active and should start with attachment end-to-end validation.
