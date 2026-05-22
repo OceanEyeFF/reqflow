@@ -48,7 +48,7 @@ owner: "servo-kernel"
 - depends_on_milestones: MS-20260522-001
 - worktrack_list:
   - WT-20260522-004-runtime-smoke-suite (done, test)
-  - WT-20260522-005-dashboard-ticket-flow-fixes (planned, bugfix)
+  - WT-20260522-005-dashboard-ticket-flow-fixes (done, bugfix)
   - WT-20260522-006-runtime-docs-catch-up (planned, docs)
 - created_by: programmer-confirmed-harness
 - created_at: 2026-05-22

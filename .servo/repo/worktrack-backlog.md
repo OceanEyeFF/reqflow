@@ -93,3 +93,20 @@ owner: "servo-kernel"
 - evidence_refs: `.servo/worktrack/gate-evidence.md`
 - completed_at: 2026-05-22
 - updated: 2026-05-22
+
+### WT-20260522-005-dashboard-ticket-flow-fixes
+
+- worktrack_id: WT-20260522-005-dashboard-ticket-flow-fixes
+- milestone_id: MS-20260522-002
+- status: done
+- node_type: bugfix
+- scope: dashboard/ticket flow fixes for admin personal scope filtering and new-ticket priority label display
+- branch: worktrack/WT-20260522-005-dashboard-ticket-flow-fixes
+- baseline_branch: develop-aw
+- base_ref: e2a33a1
+- merge_commit: 41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8
+- validation: lint pass; build pass; db:validate pass; smoke pass; screenshots confirm dashboard assigned list/count and priority label display are fixed
+- intake_route: milestone-derived
+- evidence_refs: `.servo/worktrack/gate-evidence.md`
+- completed_at: 2026-05-22
+- updated: 2026-05-22
