@@ -27,9 +27,9 @@ owner: "servo-kernel"
 
 ## Active Milestone
 
-- active_milestone: N/A
-- milestone_status: completed
-- milestone_pipeline_summary: active=0 planned=0 completed=1 superseded=0
+- active_milestone: MS-20260522-002
+- milestone_status: active
+- milestone_pipeline_summary: active=1 planned=2 completed=1 superseded=0
 
 ## Baseline Branch
 
@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- RepoScope.Handback after completed baseline milestone
+- RepoScope.Observe via milestone-status-skill, then RepoScope.Decide for `MS-20260522-002`
 
 ## Linked Formal Documents
 
@@ -124,3 +124,4 @@ owner: "servo-kernel"
 - Worktrack `WT-20260522-003-docs-handoff-catch-up` closed and merged into `develop-aw` at `28a7966dd248affd9b6099340d59433f48d51d8a`.
 - Milestone `MS-20260522-001` completed on 2026-05-22; baseline is ready for programmer review and next milestone selection.
 - Runtime dashboard route hotfix merged into `develop-aw` at `462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe`; `/` now resolves to the authenticated workbench instead of the create-next-app default page.
+- Programmer requested three consecutive milestones on 2026-05-22; `MS-20260522-002` was activated and `MS-20260522-003` / `MS-20260522-004` were planned with dependency ordering.

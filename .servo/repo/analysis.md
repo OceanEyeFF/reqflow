@@ -36,7 +36,7 @@ owner: "servo-kernel"
 ## Inferences
 
 - The immediate governance-baseline milestone is complete.
-- The most likely next useful work is a new programmer-approved milestone or a repo-level next-slice decision.
+- The next pipeline has been planned as runtime smoke acceptance, collaboration surface acceptance, and operational readiness foundation.
 - Future feature work should be narrow and branch-scoped because the repo has meaningful auth/data/UI coupling and limited automated tests.
 
 ## Unknowns
@@ -53,21 +53,21 @@ owner: "servo-kernel"
 
 ## Priority Judgment
 
-- current_highest_priority: Programmer runtime review of the corrected baseline, then select the next milestone.
+- current_highest_priority: Execute `MS-20260522-002` starting with `WT-20260522-004-runtime-smoke-suite`.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 
 ## Routing Projection
 
-- recommended_repo_action: handback
-- recommended_next_route: RepoScope.Decide after programmer selects the next goal slice
-- suggested_node_type: N/A
-- continuation_ready: false_until_next_programmer_direction
-- continuation_blockers: no active milestone remains after baseline completion
+- recommended_repo_action: enter_worktrack
+- recommended_next_route: WorktrackScope.Init -> WT-20260522-004-runtime-smoke-suite
+- suggested_node_type: test
+- continuation_ready: true_for_milestone_observe
+- continuation_blockers: runtime smoke suite must stay limited to local browser-level smoke and must not absorb feature work
 
 ## Writeback Eligibility
 
-- writeback_eligibility: post-baseline runtime hotfix written back; milestone completion remains accepted
+- writeback_eligibility: next three milestones planned; `MS-20260522-002` is active
 
 ## Notes
 
