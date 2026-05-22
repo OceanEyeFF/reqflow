@@ -1,7 +1,7 @@
 ---
 title: "Worktrack Contract"
 artifact_type: "worktrack-contract"
-worktrack_id: "WT-20260522-006-runtime-docs-catch-up"
+worktrack_id: "WT-20260522-015-ms002-final-handoff-refresh"
 milestone_id: "MS-20260522-002"
 derived_from_milestone: "true"
 updated: "2026-05-22"
@@ -12,10 +12,10 @@ owner: "servo-kernel"
 
 ## Metadata
 
-- worktrack_id: WT-20260522-006-runtime-docs-catch-up
-- branch: worktrack/WT-20260522-006-runtime-docs-catch-up
+- worktrack_id: WT-20260522-015-ms002-final-handoff-refresh
+- branch: worktrack/WT-20260522-015-ms002-final-handoff-refresh
 - baseline_branch: develop-aw
-- baseline_ref: 73d596f
+- baseline_ref: 9a9d4c1
 - owner: servo-kernel
 - updated: 2026-05-22
 - contract_status: ready_for_close
@@ -32,11 +32,11 @@ owner: "servo-kernel"
 ## Worktrack Intake Review
 
 - worktrack_intake_review: ready
-- repo_fundamentals: active milestone `MS-20260522-002`; WT-004 and WT-005 are closed and merged; baseline branch is `develop-aw`.
-- snapshot_freshness: fresh at `73d596f`; repo snapshot and analysis route verified runtime docs catch-up to this worktrack.
-- milestone_purpose_alignment: directly satisfies the milestone signal that docs describe the local smoke workflow and avoid unverified production-readiness claims.
+- repo_fundamentals: active milestone `MS-20260522-002`; WT-004, WT-005, and WT-006 are closed and merged; baseline branch is `develop-aw`.
+- snapshot_freshness: fresh at `9a9d4c1`; final review found handoff still pointed to the closed WT-006.
+- milestone_purpose_alignment: directly satisfies the milestone signal that docs stay synchronized with the accepted smoke workflow and current closeout state.
 - historical_conflict_risk: low because scope is docs-only; risk rises if docs claim unverified production behavior.
-- worktrack_adjustment_recommendations: keep as a single docs catch-up slice.
+- worktrack_adjustment_recommendations: keep as a small docs-only closeout slice.
 - add_remove_worktrack_recommendations: none
 - intake_review_verdict: ready_for_worktrack_init
 - ready_for_worktrack_init: true
@@ -51,35 +51,34 @@ owner: "servo-kernel"
 
 ## Task Goal
 
-- Update operator-facing docs with the accepted smoke workflow, WT-005 runtime fixes, seed login path, and local runtime caveats.
+- Update operator-facing handoff docs so MS-002 closeout no longer reports the already closed WT-006 as the current worktrack.
 
 ## Scope
 
 ### Control Signal
-- Scope summary: Docs-only catch-up for verified runtime smoke and dashboard/ticket flow fixes.
+- Scope summary: Docs-only final handoff freshness fix for MS-002 closeout.
 
 ### Supporting Detail
-- In scope: README, `docs/handoff.md`, and `.servo/worktrack/*`.
+- In scope: `docs/handoff.md` and `.servo/worktrack/*`.
 - Out of scope: product code, schema/migration changes, new roadmap commitments, production-readiness claims.
 
 ## Acceptance Criteria
 
 ### Control Signal
-- Core acceptance: operator-facing docs describe how to run and interpret the accepted local smoke workflow.
+- Core acceptance: operator-facing docs reflect that MS-002 is at Milestone Gate / user visual acceptance, not still executing WT-006.
 
 ### Supporting Detail
-- README contains setup, validation, smoke coverage, Chrome channel caveat, and worktree workflow.
-- `docs/handoff.md` no longer lists WT-005 defects as unresolved and points to WT-006 as the docs catch-up source.
-- Validation commands pass after docs update.
+- `docs/handoff.md` no longer lists WT-006 as the current worktrack.
+- `docs/handoff.md` references the latest accepted MS-002 checkpoints available at this closeout boundary.
+- Validation commands pass after the docs update.
 
 ## Verification Requirements
 
 - `npm run lint`
-- `npm run build`
 - `$env:DATABASE_URL='file:./dev.db'; npm run db:validate`
-- stale-text search for old unresolved WT-005 defect wording
+- stale-text search for stale current-worktrack wording
 - `git diff --check`
 
 ## Notes
 
-- Third worktrack under `MS-20260522-002`.
+- Supplemental docs closeout worktrack under `MS-20260522-002`, added after final CodeReview found stale handoff state.
