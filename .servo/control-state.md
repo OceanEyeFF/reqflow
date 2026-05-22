@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- Observe active `MS-20260522-003`, then schedule the first worktrack `WT-20260522-007-attachment-end-to-end-validation`.
+- Observe active `MS-20260522-003`, then schedule the next worktrack `WT-20260522-008-notification-user-surface`.
 
 ## Linked Formal Documents
 
@@ -95,20 +95,20 @@ owner: "servo-kernel"
 > 记录最近一次 worktrack 关闭后的已验证基线，供后续续跑时快速定位。
 > `latest_observed_checkpoint` 与 `last_doc_catch_up_checkpoint` 是 git hash 幂等性锚点，用于避免对同一代码基线重复执行 repo-refresh 和 doc-catch-up。空值表示锚点尚未建立，首次观察必须完整刷新；harness-skill 启动时通过 git rev-parse HEAD 对比这两个字段决定是否跳过重复刷新。
 
-- last_verified_checkpoint: 4179629cdb71cd00c0e52c09dc346035d8147f82
-- latest_observed_checkpoint: 4179629cdb71cd00c0e52c09dc346035d8147f82
+- last_verified_checkpoint: cc6e22bf0c97493ceef17a3a74f51cf77fa29255
+- latest_observed_checkpoint: cc6e22bf0c97493ceef17a3a74f51cf77fa29255
 - last_doc_catch_up_checkpoint: 4179629cdb71cd00c0e52c09dc346035d8147f82
-- milestone_input_checkpoint: sha256:d69ec2fc0ab9aed4c17469575f52685bd68c32ef3de36d1863362cab4b5a4e4c
+- milestone_input_checkpoint: sha256:d3e6b287a0ffab3b3dced7064c035b357076ae14cc7fada059da02dfa4f42f39
 - checkpoint_type: git-commit
-- checkpoint_ref: 4179629cdb71cd00c0e52c09dc346035d8147f82
+- checkpoint_ref: cc6e22bf0c97493ceef17a3a74f51cf77fa29255
 - verified_at: 2026-05-23
 - if_no_commit_reason: N/A
 - alternative_traceability: N/A
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 26
-- autonomous_worktracks_opened: 4
+- autonomy_budget_remaining: 25
+- autonomous_worktracks_opened: 5
 
 ## Notes
 
@@ -131,3 +131,4 @@ owner: "servo-kernel"
 - Review-added worktrack `WT-20260522-015-ms002-final-handoff-refresh` closed and merged into `develop-aw` at `a78cc4b85a618a035e466fdb6e541c815f2daf66`; all `MS-20260522-002` worktracks are closed and milestone gate/final acceptance is required.
 - Milestone Gate for `MS-20260522-002` passed on 2026-05-22 with black-box smoke, white-box review, and anti-cheat checks; pipeline advancement is held for programmer visual/final acceptance.
 - Programmer accepted `MS-20260522-002` on 2026-05-23 after visual validation; `MS-20260522-003` is activated with first candidate `WT-20260522-007-attachment-end-to-end-validation`.
+- Worktrack `WT-20260522-007-attachment-end-to-end-validation` closed and merged into `develop-aw` at `cc6e22bf0c97493ceef17a3a74f51cf77fa29255`; next candidate is `WT-20260522-008-notification-user-surface`.

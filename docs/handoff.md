@@ -25,8 +25,9 @@
   - `WT-20260522-005-dashboard-ticket-flow-fixes`: 修复 admin 个人 scope 列表语义和新建工单优先级标签显示。
   - `WT-20260522-006-runtime-docs-catch-up`: 追平 runtime smoke 和本地运行边界文档。
   - `WT-20260522-015-ms002-final-handoff-refresh`: 修正 MS-002 收尾交接状态，避免 handoff 指向已关闭 worktrack。
+  - `WT-20260522-007-attachment-end-to-end-validation`: 建立附件上传、列表、鉴权下载、删除和 smoke 截图证据。
 - 当前 milestone: `MS-20260522-003` - Collaboration Surface Acceptance。
-- 当前 worktrack: N/A；下一步候选为 `WT-20260522-007-attachment-end-to-end-validation`。
+- 当前 worktrack: N/A；下一步候选为 `WT-20260522-008-notification-user-surface`。
 
 ---
 

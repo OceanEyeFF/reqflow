@@ -67,7 +67,7 @@ owner: "servo-kernel"
 - priority: 3
 - depends_on_milestones: MS-20260522-002
 - worktrack_list:
-  - WT-20260522-007-attachment-end-to-end-validation (planned, bugfix)
+  - WT-20260522-007-attachment-end-to-end-validation (done, bugfix)
   - WT-20260522-008-notification-user-surface (planned, feature)
   - WT-20260522-009-member-comment-interaction-hardening (planned, bugfix)
   - WT-20260522-010-collaboration-docs-catch-up (planned, docs)

@@ -20,8 +20,8 @@ owner: "servo-kernel"
 ## Mainline Status
 
 - baseline_branch: develop-aw
-- last_verified_checkpoint: 4179629cdb71cd00c0e52c09dc346035d8147f82
-- checkpoint_ref: 4179629cdb71cd00c0e52c09dc346035d8147f82
+- last_verified_checkpoint: cc6e22bf0c97493ceef17a3a74f51cf77fa29255
+- checkpoint_ref: cc6e22bf0c97493ceef17a3a74f51cf77fa29255
 - checkpoint_type: git-commit
 
 ## Architecture And Module Map
@@ -46,7 +46,7 @@ owner: "servo-kernel"
 - Harness artifacts initialized under `.servo/` in existing-code-adoption mode.
 - Completed milestone: `MS-20260522-001` (`Establish Verifiable Governance Baseline`).
 - Completed milestone: `MS-20260522-002` (`Runtime Usability And Smoke Acceptance`), accepted by programmer on 2026-05-23 after visual validation.
-- Active milestone: `MS-20260522-003` (`Collaboration Surface Acceptance`), progress 0/4 worktracks complete.
+- Active milestone: `MS-20260522-003` (`Collaboration Surface Acceptance`), progress 1/4 worktracks complete; next candidate `WT-20260522-008-notification-user-surface`.
 - Closed worktracks:
   - `WT-20260522-001-validation-environment-baseline` merged at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
   - `WT-20260522-002-lint-quality-baseline` merged at `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`.
@@ -55,6 +55,7 @@ owner: "servo-kernel"
   - `WT-20260522-005-dashboard-ticket-flow-fixes` merged at `41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8`.
   - `WT-20260522-006-runtime-docs-catch-up` merged at `d59e734213a57502e174fdf35b58fc128f21f522`.
   - `WT-20260522-015-ms002-final-handoff-refresh` merged at `a78cc4b85a618a035e466fdb6e541c815f2daf66`.
+  - `WT-20260522-007-attachment-end-to-end-validation` merged at `cc6e22bf0c97493ceef17a3a74f51cf77fa29255`.
 - Worktree discipline is mandatory: no direct code edits in the main checkout.
 - Next.js code changes require reading relevant installed docs from `node_modules/next/dist/docs/`.
 - No `origin` remote is configured; remote-based baseline/fetch instructions need adjustment or a remote must be added before relying on them.
@@ -81,3 +82,4 @@ owner: "servo-kernel"
 - Runtime operator docs are now caught up: README and `docs/handoff.md` describe setup, smoke coverage, Chrome channel caveat, worktree workflow, and verified WT-005 fixes.
 - Final handoff freshness is now caught up: `docs/handoff.md` no longer points to closed WT-006 as the current worktrack and now marks MS-002 at Gate / user visual acceptance.
 - MS-002 was accepted by the programmer on 2026-05-23; MS-003 is now active and should start with attachment end-to-end validation.
+- Attachment workflow is now locally verified: ticket detail supports upload/list/authenticated download/delete, files are stored under ignored `storage/uploads`, and smoke screenshots cover empty and uploaded states.

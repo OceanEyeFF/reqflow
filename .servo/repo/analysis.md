@@ -43,7 +43,7 @@ owner: "servo-kernel"
 
 - The immediate governance-baseline milestone is complete.
 - The runtime smoke acceptance milestone is accepted and complete.
-- The collaboration surface milestone is now active and should begin with attachment end-to-end validation.
+- The collaboration surface milestone is active; attachment end-to-end validation is complete and the next planned slice is notification user surface.
 - Future feature work should be narrow and branch-scoped because the repo has meaningful auth/data/UI coupling and limited automated tests.
 
 ## Unknowns
@@ -55,12 +55,12 @@ owner: "servo-kernel"
 
 ## Main Contradiction
 
-- current_main_contradiction: Collaboration-related APIs/models exist, but the user-visible attachment, notification, member, and comment workflows are not yet proven end-to-end.
-- main_aspect: Start MS-003 with the attachment workflow because it has local storage/runtime risk and should be validated before broader collaboration UI work.
+- current_main_contradiction: Notifications, member flows, and comment interaction still lack complete user-visible acceptance evidence.
+- main_aspect: Expose the existing notification API through a minimal user surface next.
 
 ## Priority Judgment
 
-- current_highest_priority: Initialize `WT-20260522-007-attachment-end-to-end-validation`.
+- current_highest_priority: Initialize `WT-20260522-008-notification-user-surface`.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 

@@ -144,3 +144,20 @@ owner: "servo-kernel"
 - evidence_refs: `.servo/worktrack/gate-evidence.md`
 - completed_at: 2026-05-22
 - updated: 2026-05-22
+
+### WT-20260522-007-attachment-end-to-end-validation
+
+- worktrack_id: WT-20260522-007-attachment-end-to-end-validation
+- milestone_id: MS-20260522-003
+- status: done
+- node_type: bugfix
+- scope: attachment upload/list/download/delete workflow with private local storage and ticket access checks
+- branch: worktrack/WT-20260522-007-attachment-end-to-end-validation
+- baseline_branch: develop-aw
+- base_ref: a670c2c
+- merge_commit: cc6e22bf0c97493ceef17a3a74f51cf77fa29255
+- validation: lint pass; build pass; db:validate pass; local validation DB migrate deploy pass; smoke pass against clean migrated/seeded temp DB; screenshots reviewed
+- intake_route: milestone-derived
+- evidence_refs: `.servo/worktrack/gate-evidence.md`
+- completed_at: 2026-05-23
+- updated: 2026-05-23
