@@ -110,3 +110,20 @@ owner: "servo-kernel"
 - evidence_refs: `.servo/worktrack/gate-evidence.md`
 - completed_at: 2026-05-22
 - updated: 2026-05-22
+
+### WT-20260522-006-runtime-docs-catch-up
+
+- worktrack_id: WT-20260522-006-runtime-docs-catch-up
+- milestone_id: MS-20260522-002
+- status: done
+- node_type: docs
+- scope: operator-facing runtime smoke workflow and local runtime caveat documentation
+- branch: worktrack/WT-20260522-006-runtime-docs-catch-up
+- baseline_branch: develop-aw
+- base_ref: 73d596f
+- merge_commit: d59e734213a57502e174fdf35b58fc128f21f522
+- validation: lint pass; build pass; db:validate pass; stale-text search pass
+- intake_route: milestone-derived
+- evidence_refs: `.servo/worktrack/gate-evidence.md`
+- completed_at: 2026-05-22
+- updated: 2026-05-22

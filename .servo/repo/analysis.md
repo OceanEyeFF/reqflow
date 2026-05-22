@@ -31,6 +31,7 @@ owner: "servo-kernel"
 - `WT-20260522-003-docs-handoff-catch-up` completed and merged into `develop-aw` at `28a7966dd248affd9b6099340d59433f48d51d8a`.
 - `WT-20260522-004-runtime-smoke-suite` completed and merged into `develop-aw` at `426c8a5f32af7ce8b595cc5b694a8306d0ee831c`.
 - `WT-20260522-005-dashboard-ticket-flow-fixes` completed and merged into `develop-aw` at `41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8`.
+- `WT-20260522-006-runtime-docs-catch-up` completed and merged into `develop-aw` at `d59e734213a57502e174fdf35b58fc128f21f522`.
 - Lint, build, and Prisma validation pass on the accepted baseline after documented local setup.
 - Operator-facing handoff docs now reflect the verified Harness baseline.
 - Runtime smoke testing found and fixed a post-login routing bug: `/` previously rendered the create-next-app default page, and now renders the authenticated dashboard.
@@ -40,7 +41,7 @@ owner: "servo-kernel"
 ## Inferences
 
 - The immediate governance-baseline milestone is complete.
-- The runtime smoke acceptance milestone is in progress with smoke harness and dashboard/ticket flow fixes complete; the next slice should catch up operator-facing runtime docs.
+- The runtime smoke acceptance milestone has all declared worktracks closed; it now needs Milestone Gate review and programmer final acceptance.
 - Future feature work should be narrow and branch-scoped because the repo has meaningful auth/data/UI coupling and limited automated tests.
 
 ## Unknowns
@@ -52,22 +53,22 @@ owner: "servo-kernel"
 
 ## Main Contradiction
 
-- current_main_contradiction: Runtime behavior is now smoke-tested and fixed, but operator-facing docs need to reflect the accepted smoke workflow and local runtime caveats.
-- main_aspect: Complete runtime docs catch-up without adding product scope.
+- current_main_contradiction: MS-002 implementation worktracks are closed, but goal-driven milestone acceptance still requires an explicit Milestone Gate and programmer final acceptance.
+- main_aspect: Hand back MS-002 evidence for final acceptance before advancing the pipeline.
 
 ## Priority Judgment
 
-- current_highest_priority: Execute `WT-20260522-006-runtime-docs-catch-up` under `MS-20260522-002`.
+- current_highest_priority: Run MS-002 Milestone Gate and hand back for programmer acceptance.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 
 ## Routing Projection
 
 - recommended_repo_action: enter_worktrack
-- recommended_next_route: WorktrackScope.Init -> WT-20260522-006-runtime-docs-catch-up
-- suggested_node_type: docs
+- recommended_next_route: RepoScope.Observe -> milestone-status-skill -> handback
+- suggested_node_type: N/A
 - continuation_ready: true_for_milestone_observe
-- continuation_blockers: docs catch-up must only record verified smoke workflow and runtime caveats; do not claim production readiness
+- continuation_blockers: goal-driven milestone closeout requires programmer final acceptance
 
 ## Writeback Eligibility
 

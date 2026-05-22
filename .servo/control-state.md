@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- RepoScope.Observe via milestone-status-skill, then RepoScope.Decide for next candidate `WT-20260522-006-runtime-docs-catch-up`
+- RepoScope.Observe via milestone-status-skill for `MS-20260522-002`, then handback for programmer final acceptance if Milestone Gate passes
 
 ## Linked Formal Documents
 
@@ -95,20 +95,20 @@ owner: "servo-kernel"
 > 记录最近一次 worktrack 关闭后的已验证基线，供后续续跑时快速定位。
 > `latest_observed_checkpoint` 与 `last_doc_catch_up_checkpoint` 是 git hash 幂等性锚点，用于避免对同一代码基线重复执行 repo-refresh 和 doc-catch-up。空值表示锚点尚未建立，首次观察必须完整刷新；harness-skill 启动时通过 git rev-parse HEAD 对比这两个字段决定是否跳过重复刷新。
 
-- last_verified_checkpoint: 41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8
-- latest_observed_checkpoint: 41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8
-- last_doc_catch_up_checkpoint: 426c8a5f32af7ce8b595cc5b694a8306d0ee831c
-- milestone_input_checkpoint: sha256:78b60e12f513413aa7df3bbe2c684c142c13af2ec62b84b131d4c3a67d0ff93d
+- last_verified_checkpoint: d59e734213a57502e174fdf35b58fc128f21f522
+- latest_observed_checkpoint: d59e734213a57502e174fdf35b58fc128f21f522
+- last_doc_catch_up_checkpoint: d59e734213a57502e174fdf35b58fc128f21f522
+- milestone_input_checkpoint: sha256:aecb629b63dc7292ff458f721acdd466b97b5066d763dc5e3c6d1834485153b3
 - checkpoint_type: git-commit
-- checkpoint_ref: 41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8
+- checkpoint_ref: d59e734213a57502e174fdf35b58fc128f21f522
 - verified_at: 2026-05-22
 - if_no_commit_reason: N/A
 - alternative_traceability: N/A
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 28
-- autonomous_worktracks_opened: 2
+- autonomy_budget_remaining: 27
+- autonomous_worktracks_opened: 3
 
 ## Notes
 
@@ -127,3 +127,4 @@ owner: "servo-kernel"
 - Programmer requested three consecutive milestones on 2026-05-22; `MS-20260522-002` was activated and `MS-20260522-003` / `MS-20260522-004` were planned with dependency ordering.
 - Worktrack `WT-20260522-004-runtime-smoke-suite` closed and merged into `develop-aw` at `426c8a5f32af7ce8b595cc5b694a8306d0ee831c`; next candidate is `WT-20260522-005-dashboard-ticket-flow-fixes`.
 - Worktrack `WT-20260522-005-dashboard-ticket-flow-fixes` closed and merged into `develop-aw` at `41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8`; next candidate is `WT-20260522-006-runtime-docs-catch-up`.
+- Worktrack `WT-20260522-006-runtime-docs-catch-up` closed and merged into `develop-aw` at `d59e734213a57502e174fdf35b58fc128f21f522`; all `MS-20260522-002` worktracks are closed and milestone gate/final acceptance is required.

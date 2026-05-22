@@ -49,7 +49,7 @@ owner: "servo-kernel"
 - worktrack_list:
   - WT-20260522-004-runtime-smoke-suite (done, test)
   - WT-20260522-005-dashboard-ticket-flow-fixes (done, bugfix)
-  - WT-20260522-006-runtime-docs-catch-up (planned, docs)
+  - WT-20260522-006-runtime-docs-catch-up (done, docs)
 - created_by: programmer-confirmed-harness
 - created_at: 2026-05-22
 - updated_by: harness-skill
