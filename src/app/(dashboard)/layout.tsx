@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { NotificationMenu } from "@/components/notification-menu";
 import { SignOutButton } from "@/components/sign-out-button";
 import { ROLE_LABELS } from "@/types";
 
@@ -33,6 +34,7 @@ export default async function DashboardLayout({
               </nav>
             </div>
             <div className="flex items-center gap-4">
+              <NotificationMenu />
               <div className="text-right">
                 <p className="text-sm font-medium">{session.user.name}</p>
                 <p className="text-xs text-gray-500">

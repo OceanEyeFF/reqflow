@@ -1,7 +1,7 @@
 ---
 title: "Gate Evidence"
 artifact_type: "worktrack-gate-evidence"
-worktrack_id: "WT-20260522-007-attachment-end-to-end-validation"
+worktrack_id: "WT-20260522-008-notification-user-surface"
 updated: "2026-05-23"
 owner: "servo-kernel"
 ---
@@ -10,7 +10,7 @@ owner: "servo-kernel"
 
 ## Metadata
 
-- worktrack_id: WT-20260522-007-attachment-end-to-end-validation
+- worktrack_id: WT-20260522-008-notification-user-surface
 - updated: 2026-05-23
 - gate_round: 1
 - required_evidence_lanes: test, review, policy
@@ -24,18 +24,19 @@ owner: "servo-kernel"
 - review_profile: standard
 - confidence: high
 - ready_for_gate: true
-- residual_risks: production object storage, malware scanning, and public sharing remain out of scope for MS-003 and should be covered by later operational readiness decisions.
+- residual_risks: notification freshness is request-time only; live polling/websocket delivery and preference settings remain out of scope.
 
 ### Supporting Detail
 
 - input_ref: `.servo/worktrack/contract.md`
 - freshness: current
-- static_semantic_review: pass; attachment API now checks ticket access for list/upload/delete, and download uses an authenticated route instead of public static files.
-- ui_review: pass; screenshots show an empty attachment card and an uploaded file row with size/uploader metadata and delete action.
-- test_review: pass; smoke performs real upload, authenticated download, delete, and unauthenticated attachment API rejection.
-- code_review: pass; local uploads are written under ignored `storage/uploads`, database-create failure attempts file cleanup, and delete removes the stored file then DB row.
-- project_security_review: pass for local scope; related non-admin users are limited by creator/assignee/member checks, while admin retains broad access.
-- missing_evidence: automated 403 login for an unrelated seeded user was not retained because the local validation DB is not guaranteed to contain that account; the 403 path is covered by helper-level code review.
+- discovery_review: pass; explorer found existing notification APIs and helpers but no user-facing surface, and flagged the handoff method mismatch for later docs catch-up.
+- static_semantic_review: pass; the header now exposes a client notification menu using existing `GET /api/notifications`, `PATCH /api/notifications/[id]`, and `PATCH /api/notifications/read-all` routes.
+- ui_review: pass; screenshots show an unread badge/dropdown with two manager notifications and a post-click ticket detail page.
+- test_review: pass; smoke creates a manager-assigned ticket, triggers a status-change notification, verifies unread count, single-read decrement, all-read clear, and ticket detail navigation.
+- code_review: pass; read actions update local state only after successful API responses, historical notifications remain visible after all-read, and the ticket-link assertion now checks URL plus detail `h1`.
+- project_security_review: pass for local scope; the menu reads only the current authenticated user's notifications through existing server-side session filters.
+- missing_evidence: no mobile screenshot was captured in this worktrack; visual acceptance is reserved for the user per instruction.
 
 ## Validation Lane
 
@@ -43,20 +44,21 @@ owner: "servo-kernel"
 
 - confidence: high
 - ready_for_gate: true
-- residual_risks: validation database required `prisma migrate deploy` because the local worktree DB initially lacked `TicketAttachment`.
+- residual_risks: temp DB smoke validates deterministic seed behavior; local runtime DB may contain manual browsing drift and is intentionally excluded from evidence.
 
 ### Supporting Detail
 
 - command_evidence:
   - `npm run lint`: pass.
-  - `npm run build`: pass; Next.js build recognized `/api/tickets/[id]/attachments/[attachmentId]/download`.
+  - `npm run build`: pass; Next.js build recognized the notification routes and dashboard pages.
   - `$env:DATABASE_URL='file:./dev.db'; npm run db:validate`: pass.
-  - `$env:DATABASE_URL='file:./dev.db'; npx prisma migrate deploy`: pass; applied `20260517024330_add_ticket_attachments` to the local validation DB only.
-  - `npm run smoke`: pass; 1 Playwright test passed.
+  - clean temp DB `npx prisma migrate deploy`: pass; applied all three migrations to `prisma/.tmp-smoke/smoke.db`.
+  - clean temp DB `npm run db:seed`: pass.
+  - clean temp DB `npm run smoke`: pass; 1 Playwright test passed.
 - screenshot_evidence:
-  - `test-results/smoke/02-ticket-detail.png`: empty attachment card visible.
-  - `test-results/smoke/03-ticket-detail-attachments.png`: uploaded attachment visible with metadata and delete action.
-- local_artifact_check: `storage/uploads` is empty after smoke delete flow; upload directory is ignored.
+  - `test-results/smoke/06-notifications-unread.png`: manager sees notification bell badge, unread count, and notification dropdown.
+  - `test-results/smoke/07-notification-ticket-link.png`: notification link lands on the created ticket detail page.
+- assertion_hardening: initial screenshot review found the old navigation check could pass on a dashboard ticket card title; the smoke test now requires `/tickets/{id}` URL and the detail page `h1`.
 
 ## Policy Lane
 
@@ -64,24 +66,25 @@ owner: "servo-kernel"
 
 - confidence: high
 - ready_for_gate: true
-- residual_risks: local database binary changed during validation and must be excluded from commit.
+- residual_risks: local runtime artifacts must remain unstaged.
 
 ### Supporting Detail
 
 - input_ref: `AGENTS.md`, `.servo/goal-charter.md`, `.servo/milestone/MS-20260522-003.md`
-- worktree_policy: all scoped edits occurred in `WT-20260522-007-attachment-end-to-end-validation`; main checkout was not edited.
+- worktree_policy: all scoped edits occurred in `WT-20260522-008-notification-user-surface`; main checkout was not edited.
 - nextjs_docs_review: read installed Next.js 16 docs for Route Handlers, Server/Client Components, and Playwright before code changes.
-- scope_control: no schema migration, production storage strategy, broad redesign, or unrelated collaboration surface was introduced.
+- scope_control: no schema migration, external delivery channel, broad notification settings, or unrelated collaboration redesign was introduced.
+- docs_sync: `docs/handoff.md` should be corrected from `POST /api/notifications/read-all` to `PATCH /api/notifications/read-all` during Repo refresh.
 
 ## Evidence Assessment
 
 ### Control Signal
 
-- node_type: bugfix
+- node_type: feature
 - applied_gate_criteria: test + review + policy
 - fallback_used: current-carrier implementation after explorer subagent discovery
 - overall_confidence: high
-- overall_confidence_reason: Browser-level evidence proves the user-visible attachment workflow, and static review covers authorization and storage behavior that smoke cannot fully exercise with current seed data.
+- overall_confidence_reason: Browser-level evidence proves the user-facing notification loop, and static review confirms it stays within the existing authenticated notification API contract.
 - freshness_blockers: N/A
 
 ## Recommended Next Route
@@ -92,4 +95,4 @@ owner: "servo-kernel"
 - recommended_next_route: WorktrackScope.Close
 - approval_required: false
 - needs_programmer_approval: false
-- why: WT-007 satisfies the attachment workflow acceptance criteria for local runtime scope.
+- why: WT-008 satisfies the notification user surface acceptance criteria for local runtime scope.
