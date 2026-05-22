@@ -1,7 +1,7 @@
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
+import { SignOutButton } from "@/components/sign-out-button";
 import { ROLE_LABELS } from "@/types";
 
 export default async function DashboardLayout({
@@ -39,15 +39,7 @@ export default async function DashboardLayout({
                   {ROLE_LABELS[session.user.role] || session.user.role}
                 </p>
               </div>
-              <form
-                action={async () => {
-                  await signOut({ redirectTo: "/login" });
-                }}
-              >
-                <Button variant="outline" size="sm" type="submit">
-                  退出
-                </Button>
-              </form>
+              <SignOutButton />
             </div>
           </div>
         </div>
