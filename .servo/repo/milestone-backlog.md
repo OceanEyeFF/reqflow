@@ -29,7 +29,7 @@ owner: "servo-kernel"
 - depends_on_milestones: N/A
 - worktrack_list:
   - WT-20260522-001-validation-environment-baseline (done, config)
-  - WT-20260522-002-lint-quality-baseline (planned, bugfix)
+  - WT-20260522-002-lint-quality-baseline (done, bugfix)
   - WT-20260522-003-docs-handoff-catch-up (planned, docs)
 - created_by: programmer-confirmed-harness
 - created_at: 2026-05-22

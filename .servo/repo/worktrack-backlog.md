@@ -25,3 +25,20 @@ owner: "servo-kernel"
 - evidence_refs: `.servo/worktrack/gate-evidence.md`
 - completed_at: 2026-05-22
 - updated: 2026-05-22
+
+### WT-20260522-002-lint-quality-baseline
+
+- worktrack_id: WT-20260522-002-lint-quality-baseline
+- milestone_id: MS-20260522-001
+- status: done
+- node_type: bugfix
+- scope: zero-error lint quality baseline without product feature expansion
+- branch: worktrack/WT-20260522-002-lint-quality-baseline
+- baseline_branch: develop-aw
+- base_ref: 6137624
+- merge_commit: a16986e4e126a531fd613aa9204f9bfd16b0f3f5
+- validation: lint pass; build pass; db:validate pass after documented local setup
+- intake_route: milestone-derived
+- evidence_refs: `.servo/worktrack/gate-evidence.md`
+- completed_at: 2026-05-22
+- updated: 2026-05-22

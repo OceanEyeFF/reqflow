@@ -27,7 +27,8 @@ owner: "servo-kernel"
 - The repo has no configured `origin` remote.
 - Governance instructions require worktree-only code changes and installed Next.js docs review before Next code changes.
 - `WT-20260522-001-validation-environment-baseline` completed and merged into `develop-aw` at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
-- Build and Prisma validation are now runnable with documented local setup; lint remains red due source quality findings.
+- `WT-20260522-002-lint-quality-baseline` completed and merged into `develop-aw` at `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`.
+- Lint, build, and Prisma validation pass on the accepted baseline after documented local setup.
 
 ## Inferences
 
@@ -49,21 +50,21 @@ owner: "servo-kernel"
 
 ## Priority Judgment
 
-- current_highest_priority: Execute `WT-20260522-002-lint-quality-baseline` to make lint a passing baseline signal.
+- current_highest_priority: Execute `WT-20260522-003-docs-handoff-catch-up` so operator-facing docs match the verified baseline.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 
 ## Routing Projection
 
 - recommended_repo_action: enter_worktrack
-- recommended_next_route: WorktrackScope.Init -> WT-20260522-002-lint-quality-baseline
-- suggested_node_type: bugfix
+- recommended_next_route: WorktrackScope.Init -> WT-20260522-003-docs-handoff-catch-up
+- suggested_node_type: docs
 - continuation_ready: true_for_milestone_observe
-- continuation_blockers: lint worktrack must stay limited to current lint errors and avoid product feature expansion
+- continuation_blockers: docs catch-up must avoid unverified product claims and cite validated command outcomes
 
 ## Writeback Eligibility
 
-- writeback_eligibility: milestone initialized and active; no worktrack closeout writeback exists yet
+- writeback_eligibility: WT2 closeout written back; remaining milestone work is docs/handoff catch-up
 
 ## Notes
 

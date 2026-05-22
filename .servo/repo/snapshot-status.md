@@ -20,8 +20,8 @@ owner: "servo-kernel"
 ## Mainline Status
 
 - baseline_branch: develop-aw
-- last_verified_checkpoint: ad6e18928365db2616b2731d0e93b4f9481992c3
-- checkpoint_ref: ad6e18928365db2616b2731d0e93b4f9481992c3
+- last_verified_checkpoint: a16986e4e126a531fd613aa9204f9bfd16b0f3f5
+- checkpoint_ref: a16986e4e126a531fd613aa9204f9bfd16b0f3f5
 - checkpoint_type: git-commit
 
 ## Architecture And Module Map
@@ -45,7 +45,9 @@ owner: "servo-kernel"
 
 - Harness artifacts initialized under `.servo/` in existing-code-adoption mode.
 - Active milestone: `MS-20260522-001` (`Establish Verifiable Governance Baseline`).
-- Closed worktrack: `WT-20260522-001-validation-environment-baseline` merged at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
+- Closed worktracks:
+  - `WT-20260522-001-validation-environment-baseline` merged at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
+  - `WT-20260522-002-lint-quality-baseline` merged at `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`.
 - Worktree discipline is mandatory: no direct code edits in the main checkout.
 - Next.js code changes require reading relevant installed docs from `node_modules/next/dist/docs/`.
 - No `origin` remote is configured; remote-based baseline/fetch instructions need adjustment or a remote must be added before relying on them.
@@ -54,7 +56,7 @@ owner: "servo-kernel"
 ## Known Issues And Risks
 
 - `docs/handoff.md` appears partly stale compared with current schema/routes that include notifications and attachments.
-- `npm run lint` remains red with existing code quality findings and is assigned to `WT-20260522-002-lint-quality-baseline`.
+- Operator-facing docs still need catch-up to reflect the verified baseline and branch/worktree workflow.
 - No dedicated unit or e2e test suite is declared; `npm run lint`, `npm run build`, and `npm run db:validate` are the primary observed verification commands.
 - SQLite and local file uploads are local-development friendly but need explicit production strategy before deployment use.
 - NextAuth v5 beta and Next.js 16 API behavior are version-sensitive.
@@ -64,3 +66,4 @@ owner: "servo-kernel"
 
 - Initial snapshot was created from read-only discovery plus programmer-confirmed goal inputs. The next Harness loop should run `RepoScope.Observe` before deciding any worktrack.
 - Worktree validation environment baseline is now established: `.env.example` is committed, `.env` stays ignored, `db:validate` script exists, and Turbopack root is pinned to `process.cwd()`.
+- Lint quality baseline is now established: `npm run lint`, `npm run build`, and `npm run db:validate` pass on `develop-aw` after documented local setup.
