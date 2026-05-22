@@ -31,6 +31,7 @@ owner: "servo-kernel"
 - `WT-20260522-003-docs-handoff-catch-up` completed and merged into `develop-aw` at `28a7966dd248affd9b6099340d59433f48d51d8a`.
 - Lint, build, and Prisma validation pass on the accepted baseline after documented local setup.
 - Operator-facing handoff docs now reflect the verified Harness baseline.
+- Runtime smoke testing found and fixed a post-login routing bug: `/` previously rendered the create-next-app default page, and now renders the authenticated dashboard.
 
 ## Inferences
 
@@ -52,7 +53,7 @@ owner: "servo-kernel"
 
 ## Priority Judgment
 
-- current_highest_priority: Pause for programmer review or select the next milestone after the verified baseline.
+- current_highest_priority: Programmer runtime review of the corrected baseline, then select the next milestone.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 
@@ -66,7 +67,7 @@ owner: "servo-kernel"
 
 ## Writeback Eligibility
 
-- writeback_eligibility: WT3 closeout written back; milestone completion can be treated as the accepted governance baseline
+- writeback_eligibility: post-baseline runtime hotfix written back; milestone completion remains accepted
 
 ## Notes
 

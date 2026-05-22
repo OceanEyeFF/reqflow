@@ -20,8 +20,8 @@ owner: "servo-kernel"
 ## Mainline Status
 
 - baseline_branch: develop-aw
-- last_verified_checkpoint: 28a7966dd248affd9b6099340d59433f48d51d8a
-- checkpoint_ref: 28a7966dd248affd9b6099340d59433f48d51d8a
+- last_verified_checkpoint: 462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe
+- checkpoint_ref: 462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe
 - checkpoint_type: git-commit
 
 ## Architecture And Module Map
@@ -68,3 +68,4 @@ owner: "servo-kernel"
 - Worktree validation environment baseline is now established: `.env.example` is committed, `.env` stays ignored, `db:validate` script exists, and Turbopack root is pinned to `process.cwd()`.
 - Lint quality baseline is now established: `npm run lint`, `npm run build`, and `npm run db:validate` pass on `develop-aw` after documented local setup.
 - Handoff documentation catch-up is now established: `docs/handoff.md` reflects `develop-aw`, verified commands, and current attachment/notification route/model facts.
+- Runtime smoke follow-up fixed `/` routing: the create-next-app default `src/app/page.tsx` was removed, so `/` now uses the authenticated dashboard route group; logout is handled by a client-side sign-out button.

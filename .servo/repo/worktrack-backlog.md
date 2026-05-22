@@ -26,6 +26,23 @@ owner: "servo-kernel"
 - completed_at: 2026-05-22
 - updated: 2026-05-22
 
+### runtime-dashboard-route-hotfix
+
+- worktrack_id: runtime-dashboard-route-hotfix
+- milestone_id: N/A
+- status: done
+- node_type: bugfix
+- scope: post-login runtime route fix for authenticated dashboard entry
+- branch: worktrack/runtime-dashboard-route-hotfix
+- baseline_branch: develop-aw
+- base_ref: f4719c6
+- merge_commit: 462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe
+- validation: lint pass; build pass; db:validate pass; Playwright login smoke shows `工作台` and ticket API calls return 200
+- intake_route: programmer runtime feedback
+- evidence_refs: runtime smoke logs and Playwright snapshots
+- completed_at: 2026-05-22
+- updated: 2026-05-22
+
 ### WT-20260522-002-lint-quality-baseline
 
 - worktrack_id: WT-20260522-002-lint-quality-baseline
