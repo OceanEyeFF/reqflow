@@ -19,11 +19,11 @@ owner: "servo-kernel"
 ## Current Control Level
 
 - repo_scope: active
-- worktrack_scope: closed
+- worktrack_scope: closing
 
 ## Active Worktrack
 
-- N/A
+- WT-20260522-001-validation-environment-baseline
 
 ## Active Milestone
 
@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- RepoScope.Decide via repo-whats-next-skill, then WorktrackScope.Init if intake review remains ready
+- WorktrackScope.Close via close-worktrack-skill
 
 ## Linked Formal Documents
 
@@ -76,8 +76,8 @@ owner: "servo-kernel"
   - dispatch_package_safety: N/A
   - delegation_attempted: false
   - attempted_carrier: none
-  - carrier_decision: current-carrier-for-repo-scope-control
-  - fallback_reason: no SubAgent dispatch shell was required for milestone initialization
+  - carrier_decision: current-carrier-fallback-ready
+  - fallback_reason: no SubAgent dispatch shell has been proven available in this runtime
 - persistent_authority_notes: Conservative defaults only; no persistent authority expansion was approved beyond the initialized control-state defaults.
 
 ## Handback Guard
@@ -116,3 +116,4 @@ owner: "servo-kernel"
 - Initial control state was created by `RepoScope.SetGoal` in existing-code-adoption mode. The next Harness loop must re-observe the repo before opening any worktrack.
 - Milestone `MS-20260522-001` was confirmed by the programmer and activated on 2026-05-22.
 - Milestone observe result: `not_achieved`, progress 0/3, next candidate worktrack `WT-20260522-001-validation-environment-baseline`.
+- Worktrack `WT-20260522-001-validation-environment-baseline` initialized on branch `worktrack/WT-20260522-001-validation-environment-baseline`.
