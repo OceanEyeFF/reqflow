@@ -1,71 +1,75 @@
 ---
 title: "Plan / Task Queue"
 artifact_type: "worktrack-plan-task-queue"
-generated_from: "servo-set-harness-goal-skill/assets/worktrack/plan-task-queue.md"
+worktrack_id: "WT-20260522-001-validation-environment-baseline"
 updated: "2026-05-22"
 owner: "servo-kernel"
 ---
 
 # Plan / Task Queue
 
-> 这是 `.servo/worktrack/plan-task-queue.md` 的运行样例，用来把 worktrack contract 展开成当前执行队列。
-> 按 `Control Signal` / `Supporting Detail` 双层输出：`Control Signal` 只放影响下一动作决策的关键结论；`Supporting Detail` 放完整计划上下文。
-
 ## Metadata
 
-- worktrack_id: N/A
+- worktrack_id: WT-20260522-001-validation-environment-baseline
 - updated: 2026-05-22
-- current_phase: N/A
+- current_phase: completed
 - contract_ref: worktrack/contract.md
-- queue_status: not_initialized
+- queue_status: completed
 
 ## Task List
 
-1. [ ] N/A
+1. [x] Inspect installed Next.js docs relevant to workspace root/build behavior.
+2. [x] Reproduce and classify validation command failures in the worktrack worktree.
+3. [x] Add minimal non-secret validation environment guidance/config needed for reproducible commands.
+4. [x] Re-run validation commands and capture results.
+5. [x] Update gate evidence with review, validation, and policy surfaces.
 
 ## Execution Order Notes
 
-- N/A
+- First confirm whether failures are environment/setup failures or code failures.
+- Keep lint remediation findings as evidence for the next worktrack unless command execution itself is blocked.
 
 ## Dependencies
 
-- N/A
+- Active milestone `MS-20260522-001`
+- Baseline branch `develop-aw`
+- Installed docs in the main checkout may be used as read-only reference because this worktree has no local `node_modules` until dependencies are installed.
 
 ## Current Blockers
 
-- No active worktrack exists.
+- `npm run lint` still fails with existing code quality errors; this is intentionally left for `WT-20260522-002-lint-quality-baseline`.
 
 ## Current Next Action
 
 ### Control Signal
-- selected_next_action: RepoScope.Observe
-- selection_reason: Harness initialization has completed; repo state must be observed before any worktrack queue can be scheduled.
+- selected_next_action: WorktrackScope.Verify
+- selection_reason: Implementation is complete and validation evidence has been collected.
 
 ### Supporting Detail
-- selected_next_action_id: repo-observe-after-set-goal
-- selected_next_action: RepoScope.Observe via repo-status-skill
-- selection_reason: `.servo/control-state.md` and `.servo/goal-charter.md` now exist, but no worktrack contract has been initialized.
+- selected_next_action_id: WT-20260522-001-VERIFY
+- selected_next_action: Verify and close the validation environment baseline.
+- selection_reason: Build and Prisma validation now run with documented setup; lint is runnable and its failures are attributable to code quality.
 
 ## Dispatch Handoff Packet
 
-- task: N/A
-- goal_for_this_round: N/A
-- node_type: N/A
-- gate_criteria_for_this_round: N/A
-- baseline_policy: N/A
-- constraints_for_this_round: N/A
-- acceptance_criteria_for_this_round: N/A
-- verification_requirements: N/A
+- task: Establish validation environment baseline for ReqFlow worktree.
+- goal_for_this_round: Make validation commands reproducible/interpretable without changing product behavior.
+- node_type: config
+- gate_criteria_for_this_round: validation + policy
+- baseline_policy: commit-on-config-branch, merge required
+- constraints_for_this_round: no product features, no broad lint fixes, no secrets, inspect Next docs before Next config changes
+- acceptance_criteria_for_this_round: validation prerequisites documented; lint/build/prisma outputs captured; environment-caused failures separated from code findings
+- verification_requirements: `npm run lint`; `npm run build`; `npx prisma validate` with documented `DATABASE_URL`; diff review
 - runtime_dispatch_mode: auto
-- done_signal: N/A
-- required_context: N/A
-- return_to_schedule_if: N/A
+- done_signal: gate evidence ready for validation + policy judgment
+- required_context: `.servo/worktrack/contract.md`, `.servo/milestone/MS-20260522-001.md`, `package.json`, `next.config.ts`, `prisma/schema.prisma`, `AGENTS.md`
+- return_to_schedule_if: build/prisma failures reveal required product changes beyond validation setup
 
 ## Readiness
 
 - dispatch_packet_ready: false
-- recommended_next_route: RepoScope.Observe
+- recommended_next_route: WorktrackScope.Judge
 
 ## Notes
 
-- This queue is intentionally inactive until RepoScope.Decide selects a worktrack and `init-worktrack-skill` creates a scoped plan.
+- Dispatch executed via current-carrier runtime fallback because no SubAgent shell was proven available.

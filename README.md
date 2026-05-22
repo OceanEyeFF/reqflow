@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ReqFlow
 
-## Getting Started
+ReqFlow is a lightweight internal ticket/request collaboration system built with Next.js 16, React 19, TypeScript, TailwindCSS v4, Prisma 5, SQLite, and NextAuth v5 beta.
 
-First, run the development server:
+## Local Setup
 
 ```bash
+npm install
+Copy-Item .env.example .env
+npm run db:validate
+npm run db:seed
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000/login`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Test Accounts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Username | Password | Role |
+| --- | --- | --- |
+| admin | admin123 | admin |
+| manager | manager123 | manager |
+| user | user123 | user |
 
-## Learn More
+## Validation Commands
 
-To learn more about Next.js, take a look at the following resources:
+Run these from the active worktree root, not from the main checkout:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+npm run build
+npm run db:validate
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+`npm run db:validate` requires `.env`; copy `.env.example` to `.env` first. The committed `.env.example` contains only local development placeholders and no secrets.
 
-## Deploy on Vercel
+Next.js 16 uses Turbopack by default. This repo sets `turbopack.root` to `process.cwd()` so a nested git worktree resolves modules from the current worktree instead of the parent checkout.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Harness Workflow
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Harness-managed code changes should be made from `develop-aw` through dedicated worktrack branches and worktrees. Do not edit the main checkout directly.
