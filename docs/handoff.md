@@ -14,7 +14,7 @@
 
 - 基线 worktree: `E:\repos\personal\reqflow\.worktrees\develop-aw`
 - 最新已验证业务 checkpoint: `d59e734213a57502e174fdf35b58fc128f21f522`
-- 最新 Harness repo-refresh checkpoint: `9a9d4c1`
+- 最新 MS-002 closeout merge checkpoint: `a78cc4b85a618a035e466fdb6e541c815f2daf66`
 - 当前 Milestone 计划基准: `80621eabd29e5d6232fa6f9db461ed0c1d036449`
 - 已完成 worktrack:
   - `WT-20260522-001-validation-environment-baseline`: 建立 `.env.example`、`db:validate`、Turbopack worktree root 和验证说明。

@@ -127,3 +127,20 @@ owner: "servo-kernel"
 - evidence_refs: `.servo/worktrack/gate-evidence.md`
 - completed_at: 2026-05-22
 - updated: 2026-05-22
+
+### WT-20260522-015-ms002-final-handoff-refresh
+
+- worktrack_id: WT-20260522-015-ms002-final-handoff-refresh
+- milestone_id: MS-20260522-002
+- status: done
+- node_type: docs
+- scope: final MS-002 handoff freshness fix after CodeReview found stale current-worktrack wording
+- branch: worktrack/WT-20260522-015-ms002-final-handoff-refresh
+- baseline_branch: develop-aw
+- base_ref: 9a9d4c1
+- merge_commit: a78cc4b85a618a035e466fdb6e541c815f2daf66
+- validation: lint pass; db:validate pass; diff-check pass; stale current-worktrack search pass
+- intake_route: review-derived
+- evidence_refs: `.servo/worktrack/gate-evidence.md`
+- completed_at: 2026-05-22
+- updated: 2026-05-22

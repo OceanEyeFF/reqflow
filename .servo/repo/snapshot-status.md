@@ -20,8 +20,8 @@ owner: "servo-kernel"
 ## Mainline Status
 
 - baseline_branch: develop-aw
-- last_verified_checkpoint: d59e734213a57502e174fdf35b58fc128f21f522
-- checkpoint_ref: d59e734213a57502e174fdf35b58fc128f21f522
+- last_verified_checkpoint: a78cc4b85a618a035e466fdb6e541c815f2daf66
+- checkpoint_ref: a78cc4b85a618a035e466fdb6e541c815f2daf66
 - checkpoint_type: git-commit
 
 ## Architecture And Module Map
@@ -45,7 +45,7 @@ owner: "servo-kernel"
 
 - Harness artifacts initialized under `.servo/` in existing-code-adoption mode.
 - Completed milestone: `MS-20260522-001` (`Establish Verifiable Governance Baseline`).
-- Active milestone: `MS-20260522-002` (`Runtime Usability And Smoke Acceptance`), progress 3/3 worktracks complete; pending Milestone Gate and programmer final acceptance.
+- Active milestone: `MS-20260522-002` (`Runtime Usability And Smoke Acceptance`), progress 4/4 worktracks complete; pending Milestone Gate and programmer final acceptance.
 - Closed worktracks:
   - `WT-20260522-001-validation-environment-baseline` merged at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
   - `WT-20260522-002-lint-quality-baseline` merged at `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`.
@@ -53,6 +53,7 @@ owner: "servo-kernel"
   - `WT-20260522-004-runtime-smoke-suite` merged at `426c8a5f32af7ce8b595cc5b694a8306d0ee831c`.
   - `WT-20260522-005-dashboard-ticket-flow-fixes` merged at `41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8`.
   - `WT-20260522-006-runtime-docs-catch-up` merged at `d59e734213a57502e174fdf35b58fc128f21f522`.
+  - `WT-20260522-015-ms002-final-handoff-refresh` merged at `a78cc4b85a618a035e466fdb6e541c815f2daf66`.
 - Worktree discipline is mandatory: no direct code edits in the main checkout.
 - Next.js code changes require reading relevant installed docs from `node_modules/next/dist/docs/`.
 - No `origin` remote is configured; remote-based baseline/fetch instructions need adjustment or a remote must be added before relying on them.
@@ -77,3 +78,4 @@ owner: "servo-kernel"
 - Runtime smoke baseline is now established: `npm run smoke` covers local login, authenticated dashboard, ticket detail, ticket list, new-ticket reachability, and logout with screenshots under ignored `test-results/smoke/`.
 - Dashboard/ticket flow fixes are now established: admin personal scopes stay personal unless `scope=all`, unknown ticket scopes fall back to assigned-to-me, and new-ticket priority select displays user-facing labels.
 - Runtime operator docs are now caught up: README and `docs/handoff.md` describe setup, smoke coverage, Chrome channel caveat, worktree workflow, and verified WT-005 fixes.
+- Final handoff freshness is now caught up: `docs/handoff.md` no longer points to closed WT-006 as the current worktrack and now marks MS-002 at Gate / user visual acceptance.

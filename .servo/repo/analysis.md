@@ -32,6 +32,7 @@ owner: "servo-kernel"
 - `WT-20260522-004-runtime-smoke-suite` completed and merged into `develop-aw` at `426c8a5f32af7ce8b595cc5b694a8306d0ee831c`.
 - `WT-20260522-005-dashboard-ticket-flow-fixes` completed and merged into `develop-aw` at `41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8`.
 - `WT-20260522-006-runtime-docs-catch-up` completed and merged into `develop-aw` at `d59e734213a57502e174fdf35b58fc128f21f522`.
+- `WT-20260522-015-ms002-final-handoff-refresh` completed and merged into `develop-aw` at `a78cc4b85a618a035e466fdb6e541c815f2daf66`.
 - Lint, build, and Prisma validation pass on the accepted baseline after documented local setup.
 - Operator-facing handoff docs now reflect the verified Harness baseline.
 - Runtime smoke testing found and fixed a post-login routing bug: `/` previously rendered the create-next-app default page, and now renders the authenticated dashboard.
@@ -41,7 +42,7 @@ owner: "servo-kernel"
 ## Inferences
 
 - The immediate governance-baseline milestone is complete.
-- The runtime smoke acceptance milestone has all declared worktracks closed; it now needs Milestone Gate review and programmer final acceptance.
+- The runtime smoke acceptance milestone has all declared and review-added closeout worktracks closed; it now needs Milestone Gate review and programmer final acceptance.
 - Future feature work should be narrow and branch-scoped because the repo has meaningful auth/data/UI coupling and limited automated tests.
 
 ## Unknowns
