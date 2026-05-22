@@ -19,11 +19,11 @@ owner: "servo-kernel"
 ## Current Control Level
 
 - repo_scope: active
-- worktrack_scope: closed
+- worktrack_scope: closing
 
 ## Active Worktrack
 
-- N/A
+- WT-20260522-003-docs-handoff-catch-up
 
 ## Active Milestone
 
@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- RepoScope.Observe via milestone-status-skill, then RepoScope.Decide for `WT-20260522-003-docs-handoff-catch-up`
+- WorktrackScope.Close via close-worktrack-skill
 
 ## Linked Formal Documents
 
@@ -120,3 +120,4 @@ owner: "servo-kernel"
 - Worktrack `WT-20260522-001-validation-environment-baseline` closed and merged into `develop-aw` at `ad6e18928365db2616b2731d0e93b4f9481992c3`; next candidate is `WT-20260522-002-lint-quality-baseline`.
 - Worktrack `WT-20260522-002-lint-quality-baseline` validation passed on 2026-05-22 and is ready for closeout.
 - Worktrack `WT-20260522-002-lint-quality-baseline` closed and merged into `develop-aw` at `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`; next candidate is `WT-20260522-003-docs-handoff-catch-up`.
+- Worktrack `WT-20260522-003-docs-handoff-catch-up` validation passed on 2026-05-22 and is ready for closeout.
