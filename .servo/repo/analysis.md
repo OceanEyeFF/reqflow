@@ -28,12 +28,14 @@ owner: "servo-kernel"
 - Governance instructions require worktree-only code changes and installed Next.js docs review before Next code changes.
 - `WT-20260522-001-validation-environment-baseline` completed and merged into `develop-aw` at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
 - `WT-20260522-002-lint-quality-baseline` completed and merged into `develop-aw` at `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`.
+- `WT-20260522-003-docs-handoff-catch-up` completed and merged into `develop-aw` at `28a7966dd248affd9b6099340d59433f48d51d8a`.
 - Lint, build, and Prisma validation pass on the accepted baseline after documented local setup.
+- Operator-facing handoff docs now reflect the verified Harness baseline.
 
 ## Inferences
 
-- The immediate control need is to establish Harness baseline artifacts, then re-enter RepoScope.Observe to validate the initialized state.
-- The most likely next useful work is not coding directly; it is a RepoScope decision pass that reconciles actual code, stale docs, and the next worktrack candidate.
+- The immediate governance-baseline milestone is complete.
+- The most likely next useful work is a new programmer-approved milestone or a repo-level next-slice decision.
 - Future feature work should be narrow and branch-scoped because the repo has meaningful auth/data/UI coupling and limited automated tests.
 
 ## Unknowns
@@ -50,21 +52,21 @@ owner: "servo-kernel"
 
 ## Priority Judgment
 
-- current_highest_priority: Execute `WT-20260522-003-docs-handoff-catch-up` so operator-facing docs match the verified baseline.
+- current_highest_priority: Pause for programmer review or select the next milestone after the verified baseline.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 
 ## Routing Projection
 
-- recommended_repo_action: enter_worktrack
-- recommended_next_route: WorktrackScope.Init -> WT-20260522-003-docs-handoff-catch-up
-- suggested_node_type: docs
-- continuation_ready: true_for_milestone_observe
-- continuation_blockers: docs catch-up must avoid unverified product claims and cite validated command outcomes
+- recommended_repo_action: handback
+- recommended_next_route: RepoScope.Decide after programmer selects the next goal slice
+- suggested_node_type: N/A
+- continuation_ready: false_until_next_programmer_direction
+- continuation_blockers: no active milestone remains after baseline completion
 
 ## Writeback Eligibility
 
-- writeback_eligibility: WT2 closeout written back; remaining milestone work is docs/handoff catch-up
+- writeback_eligibility: WT3 closeout written back; milestone completion can be treated as the accepted governance baseline
 
 ## Notes
 

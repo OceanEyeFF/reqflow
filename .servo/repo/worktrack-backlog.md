@@ -42,3 +42,20 @@ owner: "servo-kernel"
 - evidence_refs: `.servo/worktrack/gate-evidence.md`
 - completed_at: 2026-05-22
 - updated: 2026-05-22
+
+### WT-20260522-003-docs-handoff-catch-up
+
+- worktrack_id: WT-20260522-003-docs-handoff-catch-up
+- milestone_id: MS-20260522-001
+- status: done
+- node_type: docs
+- scope: operator-facing handoff documentation catch-up from verified baseline facts
+- branch: worktrack/WT-20260522-003-docs-handoff-catch-up
+- baseline_branch: develop-aw
+- base_ref: b62e4b0
+- merge_commit: 28a7966dd248affd9b6099340d59433f48d51d8a
+- validation: lint pass; build pass; db:validate pass; stale-text search pass
+- intake_route: milestone-derived
+- evidence_refs: `.servo/worktrack/gate-evidence.md`
+- completed_at: 2026-05-22
+- updated: 2026-05-22
