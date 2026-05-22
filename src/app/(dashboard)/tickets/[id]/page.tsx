@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS, MEMBER_ROLE_LABELS, TICKET_STATUS, TICKET_PRIORITY } from "@/types";
-import { ArrowLeft, Send, User as UserIcon } from "lucide-react";
+import { ArrowLeft, Download, Paperclip, Send, Trash2, Upload, User as UserIcon } from "lucide-react";
 
 type TicketDetail = {
   id: string;
@@ -34,6 +34,26 @@ type User = {
   username: string;
 };
 
+type CurrentUser = User & {
+  role: string;
+};
+
+type TicketAttachment = {
+  id: string;
+  filename: string;
+  fileUrl: string;
+  fileSize: number;
+  mimeType: string;
+  createdAt: string;
+  user: { id: string; displayName: string; avatarUrl: string | null };
+};
+
+function formatFileSize(bytes: number) {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
+}
+
 export default function TicketDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -41,11 +61,17 @@ export default function TicketDetailPage() {
 
   const [ticket, setTicket] = useState<TicketDetail | null>(null);
   const [users, setUsers] = useState<User[]>([]);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const [attachments, setAttachments] = useState<TicketAttachment[]>([]);
   const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState("");
   const [submittingComment, setSubmittingComment] = useState(false);
   const [showAddMember, setShowAddMember] = useState(false);
   const [newMemberId, setNewMemberId] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadingAttachment, setUploadingAttachment] = useState(false);
+  const [deletingAttachmentId, setDeletingAttachmentId] = useState<string | null>(null);
+  const [attachmentError, setAttachmentError] = useState("");
 
   const fetchTicket = useCallback(async () => {
     const res = await fetch(`/api/tickets/${ticketId}`);
@@ -56,13 +82,23 @@ export default function TicketDetailPage() {
     setLoading(false);
   }, [ticketId]);
 
+  const fetchAttachments = useCallback(async () => {
+    const res = await fetch(`/api/tickets/${ticketId}/attachments`);
+    if (res.ok) {
+      const data = await res.json();
+      setAttachments(data.attachments || []);
+    }
+  }, [ticketId]);
+
   useEffect(() => {
     let cancelled = false;
 
     async function load() {
-      const [ticketRes, usersRes] = await Promise.all([
+      const [ticketRes, usersRes, meRes, attachmentsRes] = await Promise.all([
         fetch(`/api/tickets/${ticketId}`),
         fetch("/api/users"),
+        fetch("/api/auth/me"),
+        fetch(`/api/tickets/${ticketId}/attachments`),
       ]);
 
       if (cancelled) return;
@@ -77,6 +113,16 @@ export default function TicketDetailPage() {
         setUsers(data.users || []);
       }
 
+      if (meRes.ok) {
+        const data = await meRes.json();
+        setCurrentUser(data.user);
+      }
+
+      if (attachmentsRes.ok) {
+        const data = await attachmentsRes.json();
+        setAttachments(data.attachments || []);
+      }
+
       setLoading(false);
     }
 
@@ -86,6 +132,52 @@ export default function TicketDetailPage() {
       cancelled = true;
     };
   }, [ticketId]);
+
+  async function handleUploadAttachment(e: React.FormEvent) {
+    e.preventDefault();
+    if (!selectedFile) return;
+
+    setUploadingAttachment(true);
+    setAttachmentError("");
+
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    const res = await fetch(`/api/tickets/${ticketId}/attachments`, {
+      method: "POST",
+      body: formData,
+    });
+
+    if (res.ok) {
+      setSelectedFile(null);
+      const input = document.getElementById("attachment-file") as HTMLInputElement | null;
+      if (input) input.value = "";
+      await fetchAttachments();
+    } else {
+      const data = await res.json().catch(() => ({ error: "附件上传失败" }));
+      setAttachmentError(data.error || "附件上传失败");
+    }
+
+    setUploadingAttachment(false);
+  }
+
+  async function handleDeleteAttachment(attachmentId: string) {
+    setDeletingAttachmentId(attachmentId);
+    setAttachmentError("");
+
+    const res = await fetch(`/api/tickets/${ticketId}/attachments?attachmentId=${attachmentId}`, {
+      method: "DELETE",
+    });
+
+    if (res.ok) {
+      await fetchAttachments();
+    } else {
+      const data = await res.json().catch(() => ({ error: "附件删除失败" }));
+      setAttachmentError(data.error || "附件删除失败");
+    }
+
+    setDeletingAttachmentId(null);
+  }
 
   async function handleAddComment(e: React.FormEvent) {
     e.preventDefault();
@@ -267,6 +359,85 @@ export default function TicketDetailPage() {
 
         {/* Right: Info sidebar */}
         <div className="space-y-6">
+          {/* Attachments */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Paperclip className="w-4 h-4" />
+                附件 ({attachments.length})
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <form onSubmit={handleUploadAttachment} className="space-y-3">
+                <div className="space-y-2">
+                  <Label htmlFor="attachment-file" className="text-xs text-gray-500">
+                    选择附件
+                  </Label>
+                  <input
+                    id="attachment-file"
+                    aria-label="选择附件"
+                    type="file"
+                    className="block w-full text-sm file:mr-3 file:h-8 file:rounded-md file:border file:border-input file:bg-background file:px-3 file:text-sm"
+                    onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
+                  />
+                  <p className="text-xs text-gray-400">支持图片、PDF、Office、ZIP、TXT，单个文件不超过 10MB。</p>
+                </div>
+                <Button type="submit" size="sm" disabled={!selectedFile || uploadingAttachment}>
+                  <Upload className="w-4 h-4" />
+                  {uploadingAttachment ? "上传中..." : "上传附件"}
+                </Button>
+              </form>
+
+              {attachmentError && (
+                <p className="text-sm text-red-600" role="alert">{attachmentError}</p>
+              )}
+
+              <div className="space-y-3">
+                {attachments.map((attachment) => {
+                  const canDelete =
+                    currentUser?.role === "admin" || currentUser?.id === attachment.user.id;
+
+                  return (
+                    <div key={attachment.id} className="rounded-md border p-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <a
+                            href={`/api/tickets/${ticketId}/attachments/${attachment.id}/download`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="flex items-center gap-2 text-sm font-medium hover:underline"
+                            aria-label={`下载 ${attachment.filename}`}
+                          >
+                            <Download className="w-4 h-4 shrink-0" />
+                            <span className="truncate">{attachment.filename}</span>
+                          </a>
+                          <p className="mt-1 text-xs text-gray-500">
+                            {formatFileSize(attachment.fileSize)} · {attachment.user.displayName}
+                          </p>
+                        </div>
+                        {canDelete && (
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            aria-label={`删除 ${attachment.filename}`}
+                            disabled={deletingAttachmentId === attachment.id}
+                            onClick={() => handleDeleteAttachment(attachment.id)}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+                {attachments.length === 0 && (
+                  <p className="text-gray-400 text-sm">暂无附件</p>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Status actions */}
           <Card>
             <CardHeader>

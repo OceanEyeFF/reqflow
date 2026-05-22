@@ -1,8 +1,8 @@
 ---
 title: "Plan / Task Queue"
 artifact_type: "worktrack-plan-task-queue"
-worktrack_id: "WT-20260522-015-ms002-final-handoff-refresh"
-updated: "2026-05-22"
+worktrack_id: "WT-20260522-007-attachment-end-to-end-validation"
+updated: "2026-05-23"
 owner: "servo-kernel"
 ---
 
@@ -10,24 +10,27 @@ owner: "servo-kernel"
 
 ## Metadata
 
-- worktrack_id: WT-20260522-015-ms002-final-handoff-refresh
-- updated: 2026-05-22
+- worktrack_id: WT-20260522-007-attachment-end-to-end-validation
+- updated: 2026-05-23
 - current_phase: verifying
 - contract_ref: worktrack/contract.md
 - queue_status: completed
 
 ## Task List
 
-1. [x] Identify stale handoff current-worktrack wording.
-2. [x] Update operator-facing handoff docs to MS-002 closeout state.
-3. [x] Run validation and stale-text checks.
-4. [x] Update gate evidence and close if all criteria pass.
+1. [x] Inspect existing attachment API, Prisma model, and ticket detail UI gap.
+2. [x] Add ticket access checks and private authorized download path for attachments.
+3. [x] Add ticket detail attachment upload/list/download/delete UI.
+4. [x] Extend smoke coverage with upload, authorized download, delete, and unauthenticated API rejection.
+5. [x] Run lint/build/db validation/migration/smoke and review screenshots.
+6. [x] Update gate evidence for closeout.
 
 ## Current Next Action
 
 ### Control Signal
-- selected_next_action: gate-ms002-final-handoff-refresh
-- selection_reason: Handoff freshness fix is updated and ready for validation evidence.
+
+- selected_next_action: gate-attachment-end-to-end-validation
+- selection_reason: Implementation and validation are complete; worktrack is ready for review and closeout.
 
 ## Readiness
 
