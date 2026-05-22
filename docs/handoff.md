@@ -5,7 +5,7 @@
 **项目名称**: ReqFlow - 轻量级公司内部工单需求协作系统  
 **仓库路径**: `E:\repos\personal\reqflow`  
 **Harness 基线分支**: `develop-aw`  
-**当前交接状态**: MiniMax 初始化代码已纳入 Harness 评估；验证环境、lint 质量基线和首个 runtime smoke 基线已建立。
+**当前交接状态**: MiniMax 初始化代码已纳入 Harness 评估；验证环境、lint 质量基线、runtime smoke 基线和首轮 dashboard/ticket flow 修复已建立。
 **技术栈**: Next.js 16.2.6 + React 19.2.4 + TypeScript + TailwindCSS v4 + Prisma 5 + SQLite + NextAuth v5 beta
 
 ---
@@ -13,16 +13,18 @@
 ## 已验证基线
 
 - 基线 worktree: `E:\repos\personal\reqflow\.worktrees\develop-aw`
-- 最新已验证业务 checkpoint: `462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe`
-- 最新 Harness repo-refresh checkpoint: `462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe`
+- 最新已验证业务 checkpoint: `41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8`
+- 最新 Harness repo-refresh checkpoint: `73d596f`
 - 当前 Milestone 计划基准: `80621eabd29e5d6232fa6f9db461ed0c1d036449`
 - 已完成 worktrack:
   - `WT-20260522-001-validation-environment-baseline`: 建立 `.env.example`、`db:validate`、Turbopack worktree root 和验证说明。
   - `WT-20260522-002-lint-quality-baseline`: 修复当前 ESLint errors/warnings，使 lint/build/db validate 在基线 worktree 通过。
   - `WT-20260522-003-docs-handoff-catch-up`: 将 operator-facing handoff 文档追平到已验证基线。
   - `runtime-dashboard-route-hotfix`: 修复 `/` 登录后仍显示 create-next-app 默认页的问题。
+  - `WT-20260522-004-runtime-smoke-suite`: 建立 Playwright runtime smoke 命令和截图证据。
+  - `WT-20260522-005-dashboard-ticket-flow-fixes`: 修复 admin 个人 scope 列表语义和新建工单优先级标签显示。
 - 当前 milestone: `MS-20260522-002` - Runtime Usability And Smoke Acceptance。
-- 当前 worktrack: `WT-20260522-004-runtime-smoke-suite` - 建立 Playwright runtime smoke 命令和截图证据。
+- 当前 worktrack: `WT-20260522-006-runtime-docs-catch-up` - 追平 runtime smoke 和本地运行边界文档。
 
 ---
 
@@ -84,16 +86,18 @@ npm run smoke
 
 - `/login` 使用 `admin/admin123` 登录。
 - 登录后进入 `/` 工作台。
-- Dashboard tab 切换到“我发起的”并打开示例工单。
+- Dashboard 默认“待我处理”显示 0 和空列表。
+- Dashboard tab 切换到“我发起的”并显示示例工单。
 - 工单详情页加载评论、状态区、详情区和协作者区。
 - `/tickets` 列表页切换到“全部工单”并显示示例工单。
-- `/tickets/new` 新建工单页面可达。
+- `/tickets/new` 新建工单页面可达，优先级下拉显示中文标签并保留内部值。
 - 点击“退出”返回登录页。
 
-当前 smoke 截图 sanity check 暴露但未在本 worktrack 修复的产品层问题：
+已由 `WT-20260522-005-dashboard-ticket-flow-fixes` 修复并纳入 smoke 断言：
 
-- Dashboard 卡片显示“待我处理”为 0，但默认列表区域显示“待我处理 (1)”且出现示例工单；需要在 `WT-20260522-005-dashboard-ticket-flow-fixes` 处理中核对 stats 与 ticket scope 过滤。
-- 新建工单页“优先级”下拉显示内部值 `low`，而不是中文标签；建议同样纳入 `WT-20260522-005` 的 dashboard/ticket flow 修复范围。
+- Admin 访问个人 scope 时不再绕过 scope 过滤；只有显式 `scope=all` 才查看全部工单。
+- 未知 ticket scope 默认回到 `assigned_to_me`，避免意外宽读。
+- 新建工单页“优先级”下拉显示 `低 / 中 / 高 / 紧急`，提交值仍为内部枚举值。
 
 ---
 
@@ -201,4 +205,4 @@ cd .worktrees/WT-xxxx
 ---
 
 *交接更新时间: 2026-05-22*  
-*交接来源: Harness `WT-20260522-004-runtime-smoke-suite`*
+*交接来源: Harness `WT-20260522-006-runtime-docs-catch-up`*
