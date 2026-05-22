@@ -2,95 +2,147 @@
 
 ## 项目概览
 
-**项目名称**: ReqFlow - 轻量级公司内部工单需求协作系统
-**仓库路径**: `E:\repos\personal\reqflow`
-**当前分支**: `develop`
-**技术栈**: Next.js 16 + TypeScript + TailwindCSS + Prisma 5 + SQLite + NextAuth
+**项目名称**: ReqFlow - 轻量级公司内部工单需求协作系统  
+**仓库路径**: `E:\repos\personal\reqflow`  
+**Harness 基线分支**: `develop-aw`  
+**当前交接状态**: MiniMax 初始化代码已纳入 Harness 评估；验证环境和 lint 质量基线已建立。  
+**技术栈**: Next.js 16.2.6 + React 19.2.4 + TypeScript + TailwindCSS v4 + Prisma 5 + SQLite + NextAuth v5 beta
 
 ---
 
-## 已完成的工作
+## 已验证基线
 
-### 1. Git 环境
-- ✅ `master` 分支（初始空提交）
-- ✅ `develop` 分支（已合并 scaffold 代码）
-- ✅ 开发规范：所有代码走 `feature/<name>` worktree，完成后合并回 develop
+- 基线 worktree: `E:\repos\personal\reqflow\.worktrees\develop-aw`
+- 最新已验证业务 checkpoint: `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`
+- 最新 Harness repo-refresh checkpoint: `b62e4b06266edb0d9441692c9333d67e3b2de5a5`
+- 已完成 worktrack:
+  - `WT-20260522-001-validation-environment-baseline`: 建立 `.env.example`、`db:validate`、Turbopack worktree root 和验证说明。
+  - `WT-20260522-002-lint-quality-baseline`: 修复当前 ESLint errors/warnings，使 lint/build/db validate 在基线 worktree 通过。
+- 当前 milestone: `MS-20260522-001` - Establish Verifiable Governance Baseline。
 
-### 2. 项目脚手架
-- ✅ Next.js 16 初始化（TypeScript, TailwindCSS, ESLint）
-- ✅ Prisma 5 + SQLite 配置
-- ✅ NextAuth v5 (beta) 配置（credentials provider）
-- ✅ 基础 UI 组件（Button, Badge, Card, Input, Label, Textarea）
+---
 
-### 3. 数据模型 (Prisma Schema)
-- ✅ `User` - 用户表
-- ✅ `Ticket` - 工单表
-- ✅ `TicketMember` - 工单协作者表
-- ✅ `TicketComment` - 工单评论表
-- ✅ `TicketLog` - 操作日志表
-- ✅ NextAuth 适配器（Account, Session, VerificationToken）
+## 启动项目
 
-### 4. REST API
-- ✅ `GET/POST /api/tickets` - 工单列表 + 创建
-- ✅ `GET/PATCH/DELETE /api/tickets/[id]` - 工单详情 + 更新
-- ✅ `GET/POST /api/tickets/[id]/comments` - 评论 CRUD
-- ✅ `GET/POST/DELETE /api/tickets/[id]/members` - 协作者管理
-- ✅ `GET /api/tickets/[id]/logs` - 操作日志
-- ✅ `GET /api/users` - 用户列表
-- ✅ `GET /api/auth/me` - 当前用户信息
+在 Harness 管理的 worktree 根目录执行：
 
-### 5. 页面
-- ✅ `/login` - 登录页
-- ✅ `/` (dashboard layout) - 工作台首页（统计卡片 + 最近工单）
-- ✅ `/tickets` - 工单列表页（支持 scope/status/priority/keyword 筛选）
-- ✅ `/tickets/new` - 新建工单页
-- ✅ `/tickets/[id]` - 工单详情页（状态修改、评论、协作者管理、操作日志）
+```powershell
+cd E:\repos\personal\reqflow\.worktrees\develop-aw
+npm install
+Copy-Item .env.example .env
+npm run db:validate
+npm run db:seed
+npm run dev
+```
 
-### 6. 测试数据
-- ✅ `prisma/seed.ts` 已执行，预置 3 个用户 + 1 条示例工单
+打开 `http://localhost:3000/login`。
 
-**测试账号**:
+## 测试账号
+
 | 用户名 | 密码 | 角色 |
-|--------|------|------|
+| --- | --- | --- |
 | admin | admin123 | 管理员 |
 | manager | manager123 | 项目经理 |
 | user | user123 | 普通用户 |
 
 ---
 
-## 待完成的工作（按优先级）
+## 验证命令
 
-### 高优先级
-1. **附件上传功能** - Phase 7
-2. **通知系统** - Phase 8（站内通知 / 邮件通知）
-3. **移动端适配** - 响应式优化
+从当前 worktree 根目录执行：
 
-### 中优先级
-4. **用户管理页面** - 管理员可见的用户 CRUD
-5. **工单标签功能** - 给工单打标签分类
-6. **工单搜索** - 全文搜索
+```powershell
+npm run lint
+npm run build
+npm run db:validate
+```
 
-### 低优先级（未来扩展）
-7. **统计报表** - 工单完成率、平均处理时间等
-8. **飞书/钉钉集成** - 消息推送
-9. **数据库迁移** - 从 SQLite 迁移到 PostgreSQL
+已验证状态：
+
+- `npm run lint`: 通过，0 errors。
+- `npm run build`: 通过，Next.js 16.2.6 production build 和 TypeScript check 通过。
+- `npm run db:validate`: 通过；需要先把 `.env.example` 复制为被忽略的 `.env`。
+
+说明：
+
+- `.env.example` 只包含本地开发占位值，不包含 secret。
+- Next.js 16 默认使用 Turbopack，本仓库在 `next.config.ts` 中设置 `turbopack.root = process.cwd()`，用于让嵌套 worktree 从当前 worktree 解析依赖。
+- 如果新 worktree 没有本地 `node_modules`，先运行 `npm install`，否则 build 可能无法从 worktree 正确解析 Next.js package。
 
 ---
 
-## 启动项目
+## 当前功能面
 
-```bash
-# 在项目根目录（已切换到 develop）
-cd E:\repos\personal\reqflow
+### 认证和用户
 
-# 安装依赖
-npm install
+- Credentials 登录，入口为 `/login`。
+- NextAuth v5 beta 配置在 `src/auth/index.ts`。
+- 当前用户 API: `GET /api/auth/me`。
+- 用户列表 API: `GET /api/users`。
+- 用户角色: `admin`, `manager`, `user`。
 
-# 启动开发服务器
-npm run dev
+### 工单核心
 
-# 打开 http://localhost:3000/login
-# 使用 admin/admin123 登录
+- 页面:
+  - `/` - 工作台首页，展示统计和最近工单。
+  - `/tickets` - 工单列表，支持 scope/status/priority/keyword 筛选。
+  - `/tickets/new` - 新建工单。
+  - `/tickets/[id]` - 工单详情，支持状态、负责人、优先级、评论和协作者操作。
+- API:
+  - `GET/POST /api/tickets`
+  - `GET/PATCH/DELETE /api/tickets/[id]`
+  - `GET /api/tickets/stats`
+  - `GET/POST /api/tickets/[id]/comments`
+  - `GET /api/tickets/[id]/logs`
+  - `GET/POST/DELETE/PATCH /api/tickets/[id]/members`
+
+### 附件和通知
+
+- 附件数据模型和 API 已存在:
+  - Prisma model: `TicketAttachment`
+  - API: `GET/POST/DELETE /api/tickets/[id]/attachments`
+- 通知数据模型和 API 已存在:
+  - Prisma model: `Notification`
+  - API: `GET /api/notifications`
+  - API: `PATCH /api/notifications/[id]`
+  - API: `POST /api/notifications/read-all`
+- 当前交接只确认代码和 schema 中的已实现面，不声明附件上传存储策略或通知交互体验已经达到生产要求。
+
+---
+
+## 数据模型
+
+Prisma schema 当前包含：
+
+- `User`
+- `Account`
+- `Session`
+- `VerificationToken`
+- `Ticket`
+- `TicketMember`
+- `TicketComment`
+- `TicketLog`
+- `TicketAttachment`
+- `Notification`
+
+SQLite 开发数据库和 migrations 位于 `prisma/`。修改 `prisma/schema.prisma` 后需要评估 migration、seed 和验证命令影响。
+
+---
+
+## 工作流和治理规则
+
+- 不要直接修改主 checkout。
+- Harness 管理基线为 `develop-aw`。
+- 新工作应从 `develop-aw` 创建专用 worktrack branch 和 worktree，验证通过后再合并回 `develop-aw`。
+- Next.js 相关代码或配置改动前，必须读取安装包中的相关文档：`node_modules/next/dist/docs/`。
+- 当前仓库没有配置 `origin` remote，不能依赖远端 fetch/PR 流程，除非先补齐 remote。
+- 数据库二进制文件和本地上传文件不应被无关 worktrack 修改。
+
+示例：
+
+```powershell
+git worktree add .worktrees/WT-xxxx -b worktrack/WT-xxxx develop-aw
+cd .worktrees/WT-xxxx
 ```
 
 ---
@@ -98,46 +150,29 @@ npm run dev
 ## 关键文件路径
 
 | 文件 | 说明 |
-|------|------|
+| --- | --- |
+| `README.md` | 本地启动、验证命令和 Harness 工作流入口 |
+| `.env.example` | 本地开发环境变量示例 |
+| `next.config.ts` | Next.js/Turbopack worktree root 配置 |
 | `prisma/schema.prisma` | 数据库模型定义 |
-| `prisma/dev.db` | SQLite 数据库文件 |
-| `src/auth/index.ts` | NextAuth 配置 |
+| `prisma/seed.ts` | 本地 seed 数据和测试账号 |
+| `src/auth/index.ts` | NextAuth credentials 配置 |
 | `src/lib/prisma.ts` | Prisma Client 单例 |
-| `src/types/index.ts` | 常量定义（状态、优先级等） |
-| `src/app/(dashboard)/` | 所有需要登录的页面 |
+| `src/types/index.ts` | 工单状态、优先级、类型、角色常量 |
+| `src/app/(dashboard)/` | 登录后页面 |
+| `src/app/api/` | App Router route handlers |
+| `.servo/` | Harness 控制面、milestone、worktrack 和 repo 状态 |
 
 ---
 
-## 继续开发的建议
+## 已知风险和后续方向
 
-1. **使用 worktree 工作流**：
-   ```bash
-   git fetch origin
-   git worktree add .worktrees/feature-xxx -b feature/xxx origin/develop
-   cd .worktrees/feature-xxx
-   # 开发完成后合并回 develop
-   ```
-
-2. **接下来的 Phase**：
-   - Phase 6: 协作者功能（已实现后端，前端可完善）
-   - Phase 7: 附件上传（需要增加文件存储）
-   - Phase 8: 通知系统
-
-3. **数据库变更**：修改 `prisma/schema.prisma` 后运行：
-   ```bash
-   npx prisma migrate dev --name <migration_name>
-   ```
+- 尚无专用 unit/e2e 测试套件；当前 baseline 主要依赖 lint、build、Prisma validate 和代码审查。
+- SQLite 和本地文件上传适合本地开发，不代表生产数据库和文件存储策略已经完成。
+- NextAuth v5 beta 和 Next.js 16 行为对版本敏感，后续改动必须以安装文档和实际验证为准。
+- 用户管理页面、标签、全文搜索、统计报表、外部消息集成和生产化部署仍属于后续 worktrack，不应混入治理基线 worktrack。
 
 ---
 
-## 已知问题 / 注意事项
-
-1. **TailwindCSS v4**: 当前使用 TailwindCSS v4，有一些破坏性变更（如 `@apply border-border` 需要改成直接写 CSS 变量）
-2. **NextAuth v5**: 使用 beta 版本，API 有变化，需要关注官方更新
-3. **Prisma v5**: 已从 v7 回退到 v5，以获得更好的稳定性
-4. **SQLite 限制**: SQLite 不适合生产环境并发写入，后续考虑迁移到 PostgreSQL
-
----
-
-*交接时间: 2026-05-17 10:05 (UTC+8)*
-*交接人: Mavis (mavis team orchestrator)*
+*交接更新时间: 2026-05-22*  
+*交接来源: Harness `MS-20260522-001` 文档追平 worktrack*

@@ -1,7 +1,7 @@
 ---
 title: "Plan / Task Queue"
 artifact_type: "worktrack-plan-task-queue"
-worktrack_id: "WT-20260522-002-lint-quality-baseline"
+worktrack_id: "WT-20260522-003-docs-handoff-catch-up"
 updated: "2026-05-22"
 owner: "servo-kernel"
 ---
@@ -10,7 +10,7 @@ owner: "servo-kernel"
 
 ## Metadata
 
-- worktrack_id: WT-20260522-002-lint-quality-baseline
+- worktrack_id: WT-20260522-003-docs-handoff-catch-up
 - updated: 2026-05-22
 - current_phase: closing
 - contract_ref: worktrack/contract.md
@@ -18,36 +18,36 @@ owner: "servo-kernel"
 
 ## Task List
 
-1. [x] Reproduce lint failures in the worktrack worktree.
-2. [x] Apply behavior-preserving lint fixes.
-3. [x] Re-run lint, build, and Prisma validation.
+1. [x] Identify stale handoff documentation against verified code and Harness baseline.
+2. [x] Update operator-facing docs with verified facts only.
+3. [x] Run validation commands and stale-text checks.
 4. [x] Update gate evidence and close if all criteria pass.
 
 ## Current Next Action
 
 ### Control Signal
-- selected_next_action: close-lint-quality-baseline
-- selection_reason: Lint, build, and Prisma validation now pass.
+- selected_next_action: close-docs-handoff-catch-up
+- selection_reason: Handoff docs are refreshed and validation passed.
 
 ### Supporting Detail
-- selected_next_action_id: WT-20260522-002-T4
-- selected_next_action: Close lint quality baseline after verified evidence.
+- selected_next_action_id: WT-20260522-003-T4
+- selected_next_action: Close docs handoff catch-up after verified evidence.
 - selection_reason: All worktrack acceptance criteria are satisfied.
 
 ## Dispatch Handoff Packet
 
-- task: Fix current lint errors.
-- goal_for_this_round: Make `npm run lint` exit zero.
-- node_type: bugfix
-- gate_criteria_for_this_round: implementation + validation + policy
-- baseline_policy: commit-on-bugfix-branch, merge required
-- constraints_for_this_round: mechanical lint fixes only; no feature scope; no DB schema change
-- acceptance_criteria_for_this_round: lint pass; build pass; Prisma validate pass
-- verification_requirements: `npm run lint`; `npm run build`; `npm run db:validate`
+- task: Refresh operator-facing handoff docs.
+- goal_for_this_round: Make docs match verified `develop-aw` baseline facts.
+- node_type: docs
+- gate_criteria_for_this_round: validation + policy
+- baseline_policy: commit-on-docs-branch, merge required
+- constraints_for_this_round: docs-only; no unverified product claims; no code changes
+- acceptance_criteria_for_this_round: stale branch/phase claims removed; validation commands documented; current route/model inventory reflected
+- verification_requirements: `npm run lint`; `npm run build`; `npm run db:validate`; stale-text search
 - runtime_dispatch_mode: auto
 - done_signal: gate evidence ready for closeout
-- required_context: lint output, affected source files, `.servo/worktrack/contract.md`
-- return_to_schedule_if: lint fixes require product redesign or scope expansion
+- required_context: `docs/handoff.md`, README, Prisma schema, route list, `.servo/repo/snapshot-status.md`
+- return_to_schedule_if: docs update requires product implementation or goal changes
 
 ## Readiness
 
@@ -58,4 +58,4 @@ owner: "servo-kernel"
 ## Notes
 
 - Current carrier fallback is allowed if no SubAgent dispatch shell is available.
-- Verification passed on 2026-05-22: `npm run lint`, `npm run build`, `npm run db:validate`.
+- Verification passed on 2026-05-22: `npm run lint`, `npm run build`, `npm run db:validate`, and stale-text search.
