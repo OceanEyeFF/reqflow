@@ -15,6 +15,10 @@
 /playwright-report/
 /test-results/
 
+# local uploaded files
+/public/uploads/
+/storage/uploads/
+
 # next.js
 /.next/
 /out/

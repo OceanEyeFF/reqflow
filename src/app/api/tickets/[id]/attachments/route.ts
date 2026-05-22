@@ -4,8 +4,10 @@ import { existsSync } from "fs";
 import path from "path";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { canAccessTicket } from "@/lib/ticket-access";
 
 const ALLOWED_MIME_TYPES = [
+  "text/plain",
   "image/jpeg",
   "image/png",
   "image/gif",
@@ -18,9 +20,10 @@ const ALLOWED_MIME_TYPES = [
   "application/zip",
 ];
 
-const ALLOWED_EXTENSIONS = [".doc", ".docx", ".xls", ".xlsx", ".zip"];
+const ALLOWED_EXTENSIONS = [".txt", ".doc", ".docx", ".xls", ".xlsx", ".zip"];
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+const UPLOADS_DIR = path.join(process.cwd(), "storage", "uploads");
 
 function isAllowedType(mimeType: string, filename: string): boolean {
   if (ALLOWED_MIME_TYPES.includes(mimeType)) {
@@ -31,11 +34,14 @@ function isAllowedType(mimeType: string, filename: string): boolean {
 }
 
 async function ensureUploadsDir() {
-  const uploadsDir = path.join(process.cwd(), "public", "uploads");
-  if (!existsSync(uploadsDir)) {
-    await mkdir(uploadsDir, { recursive: true });
+  if (!existsSync(UPLOADS_DIR)) {
+    await mkdir(UPLOADS_DIR, { recursive: true });
   }
-  return uploadsDir;
+  return UPLOADS_DIR;
+}
+
+function getStoredFilePath(fileUrl: string) {
+  return path.join(UPLOADS_DIR, path.basename(fileUrl));
 }
 
 export async function GET(
@@ -53,6 +59,10 @@ export async function GET(
   const ticket = await prisma.ticket.findUnique({ where: { id } });
   if (!ticket) {
     return Response.json({ error: "工单不存在" }, { status: 404 });
+  }
+
+  if (!(await canAccessTicket(id, session.user.id, session.user.role))) {
+    return Response.json({ error: "无权查看该工单附件" }, { status: 403 });
   }
 
   const attachments = await prisma.ticketAttachment.findMany({
@@ -81,6 +91,10 @@ export async function POST(
   const ticket = await prisma.ticket.findUnique({ where: { id } });
   if (!ticket) {
     return Response.json({ error: "工单不存在" }, { status: 404 });
+  }
+
+  if (!(await canAccessTicket(id, session.user.id, session.user.role))) {
+    return Response.json({ error: "无权上传该工单附件" }, { status: 403 });
   }
 
   let formData: FormData;
@@ -122,23 +136,27 @@ export async function POST(
   const buffer = Buffer.from(await file.arrayBuffer());
   await writeFile(filePath, buffer);
 
-  // Save to database
   const fileUrl = `/uploads/${uniqueFilename}`;
-  const attachment = await prisma.ticketAttachment.create({
-    data: {
-      ticketId: id,
-      userId: session.user.id,
-      filename: file.name,
-      fileUrl,
-      fileSize: file.size,
-      mimeType: file.type || "application/octet-stream",
-    },
-    include: {
-      user: { select: { id: true, displayName: true, avatarUrl: true } },
-    },
-  });
+  try {
+    const attachment = await prisma.ticketAttachment.create({
+      data: {
+        ticketId: id,
+        userId: session.user.id,
+        filename: file.name,
+        fileUrl,
+        fileSize: file.size,
+        mimeType: file.type || "application/octet-stream",
+      },
+      include: {
+        user: { select: { id: true, displayName: true, avatarUrl: true } },
+      },
+    });
 
-  return Response.json({ attachment }, { status: 201 });
+    return Response.json({ attachment }, { status: 201 });
+  } catch {
+    await unlink(filePath).catch(() => undefined);
+    return Response.json({ error: "附件保存失败" }, { status: 500 });
+  }
 }
 
 export async function DELETE(
@@ -170,13 +188,17 @@ export async function DELETE(
     return Response.json({ error: "附件不属于该工单" }, { status: 400 });
   }
 
+  if (!(await canAccessTicket(id, session.user.id, session.user.role))) {
+    return Response.json({ error: "无权访问该工单附件" }, { status: 403 });
+  }
+
   // Only the uploader can delete their own attachments (or admin)
   if (attachment.userId !== session.user.id && session.user.role !== "admin") {
     return Response.json({ error: "无权删除该附件" }, { status: 403 });
   }
 
   // Delete physical file
-  const filePath = path.join(process.cwd(), "public", attachment.fileUrl);
+  const filePath = getStoredFilePath(attachment.fileUrl);
   try {
     await unlink(filePath);
   } catch {
