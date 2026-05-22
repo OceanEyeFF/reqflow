@@ -9,10 +9,12 @@ test("authenticated user can reach core ticket workflow", async ({ page }) => {
   await page.getByRole("button", { name: "登录" }).click();
 
   await expect(page.getByRole("heading", { name: "工作台" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "待我处理 (0)" })).toBeVisible();
+  await expect(page.getByText("暂无工单")).toBeVisible();
   await page.screenshot({ path: "test-results/smoke/01-dashboard.png", fullPage: true });
 
   await page.getByRole("button", { name: "我发起的" }).click();
-  await expect(page.getByRole("heading", { name: /我发起的 \(\d+\)/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "我发起的 (1)" })).toBeVisible();
   await expect(page.getByRole("link", { name: /用户登录页面样式优化/ })).toBeVisible();
 
   await page.getByRole("link", { name: /用户登录页面样式优化/ }).click();
@@ -29,6 +31,8 @@ test("authenticated user can reach core ticket workflow", async ({ page }) => {
   await page.getByRole("link", { name: "新建工单" }).first().click();
   await expect(page.getByRole("heading", { name: "新建工单" })).toBeVisible();
   await expect(page.getByLabel("标题 *")).toBeVisible();
+  await expect(page.getByLabel("优先级")).toHaveValue("medium");
+  await expect(page.getByLabel("优先级").locator("option:checked")).toHaveText("中");
   await page.screenshot({ path: "test-results/smoke/04-new-ticket.png", fullPage: true });
 
   await page.getByRole("button", { name: "退出" }).click();

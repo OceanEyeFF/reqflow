@@ -16,12 +16,19 @@ export async function GET(request: NextRequest) {
   const priority = searchParams.get("priority");
   const keyword = searchParams.get("keyword");
 
-  const isAdmin = session.user.role === "admin";
-
-  // Build where clause based on scope
+  // Build where clause based on scope. Admins can see all tickets only when
+  // explicitly requesting the "all" scope; personal scopes still mean personal.
   const whereClause: Prisma.TicketWhereInput = {};
 
-  if (!isAdmin && scope !== "all") {
+  if (scope === "all") {
+    if (session.user.role !== "admin") {
+      whereClause.OR = [
+        { creatorId: session.user.id },
+        { assigneeId: session.user.id },
+        { members: { some: { userId: session.user.id } } },
+      ];
+    }
+  } else {
     switch (scope) {
       case "assigned_to_me":
         whereClause.assigneeId = session.user.id;
@@ -31,6 +38,9 @@ export async function GET(request: NextRequest) {
         break;
       case "joined":
         whereClause.members = { some: { userId: session.user.id } };
+        break;
+      default:
+        whereClause.assigneeId = session.user.id;
         break;
     }
   }

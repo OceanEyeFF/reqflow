@@ -1,7 +1,7 @@
 ---
 title: "Gate Evidence"
 artifact_type: "worktrack-gate-evidence"
-worktrack_id: "WT-20260522-004-runtime-smoke-suite"
+worktrack_id: "WT-20260522-005-dashboard-ticket-flow-fixes"
 updated: "2026-05-22"
 owner: "servo-kernel"
 ---
@@ -10,10 +10,10 @@ owner: "servo-kernel"
 
 ## Metadata
 
-- worktrack_id: WT-20260522-004-runtime-smoke-suite
+- worktrack_id: WT-20260522-005-dashboard-ticket-flow-fixes
 - updated: 2026-05-22
 - gate_round: 1
-- required_evidence_lanes: validation, policy
+- required_evidence_lanes: implementation, validation, policy
 - review_profile: standard
 
 ## Review Lane
@@ -24,16 +24,16 @@ owner: "servo-kernel"
 - four_lane_dispatch_status: current-carrier-fallback
 - confidence: high
 - ready_for_gate: true
-- residual_risks: The smoke confirms core navigation on local seed data, not full production readiness or exhaustive feature coverage.
+- residual_risks: Admin `all` scope intentionally still exposes all tickets; broader authorization policy is out of this worktrack.
 
 ### Supporting Detail
 - input_ref: `.servo/worktrack/contract.md`
 - freshness: current
-- static_semantic_review: pass; smoke harness is isolated to `playwright.config.ts` and `tests/smoke/core-workflow.spec.ts`, with `package.json` script and ignored report outputs.
-- test_review: pass; smoke uses role/label selectors where stable and records screenshots for dashboard, ticket detail, ticket list, and new-ticket form.
-- code_review: pass; final review corrected a documentation checkpoint wording issue so `80621ea` is described as the milestone planning baseline, not as a repo-refresh checkpoint.
-- project_security_review: pass; no secrets were added, local `AUTH_SECRET` is provided only through Playwright webServer env, and `.env` remains ignored.
-- complexity_performance_review: pass; single Chromium/Chrome project, serial smoke, no broad fixture or product-code coupling.
+- static_semantic_review: pass; `GET /api/tickets` now applies personal scope semantics to admins unless `scope=all` is explicitly requested, and unknown scopes default to assigned-to-me.
+- test_review: pass; smoke now asserts default dashboard empty assigned list, created list count 1, and priority select value/visible label.
+- code_review: pass; final review found and fixed the unknown-scope fallback risk in the same API branch.
+- project_security_review: pass; the default branch now avoids accidental broad reads on invalid scope values for all roles.
+- complexity_performance_review: pass; changes remain small and do not add extra database round trips.
 - four_lane_fallback_reason: no SubAgent dispatch shell proven; current-carrier fallback preserved the dispatch package scope.
 - missing_evidence: N/A
 - upstream_constraint_signals: `.servo/worktrack/contract.md#Constraints`
@@ -44,7 +44,7 @@ owner: "servo-kernel"
 ### Control Signal
 - confidence: high
 - ready_for_gate: true
-- residual_risks: Playwright managed Chromium download failed in this network environment, so the verified smoke path uses installed Chrome channel.
+- residual_risks: Smoke uses seed data and installed Chrome channel; broader browser matrix remains out of scope.
 
 ### Supporting Detail
 - input_ref: worktrack command probes and screenshot review on 2026-05-22
@@ -56,12 +56,9 @@ owner: "servo-kernel"
   - `npm run build`: pass, Next.js 16.2.6 production build and TypeScript check completed.
   - `$env:DATABASE_URL='file:./dev.db'; npm run db:validate`: pass, Prisma schema valid.
   - `npm run smoke`: pass, 1 Playwright test passed using installed Chrome channel.
-  - `npx playwright install chromium`: failed after repeated TLS reset; treated as environment download limitation, not product failure.
 - screenshot_evidence:
-  - `test-results/smoke/01-dashboard.png`: dashboard reachable after login; sanity issue found where stats/list count disagree.
-  - `test-results/smoke/02-ticket-detail.png`: ticket detail reachable with comments, status, details, and collaborator sections visible.
-  - `test-results/smoke/03-ticket-list.png`: ticket list reachable and example ticket visible.
-  - `test-results/smoke/04-new-ticket.png`: new-ticket form reachable; sanity issue found where priority select displays internal value.
+  - `test-results/smoke/01-dashboard.png`: dashboard assigned stat and list now both show 0/no tickets.
+  - `test-results/smoke/04-new-ticket.png`: priority select now displays user-facing `中` for the default medium value.
 - low_severity_absorption_applied: no
 
 ## Policy Lane
@@ -69,29 +66,29 @@ owner: "servo-kernel"
 ### Control Signal
 - confidence: high
 - ready_for_gate: true
-- residual_risks: Product defects found by smoke are routed to existing `WT-20260522-005-dashboard-ticket-flow-fixes` instead of being fixed in this test worktrack.
+- residual_risks: No database binary/schema mutation was made.
 
 ### Supporting Detail
-- input_ref: `AGENTS.md`, `.servo/goal-charter.md`, `.servo/milestone/MS-20260522-002.md`
+- input_ref: `AGENTS.md`, `.servo/goal-charter.md`, `.servo/milestone/MS-20260522-002.md`, installed Next.js docs under `node_modules/next/dist/docs/`
 - freshness: current
 - missing_evidence: N/A
-- upstream_constraint_signals: all changes occurred in worktree `WT-20260522-004-runtime-smoke-suite`; baseline branch remains `develop-aw`; scope stayed validation/docs only; no database binaries or uploads were intentionally changed.
+- upstream_constraint_signals: all changes occurred in worktree `WT-20260522-005-dashboard-ticket-flow-fixes`; baseline branch remains `develop-aw`; scope stayed dashboard/ticket runtime bugfix; Next.js local docs were read before code edits.
 - low_severity_absorption_applied: no
 
 ## Evidence Assessment
 
 ### Control Signal
-- node_type: test
-- applied_gate_criteria: validation + policy
+- node_type: bugfix
+- applied_gate_criteria: implementation + validation + policy
 - fallback_used: true
 - overall_confidence: high
-- overall_confidence_reason: The worktrack adds a repeatable smoke command, validates the core authenticated workflow in a real browser, records screenshots, and keeps discovered product fixes out of scope for WT-005.
+- overall_confidence_reason: Targeted code changes fix both smoke-discovered defects, add regression assertions, pass all validation commands, and keep scope within the active milestone.
 - freshness_blockers: N/A
 
 ### Supporting Detail
 - node_type_source: `.servo/goal-charter.md#Engineering Node Map`
-- diff_surface_summary: Added Playwright dev dependency, `smoke` script, Playwright config, core smoke spec, ignored Playwright outputs, ESLint ignores for Playwright artifacts, handoff smoke docs, and worktrack evidence updates.
-- git_diff_stat: 10 files changed before evidence closeout update.
+- diff_surface_summary: Updated ticket list API scope handling, new-ticket priority labels, smoke regression assertions, and worktrack evidence.
+- git_diff_stat: 6 files changed before evidence closeout update.
 
 ## Per-Surface Verdicts
 
@@ -102,9 +99,9 @@ owner: "servo-kernel"
 - low_severity_absorption_reason: N/A
 
 ### Supporting Detail
-- Implementation surface covers only test harness and docs, not product behavior.
+- Implementation surface covers ticket scope filtering and priority select labels.
 - Validation surface is supported by lint, build, Prisma validate, smoke pass, and screenshot review.
-- Policy surface is supported by worktree-only changes, Next.js installed docs review, and explicit routing of product defects to WT-005.
+- Policy surface is supported by worktree-only changes, installed Next.js docs review, and no schema/database binary mutation.
 
 ## Recommended Next Route
 
@@ -113,13 +110,8 @@ owner: "servo-kernel"
 - recommended_next_route: WorktrackScope.Close
 - approval_required: false
 - needs_programmer_approval: false
-- why: The runtime smoke suite satisfies the declared test-node acceptance criteria; product issues discovered by screenshots are already within the next planned bugfix worktrack.
-
-### Supporting Detail
-- approval_scope: N/A
-- approval_reason: N/A
+- why: The dashboard/ticket flow bugfix satisfies acceptance criteria and has fresh validation evidence.
 
 ## Follow-up Actions
 
 - Close and merge this worktrack into `develop-aw`, then refresh repo snapshot and milestone progress.
-- Carry screenshot-discovered dashboard/list count mismatch and new-ticket priority label issue into `WT-20260522-005-dashboard-ticket-flow-fixes`.

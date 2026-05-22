@@ -1,7 +1,7 @@
 ---
 title: "Plan / Task Queue"
 artifact_type: "worktrack-plan-task-queue"
-worktrack_id: "WT-20260522-004-runtime-smoke-suite"
+worktrack_id: "WT-20260522-005-dashboard-ticket-flow-fixes"
 updated: "2026-05-22"
 owner: "servo-kernel"
 ---
@@ -10,7 +10,7 @@ owner: "servo-kernel"
 
 ## Metadata
 
-- worktrack_id: WT-20260522-004-runtime-smoke-suite
+- worktrack_id: WT-20260522-005-dashboard-ticket-flow-fixes
 - updated: 2026-05-22
 - current_phase: verifying
 - contract_ref: worktrack/contract.md
@@ -18,37 +18,37 @@ owner: "servo-kernel"
 
 ## Task List
 
-1. [x] Inspect existing app routes, seed data, and installed Next.js/Playwright constraints relevant to runtime smoke.
-2. [x] Add the minimal smoke runner/test and npm script without changing product behavior.
-3. [x] Run validation commands and browser smoke; collect screenshots/log evidence.
-4. [x] Document the accepted smoke workflow and any runtime blockers routed to WT-005.
-5. [x] Update gate evidence for review, validation, and policy lanes.
+1. [x] Reproduce and localize dashboard scope/count mismatch and priority label leakage.
+2. [x] Apply the smallest behavior-preserving fixes in scoped client/API code.
+3. [x] Extend smoke assertions to guard the fixed behavior.
+4. [x] Run lint/build/db validate/smoke and inspect screenshots.
+5. [x] Update gate evidence and close if all criteria pass.
 
 ## Current Next Action
 
 ### Control Signal
-- selected_next_action: gate-runtime-smoke-suite
-- selection_reason: Smoke harness and docs are implemented; lint, build, db validate, and runtime smoke pass.
+- selected_next_action: gate-dashboard-ticket-flow-fixes
+- selection_reason: Implementation, regression smoke, screenshot review, and code review are complete.
 
 ### Supporting Detail
-- selected_next_action_id: WT-20260522-004-T5
-- selected_next_action: Run Gate for runtime smoke suite.
-- selection_reason: All planned queue items have produced evidence.
+- selected_next_action_id: WT-20260522-005-T5
+- selected_next_action: Run Gate for dashboard/ticket flow fixes.
+- selection_reason: All worktrack acceptance criteria have fresh evidence.
 
 ## Dispatch Handoff Packet
 
-- task: Add repeatable runtime smoke coverage.
-- goal_for_this_round: Establish a local browser-level smoke command for login and core ticket navigation.
-- node_type: test
-- gate_criteria_for_this_round: validation + policy
-- baseline_policy: commit-on-test-branch, merge required
-- constraints_for_this_round: validation-only; no broad product fixes; route runtime blockers to WT-005
-- acceptance_criteria_for_this_round: login/dashboard/tickets/new-ticket/logout smoke coverage or explicit blocker evidence; validation commands stay passing
-- verification_requirements: `npm run lint`; `npm run build`; `npm run db:validate`; `npm run smoke`; screenshots
+- task: Fix dashboard/ticket flow defects found by smoke.
+- goal_for_this_round: Make dashboard scope/list counts consistent and new-ticket priority labels user-facing.
+- node_type: bugfix
+- gate_criteria_for_this_round: implementation + validation + policy
+- baseline_policy: commit-on-bugfix-branch, merge required
+- constraints_for_this_round: targeted bugfix only; no schema/db binary changes; no broad redesign
+- acceptance_criteria_for_this_round: dashboard active tab count/list align; priority select shows Chinese labels; smoke assertions and screenshots prove both
+- verification_requirements: `npm run lint`; `npm run build`; `$env:DATABASE_URL='file:./dev.db'; npm run db:validate`; `npm run smoke`; screenshot sanity check
 - runtime_dispatch_mode: auto
 - done_signal: gate evidence ready for closeout
-- required_context: `.servo/worktrack/contract.md`, `package.json`, `playwright.config.ts`, `tests/smoke/core-workflow.spec.ts`, `docs/handoff.md`, browser smoke output
-- return_to_schedule_if: product defects require fixes outside smoke harness scope
+- required_context: `.servo/worktrack/contract.md`, `src/app/api/tickets/route.ts`, `src/app/(dashboard)/tickets/new/page.tsx`, `tests/smoke/core-workflow.spec.ts`, browser smoke output
+- return_to_schedule_if: product defects require scope beyond dashboard/ticket flow fixes
 
 ## Readiness
 
@@ -59,4 +59,3 @@ owner: "servo-kernel"
 ## Notes
 
 - Current carrier fallback was used because no SubAgent dispatch shell was proven in this runtime.
-- Playwright managed Chromium download failed due repeated TLS resets; smoke was verified with installed Chrome channel.

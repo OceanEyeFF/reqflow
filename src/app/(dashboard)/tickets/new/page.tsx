@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { TICKET_TYPE, TICKET_PRIORITY } from "@/types";
+import { TICKET_TYPE, TICKET_PRIORITY, PRIORITY_LABELS } from "@/types";
 
 type User = {
   id: string;
@@ -108,8 +108,8 @@ export default function NewTicketPage() {
                   value={form.priority}
                   onChange={(e) => setForm({ ...form, priority: e.target.value })}
                 >
-                  {Object.entries(TICKET_PRIORITY).map(([key, label]) => (
-                    <option key={key} value={key}>{label}</option>
+                  {Object.values(TICKET_PRIORITY).map((priority) => (
+                    <option key={priority} value={priority}>{PRIORITY_LABELS[priority]}</option>
                   ))}
                 </select>
               </div>
