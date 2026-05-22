@@ -1,7 +1,14 @@
 import { NextRequest } from "next/server";
+import { Prisma } from "@prisma/client";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { notifyTicketAssigned, notifyStatusChanged } from "@/lib/notifications";
+
+type TicketPatchBody = {
+  status?: string;
+  assigneeId?: string | null;
+  priority?: string;
+};
 
 export async function GET(
   request: NextRequest,
@@ -50,15 +57,15 @@ export async function PATCH(
   }
 
   const { id } = await params;
-  const body = await request.json();
+  const body = (await request.json()) as TicketPatchBody;
 
   const ticket = await prisma.ticket.findUnique({ where: { id } });
   if (!ticket) {
     return Response.json({ error: "工单不存在" }, { status: 404 });
   }
 
-  const updateData: any = {};
-  const logs: any[] = [];
+  const updateData: Prisma.TicketUncheckedUpdateInput = {};
+  const logs: Prisma.TicketLogCreateManyInput[] = [];
 
   // Handle status change
   if (body.status && body.status !== ticket.status) {

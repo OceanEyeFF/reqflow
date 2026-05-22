@@ -19,11 +19,11 @@ owner: "servo-kernel"
 ## Current Control Level
 
 - repo_scope: active
-- worktrack_scope: closed
+- worktrack_scope: closing
 
 ## Active Worktrack
 
-- N/A
+- WT-20260522-002-lint-quality-baseline
 
 ## Active Milestone
 
@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- RepoScope.Observe via milestone-status-skill, then RepoScope.Decide for `WT-20260522-002-lint-quality-baseline`
+- WorktrackScope.Close via close-worktrack-skill
 
 ## Linked Formal Documents
 
@@ -118,3 +118,4 @@ owner: "servo-kernel"
 - Milestone observe result: `not_achieved`, progress 0/3, next candidate worktrack `WT-20260522-001-validation-environment-baseline`.
 - Worktrack `WT-20260522-001-validation-environment-baseline` initialized on branch `worktrack/WT-20260522-001-validation-environment-baseline`.
 - Worktrack `WT-20260522-001-validation-environment-baseline` closed and merged into `develop-aw` at `ad6e18928365db2616b2731d0e93b4f9481992c3`; next candidate is `WT-20260522-002-lint-quality-baseline`.
+- Worktrack `WT-20260522-002-lint-quality-baseline` validation passed on 2026-05-22 and is ready for closeout.

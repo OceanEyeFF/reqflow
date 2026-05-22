@@ -3,6 +3,14 @@ import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
+function getTokenString(value: unknown) {
+  return typeof value === "string" ? value : "";
+}
+
+function getNullableTokenString(value: unknown) {
+  return typeof value === "string" ? value : null;
+}
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
@@ -49,20 +57,20 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.username = (user as any).username;
-        token.role = (user as any).role;
-        token.department = (user as any).department;
-        token.avatarUrl = (user as any).avatarUrl;
+        token.username = user.username;
+        token.role = user.role;
+        token.department = user.department;
+        token.avatarUrl = user.avatarUrl;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string;
-        (session.user as any).username = token.username;
-        (session.user as any).role = token.role;
-        (session.user as any).department = token.department;
-        (session.user as any).avatarUrl = token.avatarUrl;
+        session.user.id = getTokenString(token.id);
+        session.user.username = getTokenString(token.username);
+        session.user.role = getTokenString(token.role);
+        session.user.department = getNullableTokenString(token.department);
+        session.user.avatarUrl = getNullableTokenString(token.avatarUrl);
       }
       return session;
     },

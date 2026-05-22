@@ -1,8 +1,7 @@
 import { auth, signOut } from "@/auth";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { ROLE_LABELS } from "@/types";
 
 export default async function DashboardLayout({
@@ -25,12 +24,12 @@ export default async function DashboardLayout({
             <div className="flex items-center gap-8">
               <h1 className="text-xl font-bold text-primary">ReqFlow</h1>
               <nav className="flex gap-6">
-                <a href="/" className="text-sm font-medium text-gray-600 hover:text-gray-900">
+                <Link href="/" className="text-sm font-medium text-gray-600 hover:text-gray-900">
                   工作台
-                </a>
-                <a href="/tickets" className="text-sm font-medium text-gray-600 hover:text-gray-900">
+                </Link>
+                <Link href="/tickets" className="text-sm font-medium text-gray-600 hover:text-gray-900">
                   工单
-                </a>
+                </Link>
               </nav>
             </div>
             <div className="flex items-center gap-4">
