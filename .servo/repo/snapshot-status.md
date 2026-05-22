@@ -44,6 +44,7 @@ owner: "servo-kernel"
 ## Governance Status
 
 - Harness artifacts initialized under `.servo/` in existing-code-adoption mode.
+- Active milestone: `MS-20260522-001` (`Establish Verifiable Governance Baseline`).
 - Worktree discipline is mandatory: no direct code edits in the main checkout.
 - Next.js code changes require reading relevant installed docs from `node_modules/next/dist/docs/`.
 - No `origin` remote is configured; remote-based baseline/fetch instructions need adjustment or a remote must be added before relying on them.

@@ -53,15 +53,15 @@ owner: "servo-kernel"
 
 ## Routing Projection
 
-- recommended_repo_action: observe_after_initialization
-- recommended_next_route: RepoScope.Observe -> repo-status-skill
-- suggested_node_type: N/A
-- continuation_ready: true_for_repo_observe
-- continuation_blockers: no worktrack should be initialized until RepoScope.Observe and RepoScope.Decide consume the new `.servo/` artifacts
+- recommended_repo_action: active_milestone_observe
+- recommended_next_route: RepoScope.Observe -> milestone-status-skill -> RepoScope.Decide
+- suggested_node_type: config
+- continuation_ready: true_for_milestone_observe
+- continuation_blockers: first worktrack may initialize only after milestone-status and worktrack intake review confirm readiness
 
 ## Writeback Eligibility
 
-- writeback_eligibility: eligible_for_initialization_writeback; not eligible for milestone/worktrack status writeback because no active milestone or worktrack exists
+- writeback_eligibility: milestone initialized and active; no worktrack closeout writeback exists yet
 
 ## Notes
 

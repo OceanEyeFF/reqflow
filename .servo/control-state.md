@@ -25,13 +25,19 @@ owner: "servo-kernel"
 
 - N/A
 
+## Active Milestone
+
+- active_milestone: MS-20260522-001
+- milestone_status: active
+- milestone_pipeline_summary: active=1 planned=0 completed=0 superseded=0
+
 ## Baseline Branch
 
 - develop-aw
 
 ## Current Next Action
 
-- RepoScope.Observe via repo-status-skill
+- RepoScope.Decide via repo-whats-next-skill, then WorktrackScope.Init if intake review remains ready
 
 ## Linked Formal Documents
 
@@ -70,8 +76,8 @@ owner: "servo-kernel"
   - dispatch_package_safety: N/A
   - delegation_attempted: false
   - attempted_carrier: none
-  - carrier_decision: current-carrier-for-initialization
-  - fallback_reason: no dispatch required during RepoScope.SetGoal initialization
+  - carrier_decision: current-carrier-for-repo-scope-control
+  - fallback_reason: no SubAgent dispatch shell was required for milestone initialization
 - persistent_authority_notes: Conservative defaults only; no persistent authority expansion was approved beyond the initialized control-state defaults.
 
 ## Handback Guard
@@ -92,7 +98,7 @@ owner: "servo-kernel"
 - last_verified_checkpoint: N/A
 - latest_observed_checkpoint: N/A
 - last_doc_catch_up_checkpoint: N/A
-- milestone_input_checkpoint: N/A
+- milestone_input_checkpoint: sha256:e784164111c4316455d3f30f1f67a2b013f6a7d6825aeb3691681ada65f79876
 - checkpoint_type: git-commit
 - checkpoint_ref: e8f380a84dbcdcb335256ee28e866a3788fecc2e
 - verified_at: 2026-05-22
@@ -108,3 +114,5 @@ owner: "servo-kernel"
 
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Initial control state was created by `RepoScope.SetGoal` in existing-code-adoption mode. The next Harness loop must re-observe the repo before opening any worktrack.
+- Milestone `MS-20260522-001` was confirmed by the programmer and activated on 2026-05-22.
+- Milestone observe result: `not_achieved`, progress 0/3, next candidate worktrack `WT-20260522-001-validation-environment-baseline`.
