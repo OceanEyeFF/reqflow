@@ -13,8 +13,8 @@
 ## 已验证基线
 
 - 基线 worktree: `E:\repos\personal\reqflow\.worktrees\develop-aw`
-- 最新已验证业务 checkpoint: `41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8`
-- 最新 Harness repo-refresh checkpoint: `73d596f`
+- 最新已验证业务 checkpoint: `d59e734213a57502e174fdf35b58fc128f21f522`
+- 最新 Harness repo-refresh checkpoint: `9a9d4c1`
 - 当前 Milestone 计划基准: `80621eabd29e5d6232fa6f9db461ed0c1d036449`
 - 已完成 worktrack:
   - `WT-20260522-001-validation-environment-baseline`: 建立 `.env.example`、`db:validate`、Turbopack worktree root 和验证说明。
@@ -23,8 +23,10 @@
   - `runtime-dashboard-route-hotfix`: 修复 `/` 登录后仍显示 create-next-app 默认页的问题。
   - `WT-20260522-004-runtime-smoke-suite`: 建立 Playwright runtime smoke 命令和截图证据。
   - `WT-20260522-005-dashboard-ticket-flow-fixes`: 修复 admin 个人 scope 列表语义和新建工单优先级标签显示。
+  - `WT-20260522-006-runtime-docs-catch-up`: 追平 runtime smoke 和本地运行边界文档。
+  - `WT-20260522-015-ms002-final-handoff-refresh`: 修正 MS-002 收尾交接状态，避免 handoff 指向已关闭 worktrack。
 - 当前 milestone: `MS-20260522-002` - Runtime Usability And Smoke Acceptance。
-- 当前 worktrack: `WT-20260522-006-runtime-docs-catch-up` - 追平 runtime smoke 和本地运行边界文档。
+- 当前 worktrack: N/A；`MS-20260522-002` 已进入 Milestone Gate 和用户画面验收边界。
 
 ---
 
@@ -205,4 +207,4 @@ cd .worktrees/WT-xxxx
 ---
 
 *交接更新时间: 2026-05-22*  
-*交接来源: Harness `WT-20260522-006-runtime-docs-catch-up`*
+*交接来源: Harness `WT-20260522-015-ms002-final-handoff-refresh`*
