@@ -15,7 +15,7 @@ owner: "servo-kernel"
 - repo: reqflow
 - baseline_branch: develop-aw
 - updated: 2026-05-22
-- status: runtime-smoke-baseline-established
+- status: runtime-smoke-gate-passed-awaiting-user-acceptance
 
 ## Mainline Status
 
@@ -45,7 +45,7 @@ owner: "servo-kernel"
 
 - Harness artifacts initialized under `.servo/` in existing-code-adoption mode.
 - Completed milestone: `MS-20260522-001` (`Establish Verifiable Governance Baseline`).
-- Active milestone: `MS-20260522-002` (`Runtime Usability And Smoke Acceptance`), progress 4/4 worktracks complete; pending Milestone Gate and programmer final acceptance.
+- Active milestone: `MS-20260522-002` (`Runtime Usability And Smoke Acceptance`), progress 4/4 worktracks complete; Milestone Gate passed; pending programmer visual/final acceptance.
 - Closed worktracks:
   - `WT-20260522-001-validation-environment-baseline` merged at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
   - `WT-20260522-002-lint-quality-baseline` merged at `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`.

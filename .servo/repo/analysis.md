@@ -42,7 +42,7 @@ owner: "servo-kernel"
 ## Inferences
 
 - The immediate governance-baseline milestone is complete.
-- The runtime smoke acceptance milestone has all declared and review-added closeout worktracks closed; it now needs Milestone Gate review and programmer final acceptance.
+- The runtime smoke acceptance milestone has all declared and review-added closeout worktracks closed; Milestone Gate passed and it now needs programmer visual/final acceptance.
 - Future feature work should be narrow and branch-scoped because the repo has meaningful auth/data/UI coupling and limited automated tests.
 
 ## Unknowns
@@ -54,21 +54,21 @@ owner: "servo-kernel"
 
 ## Main Contradiction
 
-- current_main_contradiction: MS-002 implementation worktracks are closed, but goal-driven milestone acceptance still requires an explicit Milestone Gate and programmer final acceptance.
+- current_main_contradiction: MS-002 automated Gate is satisfied, but user-owned visual/final acceptance is still pending.
 - main_aspect: Hand back MS-002 evidence for final acceptance before advancing the pipeline.
 
 ## Priority Judgment
 
-- current_highest_priority: Run MS-002 Milestone Gate and hand back for programmer acceptance.
+- current_highest_priority: Hand back MS-002 Gate evidence for programmer visual/final acceptance.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 
 ## Routing Projection
 
 - recommended_repo_action: enter_worktrack
-- recommended_next_route: RepoScope.Observe -> milestone-status-skill -> handback
+- recommended_next_route: handback
 - suggested_node_type: N/A
-- continuation_ready: true_for_milestone_observe
+- continuation_ready: false_until_programmer_acceptance
 - continuation_blockers: goal-driven milestone closeout requires programmer final acceptance
 
 ## Writeback Eligibility

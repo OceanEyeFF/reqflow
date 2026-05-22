@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- RepoScope.Observe via milestone-status-skill for `MS-20260522-002`, then handback for programmer final acceptance if Milestone Gate passes
+- Hand back `MS-20260522-002` Gate evidence for programmer visual/final acceptance; do not activate `MS-20260522-003` until acceptance is confirmed.
 
 ## Linked Formal Documents
 
@@ -82,8 +82,8 @@ owner: "servo-kernel"
 
 ## Handback Guard
 
-- handoff_state: none
-- last_stop_reason: N/A
+- handoff_state: ms-002-final-acceptance-required
+- last_stop_reason: Milestone Gate passed and programmer-owned visual/final acceptance is required.
 - last_handback_signature: N/A
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
@@ -129,3 +129,4 @@ owner: "servo-kernel"
 - Worktrack `WT-20260522-005-dashboard-ticket-flow-fixes` closed and merged into `develop-aw` at `41c0649ec9e38ae46ed7ce29d5f693c6a6eb47b8`; next candidate is `WT-20260522-006-runtime-docs-catch-up`.
 - Worktrack `WT-20260522-006-runtime-docs-catch-up` closed and merged into `develop-aw` at `d59e734213a57502e174fdf35b58fc128f21f522`; final CodeReview then found stale handoff current-worktrack wording.
 - Review-added worktrack `WT-20260522-015-ms002-final-handoff-refresh` closed and merged into `develop-aw` at `a78cc4b85a618a035e466fdb6e541c815f2daf66`; all `MS-20260522-002` worktracks are closed and milestone gate/final acceptance is required.
+- Milestone Gate for `MS-20260522-002` passed on 2026-05-22 with black-box smoke, white-box review, and anti-cheat checks; pipeline advancement is held for programmer visual/final acceptance.

@@ -26,7 +26,7 @@
   - `WT-20260522-006-runtime-docs-catch-up`: 追平 runtime smoke 和本地运行边界文档。
   - `WT-20260522-015-ms002-final-handoff-refresh`: 修正 MS-002 收尾交接状态，避免 handoff 指向已关闭 worktrack。
 - 当前 milestone: `MS-20260522-002` - Runtime Usability And Smoke Acceptance。
-- 当前 worktrack: N/A；`MS-20260522-002` 已进入 Milestone Gate 和用户画面验收边界。
+- 当前 worktrack: N/A；`MS-20260522-002` Milestone Gate 已通过，等待用户画面验收和最终确认。
 
 ---
 
