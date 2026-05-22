@@ -76,3 +76,20 @@ owner: "servo-kernel"
 - evidence_refs: `.servo/worktrack/gate-evidence.md`
 - completed_at: 2026-05-22
 - updated: 2026-05-22
+
+### WT-20260522-004-runtime-smoke-suite
+
+- worktrack_id: WT-20260522-004-runtime-smoke-suite
+- milestone_id: MS-20260522-002
+- status: done
+- node_type: test
+- scope: repeatable Playwright runtime smoke suite for login, dashboard, ticket list/detail, new-ticket reachability, and logout
+- branch: worktrack/WT-20260522-004-runtime-smoke-suite
+- baseline_branch: develop-aw
+- base_ref: 80621ea
+- merge_commit: 426c8a5f32af7ce8b595cc5b694a8306d0ee831c
+- validation: lint pass; build pass; db:validate pass; smoke pass with installed Chrome channel; screenshots generated under ignored `test-results/smoke/`
+- intake_route: milestone-derived
+- evidence_refs: `.servo/worktrack/gate-evidence.md`
+- completed_at: 2026-05-22
+- updated: 2026-05-22

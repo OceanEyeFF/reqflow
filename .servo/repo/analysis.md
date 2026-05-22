@@ -29,14 +29,17 @@ owner: "servo-kernel"
 - `WT-20260522-001-validation-environment-baseline` completed and merged into `develop-aw` at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
 - `WT-20260522-002-lint-quality-baseline` completed and merged into `develop-aw` at `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`.
 - `WT-20260522-003-docs-handoff-catch-up` completed and merged into `develop-aw` at `28a7966dd248affd9b6099340d59433f48d51d8a`.
+- `WT-20260522-004-runtime-smoke-suite` completed and merged into `develop-aw` at `426c8a5f32af7ce8b595cc5b694a8306d0ee831c`.
 - Lint, build, and Prisma validation pass on the accepted baseline after documented local setup.
 - Operator-facing handoff docs now reflect the verified Harness baseline.
 - Runtime smoke testing found and fixed a post-login routing bug: `/` previously rendered the create-next-app default page, and now renders the authenticated dashboard.
+- Repeatable Playwright smoke coverage now exists via `npm run smoke`, using installed Chrome channel when Playwright managed Chromium download is unavailable.
+- Smoke screenshots found dashboard stats/list count mismatch and new-ticket priority label display issue; these are routed to `WT-20260522-005-dashboard-ticket-flow-fixes`.
 
 ## Inferences
 
 - The immediate governance-baseline milestone is complete.
-- The next pipeline has been planned as runtime smoke acceptance, collaboration surface acceptance, and operational readiness foundation.
+- The runtime smoke acceptance milestone is in progress with smoke harness complete; the next slice should fix smoke-discovered dashboard/ticket flow defects.
 - Future feature work should be narrow and branch-scoped because the repo has meaningful auth/data/UI coupling and limited automated tests.
 
 ## Unknowns
@@ -44,26 +47,26 @@ owner: "servo-kernel"
 - Whether `develop-aw` should become the long-lived replacement for `develop` or remain a Harness-managed integration branch beside `develop`.
 - Whether a remote should be added and which remote branch should be authoritative for collaboration outside this local repo.
 - Which next product slice has highest user priority after initialization.
-- Whether runtime smoke testing is feasible in the current non-interactive Windows shell for future worktracks.
+- Whether additional smoke paths should use installed Chrome channel only or require a successful managed browser download later.
 
 ## Main Contradiction
 
-- current_main_contradiction: The codebase has accumulated useful product capabilities, but repo-level governance and current-state documentation were not yet under Harness control.
-- main_aspect: Establish a verified control baseline before opening new implementation work.
+- current_main_contradiction: The app is now smoke-testable, but the first screenshots expose dashboard/ticket flow inconsistencies that reduce runtime trust.
+- main_aspect: Fix smoke-discovered runtime usability defects without expanding into collaboration or production-readiness scope.
 
 ## Priority Judgment
 
-- current_highest_priority: Execute `MS-20260522-002` starting with `WT-20260522-004-runtime-smoke-suite`.
+- current_highest_priority: Execute `WT-20260522-005-dashboard-ticket-flow-fixes` under `MS-20260522-002`.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 
 ## Routing Projection
 
 - recommended_repo_action: enter_worktrack
-- recommended_next_route: WorktrackScope.Init -> WT-20260522-004-runtime-smoke-suite
-- suggested_node_type: test
+- recommended_next_route: WorktrackScope.Init -> WT-20260522-005-dashboard-ticket-flow-fixes
+- suggested_node_type: bugfix
 - continuation_ready: true_for_milestone_observe
-- continuation_blockers: runtime smoke suite must stay limited to local browser-level smoke and must not absorb feature work
+- continuation_blockers: bugfix scope must stay limited to dashboard/ticket runtime flow issues discovered by smoke and must not absorb collaboration features or broad redesign
 
 ## Writeback Eligibility
 

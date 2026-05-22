@@ -15,13 +15,13 @@ owner: "servo-kernel"
 - repo: reqflow
 - baseline_branch: develop-aw
 - updated: 2026-05-22
-- status: governance-baseline-established
+- status: runtime-smoke-baseline-established
 
 ## Mainline Status
 
 - baseline_branch: develop-aw
-- last_verified_checkpoint: 462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe
-- checkpoint_ref: 462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe
+- last_verified_checkpoint: 426c8a5f32af7ce8b595cc5b694a8306d0ee831c
+- checkpoint_ref: 426c8a5f32af7ce8b595cc5b694a8306d0ee831c
 - checkpoint_type: git-commit
 
 ## Architecture And Module Map
@@ -45,10 +45,12 @@ owner: "servo-kernel"
 
 - Harness artifacts initialized under `.servo/` in existing-code-adoption mode.
 - Completed milestone: `MS-20260522-001` (`Establish Verifiable Governance Baseline`).
+- Active milestone: `MS-20260522-002` (`Runtime Usability And Smoke Acceptance`), progress 1/3 worktracks complete.
 - Closed worktracks:
   - `WT-20260522-001-validation-environment-baseline` merged at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
   - `WT-20260522-002-lint-quality-baseline` merged at `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`.
   - `WT-20260522-003-docs-handoff-catch-up` merged at `28a7966dd248affd9b6099340d59433f48d51d8a`.
+  - `WT-20260522-004-runtime-smoke-suite` merged at `426c8a5f32af7ce8b595cc5b694a8306d0ee831c`.
 - Worktree discipline is mandatory: no direct code edits in the main checkout.
 - Next.js code changes require reading relevant installed docs from `node_modules/next/dist/docs/`.
 - No `origin` remote is configured; remote-based baseline/fetch instructions need adjustment or a remote must be added before relying on them.
@@ -57,7 +59,8 @@ owner: "servo-kernel"
 ## Known Issues And Risks
 
 - Operator-facing handoff docs now reflect the verified baseline, branch/worktree workflow, and current route/model inventory.
-- No dedicated unit or e2e test suite is declared; `npm run lint`, `npm run build`, and `npm run db:validate` are the primary observed verification commands.
+- A first Playwright runtime smoke suite exists via `npm run smoke`; broader unit/API/e2e coverage is still missing.
+- Runtime smoke screenshots found dashboard stats/list count mismatch and new-ticket priority label display issue; both are routed to `WT-20260522-005-dashboard-ticket-flow-fixes`.
 - SQLite and local file uploads are local-development friendly but need explicit production strategy before deployment use.
 - NextAuth v5 beta and Next.js 16 API behavior are version-sensitive.
 - Database binary files exist in the repo and should not be changed accidentally by unrelated worktracks.
@@ -69,3 +72,4 @@ owner: "servo-kernel"
 - Lint quality baseline is now established: `npm run lint`, `npm run build`, and `npm run db:validate` pass on `develop-aw` after documented local setup.
 - Handoff documentation catch-up is now established: `docs/handoff.md` reflects `develop-aw`, verified commands, and current attachment/notification route/model facts.
 - Runtime smoke follow-up fixed `/` routing: the create-next-app default `src/app/page.tsx` was removed, so `/` now uses the authenticated dashboard route group; logout is handled by a client-side sign-out button.
+- Runtime smoke baseline is now established: `npm run smoke` covers local login, authenticated dashboard, ticket detail, ticket list, new-ticket reachability, and logout with screenshots under ignored `test-results/smoke/`.

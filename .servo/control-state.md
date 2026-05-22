@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- RepoScope.Observe via milestone-status-skill, then RepoScope.Decide for `MS-20260522-002`
+- RepoScope.Observe via milestone-status-skill, then RepoScope.Decide for next candidate `WT-20260522-005-dashboard-ticket-flow-fixes`
 
 ## Linked Formal Documents
 
@@ -95,20 +95,20 @@ owner: "servo-kernel"
 > 记录最近一次 worktrack 关闭后的已验证基线，供后续续跑时快速定位。
 > `latest_observed_checkpoint` 与 `last_doc_catch_up_checkpoint` 是 git hash 幂等性锚点，用于避免对同一代码基线重复执行 repo-refresh 和 doc-catch-up。空值表示锚点尚未建立，首次观察必须完整刷新；harness-skill 启动时通过 git rev-parse HEAD 对比这两个字段决定是否跳过重复刷新。
 
-- last_verified_checkpoint: 462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe
-- latest_observed_checkpoint: 462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe
-- last_doc_catch_up_checkpoint: 28a7966dd248affd9b6099340d59433f48d51d8a
-- milestone_input_checkpoint: sha256:926135d014aa4378fe6e80e5efd51b6639a8c916c6b117cb270d028669cb54ed
+- last_verified_checkpoint: 426c8a5f32af7ce8b595cc5b694a8306d0ee831c
+- latest_observed_checkpoint: 426c8a5f32af7ce8b595cc5b694a8306d0ee831c
+- last_doc_catch_up_checkpoint: 426c8a5f32af7ce8b595cc5b694a8306d0ee831c
+- milestone_input_checkpoint: sha256:8b42b55bb6e8f19db5a4cf7d5b0ee0ec04355b1f521e78a284966328a579a2ca
 - checkpoint_type: git-commit
-- checkpoint_ref: 462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe
+- checkpoint_ref: 426c8a5f32af7ce8b595cc5b694a8306d0ee831c
 - verified_at: 2026-05-22
 - if_no_commit_reason: N/A
 - alternative_traceability: N/A
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 1
-- autonomous_worktracks_opened: 0
+- autonomy_budget_remaining: 29
+- autonomous_worktracks_opened: 1
 
 ## Notes
 
@@ -125,3 +125,4 @@ owner: "servo-kernel"
 - Milestone `MS-20260522-001` completed on 2026-05-22; baseline is ready for programmer review and next milestone selection.
 - Runtime dashboard route hotfix merged into `develop-aw` at `462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe`; `/` now resolves to the authenticated workbench instead of the create-next-app default page.
 - Programmer requested three consecutive milestones on 2026-05-22; `MS-20260522-002` was activated and `MS-20260522-003` / `MS-20260522-004` were planned with dependency ordering.
+- Worktrack `WT-20260522-004-runtime-smoke-suite` closed and merged into `develop-aw` at `426c8a5f32af7ce8b595cc5b694a8306d0ee831c`; next candidate is `WT-20260522-005-dashboard-ticket-flow-fixes`.
