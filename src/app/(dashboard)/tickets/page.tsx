@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -42,11 +42,7 @@ export default function TicketsPage() {
       .catch(() => {});
   }, []);
 
-  useEffect(() => {
-    fetchTickets();
-  }, [scope, status, priority, currentUserId]);
-
-  async function fetchTickets() {
+  const fetchTickets = useCallback(async () => {
     setLoading(true);
     const params = new URLSearchParams({ scope });
     if (status) params.set("status", status);
@@ -57,11 +53,37 @@ export default function TicketsPage() {
     const data = await res.json();
     setTickets(data.tickets || []);
     setLoading(false);
-  }
+  }, [scope, status, priority, keyword]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadTickets() {
+      setLoading(true);
+      const params = new URLSearchParams({ scope });
+      if (status) params.set("status", status);
+      if (priority) params.set("priority", priority);
+      if (keyword) params.set("keyword", keyword);
+
+      const res = await fetch(`/api/tickets?${params}`);
+      const data = await res.json();
+
+      if (!cancelled) {
+        setTickets(data.tickets || []);
+        setLoading(false);
+      }
+    }
+
+    void loadTickets();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [scope, status, priority, keyword, currentUserId]);
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();
-    fetchTickets();
+    void fetchTickets();
   }
 
   return (

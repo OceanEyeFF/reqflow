@@ -25,20 +25,6 @@ async function canModifyMembers(ticketId: string, userId: string): Promise<boole
   return member?.role === "owner";
 }
 
-// Helper: get ticket for permission checks
-async function getTicketWithMember(ticketId: string) {
-  return prisma.ticket.findUnique({
-    where: { id: ticketId },
-    select: {
-      creatorId: true,
-      assigneeId: true,
-      members: {
-        include: { user: { select: { id: true, displayName: true } } },
-      },
-    },
-  });
-}
-
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }

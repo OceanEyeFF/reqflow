@@ -1,8 +1,7 @@
-import { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const session = await auth();
   if (!session?.user) {
     return Response.json({ error: "未登录" }, { status: 401 });

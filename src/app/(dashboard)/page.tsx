@@ -48,33 +48,40 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    fetchData();
-  }, [activeTab]);
+    let cancelled = false;
 
-  async function fetchData() {
-    setLoading(true);
-    
-    // Map tab to scope
-    const scopeMap = {
-      assigned: "assigned_to_me",
-      created: "created_by_me",
-      involved: "joined",
-    };
+    async function loadData() {
+      setLoading(true);
 
-    const [ticketsRes, statsRes] = await Promise.all([
-      fetch(`/api/tickets?scope=${scopeMap[activeTab]}&status=`),
-      fetch("/api/tickets/stats"),
-    ]);
+      const scopeMap = {
+        assigned: "assigned_to_me",
+        created: "created_by_me",
+        involved: "joined",
+      };
 
-    const ticketsData = await ticketsRes.json();
-    const statsData = await statsRes.json();
+      const [ticketsRes, statsRes] = await Promise.all([
+        fetch(`/api/tickets?scope=${scopeMap[activeTab]}&status=`),
+        fetch("/api/tickets/stats"),
+      ]);
 
-    setTickets(ticketsData.tickets || []);
-    if (statsData.stats) {
-      setStats(statsData.stats);
+      if (cancelled) return;
+
+      const ticketsData = await ticketsRes.json();
+      const statsData = await statsRes.json();
+
+      setTickets(ticketsData.tickets || []);
+      if (statsData.stats) {
+        setStats(statsData.stats);
+      }
+      setLoading(false);
     }
-    setLoading(false);
-  }
+
+    void loadData();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeTab]);
 
   const tabLabels = {
     assigned: "待我处理",

@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { Prisma } from "@prisma/client";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 
@@ -11,7 +12,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const keyword = searchParams.get("keyword");
 
-  const whereClause: any = {};
+  const whereClause: Prisma.UserWhereInput = {};
   if (keyword) {
     whereClause.OR = [
       { displayName: { contains: keyword } },

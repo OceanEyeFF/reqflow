@@ -7,9 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS, MEMBER_ROLE_LABELS, TICKET_STATUS, TICKET_PRIORITY } from "@/types";
-import { ArrowLeft, Send, Clock, User as UserIcon } from "lucide-react";
+import { ArrowLeft, Send, User as UserIcon } from "lucide-react";
 
 type TicketDetail = {
   id: string;
@@ -57,18 +56,36 @@ export default function TicketDetailPage() {
     setLoading(false);
   }, [ticketId]);
 
-  const fetchUsers = useCallback(async () => {
-    const res = await fetch("/api/users");
-    if (res.ok) {
-      const data = await res.json();
-      setUsers(data.users || []);
-    }
-  }, []);
-
   useEffect(() => {
-    fetchTicket();
-    fetchUsers();
-  }, [fetchTicket, fetchUsers]);
+    let cancelled = false;
+
+    async function load() {
+      const [ticketRes, usersRes] = await Promise.all([
+        fetch(`/api/tickets/${ticketId}`),
+        fetch("/api/users"),
+      ]);
+
+      if (cancelled) return;
+
+      if (ticketRes.ok) {
+        const data = await ticketRes.json();
+        setTicket(data.ticket);
+      }
+
+      if (usersRes.ok) {
+        const data = await usersRes.json();
+        setUsers(data.users || []);
+      }
+
+      setLoading(false);
+    }
+
+    void load();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [ticketId]);
 
   async function handleAddComment(e: React.FormEvent) {
     e.preventDefault();
@@ -301,7 +318,7 @@ export default function TicketDetailPage() {
                   onChange={(e) => handlePriorityChange(e.target.value)}
                 >
                   {Object.entries(TICKET_PRIORITY).map(([key, value]) => (
-                    <option key={key} value={key}>{PRIORITY_LABELS[key]}</option>
+                    <option key={key} value={value}>{PRIORITY_LABELS[value]}</option>
                   ))}
                 </select>
               </div>

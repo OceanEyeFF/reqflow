@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { Prisma } from "@prisma/client";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { notifyTicketAssigned } from "@/lib/notifications";
@@ -18,7 +19,7 @@ export async function GET(request: NextRequest) {
   const isAdmin = session.user.role === "admin";
 
   // Build where clause based on scope
-  let whereClause: any = {};
+  const whereClause: Prisma.TicketWhereInput = {};
 
   if (!isAdmin && scope !== "all") {
     switch (scope) {
