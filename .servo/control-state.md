@@ -19,11 +19,11 @@ owner: "servo-kernel"
 ## Current Control Level
 
 - repo_scope: active
-- worktrack_scope: closing
+- worktrack_scope: closed
 
 ## Active Worktrack
 
-- WT-20260522-001-validation-environment-baseline
+- N/A
 
 ## Active Milestone
 
@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- WorktrackScope.Close via close-worktrack-skill
+- RepoScope.Observe via milestone-status-skill, then RepoScope.Decide for `WT-20260522-002-lint-quality-baseline`
 
 ## Linked Formal Documents
 
@@ -95,12 +95,12 @@ owner: "servo-kernel"
 > 记录最近一次 worktrack 关闭后的已验证基线，供后续续跑时快速定位。
 > `latest_observed_checkpoint` 与 `last_doc_catch_up_checkpoint` 是 git hash 幂等性锚点，用于避免对同一代码基线重复执行 repo-refresh 和 doc-catch-up。空值表示锚点尚未建立，首次观察必须完整刷新；harness-skill 启动时通过 git rev-parse HEAD 对比这两个字段决定是否跳过重复刷新。
 
-- last_verified_checkpoint: N/A
-- latest_observed_checkpoint: N/A
+- last_verified_checkpoint: ad6e18928365db2616b2731d0e93b4f9481992c3
+- latest_observed_checkpoint: ad6e18928365db2616b2731d0e93b4f9481992c3
 - last_doc_catch_up_checkpoint: N/A
-- milestone_input_checkpoint: sha256:e784164111c4316455d3f30f1f67a2b013f6a7d6825aeb3691681ada65f79876
+- milestone_input_checkpoint: sha256:926135d014aa4378fe6e80e5efd51b6639a8c916c6b117cb270d028669cb54ed
 - checkpoint_type: git-commit
-- checkpoint_ref: e8f380a84dbcdcb335256ee28e866a3788fecc2e
+- checkpoint_ref: ad6e18928365db2616b2731d0e93b4f9481992c3
 - verified_at: 2026-05-22
 - if_no_commit_reason: N/A
 - alternative_traceability: N/A
@@ -117,3 +117,4 @@ owner: "servo-kernel"
 - Milestone `MS-20260522-001` was confirmed by the programmer and activated on 2026-05-22.
 - Milestone observe result: `not_achieved`, progress 0/3, next candidate worktrack `WT-20260522-001-validation-environment-baseline`.
 - Worktrack `WT-20260522-001-validation-environment-baseline` initialized on branch `worktrack/WT-20260522-001-validation-environment-baseline`.
+- Worktrack `WT-20260522-001-validation-environment-baseline` closed and merged into `develop-aw` at `ad6e18928365db2616b2731d0e93b4f9481992c3`; next candidate is `WT-20260522-002-lint-quality-baseline`.

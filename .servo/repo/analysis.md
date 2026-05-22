@@ -26,6 +26,8 @@ owner: "servo-kernel"
 - Current code includes auth, dashboard, tickets, comments, members, attachments, notifications, logs, stats, Prisma migrations, and seed data.
 - The repo has no configured `origin` remote.
 - Governance instructions require worktree-only code changes and installed Next.js docs review before Next code changes.
+- `WT-20260522-001-validation-environment-baseline` completed and merged into `develop-aw` at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
+- Build and Prisma validation are now runnable with documented local setup; lint remains red due source quality findings.
 
 ## Inferences
 
@@ -47,17 +49,17 @@ owner: "servo-kernel"
 
 ## Priority Judgment
 
-- current_highest_priority: Complete Harness adoption artifacts and run RepoScope.Observe on `develop-aw`.
+- current_highest_priority: Execute `WT-20260522-002-lint-quality-baseline` to make lint a passing baseline signal.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 
 ## Routing Projection
 
-- recommended_repo_action: active_milestone_observe
-- recommended_next_route: RepoScope.Observe -> milestone-status-skill -> RepoScope.Decide
-- suggested_node_type: config
+- recommended_repo_action: enter_worktrack
+- recommended_next_route: WorktrackScope.Init -> WT-20260522-002-lint-quality-baseline
+- suggested_node_type: bugfix
 - continuation_ready: true_for_milestone_observe
-- continuation_blockers: first worktrack may initialize only after milestone-status and worktrack intake review confirm readiness
+- continuation_blockers: lint worktrack must stay limited to current lint errors and avoid product feature expansion
 
 ## Writeback Eligibility
 
