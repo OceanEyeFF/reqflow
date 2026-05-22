@@ -5,7 +5,7 @@
 **项目名称**: ReqFlow - 轻量级公司内部工单需求协作系统  
 **仓库路径**: `E:\repos\personal\reqflow`  
 **Harness 基线分支**: `develop-aw`  
-**当前交接状态**: MiniMax 初始化代码已纳入 Harness 评估；验证环境和 lint 质量基线已建立。  
+**当前交接状态**: MiniMax 初始化代码已纳入 Harness 评估；验证环境、lint 质量基线和首个 runtime smoke 基线已建立。
 **技术栈**: Next.js 16.2.6 + React 19.2.4 + TypeScript + TailwindCSS v4 + Prisma 5 + SQLite + NextAuth v5 beta
 
 ---
@@ -13,12 +13,16 @@
 ## 已验证基线
 
 - 基线 worktree: `E:\repos\personal\reqflow\.worktrees\develop-aw`
-- 最新已验证业务 checkpoint: `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`
-- 最新 Harness repo-refresh checkpoint: `b62e4b06266edb0d9441692c9333d67e3b2de5a5`
+- 最新已验证业务 checkpoint: `462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe`
+- 最新 Harness repo-refresh checkpoint: `462ffd3f0d5accc5f82973f9c0fb6b9d696b0ffe`
+- 当前 Milestone 计划基准: `80621eabd29e5d6232fa6f9db461ed0c1d036449`
 - 已完成 worktrack:
   - `WT-20260522-001-validation-environment-baseline`: 建立 `.env.example`、`db:validate`、Turbopack worktree root 和验证说明。
   - `WT-20260522-002-lint-quality-baseline`: 修复当前 ESLint errors/warnings，使 lint/build/db validate 在基线 worktree 通过。
-- 当前 milestone: `MS-20260522-001` - Establish Verifiable Governance Baseline。
+  - `WT-20260522-003-docs-handoff-catch-up`: 将 operator-facing handoff 文档追平到已验证基线。
+  - `runtime-dashboard-route-hotfix`: 修复 `/` 登录后仍显示 create-next-app 默认页的问题。
+- 当前 milestone: `MS-20260522-002` - Runtime Usability And Smoke Acceptance。
+- 当前 worktrack: `WT-20260522-004-runtime-smoke-suite` - 建立 Playwright runtime smoke 命令和截图证据。
 
 ---
 
@@ -55,6 +59,7 @@ npm run dev
 npm run lint
 npm run build
 npm run db:validate
+npm run smoke
 ```
 
 已验证状态：
@@ -62,12 +67,33 @@ npm run db:validate
 - `npm run lint`: 通过，0 errors。
 - `npm run build`: 通过，Next.js 16.2.6 production build 和 TypeScript check 通过。
 - `npm run db:validate`: 通过；需要先把 `.env.example` 复制为被忽略的 `.env`。
+- `npm run smoke`: 通过；使用 Playwright + 本机 Chrome channel 启动 Next dev server，覆盖登录、工作台、工单列表、工单详情、新建工单入口和退出。
 
 说明：
 
 - `.env.example` 只包含本地开发占位值，不包含 secret。
 - Next.js 16 默认使用 Turbopack，本仓库在 `next.config.ts` 中设置 `turbopack.root = process.cwd()`，用于让嵌套 worktree 从当前 worktree 解析依赖。
 - 如果新 worktree 没有本地 `node_modules`，先运行 `npm install`，否则 build 可能无法从 worktree 正确解析 Next.js package。
+- Playwright 默认项目使用本机 Chrome channel；如果需要切换浏览器 channel，可设置 `SMOKE_BROWSER_CHANNEL`。
+- Playwright 托管 Chromium 下载在本机网络环境中可能失败；当前已验证路径不依赖托管浏览器下载。
+- Smoke 截图输出到被忽略目录 `test-results/smoke/`，用于本地画面验收和问题复核。
+
+## Runtime Smoke 覆盖
+
+`npm run smoke` 当前执行 `tests/smoke/core-workflow.spec.ts`，覆盖：
+
+- `/login` 使用 `admin/admin123` 登录。
+- 登录后进入 `/` 工作台。
+- Dashboard tab 切换到“我发起的”并打开示例工单。
+- 工单详情页加载评论、状态区、详情区和协作者区。
+- `/tickets` 列表页切换到“全部工单”并显示示例工单。
+- `/tickets/new` 新建工单页面可达。
+- 点击“退出”返回登录页。
+
+当前 smoke 截图 sanity check 暴露但未在本 worktrack 修复的产品层问题：
+
+- Dashboard 卡片显示“待我处理”为 0，但默认列表区域显示“待我处理 (1)”且出现示例工单；需要在 `WT-20260522-005-dashboard-ticket-flow-fixes` 处理中核对 stats 与 ticket scope 过滤。
+- 新建工单页“优先级”下拉显示内部值 `low`，而不是中文标签；建议同样纳入 `WT-20260522-005` 的 dashboard/ticket flow 修复范围。
 
 ---
 
@@ -167,7 +193,7 @@ cd .worktrees/WT-xxxx
 
 ## 已知风险和后续方向
 
-- 尚无专用 unit/e2e 测试套件；当前 baseline 主要依赖 lint、build、Prisma validate 和代码审查。
+- 当前已有首个 Playwright runtime smoke；仍缺少更完整的 unit/API/e2e 覆盖。
 - SQLite 和本地文件上传适合本地开发，不代表生产数据库和文件存储策略已经完成。
 - NextAuth v5 beta 和 Next.js 16 行为对版本敏感，后续改动必须以安装文档和实际验证为准。
 - 用户管理页面、标签、全文搜索、统计报表、外部消息集成和生产化部署仍属于后续 worktrack，不应混入治理基线 worktrack。
@@ -175,4 +201,4 @@ cd .worktrees/WT-xxxx
 ---
 
 *交接更新时间: 2026-05-22*  
-*交接来源: Harness `MS-20260522-001` 文档追平 worktrack*
+*交接来源: Harness `WT-20260522-004-runtime-smoke-suite`*

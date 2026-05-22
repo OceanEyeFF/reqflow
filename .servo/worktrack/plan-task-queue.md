@@ -1,7 +1,7 @@
 ---
 title: "Plan / Task Queue"
 artifact_type: "worktrack-plan-task-queue"
-worktrack_id: "WT-20260522-003-docs-handoff-catch-up"
+worktrack_id: "WT-20260522-004-runtime-smoke-suite"
 updated: "2026-05-22"
 owner: "servo-kernel"
 ---
@@ -10,52 +10,53 @@ owner: "servo-kernel"
 
 ## Metadata
 
-- worktrack_id: WT-20260522-003-docs-handoff-catch-up
+- worktrack_id: WT-20260522-004-runtime-smoke-suite
 - updated: 2026-05-22
-- current_phase: closing
+- current_phase: verifying
 - contract_ref: worktrack/contract.md
 - queue_status: completed
 
 ## Task List
 
-1. [x] Identify stale handoff documentation against verified code and Harness baseline.
-2. [x] Update operator-facing docs with verified facts only.
-3. [x] Run validation commands and stale-text checks.
-4. [x] Update gate evidence and close if all criteria pass.
+1. [x] Inspect existing app routes, seed data, and installed Next.js/Playwright constraints relevant to runtime smoke.
+2. [x] Add the minimal smoke runner/test and npm script without changing product behavior.
+3. [x] Run validation commands and browser smoke; collect screenshots/log evidence.
+4. [x] Document the accepted smoke workflow and any runtime blockers routed to WT-005.
+5. [x] Update gate evidence for review, validation, and policy lanes.
 
 ## Current Next Action
 
 ### Control Signal
-- selected_next_action: close-docs-handoff-catch-up
-- selection_reason: Handoff docs are refreshed and validation passed.
+- selected_next_action: gate-runtime-smoke-suite
+- selection_reason: Smoke harness and docs are implemented; lint, build, db validate, and runtime smoke pass.
 
 ### Supporting Detail
-- selected_next_action_id: WT-20260522-003-T4
-- selected_next_action: Close docs handoff catch-up after verified evidence.
-- selection_reason: All worktrack acceptance criteria are satisfied.
+- selected_next_action_id: WT-20260522-004-T5
+- selected_next_action: Run Gate for runtime smoke suite.
+- selection_reason: All planned queue items have produced evidence.
 
 ## Dispatch Handoff Packet
 
-- task: Refresh operator-facing handoff docs.
-- goal_for_this_round: Make docs match verified `develop-aw` baseline facts.
-- node_type: docs
+- task: Add repeatable runtime smoke coverage.
+- goal_for_this_round: Establish a local browser-level smoke command for login and core ticket navigation.
+- node_type: test
 - gate_criteria_for_this_round: validation + policy
-- baseline_policy: commit-on-docs-branch, merge required
-- constraints_for_this_round: docs-only; no unverified product claims; no code changes
-- acceptance_criteria_for_this_round: stale branch/phase claims removed; validation commands documented; current route/model inventory reflected
-- verification_requirements: `npm run lint`; `npm run build`; `npm run db:validate`; stale-text search
+- baseline_policy: commit-on-test-branch, merge required
+- constraints_for_this_round: validation-only; no broad product fixes; route runtime blockers to WT-005
+- acceptance_criteria_for_this_round: login/dashboard/tickets/new-ticket/logout smoke coverage or explicit blocker evidence; validation commands stay passing
+- verification_requirements: `npm run lint`; `npm run build`; `npm run db:validate`; `npm run smoke`; screenshots
 - runtime_dispatch_mode: auto
 - done_signal: gate evidence ready for closeout
-- required_context: `docs/handoff.md`, README, Prisma schema, route list, `.servo/repo/snapshot-status.md`
-- return_to_schedule_if: docs update requires product implementation or goal changes
+- required_context: `.servo/worktrack/contract.md`, `package.json`, `playwright.config.ts`, `tests/smoke/core-workflow.spec.ts`, `docs/handoff.md`, browser smoke output
+- return_to_schedule_if: product defects require fixes outside smoke harness scope
 
 ## Readiness
 
 - dispatch_packet_ready: true
 - gate_evidence_ready: true
-- recommended_next_route: WorktrackScope.Close
+- recommended_next_route: WorktrackScope.Judge
 
 ## Notes
 
-- Current carrier fallback is allowed if no SubAgent dispatch shell is available.
-- Verification passed on 2026-05-22: `npm run lint`, `npm run build`, `npm run db:validate`, and stale-text search.
+- Current carrier fallback was used because no SubAgent dispatch shell was proven in this runtime.
+- Playwright managed Chromium download failed due repeated TLS resets; smoke was verified with installed Chrome channel.
