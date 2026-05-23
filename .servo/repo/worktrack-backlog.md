@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 15
-- planned: 3
+- planned: 2
 - active: 0
-- completed: 12
+- completed: 13
 - blocked: 0
 - deferred: 0
 
@@ -155,10 +155,10 @@
 - title: Comments/Members/Logs API route handler 集成测试
 - milestone_id: MS-20260523-003
 - node_type: test
-- status: planned
+- status: completed
 - priority: 3
-- contract_path:
-- branch:
+- contract_path: .servo/worktrack/WT-20260523-013/contract.md
+- branch: worktrack/wt-20260523-013-comments-members-logs (merged)
 
 ### WT-20260523-014
 
