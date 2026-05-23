@@ -28,8 +28,9 @@
   - `WT-20260522-007-attachment-end-to-end-validation`: 建立附件上传、列表、鉴权下载、删除和 smoke 截图证据。
   - `WT-20260522-008-notification-user-surface`: 建立通知铃铛、未读列表、单条已读、全部已读和通知跳转工单的 smoke 截图证据。
   - `WT-20260522-009-member-comment-interaction-hardening`: 建立非参与者访问拒绝、协作者添加/改角色、成员通知跳转和成员评论 smoke 证据。
+  - `WT-20260522-010-collaboration-docs-catch-up`: 追平 README 和 handoff 中的协作验收事实与非生产边界。
 - 当前 milestone: `MS-20260522-003` - Collaboration Surface Acceptance。
-- 当前 worktrack: `WT-20260522-010-collaboration-docs-catch-up`；下一步为 MS-003 Gate 与最终 CodeReview。
+- 当前 worktrack: N/A；下一步为 MS-003 Gate、最终 CodeReview 和画面验收。
 
 ---
 

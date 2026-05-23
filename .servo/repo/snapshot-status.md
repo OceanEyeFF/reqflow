@@ -20,8 +20,8 @@ owner: "servo-kernel"
 ## Mainline Status
 
 - baseline_branch: develop-aw
-- last_verified_checkpoint: 0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92
-- checkpoint_ref: 0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92
+- last_verified_checkpoint: 409de4ecbae5e0c69c42e4e4e66f685e33e66e2f
+- checkpoint_ref: 409de4ecbae5e0c69c42e4e4e66f685e33e66e2f
 - checkpoint_type: git-commit
 
 ## Architecture And Module Map
@@ -46,7 +46,7 @@ owner: "servo-kernel"
 - Harness artifacts initialized under `.servo/` in existing-code-adoption mode.
 - Completed milestone: `MS-20260522-001` (`Establish Verifiable Governance Baseline`).
 - Completed milestone: `MS-20260522-002` (`Runtime Usability And Smoke Acceptance`), accepted by programmer on 2026-05-23 after visual validation.
-- Active milestone: `MS-20260522-003` (`Collaboration Surface Acceptance`), progress 3/4 worktracks complete; next candidate `WT-20260522-010-collaboration-docs-catch-up`.
+- Active milestone: `MS-20260522-003` (`Collaboration Surface Acceptance`), progress 4/4 worktracks complete; next route is Milestone Gate, final CodeReview, and programmer visual acceptance.
 - Closed worktracks:
   - `WT-20260522-001-validation-environment-baseline` merged at `ad6e18928365db2616b2731d0e93b4f9481992c3`.
   - `WT-20260522-002-lint-quality-baseline` merged at `a16986e4e126a531fd613aa9204f9bfd16b0f3f5`.
@@ -58,6 +58,7 @@ owner: "servo-kernel"
   - `WT-20260522-007-attachment-end-to-end-validation` merged at `cc6e22bf0c97493ceef17a3a74f51cf77fa29255`.
   - `WT-20260522-008-notification-user-surface` merged at `8568578686d0cec1d6732784771381bfb63b05ae`.
   - `WT-20260522-009-member-comment-interaction-hardening` merged at `0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92`.
+  - `WT-20260522-010-collaboration-docs-catch-up` merged at `409de4ecbae5e0c69c42e4e4e66f685e33e66e2f`.
 - Worktree discipline is mandatory: no direct code edits in the main checkout.
 - Next.js code changes require reading relevant installed docs from `node_modules/next/dist/docs/`.
 - No `origin` remote is configured; remote-based baseline/fetch instructions need adjustment or a remote must be added before relying on them.
@@ -87,3 +88,4 @@ owner: "servo-kernel"
 - Attachment workflow is now locally verified: ticket detail supports upload/list/authenticated download/delete, files are stored under ignored `storage/uploads`, and smoke screenshots cover empty and uploaded states.
 - Notification user surface is now locally verified: the dashboard header shows a notification bell/unread badge, users can inspect notifications, mark one/all as read, and navigate from a notification to its ticket detail page.
 - Member/comment collaboration is now locally verified: non-participants are blocked from ticket detail/comments/members, admins can add/update collaborators, members can follow notifications to tickets, and comments are visible across authorized participants.
+- Collaboration documentation is now caught up: README and handoff describe verified attachment, notification, member, and comment behavior plus deferred production boundaries.

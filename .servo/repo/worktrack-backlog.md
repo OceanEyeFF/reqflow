@@ -162,6 +162,23 @@ owner: "servo-kernel"
 - completed_at: 2026-05-23
 - updated: 2026-05-23
 
+### WT-20260522-010-collaboration-docs-catch-up
+
+- worktrack_id: WT-20260522-010-collaboration-docs-catch-up
+- milestone_id: MS-20260522-003
+- status: done
+- node_type: docs
+- scope: README and handoff documentation catch-up for verified collaboration behavior and deferred production boundaries
+- branch: worktrack/WT-20260522-010-collaboration-docs-catch-up
+- baseline_branch: develop-aw
+- base_ref: c6e9954
+- merge_commit: 409de4ecbae5e0c69c42e4e4e66f685e33e66e2f
+- validation: lint pass; build pass; db:validate pass; stale-text reverse search pass; diff-check pass
+- intake_route: milestone-derived
+- evidence_refs: `.servo/worktrack/gate-evidence.md`
+- completed_at: 2026-05-23
+- updated: 2026-05-23
+
 ### WT-20260522-009-member-comment-interaction-hardening
 
 - worktrack_id: WT-20260522-009-member-comment-interaction-hardening
