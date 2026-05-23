@@ -35,6 +35,7 @@ owner: "servo-kernel"
 - `WT-20260522-015-ms002-final-handoff-refresh` completed and merged into `develop-aw` at `a78cc4b85a618a035e466fdb6e541c815f2daf66`.
 - `WT-20260522-007-attachment-end-to-end-validation` completed and merged into `develop-aw` at `cc6e22bf0c97493ceef17a3a74f51cf77fa29255`.
 - `WT-20260522-008-notification-user-surface` completed and merged into `develop-aw` at `8568578686d0cec1d6732784771381bfb63b05ae`.
+- `WT-20260522-009-member-comment-interaction-hardening` completed and merged into `develop-aw` at `0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92`.
 - Lint, build, and Prisma validation pass on the accepted baseline after documented local setup.
 - Operator-facing handoff docs now reflect the verified Harness baseline.
 - Runtime smoke testing found and fixed a post-login routing bug: `/` previously rendered the create-next-app default page, and now renders the authenticated dashboard.
@@ -45,7 +46,7 @@ owner: "servo-kernel"
 
 - The immediate governance-baseline milestone is complete.
 - The runtime smoke acceptance milestone is accepted and complete.
-- The collaboration surface milestone is active; attachment and notification user-surface validation are complete, and the next planned slice is member/comment interaction hardening.
+- The collaboration surface milestone is active; attachment, notification, and member/comment validation are complete, and the next planned slice is collaboration docs catch-up.
 - Future feature work should be narrow and branch-scoped because the repo has meaningful auth/data/UI coupling and limited automated tests.
 
 ## Unknowns
@@ -57,12 +58,12 @@ owner: "servo-kernel"
 
 ## Main Contradiction
 
-- current_main_contradiction: Member flows and comment interaction still lack complete user-visible acceptance evidence.
-- main_aspect: Harden member/comment collaboration flows under accepted local roles next.
+- current_main_contradiction: Verified collaboration behavior now needs operator-facing documentation catch-up before the milestone can be closed.
+- main_aspect: Document accepted local collaboration behavior and non-production boundaries next.
 
 ## Priority Judgment
 
-- current_highest_priority: Initialize `WT-20260522-009-member-comment-interaction-hardening`.
+- current_highest_priority: Initialize `WT-20260522-010-collaboration-docs-catch-up`.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 
@@ -70,7 +71,7 @@ owner: "servo-kernel"
 
 - recommended_repo_action: enter_worktrack
 - recommended_next_route: RepoScope.Observe -> milestone-status-skill -> schedule-worktrack-skill
-- suggested_node_type: bugfix
+- suggested_node_type: docs
 - continuation_ready: true_for_next_worktrack
 - continuation_blockers: N/A
 

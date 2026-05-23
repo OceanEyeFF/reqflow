@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- Observe active `MS-20260522-003`, then schedule the next worktrack `WT-20260522-009-member-comment-interaction-hardening`.
+- Observe active `MS-20260522-003`, then schedule the next worktrack `WT-20260522-010-collaboration-docs-catch-up`.
 
 ## Linked Formal Documents
 
@@ -95,20 +95,20 @@ owner: "servo-kernel"
 > 记录最近一次 worktrack 关闭后的已验证基线，供后续续跑时快速定位。
 > `latest_observed_checkpoint` 与 `last_doc_catch_up_checkpoint` 是 git hash 幂等性锚点，用于避免对同一代码基线重复执行 repo-refresh 和 doc-catch-up。空值表示锚点尚未建立，首次观察必须完整刷新；harness-skill 启动时通过 git rev-parse HEAD 对比这两个字段决定是否跳过重复刷新。
 
-- last_verified_checkpoint: 8568578686d0cec1d6732784771381bfb63b05ae
-- latest_observed_checkpoint: 8568578686d0cec1d6732784771381bfb63b05ae
-- last_doc_catch_up_checkpoint: 8568578686d0cec1d6732784771381bfb63b05ae
-- milestone_input_checkpoint: sha256:89a3d13bb6384d3c8750c6d2f6c1670c30878a34c38f6e04e0f41457ddf7e3ec
+- last_verified_checkpoint: 0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92
+- latest_observed_checkpoint: 0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92
+- last_doc_catch_up_checkpoint: 0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92
+- milestone_input_checkpoint: sha256:b6fe02680968ddc0ad7f584ed64b6a0f5cd54898ab8c2019c89171add181023f
 - checkpoint_type: git-commit
-- checkpoint_ref: 8568578686d0cec1d6732784771381bfb63b05ae
+- checkpoint_ref: 0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92
 - verified_at: 2026-05-23
 - if_no_commit_reason: N/A
 - alternative_traceability: N/A
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 24
-- autonomous_worktracks_opened: 6
+- autonomy_budget_remaining: 23
+- autonomous_worktracks_opened: 7
 
 ## Notes
 
@@ -133,3 +133,4 @@ owner: "servo-kernel"
 - Programmer accepted `MS-20260522-002` on 2026-05-23 after visual validation; `MS-20260522-003` is activated with first candidate `WT-20260522-007-attachment-end-to-end-validation`.
 - Worktrack `WT-20260522-007-attachment-end-to-end-validation` closed and merged into `develop-aw` at `cc6e22bf0c97493ceef17a3a74f51cf77fa29255`; next candidate is `WT-20260522-008-notification-user-surface`.
 - Worktrack `WT-20260522-008-notification-user-surface` closed and merged into `develop-aw` at `8568578686d0cec1d6732784771381bfb63b05ae`; next candidate is `WT-20260522-009-member-comment-interaction-hardening`.
+- Worktrack `WT-20260522-009-member-comment-interaction-hardening` closed and merged into `develop-aw` at `0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92`; next candidate is `WT-20260522-010-collaboration-docs-catch-up`.

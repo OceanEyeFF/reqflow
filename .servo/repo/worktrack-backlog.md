@@ -162,6 +162,23 @@ owner: "servo-kernel"
 - completed_at: 2026-05-23
 - updated: 2026-05-23
 
+### WT-20260522-009-member-comment-interaction-hardening
+
+- worktrack_id: WT-20260522-009-member-comment-interaction-hardening
+- milestone_id: MS-20260522-003
+- status: done
+- node_type: bugfix
+- scope: member/comment access control, member role UI, comment UI feedback, and smoke coverage
+- branch: worktrack/WT-20260522-009-member-comment-interaction-hardening
+- baseline_branch: develop-aw
+- base_ref: 716c59e
+- merge_commit: 0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92
+- validation: lint pass; build pass; db:validate pass; clean temp DB migrate/seed/smoke pass; screenshots reviewed for admin member/comment state and member-visible comments
+- intake_route: milestone-derived
+- evidence_refs: `.servo/worktrack/gate-evidence.md`
+- completed_at: 2026-05-23
+- updated: 2026-05-23
+
 ### WT-20260522-008-notification-user-surface
 
 - worktrack_id: WT-20260522-008-notification-user-surface

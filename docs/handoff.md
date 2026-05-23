@@ -27,8 +27,9 @@
   - `WT-20260522-015-ms002-final-handoff-refresh`: 修正 MS-002 收尾交接状态，避免 handoff 指向已关闭 worktrack。
   - `WT-20260522-007-attachment-end-to-end-validation`: 建立附件上传、列表、鉴权下载、删除和 smoke 截图证据。
   - `WT-20260522-008-notification-user-surface`: 建立通知铃铛、未读列表、单条已读、全部已读和通知跳转工单的 smoke 截图证据。
+  - `WT-20260522-009-member-comment-interaction-hardening`: 建立非参与者访问拒绝、协作者添加/改角色、成员通知跳转和成员评论 smoke 证据。
 - 当前 milestone: `MS-20260522-003` - Collaboration Surface Acceptance。
-- 当前 worktrack: N/A；下一步候选为 `WT-20260522-009-member-comment-interaction-hardening`。
+- 当前 worktrack: N/A；下一步候选为 `WT-20260522-010-collaboration-docs-catch-up`。
 
 ---
 
@@ -93,6 +94,9 @@ npm run smoke
 - Dashboard 默认“待我处理”显示 0 和空列表。
 - Dashboard tab 切换到“我发起的”并显示示例工单。
 - 工单详情页加载评论、状态区、详情区和协作者区。
+- 非参与者已登录用户不能读取无关工单详情、评论或协作者列表。
+- 管理员在工单详情添加协作者、调整协作者角色并新增评论。
+- 被添加的协作者通过通知进入工单详情并新增评论。
 - `/tickets` 列表页切换到“全部工单”并显示示例工单。
 - `/tickets/new` 新建工单页面可达，优先级下拉显示中文标签并保留内部值。
 - 附件上传、鉴权下载和删除流程。
@@ -124,7 +128,7 @@ npm run smoke
   - `/` - 工作台首页，展示统计和最近工单。
   - `/tickets` - 工单列表，支持 scope/status/priority/keyword 筛选。
   - `/tickets/new` - 新建工单。
-  - `/tickets/[id]` - 工单详情，支持状态、负责人、优先级、评论和协作者操作。
+  - `/tickets/[id]` - 工单详情，支持状态、负责人、优先级、评论、协作者、附件和操作记录。
 - API:
   - `GET/POST /api/tickets`
   - `GET/PATCH/DELETE /api/tickets/[id]`
@@ -147,6 +151,19 @@ npm run smoke
   - API: `PATCH /api/notifications/read-all`
   - 页面: 登录后顶部导航右侧通知铃铛，支持未读数、通知列表、单条已读、全部已读和跳转关联工单。
 - 当前交接确认附件和通知在本地开发环境的用户可见行为；不声明生产文件存储、恶意文件扫描、外部邮件/推送或实时消息能力已经完成。
+
+### 评论和协作者
+
+- 评论工作流已完成本地验收:
+  - API: `GET/POST /api/tickets/[id]/comments`
+  - 非参与者访问被拒绝；授权参与者可以新增评论并触发站内通知。
+  - 单条评论上限为 2000 字。
+- 协作者工作流已完成本地验收:
+  - API: `GET/POST/DELETE/PATCH /api/tickets/[id]/members`
+  - 可修改成员范围: admin、工单发起人、负责人、owner 协作者。
+  - 支持角色: `owner`, `collaborator`, `watcher`。
+  - 页面支持添加协作者、修改协作者角色、移除协作者，并显示相关操作记录。
+- 当前交接确认本地权限和用户可见行为；不声明完整生产审计、复杂角色矩阵或实时协作能力已经完成。
 
 ---
 
@@ -215,4 +232,4 @@ cd .worktrees/WT-xxxx
 ---
 
 *交接更新时间: 2026-05-23*
-*交接来源: Harness `WT-20260522-008-notification-user-surface`*
+*交接来源: Harness `WT-20260522-009-member-comment-interaction-hardening`*

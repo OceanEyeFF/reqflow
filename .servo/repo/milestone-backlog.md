@@ -69,7 +69,7 @@ owner: "servo-kernel"
 - worktrack_list:
   - WT-20260522-007-attachment-end-to-end-validation (done, bugfix)
   - WT-20260522-008-notification-user-surface (done, feature)
-  - WT-20260522-009-member-comment-interaction-hardening (planned, bugfix)
+  - WT-20260522-009-member-comment-interaction-hardening (done, bugfix)
   - WT-20260522-010-collaboration-docs-catch-up (planned, docs)
 - created_by: programmer-confirmed-harness
 - created_at: 2026-05-22
