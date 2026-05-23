@@ -5,7 +5,7 @@
 **项目名称**: ReqFlow - 轻量级公司内部工单需求协作系统  
 **仓库路径**: `E:\repos\personal\reqflow`  
 **Harness 基线分支**: `develop-aw`  
-**当前交接状态**: MiniMax 初始化代码已纳入 Harness 评估；验证环境、lint 质量基线、runtime smoke 基线、dashboard/ticket flow 修复、附件、通知、评论和协作者本地验收事实已建立。
+**当前交接状态**: MiniMax 初始化代码已纳入 Harness 评估；验证环境、lint 质量基线、runtime smoke 基线、dashboard/ticket flow 修复、附件、通知、评论、协作者和最终 CodeReview 本地验收事实已建立。
 **技术栈**: Next.js 16.2.6 + React 19.2.4 + TypeScript + TailwindCSS v4 + Prisma 5 + SQLite + NextAuth v5 beta
 
 ---
@@ -13,7 +13,7 @@
 ## 已验证基线
 
 - 基线 worktree: `E:\repos\personal\reqflow\.worktrees\develop-aw`
-- 最新已验证业务 checkpoint: `0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92`
+- 最新已验证业务 checkpoint: `18af24c70a48d26c2d23823cd61ba6d6f582a558`
 - 最新已验收 checkpoint: `4179629cdb71cd00c0e52c09dc346035d8147f82`
 - 当前 Milestone: `MS-20260522-003` - Collaboration Surface Acceptance
 - 已完成 worktrack:
@@ -30,8 +30,9 @@
   - `WT-20260522-009-member-comment-interaction-hardening`: 建立非参与者访问拒绝、协作者添加/改角色、成员通知跳转和成员评论 smoke 证据。
   - `WT-20260522-010-collaboration-docs-catch-up`: 追平 README 和 handoff 中的协作验收事实与非生产边界。
   - `WT-20260523-016-ticket-modify-permission-hardening`: 修正普通协作者/关注者仍可 PATCH 工单可变字段的最终审查问题。
+  - `WT-20260523-017-ms003-final-code-review`: 完成 MS-003 最终 CodeReview，并修正工单 PATCH status、priority、assignee 输入校验缺口。
 - 当前 milestone: `MS-20260522-003` - Collaboration Surface Acceptance。
-- 当前 worktrack: N/A；下一步为 MS-003 Gate、最终 CodeReview 和画面验收。
+- 当前 worktrack: N/A；下一步为 MS-003 Gate 和画面验收。
 
 ---
 
@@ -97,6 +98,7 @@ npm run smoke
 - Dashboard tab 切换到“我发起的”并显示示例工单。
 - 工单详情页加载评论、状态区、详情区和协作者区。
 - 非参与者已登录用户不能读取无关工单详情、评论或协作者列表。
+- 工单 PATCH 拒绝非法状态、非法优先级、缺失负责人 ID 和空负责人 ID。
 - 管理员在工单详情添加协作者、调整协作者角色并新增评论。
 - 被添加的协作者通过通知进入工单详情并新增评论。
 - `/tickets` 列表页切换到“全部工单”并显示示例工单。
@@ -166,6 +168,7 @@ npm run smoke
   - 支持角色: `owner`, `collaborator`, `watcher`。
   - 页面支持添加协作者、修改协作者角色、移除协作者，并显示相关操作记录。
 - 工单状态、负责人和优先级变更仅允许 admin、工单发起人、负责人和 owner 协作者执行；普通协作者/关注者保留读取与评论能力。
+- 工单 PATCH 会在写库前校验 status/priority 枚举和 assigneeId 的格式及用户存在性，避免非法值进入数据库或外键错误泄漏到用户请求。
 - 当前交接确认本地权限和用户可见行为；不声明完整生产审计、复杂角色矩阵或实时协作能力已经完成。
 
 ---
@@ -235,4 +238,4 @@ cd .worktrees/WT-xxxx
 ---
 
 *交接更新时间: 2026-05-23*
-*交接来源: Harness `WT-20260522-010-collaboration-docs-catch-up`*
+*交接来源: Harness `WT-20260523-017-ms003-final-code-review`*

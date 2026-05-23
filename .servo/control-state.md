@@ -37,7 +37,7 @@ owner: "servo-kernel"
 
 ## Current Next Action
 
-- Run MS-003 Gate and final CodeReview, then hand back for programmer visual acceptance.
+- Run MS-003 Gate, then hand back for programmer visual acceptance.
 
 ## Linked Formal Documents
 
@@ -95,20 +95,20 @@ owner: "servo-kernel"
 > 记录最近一次 worktrack 关闭后的已验证基线，供后续续跑时快速定位。
 > `latest_observed_checkpoint` 与 `last_doc_catch_up_checkpoint` 是 git hash 幂等性锚点，用于避免对同一代码基线重复执行 repo-refresh 和 doc-catch-up。空值表示锚点尚未建立，首次观察必须完整刷新；harness-skill 启动时通过 git rev-parse HEAD 对比这两个字段决定是否跳过重复刷新。
 
-- last_verified_checkpoint: 541bbd73bf3383ea59c4760c1f95457e482dad0f
-- latest_observed_checkpoint: 541bbd73bf3383ea59c4760c1f95457e482dad0f
+- last_verified_checkpoint: 18af24c70a48d26c2d23823cd61ba6d6f582a558
+- latest_observed_checkpoint: 18af24c70a48d26c2d23823cd61ba6d6f582a558
 - last_doc_catch_up_checkpoint: 409de4ecbae5e0c69c42e4e4e66f685e33e66e2f
-- milestone_input_checkpoint: sha256:a1c74971542e3fbafb2888d4603ca1af19432b68f80713e29453258258222bdd
+- milestone_input_checkpoint: sha256:02d533d48a78c32bdd069b5ac430feba9be1460f275c855cd2f6c802cb64777b
 - checkpoint_type: git-commit
-- checkpoint_ref: 541bbd73bf3383ea59c4760c1f95457e482dad0f
+- checkpoint_ref: 18af24c70a48d26c2d23823cd61ba6d6f582a558
 - verified_at: 2026-05-23
 - if_no_commit_reason: N/A
 - alternative_traceability: N/A
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 21
-- autonomous_worktracks_opened: 9
+- autonomy_budget_remaining: 20
+- autonomous_worktracks_opened: 10
 
 ## Notes
 
@@ -134,5 +134,6 @@ owner: "servo-kernel"
 - Worktrack `WT-20260522-007-attachment-end-to-end-validation` closed and merged into `develop-aw` at `cc6e22bf0c97493ceef17a3a74f51cf77fa29255`; next candidate is `WT-20260522-008-notification-user-surface`.
 - Worktrack `WT-20260522-008-notification-user-surface` closed and merged into `develop-aw` at `8568578686d0cec1d6732784771381bfb63b05ae`; next candidate is `WT-20260522-009-member-comment-interaction-hardening`.
 - Worktrack `WT-20260522-009-member-comment-interaction-hardening` closed and merged into `develop-aw` at `0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92`; next candidate is `WT-20260522-010-collaboration-docs-catch-up`.
-- Worktrack `WT-20260522-010-collaboration-docs-catch-up` closed and merged into `develop-aw` at `409de4ecbae5e0c69c42e4e4e66f685e33e66e2f`; all MS-003 planned worktracks are closed and milestone Gate/final CodeReview are next.
+- Worktrack `WT-20260522-010-collaboration-docs-catch-up` closed and merged into `develop-aw` at `409de4ecbae5e0c69c42e4e4e66f685e33e66e2f`; all original MS-003 planned worktracks were closed before review-added follow-up work.
 - Review-added worktrack `WT-20260523-016-ticket-modify-permission-hardening` closed and merged into `develop-aw` at `541bbd73bf3383ea59c4760c1f95457e482dad0f`; final CodeReview should restart from this checkpoint.
+- Programmer-requested CodeReview worktrack `WT-20260523-017-ms003-final-code-review` closed and merged into `develop-aw` at `18af24c70a48d26c2d23823cd61ba6d6f582a558`; ticket PATCH now rejects invalid status/priority and invalid assignee inputs before database writes.

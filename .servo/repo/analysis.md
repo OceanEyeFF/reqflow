@@ -38,6 +38,7 @@ owner: "servo-kernel"
 - `WT-20260522-009-member-comment-interaction-hardening` completed and merged into `develop-aw` at `0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92`.
 - `WT-20260522-010-collaboration-docs-catch-up` completed and merged into `develop-aw` at `409de4ecbae5e0c69c42e4e4e66f685e33e66e2f`.
 - Review-added `WT-20260523-016-ticket-modify-permission-hardening` completed and merged into `develop-aw` at `541bbd73bf3383ea59c4760c1f95457e482dad0f`.
+- Programmer-requested `WT-20260523-017-ms003-final-code-review` completed and merged into `develop-aw` at `18af24c70a48d26c2d23823cd61ba6d6f582a558`; final CodeReview fixed ticket PATCH input validation for invalid status, priority, and assignee values.
 - Lint, build, and Prisma validation pass on the accepted baseline after documented local setup.
 - Operator-facing handoff docs now reflect the verified Harness baseline.
 - Runtime smoke testing found and fixed a post-login routing bug: `/` previously rendered the create-next-app default page, and now renders the authenticated dashboard.
@@ -48,7 +49,7 @@ owner: "servo-kernel"
 
 - The immediate governance-baseline milestone is complete.
 - The runtime smoke acceptance milestone is accepted and complete.
-- The collaboration surface milestone has all planned worktracks closed; milestone Gate, final CodeReview, and programmer visual acceptance remain.
+- The collaboration surface milestone has all planned and review-added worktracks closed; milestone Gate and programmer visual acceptance remain.
 - Future feature work should be narrow and branch-scoped because the repo has meaningful auth/data/UI coupling and limited automated tests.
 
 ## Unknowns
@@ -60,19 +61,19 @@ owner: "servo-kernel"
 
 ## Main Contradiction
 
-- current_main_contradiction: MS-003 implementation and docs are complete, but milestone acceptance still requires final Gate/CodeReview and programmer visual validation.
-- main_aspect: Run MS-003 Gate and final CodeReview next.
+- current_main_contradiction: MS-003 implementation, docs, and final CodeReview are complete, but milestone acceptance still requires Milestone Gate and programmer visual validation.
+- main_aspect: Run MS-003 Gate next.
 
 ## Priority Judgment
 
-- current_highest_priority: Run MS-003 Gate and final CodeReview.
+- current_highest_priority: Run MS-003 Gate and hand back for programmer visual acceptance.
 - long_term_highest_priority: Preserve a reliable internal ticket collaboration workflow while incrementally improving production readiness and validation coverage.
 - do_not_do_now: Do not open a feature worktrack, rewrite architecture, mutate database binaries, or infer a new goal before RepoScope.Decide.
 
 ## Routing Projection
 
 - recommended_repo_action: milestone_gate
-- recommended_next_route: RepoScope.Observe -> milestone-status-skill -> review-evidence-skill -> gate-skill
+- recommended_next_route: RepoScope.Observe -> milestone-status-skill -> gate-skill
 - suggested_node_type: review
 - continuation_ready: true_for_milestone_gate
 - continuation_blockers: N/A
