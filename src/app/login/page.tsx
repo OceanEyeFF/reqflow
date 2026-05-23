@@ -20,19 +20,23 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
-    const result = await signIn("credentials", {
-      username,
-      password,
-      redirect: false,
-    });
+    try {
+      const result = await signIn("credentials", {
+        username,
+        password,
+        redirect: false,
+      });
 
-    setLoading(false);
-
-    if (result?.error) {
-      setError("用户名或密码错误");
-    } else {
-      router.push("/");
-      router.refresh();
+      if (result?.error) {
+        setError("用户名或密码错误");
+      } else {
+        router.push("/");
+        router.refresh();
+      }
+    } catch {
+      setError("登录服务不可用，请稍后重试");
+    } finally {
+      setLoading(false);
     }
   }
 

@@ -12,36 +12,41 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         password: { label: "密码", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.username || !credentials?.password) {
+        try {
+          if (!credentials?.username || !credentials?.password) {
+            return null;
+          }
+
+          const user = await prisma.user.findUnique({
+            where: { username: credentials.username as string },
+          });
+
+          if (!user) {
+            return null;
+          }
+
+          const isValid = await bcrypt.compare(
+            credentials.password as string,
+            user.passwordHash
+          );
+
+          if (!isValid) {
+            return null;
+          }
+
+          return {
+            id: user.id,
+            name: user.displayName,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+            department: user.department,
+            avatarUrl: user.avatarUrl,
+          };
+        } catch (error) {
+          console.error("Auth error:", error);
           return null;
         }
-
-        const user = await prisma.user.findUnique({
-          where: { username: credentials.username as string },
-        });
-
-        if (!user) {
-          return null;
-        }
-
-        const isValid = await bcrypt.compare(
-          credentials.password as string,
-          user.passwordHash
-        );
-
-        if (!isValid) {
-          return null;
-        }
-
-        return {
-          id: user.id,
-          name: user.displayName,
-          email: user.email,
-          username: user.username,
-          role: user.role,
-          department: user.department,
-          avatarUrl: user.avatarUrl,
-        };
       },
     }),
   ],
