@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 15
-- planned: 2
+- planned: 1
 - active: 0
-- completed: 13
+- completed: 14
 - blocked: 0
 - deferred: 0
 
@@ -166,10 +166,10 @@
 - title: Attachments/Notifications API route handler 集成测试
 - milestone_id: MS-20260523-003
 - node_type: test
-- status: planned
+- status: completed
 - priority: 4
-- contract_path:
-- branch:
+- contract_path: .servo/worktrack/WT-20260523-014/contract.md
+- branch: worktrack/wt-20260523-014-attachments-notifications (merged)
 
 ### WT-20260523-015
 

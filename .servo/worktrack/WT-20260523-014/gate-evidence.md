@@ -27,13 +27,16 @@
 - validation_surface: pass
 - confidence: high
 - ready_for_gate: true
-- residual_risks: `npm run build` remains post-merge because nested worktree Next/Turbopack root detection can be noisy
+- residual_risks: N/A
 
 ### Supporting Detail
 - worktree_lint: `npm run lint` passed
 - worktree_test: `npm run test` passed; 10 files, 71 tests
 - worktree_upload_residue_check: no `public/uploads/route-test-*` files found
-- post_merge_required: `npm run lint`, `npm run test`, `npm run build`
+- post_merge_lint: `npm run lint` passed
+- post_merge_test: `npm run test` passed; 10 files, 71 tests
+- post_merge_build: `npm run build` passed
+- post_merge_upload_residue_check: no `public/uploads/route-test-*` files found
 
 ## Policy Lane
 
@@ -61,7 +64,7 @@
 ## Recommended Next Route
 
 ### Control Signal
-- allowed_next_routes: merge, post_merge_verify, repo_refresh
-- recommended_next_route: merge
+- allowed_next_routes: repo_refresh, next_worktrack
+- recommended_next_route: next_worktrack
 - approval_required: false
 - needs_programmer_approval: false
