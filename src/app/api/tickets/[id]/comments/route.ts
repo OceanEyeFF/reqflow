@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { notifyNewComment } from "@/lib/notifications";
+import { canAccessTicket } from "@/lib/ticket-access";
 
 export async function GET(
   request: NextRequest,
@@ -13,6 +14,18 @@ export async function GET(
   }
 
   const { id } = await params;
+
+  const ticket = await prisma.ticket.findUnique({
+    where: { id },
+    select: { id: true },
+  });
+  if (!ticket) {
+    return Response.json({ error: "工单不存在" }, { status: 404 });
+  }
+
+  if (!(await canAccessTicket(id, session.user.id, session.user.role))) {
+    return Response.json({ error: "无权查看该工单评论" }, { status: 403 });
+  }
 
   const comments = await prisma.ticketComment.findMany({
     where: { ticketId: id },
@@ -35,11 +48,27 @@ export async function POST(
   }
 
   const { id } = await params;
-  const body = await request.json();
-  const { content } = body;
+  const body = await request.json().catch(() => null);
+  const content = typeof body?.content === "string" ? body.content : "";
+
+  const existingTicket = await prisma.ticket.findUnique({
+    where: { id },
+    select: { id: true },
+  });
+  if (!existingTicket) {
+    return Response.json({ error: "工单不存在" }, { status: 404 });
+  }
+
+  if (!(await canAccessTicket(id, session.user.id, session.user.role))) {
+    return Response.json({ error: "无权评论该工单" }, { status: 403 });
+  }
 
   if (!content?.trim()) {
     return Response.json({ error: "评论内容不能为空" }, { status: 400 });
+  }
+
+  if (content.length > 2000) {
+    return Response.json({ error: "评论内容不能超过 2000 字" }, { status: 400 });
   }
 
   const comment = await prisma.ticketComment.create({

@@ -43,6 +43,7 @@ export const LOG_ACTION = {
   ASSIGNEE_CHANGED: "assignee_changed",
   MEMBER_ADDED: "member_added",
   MEMBER_REMOVED: "member_removed",
+  MEMBER_ROLE_CHANGED: "member_role_changed",
   PRIORITY_CHANGED: "priority_changed",
   CLOSED: "closed",
 } as const;
