@@ -57,8 +57,8 @@ export async function PATCH(
     return Response.json({ error: "工单不存在" }, { status: 404 });
   }
 
-  const updateData: any = {};
-  const logs: any[] = [];
+  const updateData: Record<string, string | Date | null> = {};
+  const logs: Array<{ ticketId: string; userId: string; action: string; oldValue: string | null; newValue: string | null }> = [];
 
   // Handle status change
   if (body.status && body.status !== ticket.status) {

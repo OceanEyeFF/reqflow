@@ -42,10 +42,6 @@ export default function TicketsPage() {
       .catch(() => {});
   }, []);
 
-  useEffect(() => {
-    fetchTickets();
-  }, [scope, status, priority, currentUserId]);
-
   async function fetchTickets() {
     setLoading(true);
     const params = new URLSearchParams({ scope });
@@ -58,6 +54,22 @@ export default function TicketsPage() {
     setTickets(data.tickets || []);
     setLoading(false);
   }
+
+  useEffect(() => {
+    const params = new URLSearchParams({ scope });
+    if (status) params.set("status", status);
+    if (priority) params.set("priority", priority);
+    if (keyword) params.set("keyword", keyword);
+
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional loading state before async fetch
+    setLoading(true);
+    fetch(`/api/tickets?${params}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setTickets(data.tickets || []);
+        setLoading(false);
+      });
+  }, [scope, status, priority, keyword, currentUserId]);
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();

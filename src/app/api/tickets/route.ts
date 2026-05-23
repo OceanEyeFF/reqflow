@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
   const isAdmin = session.user.role === "admin";
 
   // Build where clause based on scope
-  let whereClause: any = {};
+  const whereClause: Record<string, unknown> = {};
 
   if (!isAdmin && scope !== "all") {
     switch (scope) {

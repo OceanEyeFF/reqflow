@@ -1,15 +1,14 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS, MEMBER_ROLE_LABELS, TICKET_STATUS, TICKET_PRIORITY } from "@/types";
-import { ArrowLeft, Send, Clock, User as UserIcon } from "lucide-react";
+import { ArrowLeft, Send, User as UserIcon } from "lucide-react";
 
 type TicketDetail = {
   id: string;
@@ -48,27 +47,32 @@ export default function TicketDetailPage() {
   const [showAddMember, setShowAddMember] = useState(false);
   const [newMemberId, setNewMemberId] = useState("");
 
-  const fetchTicket = useCallback(async () => {
+  const fetchTicket = async () => {
     const res = await fetch(`/api/tickets/${ticketId}`);
     if (res.ok) {
       const data = await res.json();
       setTicket(data.ticket);
     }
-    setLoading(false);
-  }, [ticketId]);
-
-  const fetchUsers = useCallback(async () => {
-    const res = await fetch("/api/users");
-    if (res.ok) {
-      const data = await res.json();
-      setUsers(data.users || []);
-    }
-  }, []);
+  };
 
   useEffect(() => {
-    fetchTicket();
-    fetchUsers();
-  }, [fetchTicket, fetchUsers]);
+    async function loadData() {
+      const [ticketRes, usersRes] = await Promise.all([
+        fetch(`/api/tickets/${ticketId}`),
+        fetch("/api/users"),
+      ]);
+      if (ticketRes.ok) {
+        const data = await ticketRes.json();
+        setTicket(data.ticket);
+      }
+      if (usersRes.ok) {
+        const data = await usersRes.json();
+        setUsers(data.users || []);
+      }
+      setLoading(false);
+    }
+    loadData();
+  }, [ticketId]);
 
   async function handleAddComment(e: React.FormEvent) {
     e.preventDefault();
@@ -300,7 +304,7 @@ export default function TicketDetailPage() {
                   value={ticket.priority}
                   onChange={(e) => handlePriorityChange(e.target.value)}
                 >
-                  {Object.entries(TICKET_PRIORITY).map(([key, value]) => (
+                  {Object.keys(TICKET_PRIORITY).map((key) => (
                     <option key={key} value={key}>{PRIORITY_LABELS[key]}</option>
                   ))}
                 </select>

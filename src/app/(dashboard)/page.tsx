@@ -48,12 +48,9 @@ export default function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    fetchData();
-  }, [activeTab]);
-
-  async function fetchData() {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional loading state before async fetch
     setLoading(true);
-    
+
     // Map tab to scope
     const scopeMap = {
       assigned: "assigned_to_me",
@@ -61,20 +58,19 @@ export default function DashboardPage() {
       involved: "joined",
     };
 
-    const [ticketsRes, statsRes] = await Promise.all([
+    Promise.all([
       fetch(`/api/tickets?scope=${scopeMap[activeTab]}&status=`),
       fetch("/api/tickets/stats"),
-    ]);
-
-    const ticketsData = await ticketsRes.json();
-    const statsData = await statsRes.json();
-
-    setTickets(ticketsData.tickets || []);
-    if (statsData.stats) {
-      setStats(statsData.stats);
-    }
-    setLoading(false);
-  }
+    ])
+      .then(([ticketsRes, statsRes]) => Promise.all([ticketsRes.json(), statsRes.json()]))
+      .then(([ticketsData, statsData]) => {
+        setTickets(ticketsData.tickets || []);
+        if (statsData.stats) {
+          setStats(statsData.stats);
+        }
+        setLoading(false);
+      });
+  }, [activeTab]);
 
   const tabLabels = {
     assigned: "待我处理",

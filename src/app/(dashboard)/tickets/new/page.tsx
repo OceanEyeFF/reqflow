@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,14 +29,10 @@ export default function NewTicketPage() {
   });
 
   useEffect(() => {
-    fetchUsers();
+    fetch("/api/users")
+      .then((res) => res.json())
+      .then((data) => setUsers(data.users || []));
   }, []);
-
-  async function fetchUsers() {
-    const res = await fetch("/api/users");
-    const data = await res.json();
-    setUsers(data.users || []);
-  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

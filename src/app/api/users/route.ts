@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const keyword = searchParams.get("keyword");
 
-  const whereClause: any = {};
+  const whereClause: Record<string, unknown> = {};
   if (keyword) {
     whereClause.OR = [
       { displayName: { contains: keyword } },
