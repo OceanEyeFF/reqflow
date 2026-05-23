@@ -23,8 +23,10 @@
 - worktrack_list: [WT-20260523-001, WT-20260523-002, WT-20260523-003, WT-20260523-004]
 - created_by: harness-kernel
 - created_at: 2026-05-23
-- updated: 2026-05-23
+- updated: 2026-05-24
 - updated_by: harness-kernel
+- accepted_by: fdch0
+- accepted_at: 2026-05-24
 
 ### MS-20260523-002
 

@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- updated: 2026-05-23
+- updated: 2026-05-24
 - baseline_branch: develop
-- baseline_commit: af9998f923b4168d140d160c89b5e9d7511077ad
+- baseline_commit: d9c3c2f4f5ead8c4041ac78e877bad1a7b8f1f92
 
 ## Codebase State
 
@@ -46,9 +46,9 @@ reqflow/
 
 | 指标 | 状态 |
 |------|------|
-| `npm run build` | 通过 (2026-05-23) |
-| `npm run lint` | 通过，ESLint 0 warning (2026-05-23) |
-| `npm run test` | 通过，10 个测试文件，71 个测试 (2026-05-23) |
+| `npm run build` | 通过 (2026-05-24) |
+| `npm run lint` | 通过，ESLint 0 warning (2026-05-24) |
+| `npm run test` | 通过，10 个测试文件，71 个测试 (2026-05-24) |
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
 
 ### 已知 Issues (来自 handoff.md)
@@ -64,11 +64,13 @@ reqflow/
 1. M3 API route handler 集成测试、最终 CodeReview Worktrack 和补充 CodeReview Worktrack 已完成并通过最终回归。
 2. `npm run lint` 通过依赖 ESLint 忽略 agent/control/runtime 目录；这些目录不属于应用源码。
 
-### Completed Milestone
+### Accepted Milestone
 
-- active_milestone: MS-20260523-003
+- milestone_id: MS-20260523-003
 - title: API route handler 集成测试
 - purpose: 为核心 API route handler 建立可重复的集成测试覆盖，保护后续重构和缺陷修复。
+- accepted_by: fdch0
+- accepted_at: 2026-05-24
 - completed_worktracks: WT-20260523-011, WT-20260523-012, WT-20260523-013, WT-20260523-014, WT-20260523-015
 - planned_worktracks: none
 

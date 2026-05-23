@@ -7,7 +7,7 @@
 - discovered_at: 2026-05-23
 - discovered_by: harness-kernel (existing-code-adoption)
 - baseline_branch: develop
-- baseline_commit: af9998f923b4168d140d160c89b5e9d7511077ad
+- baseline_commit: d9c3c2f4f5ead8c4041ac78e877bad1a7b8f1f92
 
 ## Project Facts
 
