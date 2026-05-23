@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: initialize WT-20260523-016 final CodeReview Worktrack after M3 completion
+- RepoScope.Observe: M3 completed and final CodeReview Worktrack completed; await next repo goal
 
 ## Linked Formal Documents
 
@@ -84,8 +84,8 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 08fe33c9af2b2573c6264fbfd6934388968dae47
-- last_doc_catch_up_checkpoint: 08fe33c9af2b2573c6264fbfd6934388968dae47
+- latest_observed_checkpoint: 9269949704d58ec63dff3f8ff1458dc40e05d7c9
+- last_doc_catch_up_checkpoint: 9269949704d58ec63dff3f8ff1458dc40e05d7c9
 - milestone_input_checkpoint:
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
@@ -95,8 +95,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 25
-- autonomous_worktracks_opened: 5
+- autonomy_budget_remaining: 24
+- autonomous_worktracks_opened: 6
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-23
 - autonomy_budget_notes: 用户授予30个连续Worktrack额度，低危险操作可自行审批
@@ -106,4 +106,4 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 当前阶段: M3 API route handler 集成测试已完成
-- 分治策略: 已完成测试夹具 → API 模块覆盖 → 文档与回归收口；下一步最终 CodeReview
+- 分治策略: 已完成测试夹具 → API 模块覆盖 → 文档与回归收口 → 最终 CodeReview

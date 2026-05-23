@@ -44,7 +44,9 @@
 ### Supporting Detail
 - worktree_lint: `npm run lint` passed
 - worktree_test: `npm run test` passed; 10 files, 71 tests
-- post_merge_required: `npm run lint`, `npm run test`, `npm run build`
+- post_merge_lint: `npm run lint` passed
+- post_merge_test: `npm run test` passed; 10 files, 71 tests
+- post_merge_build: `npm run build` passed
 
 ## Policy Lane
 
@@ -61,7 +63,7 @@
 ## Recommended Next Route
 
 ### Control Signal
-- allowed_next_routes: merge, post_merge_verify, repo_refresh
-- recommended_next_route: merge
+- allowed_next_routes: repo_refresh, handback
+- recommended_next_route: handback
 - approval_required: false
 - needs_programmer_approval: false

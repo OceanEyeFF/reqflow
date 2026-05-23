@@ -11,7 +11,9 @@
 ### T3: Run final Gate [completed]
 - worktree `npm run lint` passed
 - worktree `npm run test` passed; 10 files, 71 tests
-- post-merge `npm run build` pending
+- post-merge `npm run lint` passed
+- post-merge `npm run test` passed; 10 files, 71 tests
+- post-merge `npm run build` passed
 
-### T4: Close review and refresh RepoStatus [pending]
+### T4: Close review and refresh RepoStatus [completed]
 - mark WT-016 completed and update control state
