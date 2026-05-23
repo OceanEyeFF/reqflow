@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Observe: M3 completed and final CodeReview Worktrack completed; await next repo goal
+- WorktrackScope.Verify: supplemental CodeReview Worktrack WT-20260524-017 ready for post-merge validation
 
 ## Linked Formal Documents
 

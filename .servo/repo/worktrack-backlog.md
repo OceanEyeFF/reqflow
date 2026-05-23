@@ -4,9 +4,9 @@
 
 ## Summary
 
-- total: 16
+- total: 17
 - planned: 0
-- active: 0
+- active: 1
 - completed: 16
 - blocked: 0
 - deferred: 0
@@ -194,3 +194,14 @@
 - priority: 1
 - contract_path: .servo/worktrack/WT-20260523-016/contract.md
 - branch: worktrack/wt-20260523-016-final-code-review (merged)
+
+### WT-20260524-017
+
+- worktrack_id: WT-20260524-017
+- title: 补充 CodeReview Worktrack
+- milestone_id: none
+- node_type: review
+- status: active
+- priority: 2
+- contract_path: .servo/worktrack/WT-20260524-017/contract.md
+- branch: worktrack/wt-20260524-017-supplemental-code-review
