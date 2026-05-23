@@ -5,7 +5,7 @@
 **项目名称**: ReqFlow - 轻量级公司内部工单需求协作系统  
 **仓库路径**: `E:\repos\personal\reqflow`  
 **Harness 基线分支**: `develop-aw`  
-**当前交接状态**: MiniMax 初始化代码已纳入 Harness 评估；验证环境、lint 质量基线、runtime smoke 基线和首轮 dashboard/ticket flow 修复已建立。
+**当前交接状态**: MiniMax 初始化代码已纳入 Harness 评估；验证环境、lint 质量基线、runtime smoke 基线、dashboard/ticket flow 修复、附件工作流和通知用户界面已建立。
 **技术栈**: Next.js 16.2.6 + React 19.2.4 + TypeScript + TailwindCSS v4 + Prisma 5 + SQLite + NextAuth v5 beta
 
 ---
@@ -13,7 +13,7 @@
 ## 已验证基线
 
 - 基线 worktree: `E:\repos\personal\reqflow\.worktrees\develop-aw`
-- 最新已验证业务 checkpoint: `d59e734213a57502e174fdf35b58fc128f21f522`
+- 最新已验证业务 checkpoint: `8568578686d0cec1d6732784771381bfb63b05ae`
 - 最新已验收 checkpoint: `4179629cdb71cd00c0e52c09dc346035d8147f82`
 - 当前 Milestone: `MS-20260522-003` - Collaboration Surface Acceptance
 - 已完成 worktrack:
@@ -26,8 +26,9 @@
   - `WT-20260522-006-runtime-docs-catch-up`: 追平 runtime smoke 和本地运行边界文档。
   - `WT-20260522-015-ms002-final-handoff-refresh`: 修正 MS-002 收尾交接状态，避免 handoff 指向已关闭 worktrack。
   - `WT-20260522-007-attachment-end-to-end-validation`: 建立附件上传、列表、鉴权下载、删除和 smoke 截图证据。
+  - `WT-20260522-008-notification-user-surface`: 建立通知铃铛、未读列表、单条已读、全部已读和通知跳转工单的 smoke 截图证据。
 - 当前 milestone: `MS-20260522-003` - Collaboration Surface Acceptance。
-- 当前 worktrack: N/A；下一步候选为 `WT-20260522-008-notification-user-surface`。
+- 当前 worktrack: N/A；下一步候选为 `WT-20260522-009-member-comment-interaction-hardening`。
 
 ---
 
@@ -72,7 +73,7 @@ npm run smoke
 - `npm run lint`: 通过，0 errors。
 - `npm run build`: 通过，Next.js 16.2.6 production build 和 TypeScript check 通过。
 - `npm run db:validate`: 通过；需要先把 `.env.example` 复制为被忽略的 `.env`。
-- `npm run smoke`: 通过；使用 Playwright + 本机 Chrome channel 启动 Next dev server，覆盖登录、工作台、工单列表、工单详情、新建工单入口和退出。
+- `npm run smoke`: 通过；使用 Playwright + 本机 Chrome channel 启动 Next dev server，覆盖登录、工作台、工单列表、工单详情、附件上传/下载/删除、新建工单、通知未读/已读操作、通知跳转和退出。
 
 说明：
 
@@ -94,6 +95,9 @@ npm run smoke
 - 工单详情页加载评论、状态区、详情区和协作者区。
 - `/tickets` 列表页切换到“全部工单”并显示示例工单。
 - `/tickets/new` 新建工单页面可达，优先级下拉显示中文标签并保留内部值。
+- 附件上传、鉴权下载和删除流程。
+- 新建分配给项目经理的工单并触发通知。
+- 项目经理查看通知未读数、通知菜单、单条已读、全部已读，并从通知进入工单详情。
 - 点击“退出”返回登录页。
 
 已由 `WT-20260522-005-dashboard-ticket-flow-fixes` 修复并纳入 smoke 断言：
@@ -131,15 +135,18 @@ npm run smoke
 
 ### 附件和通知
 
-- 附件数据模型和 API 已存在:
+- 附件工作流已完成本地验收:
   - Prisma model: `TicketAttachment`
   - API: `GET/POST/DELETE /api/tickets/[id]/attachments`
-- 通知数据模型和 API 已存在:
+  - 下载 API: `GET /api/tickets/[id]/attachments/[attachmentId]/download`
+  - 页面: `/tickets/[id]` 右侧附件卡片支持上传、列表、下载和删除。
+- 通知用户界面已完成本地验收:
   - Prisma model: `Notification`
   - API: `GET /api/notifications`
   - API: `PATCH /api/notifications/[id]`
-  - API: `POST /api/notifications/read-all`
-- 当前交接只确认代码和 schema 中的已实现面，不声明附件上传存储策略或通知交互体验已经达到生产要求。
+  - API: `PATCH /api/notifications/read-all`
+  - 页面: 登录后顶部导航右侧通知铃铛，支持未读数、通知列表、单条已读、全部已读和跳转关联工单。
+- 当前交接确认附件和通知在本地开发环境的用户可见行为；不声明生产文件存储、恶意文件扫描、外部邮件/推送或实时消息能力已经完成。
 
 ---
 
@@ -207,5 +214,5 @@ cd .worktrees/WT-xxxx
 
 ---
 
-*交接更新时间: 2026-05-22*  
-*交接来源: Harness `WT-20260522-015-ms002-final-handoff-refresh`*
+*交接更新时间: 2026-05-23*
+*交接来源: Harness `WT-20260522-008-notification-user-surface`*

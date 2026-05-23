@@ -1,7 +1,7 @@
 ---
 title: "Worktrack Backlog"
 artifact_type: "worktrack-backlog"
-updated: "2026-05-22"
+updated: "2026-05-23"
 owner: "servo-kernel"
 ---
 
@@ -157,6 +157,23 @@ owner: "servo-kernel"
 - base_ref: a670c2c
 - merge_commit: cc6e22bf0c97493ceef17a3a74f51cf77fa29255
 - validation: lint pass; build pass; db:validate pass; local validation DB migrate deploy pass; smoke pass against clean migrated/seeded temp DB; screenshots reviewed
+- intake_route: milestone-derived
+- evidence_refs: `.servo/worktrack/gate-evidence.md`
+- completed_at: 2026-05-23
+- updated: 2026-05-23
+
+### WT-20260522-008-notification-user-surface
+
+- worktrack_id: WT-20260522-008-notification-user-surface
+- milestone_id: MS-20260522-003
+- status: done
+- node_type: feature
+- scope: notification bell, unread list/menu, single-read, all-read, and ticket-link workflow
+- branch: worktrack/WT-20260522-008-notification-user-surface
+- baseline_branch: develop-aw
+- base_ref: ff83e7a
+- merge_commit: 8568578686d0cec1d6732784771381bfb63b05ae
+- validation: lint pass; build pass; db:validate pass; clean temp DB migrate/seed/smoke pass; screenshots reviewed and ticket-link assertion hardened to URL plus detail heading
 - intake_route: milestone-derived
 - evidence_refs: `.servo/worktrack/gate-evidence.md`
 - completed_at: 2026-05-23
