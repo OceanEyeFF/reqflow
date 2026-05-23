@@ -92,3 +92,18 @@ export type TicketType = (typeof TICKET_TYPE)[keyof typeof TICKET_TYPE];
 export type UserRole = (typeof USER_ROLE)[keyof typeof USER_ROLE];
 export type MemberRole = (typeof MEMBER_ROLE)[keyof typeof MEMBER_ROLE];
 export type LogAction = (typeof LOG_ACTION)[keyof typeof LOG_ACTION];
+
+/** Shared ticket list item type used by dashboard and tickets list pages */
+export type TicketListItem = {
+  id: string;
+  title: string;
+  status: string;
+  priority: string;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
+  creator: { id: string; displayName: string };
+  assignee: { displayName: string } | null;
+  members: Array<{ role: string; user: { id: string } }>;
+  _count: { comments: number };
+};

@@ -1,36 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS, MEMBER_ROLE_LABELS } from "@/types";
+import type { TicketListItem } from "@/types";
 import { Plus, Search, Users } from "lucide-react";
 
-type Ticket = {
-  id: string;
-  title: string;
-  status: string;
-  priority: string;
-  type: string;
-  createdAt: string;
-  updatedAt: string;
-  creator: { id: string; displayName: string };
-  assignee: { displayName: string } | null;
-  members: Array<{ role: string; user: { id: string } }>;
-  _count: { comments: number };
-};
-
 export default function TicketsPage() {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [tickets, setTickets] = useState<TicketListItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [scope, setScope] = useState("assigned_to_me");
   const [status, setStatus] = useState("");
   const [priority, setPriority] = useState("");
   const [keyword, setKeyword] = useState("");
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     // Get current user ID from session
@@ -42,38 +31,45 @@ export default function TicketsPage() {
       .catch(() => {});
   }, []);
 
-  async function fetchTickets() {
+  const fetchTicketsFromApi = useCallback(async (kw: string) => {
     setLoading(true);
-    const params = new URLSearchParams({ scope });
-    if (status) params.set("status", status);
-    if (priority) params.set("priority", priority);
-    if (keyword) params.set("keyword", keyword);
+    setError("");
+    try {
+      const params = new URLSearchParams({ scope });
+      if (status) params.set("status", status);
+      if (priority) params.set("priority", priority);
+      if (kw) params.set("keyword", kw);
 
-    const res = await fetch(`/api/tickets?${params}`);
-    const data = await res.json();
-    setTickets(data.tickets || []);
-    setLoading(false);
-  }
+      const res = await fetch(`/api/tickets?${params}`);
+      if (!res.ok) throw new Error("获取工单列表失败");
+      const data = await res.json();
+      setTickets(data.tickets || []);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "获取工单列表失败");
+    } finally {
+      setLoading(false);
+    }
+  }, [scope, status, priority]);
 
   useEffect(() => {
-    const params = new URLSearchParams({ scope });
-    if (status) params.set("status", status);
-    if (priority) params.set("priority", priority);
-    if (keyword) params.set("keyword", keyword);
-
     // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional loading state before async fetch
-    setLoading(true);
-    fetch(`/api/tickets?${params}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setTickets(data.tickets || []);
-        setLoading(false);
-      });
-  }, [scope, status, priority, keyword, currentUserId]);
+    fetchTicketsFromApi(keyword);
+    // "keyword" is intentionally not a dependency — it is only applied on Enter/button click
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scope, status, priority]);
+
+  const handleKeywordChange = (value: string) => {
+    setKeyword(value);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      fetchTicketsFromApi(value);
+    }, 300);
+  };
 
   async function handleSearch(e: React.FormEvent) {
     e.preventDefault();
-    fetchTickets();
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    fetchTicketsFromApi(keyword);
   }
 
   return (
@@ -117,10 +113,10 @@ export default function TicketsPage() {
               <Input
                 placeholder="搜索标题..."
                 value={keyword}
-                onChange={(e) => setKeyword(e.target.value)}
+                onChange={(e) => handleKeywordChange(e.target.value)}
                 className="max-w-xs"
               />
-              <Button type="submit" variant="outline" size="icon">
+              <Button type="submit" variant="outline" size="icon" aria-label="搜索">
                 <Search className="w-4 h-4" />
               </Button>
             </div>
@@ -158,7 +154,9 @@ export default function TicketsPage() {
           <CardTitle>工单列表</CardTitle>
         </CardHeader>
         <CardContent>
-          {loading ? (
+          {error ? (
+            <p className="text-center py-8 text-red-500">{error}</p>
+          ) : loading ? (
             <p className="text-center py-8 text-gray-500">加载中...</p>
           ) : tickets.length === 0 ? (
             <p className="text-center py-8 text-gray-500">暂无工单</p>

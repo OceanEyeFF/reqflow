@@ -42,6 +42,7 @@ export default function TicketDetailPage() {
   const [ticket, setTicket] = useState<TicketDetail | null>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [comment, setComment] = useState("");
   const [submittingComment, setSubmittingComment] = useState(false);
   const [showAddMember, setShowAddMember] = useState(false);
@@ -57,19 +58,26 @@ export default function TicketDetailPage() {
 
   useEffect(() => {
     async function loadData() {
-      const [ticketRes, usersRes] = await Promise.all([
-        fetch(`/api/tickets/${ticketId}`),
-        fetch("/api/users"),
-      ]);
-      if (ticketRes.ok) {
-        const data = await ticketRes.json();
-        setTicket(data.ticket);
+      try {
+        const [ticketRes, usersRes] = await Promise.all([
+          fetch(`/api/tickets/${ticketId}`),
+          fetch("/api/users"),
+        ]);
+        if (ticketRes.ok) {
+          const data = await ticketRes.json();
+          setTicket(data.ticket);
+        } else {
+          setError("获取工单详情失败");
+        }
+        if (usersRes.ok) {
+          const data = await usersRes.json();
+          setUsers(data.users || []);
+        }
+      } catch {
+        setError("网络错误，请重试");
+      } finally {
+        setLoading(false);
       }
-      if (usersRes.ok) {
-        const data = await usersRes.json();
-        setUsers(data.users || []);
-      }
-      setLoading(false);
     }
     loadData();
   }, [ticketId]);
@@ -93,53 +101,83 @@ export default function TicketDetailPage() {
   }
 
   async function handleStatusChange(newStatus: string) {
-    const res = await fetch(`/api/tickets/${ticketId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ status: newStatus }),
-    });
-    if (res.ok) fetchTicket();
+    try {
+      const res = await fetch(`/api/tickets/${ticketId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus }),
+      });
+      if (res.ok) fetchTicket();
+      else alert("更新状态失败");
+    } catch {
+      alert("网络错误，请重试");
+    }
   }
 
   async function handleAssigneeChange(newAssigneeId: string) {
-    const res = await fetch(`/api/tickets/${ticketId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ assigneeId: newAssigneeId || null }),
-    });
-    if (res.ok) fetchTicket();
+    try {
+      const res = await fetch(`/api/tickets/${ticketId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ assigneeId: newAssigneeId || null }),
+      });
+      if (res.ok) fetchTicket();
+      else alert("更新负责人失败");
+    } catch {
+      alert("网络错误，请重试");
+    }
   }
 
   async function handlePriorityChange(newPriority: string) {
-    const res = await fetch(`/api/tickets/${ticketId}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ priority: newPriority }),
-    });
-    if (res.ok) fetchTicket();
+    try {
+      const res = await fetch(`/api/tickets/${ticketId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ priority: newPriority }),
+      });
+      if (res.ok) fetchTicket();
+      else alert("更新优先级失败");
+    } catch {
+      alert("网络错误，请重试");
+    }
   }
 
   async function handleAddMember() {
     if (!newMemberId) return;
 
-    const res = await fetch(`/api/tickets/${ticketId}/members`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: newMemberId, role: "collaborator" }),
-    });
+    try {
+      const res = await fetch(`/api/tickets/${ticketId}/members`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: newMemberId, role: "collaborator" }),
+      });
 
-    if (res.ok) {
-      setNewMemberId("");
-      setShowAddMember(false);
-      fetchTicket();
+      if (res.ok) {
+        setNewMemberId("");
+        setShowAddMember(false);
+        fetchTicket();
+      } else {
+        alert("添加协作者失败");
+      }
+    } catch {
+      alert("网络错误，请重试");
     }
   }
 
   async function handleRemoveMember(userId: string) {
-    const res = await fetch(`/api/tickets/${ticketId}/members?userId=${userId}`, {
-      method: "DELETE",
-    });
-    if (res.ok) fetchTicket();
+    try {
+      const res = await fetch(`/api/tickets/${ticketId}/members?userId=${userId}`, {
+        method: "DELETE",
+      });
+      if (res.ok) fetchTicket();
+      else alert("移除协作者失败");
+    } catch {
+      alert("网络错误，请重试");
+    }
+  }
+
+  if (error) {
+    return <div className="text-center py-8 text-red-500">{error}</div>;
   }
 
   if (loading) {
@@ -304,8 +342,8 @@ export default function TicketDetailPage() {
                   value={ticket.priority}
                   onChange={(e) => handlePriorityChange(e.target.value)}
                 >
-                  {Object.keys(TICKET_PRIORITY).map((key) => (
-                    <option key={key} value={key}>{PRIORITY_LABELS[key]}</option>
+                  {Object.entries(TICKET_PRIORITY).map(([key, value]) => (
+                    <option key={key} value={value}>{PRIORITY_LABELS[value]}</option>
                   ))}
                 </select>
               </div>

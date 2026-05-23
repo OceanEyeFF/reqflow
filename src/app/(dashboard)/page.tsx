@@ -6,21 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS, MEMBER_ROLE_LABELS } from "@/types";
+import type { TicketListItem } from "@/types";
 import { Plus, Users } from "lucide-react";
-
-type Ticket = {
-  id: string;
-  title: string;
-  status: string;
-  priority: string;
-  type: string;
-  createdAt: string;
-  updatedAt: string;
-  creator: { id: string; displayName: string };
-  assignee: { displayName: string } | null;
-  members: Array<{ role: string; user: { id: string } }>;
-  _count: { comments: number };
-};
 
 type Stats = {
   assigned: number;
@@ -31,10 +18,11 @@ type Stats = {
 };
 
 export default function DashboardPage() {
-  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [tickets, setTickets] = useState<TicketListItem[]>([]);
   const [stats, setStats] = useState<Stats>({ assigned: 0, created: 0, waiting: 0, urgent: 0, involved: 0 });
   const [activeTab, setActiveTab] = useState<"assigned" | "created" | "involved">("assigned");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -50,6 +38,7 @@ export default function DashboardPage() {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- intentional loading state before async fetch
     setLoading(true);
+    setError("");
 
     // Map tab to scope
     const scopeMap = {
@@ -64,10 +53,15 @@ export default function DashboardPage() {
     ])
       .then(([ticketsRes, statsRes]) => Promise.all([ticketsRes.json(), statsRes.json()]))
       .then(([ticketsData, statsData]) => {
+        if (!ticketsData && !statsData) throw new Error("获取数据失败");
         setTickets(ticketsData.tickets || []);
         if (statsData.stats) {
           setStats(statsData.stats);
         }
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(err instanceof Error ? err.message : "获取数据失败");
         setLoading(false);
       });
   }, [activeTab]);
@@ -96,8 +90,11 @@ export default function DashboardPage() {
       {/* Stats cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
         <Card
+          role="button"
+          tabIndex={0}
           className="cursor-pointer hover:border-primary transition-colors"
           onClick={() => setActiveTab("assigned")}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveTab("assigned"); } }}
         >
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">待我处理</CardTitle>
@@ -107,8 +104,11 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
         <Card
+          role="button"
+          tabIndex={0}
           className="cursor-pointer hover:border-primary transition-colors"
           onClick={() => setActiveTab("created")}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveTab("created"); } }}
         >
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">我发起的</CardTitle>
@@ -118,8 +118,11 @@ export default function DashboardPage() {
           </CardContent>
         </Card>
         <Card
+          role="button"
+          tabIndex={0}
           className="cursor-pointer hover:border-primary transition-colors"
           onClick={() => setActiveTab("involved")}
+          onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveTab("involved"); } }}
         >
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-medium text-gray-500">我参与的</CardTitle>
@@ -166,7 +169,9 @@ export default function DashboardPage() {
           <CardTitle>{tabLabels[activeTab]} ({tickets.length})</CardTitle>
         </CardHeader>
         <CardContent>
-          {loading ? (
+          {error ? (
+            <p className="text-center py-8 text-red-500">{error}</p>
+          ) : loading ? (
             <p className="text-center py-8 text-gray-500">加载中...</p>
           ) : tickets.length === 0 ? (
             <p className="text-gray-500 text-center py-8">暂无工单</p>

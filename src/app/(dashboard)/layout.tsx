@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 import { auth, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,18 @@ export default async function DashboardLayout({
     redirect("/login");
   }
 
+  const headersList = await headers();
+  const pathname = new URL(headersList.get("x-url") || "http://localhost").pathname;
+
+  function navProps(href: string) {
+    const isActive = pathname === href;
+    return {
+      href,
+      className: `text-sm font-medium ${isActive ? "text-primary" : "text-gray-600 hover:text-gray-900"}`,
+      ...(isActive ? { "aria-current": "page" as const } : {}),
+    };
+  }
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
@@ -24,10 +37,10 @@ export default async function DashboardLayout({
             <div className="flex items-center gap-8">
               <h1 className="text-xl font-bold text-primary">ReqFlow</h1>
               <nav className="flex gap-6">
-                <Link href="/" className="text-sm font-medium text-gray-600 hover:text-gray-900">
+                <Link {...navProps("/")}>
                   工作台
                 </Link>
-                <Link href="/tickets" className="text-sm font-medium text-gray-600 hover:text-gray-900">
+                <Link {...navProps("/tickets")}>
                   工单
                 </Link>
               </nav>
