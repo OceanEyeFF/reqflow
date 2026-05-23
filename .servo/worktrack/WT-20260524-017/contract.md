@@ -7,7 +7,7 @@
 - milestone_id: none
 - derived_from_user_request: true
 - node_type: review
-- status: active
+- status: completed
 - created_at: 2026-05-24
 - updated: 2026-05-24
 

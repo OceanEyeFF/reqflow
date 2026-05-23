@@ -15,7 +15,7 @@ Phase 1-8 全部完成并合并到 develop。Phase 9 的基本面与分模块治
 
 ## Principal Contradictions
 
-1. **M3 与最终审查均已完成 vs 后续目标待定**: 核心 route handler 已有真实 Prisma/SQLite 集成测试，文档已追平，最终 CodeReview 已修复两处脆弱测试断言
+1. **M3 与补充审查均已完成 vs 后续目标待定**: 核心 route handler 已有真实 Prisma/SQLite 集成测试，文档已追平，最终与补充 CodeReview 均已完成
 2. **控制面产物完成态 vs 个别 closeout 记录缺失**: WT-004、WT-008、WT-010 的最小 contract/plan 已补齐，后续应保持 worktrack closeout 事务化
 3. **单模块未拆分**: 当前部分页面和 API 逻辑仍集中在较大文件中，后续可按维护痛点继续拆分
 
@@ -40,6 +40,7 @@ Phase 1-8 全部完成并合并到 develop。Phase 9 的基本面与分模块治
 4. WT-20260523-014: Attachments/Notifications API route handler 集成测试 — completed
 5. WT-20260523-015: M3 测试文档与回归验证收口 — completed
 6. WT-20260523-016: 最终 CodeReview Worktrack — completed
+7. WT-20260524-017: 补充 CodeReview Worktrack — completed
 
 ## Unknowns
 

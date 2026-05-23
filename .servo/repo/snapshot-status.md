@@ -4,7 +4,7 @@
 
 - updated: 2026-05-23
 - baseline_branch: develop
-- baseline_commit: 9269949704d58ec63dff3f8ff1458dc40e05d7c9
+- baseline_commit: af9998f923b4168d140d160c89b5e9d7511077ad
 
 ## Codebase State
 
@@ -61,7 +61,7 @@ reqflow/
 
 ### 当前治理缺口
 
-1. M3 API route handler 集成测试和最终 CodeReview Worktrack 已完成并通过最终回归。
+1. M3 API route handler 集成测试、最终 CodeReview Worktrack 和补充 CodeReview Worktrack 已完成并通过最终回归。
 2. `npm run lint` 通过依赖 ESLint 忽略 agent/control/runtime 目录；这些目录不属于应用源码。
 
 ### Completed Milestone
@@ -75,3 +75,4 @@ reqflow/
 ### Completed Review Worktrack
 
 - WT-20260523-016: 最终 CodeReview Worktrack
+- WT-20260524-017: 补充 CodeReview Worktrack

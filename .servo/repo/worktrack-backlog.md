@@ -6,8 +6,8 @@
 
 - total: 17
 - planned: 0
-- active: 1
-- completed: 16
+- active: 0
+- completed: 17
 - blocked: 0
 - deferred: 0
 
@@ -201,7 +201,7 @@
 - title: 补充 CodeReview Worktrack
 - milestone_id: none
 - node_type: review
-- status: active
+- status: completed
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260524-017/contract.md
-- branch: worktrack/wt-20260524-017-supplemental-code-review
+- branch: worktrack/wt-20260524-017-supplemental-code-review (merged)

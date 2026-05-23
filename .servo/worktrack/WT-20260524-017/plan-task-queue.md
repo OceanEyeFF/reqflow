@@ -8,10 +8,10 @@
 ### T2: Record review evidence [completed]
 - created Gate evidence with findings and residual risks
 
-### T3: Final validation Gate [pending]
-- post-merge `npm run lint`
-- post-merge `npm run test`
-- post-merge `npm run build`
+### T3: Final validation Gate [completed]
+- post-merge `npm run lint` passed
+- post-merge `npm run test` passed; 10 files, 71 tests
+- post-merge `npm run build` passed
 
-### T4: Close and refresh RepoStatus [pending]
+### T4: Close and refresh RepoStatus [completed]
 - update backlog, control state, snapshot, and analysis after validation
