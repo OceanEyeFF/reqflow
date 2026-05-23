@@ -80,7 +80,7 @@ describe("GET /api/tickets", () => {
 
     expect(result.status).toBe(200);
     expect(result.body.tickets).toHaveLength(2);
-    expect(result.body.tickets.map((ticket) => ticket.title)).toEqual([
+    expect(result.body.tickets.map((ticket) => ticket.title).sort()).toEqual([
       "Created by admin",
       "Created by user",
     ]);

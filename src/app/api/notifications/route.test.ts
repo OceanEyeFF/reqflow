@@ -208,9 +208,13 @@ describe("PATCH /api/notifications/read-all", () => {
     await expect(
       prisma.notification.findMany({
         where: { id: { in: [first.id, second.id] } },
-        select: { isRead: true },
+        select: { id: true, isRead: true },
+        orderBy: { id: "asc" },
       })
-    ).resolves.toEqual([{ isRead: true }, { isRead: true }]);
+    ).resolves.toEqual([
+      { id: first.id, isRead: true },
+      { id: second.id, isRead: true },
+    ]);
     await expect(prisma.notification.findUnique({ where: { id: other.id } })).resolves.toMatchObject({
       isRead: false,
     });
