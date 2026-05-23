@@ -4,7 +4,7 @@
 
 - updated: 2026-05-23
 - baseline_branch: develop
-- baseline_commit: 43076327df7baebb8c0f72bd22d2c6762ca5b3dd
+- baseline_commit: 08fe33c9af2b2573c6264fbfd6934388968dae47
 
 ## Codebase State
 
@@ -61,13 +61,17 @@ reqflow/
 
 ### 当前治理缺口
 
-1. 核心 API route handler 集成测试已覆盖 Tickets、Comments、Members、Logs、Attachments、Notifications；M3 剩余文档与回归收口。
+1. M3 API route handler 集成测试已完成并通过最终回归；按用户要求，剩余最终 CodeReview Worktrack。
 2. `npm run lint` 通过依赖 ESLint 忽略 agent/control/runtime 目录；这些目录不属于应用源码。
 
-### Active Milestone
+### Completed Milestone
 
 - active_milestone: MS-20260523-003
 - title: API route handler 集成测试
 - purpose: 为核心 API route handler 建立可重复的集成测试覆盖，保护后续重构和缺陷修复。
-- completed_worktracks: WT-20260523-011, WT-20260523-012, WT-20260523-013, WT-20260523-014
-- planned_worktracks: WT-20260523-015
+- completed_worktracks: WT-20260523-011, WT-20260523-012, WT-20260523-013, WT-20260523-014, WT-20260523-015
+- planned_worktracks: none
+
+### Planned Worktrack
+
+- WT-20260523-016: 最终 CodeReview Worktrack

@@ -6,8 +6,8 @@
 
 - total: 3
 - planned: 0
-- active: 1
-- completed: 2
+- active: 0
+- completed: 3
 - superseded: 0
 
 ## Milestones
@@ -45,7 +45,7 @@
 - milestone_id: MS-20260523-003
 - title: API route handler 集成测试
 - milestone_kind: goal-driven
-- status: active
+- status: completed
 - priority: 3
 - depends_on_milestones: [MS-20260523-002]
 - worktrack_list: [WT-20260523-011, WT-20260523-012, WT-20260523-013, WT-20260523-014, WT-20260523-015]

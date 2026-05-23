@@ -20,8 +20,8 @@
 
 - active_milestone: MS-20260523-003
 - milestone_title: API route handler 集成测试
-- milestone_status: active
-- milestone_pipeline_summary: total=3 planned=0 active=1 completed=2 superseded=0
+- milestone_status: completed
+- milestone_pipeline_summary: total=3 planned=0 active=0 completed=3 superseded=0
 
 ## Baseline Branch
 
@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: initialize WT-20260523-015 from MS-20260523-003 after WT-20260523-014 Gate and RepoStatus refresh
+- RepoScope.Decide: initialize WT-20260523-016 final CodeReview Worktrack after M3 completion
 
 ## Linked Formal Documents
 
@@ -84,8 +84,8 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 43076327df7baebb8c0f72bd22d2c6762ca5b3dd
-- last_doc_catch_up_checkpoint: 43076327df7baebb8c0f72bd22d2c6762ca5b3dd
+- latest_observed_checkpoint: 08fe33c9af2b2573c6264fbfd6934388968dae47
+- last_doc_catch_up_checkpoint: 08fe33c9af2b2573c6264fbfd6934388968dae47
 - milestone_input_checkpoint:
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
@@ -95,8 +95,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 26
-- autonomous_worktracks_opened: 4
+- autonomy_budget_remaining: 25
+- autonomous_worktracks_opened: 5
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-23
 - autonomy_budget_notes: 用户授予30个连续Worktrack额度，低危险操作可自行审批
@@ -105,5 +105,5 @@
 
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
-- Phase 9 当前阶段: M3 API route handler 集成测试
-- 分治策略: 先测试夹具 → 再逐 API 模块覆盖
+- Phase 9 当前阶段: M3 API route handler 集成测试已完成
+- 分治策略: 已完成测试夹具 → API 模块覆盖 → 文档与回归收口；下一步最终 CodeReview

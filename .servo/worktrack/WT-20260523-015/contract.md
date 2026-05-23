@@ -7,7 +7,7 @@
 - milestone_id: MS-20260523-003
 - derived_from_milestone: true
 - node_type: docs
-- status: active
+- status: completed
 - created_at: 2026-05-23
 - updated: 2026-05-23
 

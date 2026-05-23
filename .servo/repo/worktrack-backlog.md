@@ -4,10 +4,10 @@
 
 ## Summary
 
-- total: 15
+- total: 16
 - planned: 1
 - active: 0
-- completed: 14
+- completed: 15
 - blocked: 0
 - deferred: 0
 
@@ -177,7 +177,20 @@
 - title: M3 测试文档与回归验证收口
 - milestone_id: MS-20260523-003
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 5
+- contract_path: .servo/worktrack/WT-20260523-015/contract.md
+- branch: worktrack/wt-20260523-015-m3-docs-regression (merged)
+
+## Final Review
+
+### WT-20260523-016
+
+- worktrack_id: WT-20260523-016
+- title: 最终 CodeReview Worktrack
+- milestone_id: none
+- node_type: review
+- status: planned
+- priority: 1
 - contract_path:
 - branch:

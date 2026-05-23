@@ -8,8 +8,10 @@
 ### T2: Update README script description [completed]
 - clarify `npm run test` runs Vitest unit/integration tests
 
-### T3: Final regression Gate [pending]
-- post-merge `npm run lint`, `npm run test`, `npm run build`
+### T3: Final regression Gate [completed]
+- post-merge `npm run lint` passed
+- post-merge `npm run test` passed; 10 files, 71 tests
+- post-merge `npm run build` passed
 
-### T4: Mark M3 complete and refresh RepoStatus [pending]
+### T4: Mark M3 complete and refresh RepoStatus [completed]
 - update milestone, backlog, control state, snapshot, analysis

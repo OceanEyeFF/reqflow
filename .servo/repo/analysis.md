@@ -15,7 +15,7 @@ Phase 1-8 全部完成并合并到 develop。Phase 9 的基本面与分模块治
 
 ## Principal Contradictions
 
-1. **API route handler 集成测试已覆盖 vs milestone 收口待完成**: 核心 route handler 已有真实 Prisma/SQLite 集成测试，剩余工作是文档追平与最终回归验证
+1. **M3 已完成 vs 最终审查尚未执行**: 核心 route handler 已有真实 Prisma/SQLite 集成测试，文档已追平，剩余用户指定的最终 CodeReview Worktrack
 2. **控制面产物完成态 vs 个别 closeout 记录缺失**: WT-004、WT-008、WT-010 的最小 contract/plan 已补齐，后续应保持 worktrack closeout 事务化
 3. **单模块未拆分**: 当前部分页面和 API 逻辑仍集中在较大文件中，后续可按维护痛点继续拆分
 
@@ -38,10 +38,11 @@ Phase 1-8 全部完成并合并到 develop。Phase 9 的基本面与分模块治
 2. WT-20260523-012: Tickets API route handler 集成测试 — completed
 3. WT-20260523-013: Comments/Members/Logs API route handler 集成测试 — completed
 4. WT-20260523-014: Attachments/Notifications API route handler 集成测试 — completed
-5. WT-20260523-015: M3 测试文档与回归验证收口 — next
+5. WT-20260523-015: M3 测试文档与回归验证收口 — completed
+6. WT-20260523-016: 最终 CodeReview Worktrack — next
 
 ## Unknowns
 
-- WT-20260523-015 需要确认 README 或相关文档是否充分描述测试运行方式和数据边界。
+- 最终 CodeReview 需要聚焦本轮新增测试、测试隔离、文件系统副作用和控制面一致性。
 - 附件上传测试是否需要抽象文件系统存储目录？
 - 页面级回归测试是否引入 Playwright，还是先保持 Vitest 单元/集成测试？
