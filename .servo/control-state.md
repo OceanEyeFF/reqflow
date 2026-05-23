@@ -18,8 +18,10 @@
 
 ## Active Milestone
 
-- N/A
-- milestone_status: none
+- active_milestone: MS-20260523-003
+- milestone_title: API route handler 集成测试
+- milestone_status: active
+- milestone_pipeline_summary: total=3 planned=0 active=1 completed=2 superseded=0
 
 ## Baseline Branch
 
@@ -27,7 +29,7 @@
 
 ## Current Next Action
 
--
+- RepoScope.Decide: initialize next worktrack from MS-20260523-003 after intake review
 
 ## Linked Formal Documents
 
@@ -82,8 +84,8 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 1608c7a8893eee68fe203f4cc921a94524814369
-- last_doc_catch_up_checkpoint:
+- latest_observed_checkpoint: ef9ac90b222a2caeffc12134877bce944a385c99
+- last_doc_catch_up_checkpoint: ef9ac90b222a2caeffc12134877bce944a385c99
 - milestone_input_checkpoint:
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
@@ -103,4 +105,5 @@
 
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
-- 分治策略: 先基本面 → 再分模块治理
+- Phase 9 当前阶段: M3 API route handler 集成测试
+- 分治策略: 先测试夹具 → 再逐 API 模块覆盖

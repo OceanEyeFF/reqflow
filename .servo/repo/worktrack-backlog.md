@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 10
-- planned: 0
+- total: 15
+- planned: 5
 - active: 0
 - completed: 10
 - blocked: 0
@@ -124,3 +124,60 @@
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260523-010/contract.md
 - branch: worktrack/wt-20260523-010-tests (merged)
+
+## M3: API route handler 集成测试 (MS-20260523-003)
+
+### WT-20260523-011
+
+- worktrack_id: WT-20260523-011
+- title: API 集成测试夹具与测试环境
+- milestone_id: MS-20260523-003
+- node_type: test
+- status: planned
+- priority: 1
+- contract_path:
+- branch:
+
+### WT-20260523-012
+
+- worktrack_id: WT-20260523-012
+- title: Tickets API route handler 集成测试
+- milestone_id: MS-20260523-003
+- node_type: test
+- status: planned
+- priority: 2
+- contract_path:
+- branch:
+
+### WT-20260523-013
+
+- worktrack_id: WT-20260523-013
+- title: Comments/Members/Logs API route handler 集成测试
+- milestone_id: MS-20260523-003
+- node_type: test
+- status: planned
+- priority: 3
+- contract_path:
+- branch:
+
+### WT-20260523-014
+
+- worktrack_id: WT-20260523-014
+- title: Attachments/Notifications API route handler 集成测试
+- milestone_id: MS-20260523-003
+- node_type: test
+- status: planned
+- priority: 4
+- contract_path:
+- branch:
+
+### WT-20260523-015
+
+- worktrack_id: WT-20260523-015
+- title: M3 测试文档与回归验证收口
+- milestone_id: MS-20260523-003
+- node_type: docs
+- status: planned
+- priority: 5
+- contract_path:
+- branch:

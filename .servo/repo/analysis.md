@@ -30,8 +30,15 @@ Phase 1-8 全部完成并合并到 develop。Phase 9 的基本面与分模块治
 
 ## Route Projection
 
-建议下一 Milestone：
+当前 Milestone：
 1. **M3: API route handler 集成测试** — 为 tickets、comments、members、attachments、notifications 的关键成功/失败路径建立 Prisma/SQLite 测试夹具与 route handler 覆盖
+
+建议按以下 worktrack 顺序推进：
+1. WT-20260523-011: API 集成测试夹具与测试环境
+2. WT-20260523-012: Tickets API route handler 集成测试
+3. WT-20260523-013: Comments/Members/Logs API route handler 集成测试
+4. WT-20260523-014: Attachments/Notifications API route handler 集成测试
+5. WT-20260523-015: M3 测试文档与回归验证收口
 
 ## Unknowns
 

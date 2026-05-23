@@ -4,7 +4,7 @@
 
 - updated: 2026-05-23
 - baseline_branch: develop
-- baseline_commit: 1608c7a8893eee68fe203f4cc921a94524814369
+- baseline_commit: ef9ac90b222a2caeffc12134877bce944a385c99
 
 ## Codebase State
 
@@ -63,3 +63,10 @@ reqflow/
 
 1. 核心 API 目前已有基础单元测试，但尚未覆盖 route handler 集成测试。
 2. `npm run lint` 通过依赖 ESLint 忽略 agent/control/runtime 目录；这些目录不属于应用源码。
+
+### Active Milestone
+
+- active_milestone: MS-20260523-003
+- title: API route handler 集成测试
+- purpose: 为核心 API route handler 建立可重复的集成测试覆盖，保护后续重构和缺陷修复。
+- planned_worktracks: WT-20260523-011, WT-20260523-012, WT-20260523-013, WT-20260523-014, WT-20260523-015

@@ -4,9 +4,9 @@
 
 ## Pipeline Summary
 
-- total: 2
+- total: 3
 - planned: 0
-- active: 0
+- active: 1
 - completed: 2
 - superseded: 0
 
@@ -35,6 +35,20 @@
 - priority: 2
 - depends_on_milestones: [MS-20260523-001]
 - worktrack_list: [WT-20260523-005, WT-20260523-006, WT-20260523-007, WT-20260523-008, WT-20260523-009, WT-20260523-010]
+- created_by: harness-kernel
+- created_at: 2026-05-23
+- updated: 2026-05-23
+- updated_by: harness-kernel
+
+### MS-20260523-003
+
+- milestone_id: MS-20260523-003
+- title: API route handler 集成测试
+- milestone_kind: goal-driven
+- status: active
+- priority: 3
+- depends_on_milestones: [MS-20260523-002]
+- worktrack_list: [WT-20260523-011, WT-20260523-012, WT-20260523-013, WT-20260523-014, WT-20260523-015]
 - created_by: harness-kernel
 - created_at: 2026-05-23
 - updated: 2026-05-23
