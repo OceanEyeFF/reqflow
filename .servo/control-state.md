@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: initialize WT-20260523-012 from MS-20260523-003 after intake review
+- RepoScope.Decide: initialize WT-20260523-013 from MS-20260523-003 after WT-20260523-012 Gate and RepoStatus refresh
 
 ## Linked Formal Documents
 
@@ -84,8 +84,8 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: c1d84761ae7b6693c9ed27573c4ff6e65d379a62
-- last_doc_catch_up_checkpoint: c1d84761ae7b6693c9ed27573c4ff6e65d379a62
+- latest_observed_checkpoint: ac7609df28bcf0994080490805a0d85fdd76eead
+- last_doc_catch_up_checkpoint: ac7609df28bcf0994080490805a0d85fdd76eead
 - milestone_input_checkpoint:
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
@@ -95,8 +95,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 29
-- autonomous_worktracks_opened: 1
+- autonomy_budget_remaining: 28
+- autonomous_worktracks_opened: 2
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-23
 - autonomy_budget_notes: 用户授予30个连续Worktrack额度，低危险操作可自行审批
