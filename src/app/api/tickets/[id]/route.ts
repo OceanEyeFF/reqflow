@@ -3,6 +3,7 @@ import { Prisma } from "@prisma/client";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { notifyTicketAssigned, notifyStatusChanged } from "@/lib/notifications";
+import { canAccessTicket } from "@/lib/ticket-access";
 
 type TicketPatchBody = {
   status?: string;
@@ -44,6 +45,10 @@ export async function GET(
     return Response.json({ error: "工单不存在" }, { status: 404 });
   }
 
+  if (!(await canAccessTicket(id, session.user.id, session.user.role))) {
+    return Response.json({ error: "无权查看该工单" }, { status: 403 });
+  }
+
   return Response.json({ ticket });
 }
 
@@ -62,6 +67,10 @@ export async function PATCH(
   const ticket = await prisma.ticket.findUnique({ where: { id } });
   if (!ticket) {
     return Response.json({ error: "工单不存在" }, { status: 404 });
+  }
+
+  if (!(await canAccessTicket(id, session.user.id, session.user.role))) {
+    return Response.json({ error: "无权修改该工单" }, { status: 403 });
   }
 
   const updateData: Prisma.TicketUncheckedUpdateInput = {};

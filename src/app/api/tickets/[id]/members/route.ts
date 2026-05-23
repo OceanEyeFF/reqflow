@@ -2,9 +2,14 @@ import { NextRequest } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { notifyMemberAdded } from "@/lib/notifications";
+import { canAccessTicket } from "@/lib/ticket-access";
 
-// Helper: check if user can modify members (creator, assignee, or owner role)
-async function canModifyMembers(ticketId: string, userId: string): Promise<boolean> {
+const VALID_MEMBER_ROLES = ["owner", "collaborator", "watcher"];
+
+// Helper: check if user can modify members (admin, creator, assignee, or owner role)
+async function canModifyMembers(ticketId: string, userId: string, userRole: string): Promise<boolean> {
+  if (userRole === "admin") return true;
+
   const ticket = await prisma.ticket.findUnique({
     where: { id: ticketId },
     select: { creatorId: true, assigneeId: true },
@@ -12,14 +17,13 @@ async function canModifyMembers(ticketId: string, userId: string): Promise<boole
 
   if (!ticket) return false;
 
-  // Creator or current assignee can modify members
   if (ticket.creatorId === userId || ticket.assigneeId === userId) {
     return true;
   }
 
-  // Or user has 'owner' role in ticket members
   const member = await prisma.ticketMember.findUnique({
     where: { ticketId_userId: { ticketId, userId } },
+    select: { role: true },
   });
 
   return member?.role === "owner";
@@ -35,6 +39,18 @@ export async function GET(
   }
 
   const { id } = await params;
+
+  const ticket = await prisma.ticket.findUnique({
+    where: { id },
+    select: { id: true },
+  });
+  if (!ticket) {
+    return Response.json({ error: "工单不存在" }, { status: 404 });
+  }
+
+  if (!(await canAccessTicket(id, session.user.id, session.user.role))) {
+    return Response.json({ error: "无权查看该工单协作者" }, { status: 403 });
+  }
 
   const members = await prisma.ticketMember.findMany({
     where: { ticketId: id },
@@ -56,17 +72,42 @@ export async function POST(
   }
 
   const { id } = await params;
-  const body = await request.json();
-  const { userId, role } = body;
+  const body = await request.json().catch(() => null);
+  const userId = typeof body?.userId === "string" ? body.userId : "";
+  const role = typeof body?.role === "string" ? body.role : "";
 
   if (!userId) {
     return Response.json({ error: "用户ID不能为空" }, { status: 400 });
   }
 
-  // Permission check: only creator, assignee, or owner role can add members
-  const canModify = await canModifyMembers(id, session.user.id);
+  if (role && !VALID_MEMBER_ROLES.includes(role)) {
+    return Response.json({ error: `角色必须是以下之一: ${VALID_MEMBER_ROLES.join(", ")}` }, { status: 400 });
+  }
+
+  const ticket = await prisma.ticket.findUnique({
+    where: { id },
+    select: { title: true, creatorId: true, assigneeId: true },
+  });
+  if (!ticket) {
+    return Response.json({ error: "工单不存在" }, { status: 404 });
+  }
+
+  // Permission check: only admin, creator, assignee, or owner role can add members
+  const canModify = await canModifyMembers(id, session.user.id, session.user.role);
   if (!canModify) {
     return Response.json({ error: "只有工单创建者、负责人或owner角色成员可以添加协作者" }, { status: 403 });
+  }
+
+  if (ticket.creatorId === userId || ticket.assigneeId === userId) {
+    return Response.json({ error: "发起人和负责人不需要重复添加为协作者" }, { status: 400 });
+  }
+
+  const targetUser = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { id: true },
+  });
+  if (!targetUser) {
+    return Response.json({ error: "用户不存在" }, { status: 404 });
   }
 
   // Check if already a member
@@ -77,12 +118,6 @@ export async function POST(
   if (existing) {
     return Response.json({ error: "该用户已是协作者" }, { status: 400 });
   }
-
-  // Get ticket title for notification
-  const ticket = await prisma.ticket.findUnique({
-    where: { id },
-    select: { title: true },
-  });
 
   const member = await prisma.ticketMember.create({
     data: {
@@ -105,10 +140,7 @@ export async function POST(
     },
   });
 
-  // Notify the added member
-  if (ticket) {
-    await notifyMemberAdded(id, userId, ticket.title);
-  }
+  await notifyMemberAdded(id, userId, ticket.title);
 
   return Response.json({ member });
 }
@@ -130,8 +162,16 @@ export async function DELETE(
     return Response.json({ error: "用户ID不能为空" }, { status: 400 });
   }
 
-  // Permission check: only creator, assignee, or owner role can remove members
-  const canModify = await canModifyMembers(id, session.user.id);
+  const ticket = await prisma.ticket.findUnique({
+    where: { id },
+    select: { id: true },
+  });
+  if (!ticket) {
+    return Response.json({ error: "工单不存在" }, { status: 404 });
+  }
+
+  // Permission check: only admin, creator, assignee, or owner role can remove members
+  const canModify = await canModifyMembers(id, session.user.id, session.user.role);
   if (!canModify) {
     return Response.json({ error: "只有工单创建者、负责人或owner角色成员可以移除协作者" }, { status: 403 });
   }
@@ -181,22 +221,19 @@ export async function PATCH(
     return Response.json({ error: "用户ID不能为空" }, { status: 400 });
   }
 
-  const body = await request.json();
-  const { role } = body;
+  const body = await request.json().catch(() => null);
+  const role = typeof body?.role === "string" ? body.role : "";
 
-  // Validate role
-  const validRoles = ["owner", "collaborator", "watcher"];
-  if (!role || !validRoles.includes(role)) {
-    return Response.json({ error: `角色必须是以下之一: ${validRoles.join(", ")}` }, { status: 400 });
+  if (!role || !VALID_MEMBER_ROLES.includes(role)) {
+    return Response.json({ error: `角色必须是以下之一: ${VALID_MEMBER_ROLES.join(", ")}` }, { status: 400 });
   }
 
-  // Permission check: only creator, assignee, or owner role can modify member roles
-  const canModify = await canModifyMembers(id, session.user.id);
+  // Permission check: only admin, creator, assignee, or owner role can modify member roles
+  const canModify = await canModifyMembers(id, session.user.id, session.user.role);
   if (!canModify) {
     return Response.json({ error: "只有工单创建者、负责人或owner角色成员可以修改协作者角色" }, { status: 403 });
   }
 
-  // Get ticket to check if target user is the creator
   const ticket = await prisma.ticket.findUnique({
     where: { id },
     select: { creatorId: true },

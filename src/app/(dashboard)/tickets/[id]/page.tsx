@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS, MEMBER_ROLE_LABELS, TICKET_STATUS, TICKET_PRIORITY } from "@/types";
+import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS, MEMBER_ROLE_LABELS, MEMBER_ROLE, TICKET_STATUS, TICKET_PRIORITY } from "@/types";
 import { ArrowLeft, Download, Paperclip, Send, Trash2, Upload, User as UserIcon } from "lucide-react";
 
 type TicketDetail = {
@@ -65,9 +65,15 @@ export default function TicketDetailPage() {
   const [attachments, setAttachments] = useState<TicketAttachment[]>([]);
   const [loading, setLoading] = useState(true);
   const [comment, setComment] = useState("");
+  const [commentError, setCommentError] = useState("");
   const [submittingComment, setSubmittingComment] = useState(false);
   const [showAddMember, setShowAddMember] = useState(false);
   const [newMemberId, setNewMemberId] = useState("");
+  const [newMemberRole, setNewMemberRole] = useState("collaborator");
+  const [memberError, setMemberError] = useState("");
+  const [addingMember, setAddingMember] = useState(false);
+  const [removingMemberId, setRemovingMemberId] = useState<string | null>(null);
+  const [updatingMemberId, setUpdatingMemberId] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [uploadingAttachment, setUploadingAttachment] = useState(false);
   const [deletingAttachmentId, setDeletingAttachmentId] = useState<string | null>(null);
@@ -184,6 +190,7 @@ export default function TicketDetailPage() {
     if (!comment.trim()) return;
 
     setSubmittingComment(true);
+    setCommentError("");
     const res = await fetch(`/api/tickets/${ticketId}/comments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -192,7 +199,10 @@ export default function TicketDetailPage() {
 
     if (res.ok) {
       setComment("");
-      fetchTicket();
+      await fetchTicket();
+    } else {
+      const data = await res.json().catch(() => ({ error: "评论提交失败" }));
+      setCommentError(data.error || "评论提交失败");
     }
     setSubmittingComment(false);
   }
@@ -227,24 +237,56 @@ export default function TicketDetailPage() {
   async function handleAddMember() {
     if (!newMemberId) return;
 
+    setAddingMember(true);
+    setMemberError("");
     const res = await fetch(`/api/tickets/${ticketId}/members`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: newMemberId, role: "collaborator" }),
+      body: JSON.stringify({ userId: newMemberId, role: newMemberRole }),
     });
 
     if (res.ok) {
       setNewMemberId("");
+      setNewMemberRole("collaborator");
       setShowAddMember(false);
-      fetchTicket();
+      await fetchTicket();
+    } else {
+      const data = await res.json().catch(() => ({ error: "协作者添加失败" }));
+      setMemberError(data.error || "协作者添加失败");
     }
+    setAddingMember(false);
   }
 
   async function handleRemoveMember(userId: string) {
+    setRemovingMemberId(userId);
+    setMemberError("");
     const res = await fetch(`/api/tickets/${ticketId}/members?userId=${userId}`, {
       method: "DELETE",
     });
-    if (res.ok) fetchTicket();
+    if (res.ok) {
+      await fetchTicket();
+    } else {
+      const data = await res.json().catch(() => ({ error: "协作者移除失败" }));
+      setMemberError(data.error || "协作者移除失败");
+    }
+    setRemovingMemberId(null);
+  }
+
+  async function handleMemberRoleChange(userId: string, role: string) {
+    setUpdatingMemberId(userId);
+    setMemberError("");
+    const res = await fetch(`/api/tickets/${ticketId}/members?userId=${userId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role }),
+    });
+    if (res.ok) {
+      await fetchTicket();
+    } else {
+      const data = await res.json().catch(() => ({ error: "协作者角色更新失败" }));
+      setMemberError(data.error || "协作者角色更新失败");
+    }
+    setUpdatingMemberId(null);
   }
 
   if (loading) {
@@ -254,6 +296,19 @@ export default function TicketDetailPage() {
   if (!ticket) {
     return <div className="text-center py-8">工单不存在</div>;
   }
+
+  const currentMemberRole = ticket.members.find((member) => member.user.id === currentUser?.id)?.role;
+  const canModifyMembers =
+    currentUser?.role === "admin" ||
+    currentUser?.id === ticket.creator.id ||
+    currentUser?.id === ticket.assignee?.id ||
+    currentMemberRole === "owner";
+  const memberCandidates = users.filter(
+    (user) =>
+      user.id !== ticket.creator.id &&
+      user.id !== ticket.assignee?.id &&
+      !ticket.members.some((member) => member.user.id === user.id)
+  );
 
   return (
     <div className="space-y-6">
@@ -312,15 +367,23 @@ export default function TicketDetailPage() {
               </div>
 
               {/* Add comment form */}
+              {commentError && (
+                <p className="mb-3 text-sm text-red-600" role="alert">{commentError}</p>
+              )}
               <form onSubmit={handleAddComment} className="flex gap-2">
                 <Textarea
+                  aria-label="添加评论"
                   placeholder="添加评论..."
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                   rows={2}
                   className="flex-1"
                 />
-                <Button type="submit" disabled={submittingComment || !comment.trim()}>
+                <Button
+                  type="submit"
+                  aria-label="发送评论"
+                  disabled={submittingComment || !comment.trim()}
+                >
                   <Send className="w-4 h-4" />
                 </Button>
               </form>
@@ -344,6 +407,7 @@ export default function TicketDetailPage() {
                     {log.action === "priority_changed" && `将优先级从 ${PRIORITY_LABELS[log.oldValue || ""] || log.oldValue} 改为 ${PRIORITY_LABELS[log.newValue || ""] || log.newValue}`}
                     {log.action === "member_added" && `添加了协作者 ${log.newValue}`}
                     {log.action === "member_removed" && `移除了协作者 ${log.oldValue}`}
+                    {log.action === "member_role_changed" && `将协作者角色从 ${log.oldValue} 改为 ${log.newValue}`}
                     <span className="text-gray-400 ml-2">
                       {new Date(log.createdAt).toLocaleString()}
                     </span>
@@ -517,46 +581,93 @@ export default function TicketDetailPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle>协作者</CardTitle>
-              <Button variant="ghost" size="sm" onClick={() => setShowAddMember(!showAddMember)}>
-                {showAddMember ? "取消" : "添加"}
-              </Button>
+              {canModifyMembers && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  aria-label={showAddMember ? "取消添加协作者" : "添加协作者"}
+                  onClick={() => {
+                    setMemberError("");
+                    setShowAddMember(!showAddMember);
+                  }}
+                >
+                  {showAddMember ? "取消" : "添加"}
+                </Button>
+              )}
             </CardHeader>
             <CardContent>
               {showAddMember && (
-                <div className="flex gap-2 mb-4">
+                <div className="mb-4 space-y-2">
                   <select
-                    className="flex-1 h-9 rounded-md border border-input bg-background px-3 text-sm"
+                    aria-label="选择协作者"
+                    className="w-full h-9 rounded-md border border-input bg-background px-3 text-sm"
                     value={newMemberId}
                     onChange={(e) => setNewMemberId(e.target.value)}
                   >
                     <option value="">选择用户</option>
-                    {users
-                      .filter((u) => !ticket.members.some((m) => m.user.id === u.id))
-                      .map((user) => (
-                        <option key={user.id} value={user.id}>
-                          {user.displayName}
-                        </option>
-                      ))}
+                    {memberCandidates.map((user) => (
+                      <option key={user.id} value={user.id}>
+                        {user.displayName}
+                      </option>
+                    ))}
                   </select>
-                  <Button size="sm" onClick={handleAddMember} disabled={!newMemberId}>
-                    添加
+                  <select
+                    aria-label="选择协作者角色"
+                    className="w-full h-9 rounded-md border border-input bg-background px-3 text-sm"
+                    value={newMemberRole}
+                    onChange={(e) => setNewMemberRole(e.target.value)}
+                  >
+                    {Object.entries(MEMBER_ROLE).map(([key, value]) => (
+                      <option key={key} value={value}>
+                        {MEMBER_ROLE_LABELS[value]}
+                      </option>
+                    ))}
+                  </select>
+                  <Button
+                    size="sm"
+                    onClick={handleAddMember}
+                    disabled={!newMemberId || addingMember}
+                  >
+                    {addingMember ? "添加中..." : "确认添加"}
                   </Button>
                 </div>
               )}
+              {memberError && (
+                <p className="mb-3 text-sm text-red-600" role="alert">{memberError}</p>
+              )}
               <div className="space-y-2">
                 {ticket.members.map((member) => (
-                  <div key={member.id} className="flex items-center justify-between">
-                    <div>
+                  <div key={member.id} className="flex items-center justify-between gap-3">
+                    <div className="min-w-0">
                       <p className="text-sm font-medium">{member.user.displayName}</p>
                       <Badge memberRole={member.role}>{MEMBER_ROLE_LABELS[member.role]}</Badge>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => handleRemoveMember(member.user.id)}
-                    >
-                      移除
-                    </Button>
+                    {canModifyMembers && (
+                      <div className="flex items-center gap-2">
+                        <select
+                          aria-label={`修改协作者角色 ${member.user.displayName}`}
+                          className="h-8 rounded-md border border-input bg-background px-2 text-sm"
+                          value={member.role}
+                          disabled={updatingMemberId === member.user.id}
+                          onChange={(e) => handleMemberRoleChange(member.user.id, e.target.value)}
+                        >
+                          {Object.entries(MEMBER_ROLE).map(([key, value]) => (
+                            <option key={key} value={value}>
+                              {MEMBER_ROLE_LABELS[value]}
+                            </option>
+                          ))}
+                        </select>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          aria-label={`移除协作者 ${member.user.displayName}`}
+                          disabled={removingMemberId === member.user.id}
+                          onClick={() => handleRemoveMember(member.user.id)}
+                        >
+                          移除
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 ))}
                 {ticket.members.length === 0 && (
