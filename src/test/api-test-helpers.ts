@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, rmSync } from "node:fs";
 import path from "node:path";
 import { NextRequest } from "next/server";
-import type { PrismaClient } from "@prisma/client";
+import type { PrismaClient, Ticket, User } from "@prisma/client";
 import type { Session } from "next-auth";
 import type { Mock } from "vitest";
 
@@ -32,10 +32,16 @@ export function createTestDatabaseUrl(label: string): string {
 }
 
 export function pushTestDatabaseSchema(databaseUrl: string): void {
-  const npx = process.platform === "win32" ? "npx.cmd" : "npx";
   execFileSync(
-    npx,
-    ["prisma", "db", "push", "--schema", "prisma/schema.prisma", "--skip-generate"],
+    process.execPath,
+    [
+      "node_modules/prisma/build/index.js",
+      "db",
+      "push",
+      "--schema",
+      "prisma/schema.prisma",
+      "--skip-generate",
+    ],
     {
       cwd: process.cwd(),
       env: { ...process.env, DATABASE_URL: databaseUrl },
@@ -68,6 +74,64 @@ export async function clearDatabase(prisma: PrismaClient): Promise<void> {
   await prisma.account.deleteMany();
   await prisma.verificationToken.deleteMany();
   await prisma.user.deleteMany();
+}
+
+export async function disconnectPrisma(prisma?: PrismaClient): Promise<void> {
+  if (!prisma) return;
+  await prisma.$disconnect();
+  delete (globalThis as { prisma?: PrismaClient }).prisma;
+}
+
+function uniqueValue(prefix: string): string {
+  return `${prefix}-${process.pid}-${Date.now()}-${Math.random()
+    .toString(36)
+    .slice(2, 8)}`;
+}
+
+export async function seedUser(
+  prisma: PrismaClient,
+  overrides: Partial<User> = {}
+): Promise<User> {
+  const username = overrides.username ?? uniqueValue("user");
+  return prisma.user.create({
+    data: {
+      id: overrides.id,
+      username,
+      displayName: overrides.displayName ?? username,
+      email: overrides.email ?? `${username}@example.test`,
+      passwordHash: overrides.passwordHash ?? "test-password-hash",
+      avatarUrl: overrides.avatarUrl ?? null,
+      role: overrides.role ?? "user",
+      department: overrides.department ?? null,
+      createdAt: overrides.createdAt,
+      updatedAt: overrides.updatedAt,
+    },
+  });
+}
+
+export async function seedTicket(
+  prisma: PrismaClient,
+  data: {
+    creatorId: string;
+    assigneeId?: string | null;
+  } & Partial<Omit<Ticket, "creatorId" | "assigneeId">>
+): Promise<Ticket> {
+  return prisma.ticket.create({
+    data: {
+      id: data.id,
+      title: data.title ?? uniqueValue("ticket"),
+      description: data.description ?? "Test ticket description",
+      type: data.type ?? "需求",
+      priority: data.priority ?? "medium",
+      status: data.status ?? "pending",
+      creatorId: data.creatorId,
+      assigneeId: data.assigneeId ?? null,
+      dueDate: data.dueDate ?? null,
+      closedAt: data.closedAt ?? null,
+      createdAt: data.createdAt,
+      updatedAt: data.updatedAt,
+    },
+  });
 }
 
 export function createMockSession(user: TestSessionUser): Session {
