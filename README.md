@@ -48,10 +48,24 @@ Notes:
 - authenticated dashboard entry from `/`;
 - dashboard assigned scope shows `0` and an empty list for admin seed data;
 - dashboard "我发起的" scope shows the seeded sample ticket;
-- ticket detail page opens and shows comments;
+- ticket detail page opens and shows comments, attachments, status controls, details, and collaborator controls;
+- non-participant users are denied ticket detail, comment, and member access for unrelated tickets;
+- attachment upload, authenticated download, and delete work from ticket detail;
+- admin can add a collaborator, change the collaborator role, and add a comment;
+- an added collaborator can follow a notification to the ticket and add a comment;
 - `/tickets` list can show all tickets;
 - `/tickets/new` is reachable and priority shows user-facing labels while preserving internal values;
+- notification unread count, notification list, single read, all read, and ticket-link navigation work for assigned tickets;
 - logout returns to `/login`.
+
+## Verified Collaboration Surface
+
+- Attachments are stored under ignored local `storage/uploads` and downloaded through authenticated ticket attachment routes.
+- Notifications are in-app only: the header bell shows unread count, a menu lists notifications, and read actions call `PATCH` notification APIs.
+- Comments and collaborator lists require ticket access. Admins, creators, assignees, and owner-role collaborators can modify collaborators.
+- Collaborator roles are `owner`, `collaborator`, and `watcher`; the ticket detail page supports adding collaborators, changing roles, and removing collaborators.
+
+Local verification does not imply production object storage, malware scanning, email/push delivery, realtime updates, full audit policy, or a richer role matrix.
 
 ## Harness Workflow
 
