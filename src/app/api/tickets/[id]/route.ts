@@ -3,7 +3,7 @@ import { Prisma } from "@prisma/client";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { notifyTicketAssigned, notifyStatusChanged } from "@/lib/notifications";
-import { canAccessTicket } from "@/lib/ticket-access";
+import { canAccessTicket, canModifyTicket } from "@/lib/ticket-access";
 
 type TicketPatchBody = {
   status?: string;
@@ -69,7 +69,7 @@ export async function PATCH(
     return Response.json({ error: "工单不存在" }, { status: 404 });
   }
 
-  if (!(await canAccessTicket(id, session.user.id, session.user.role))) {
+  if (!(await canModifyTicket(id, session.user.id, session.user.role))) {
     return Response.json({ error: "无权修改该工单" }, { status: 403 });
   }
 

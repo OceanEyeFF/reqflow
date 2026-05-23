@@ -107,6 +107,11 @@ test("authenticated user can reach core ticket workflow", async ({ page, browser
     .click();
   await expect(memberPage).toHaveURL(new RegExp(`/tickets/${ticketId}$`));
   await expect(memberPage.locator("h1", { hasText: "【示例】用户登录页面样式优化" })).toBeVisible();
+  await expect(memberPage.getByRole("button", { name: "处理中" })).toBeDisabled();
+  const memberStatusPatch = await memberPage.request.patch(`/api/tickets/${ticketId}`, {
+    data: { status: "processing" },
+  });
+  expect(memberStatusPatch.status()).toBe(403);
   await memberPage.getByLabel("添加评论").fill("WT-009 smoke 成员评论");
   await memberPage.getByRole("button", { name: "发送评论" }).click();
   await expect(memberPage.getByText("评论 (3)")).toBeVisible();
