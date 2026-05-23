@@ -1,45 +1,33 @@
 ---
 title: "Gate Evidence"
 artifact_type: "worktrack-gate-evidence"
-worktrack_id: "WT-20260522-010-collaboration-docs-catch-up"
+worktrack_id: "WT-20260523-016-ticket-modify-permission-hardening"
 updated: "2026-05-23"
 owner: "servo-kernel"
 ---
 
 # Gate Evidence
 
-## Metadata
-
-- worktrack_id: WT-20260522-010-collaboration-docs-catch-up
-- updated: 2026-05-23
-- gate_round: 1
-- required_evidence_lanes: review, policy
-- review_profile: docs
-
 ## Review Lane
 
-- confidence: high
-- ready_for_gate: true
-- docs_scope: README, docs/handoff, worktrack control artifacts
-- verified_facts_used: WT-007 attachment workflow, WT-008 notification surface, WT-009 member/comment hardening, and merged checkpoint `0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92`.
-- stale_context_removed: README no longer describes smoke as only login/dashboard/ticket navigation; handoff no longer points to WT-009 as the next candidate.
-- boundary_review: docs explicitly avoid claiming production object storage, malware scanning, external email/push, realtime delivery, full audit policy, or richer role matrix.
+- review_source: final CodeReview preflight found ordinary collaborators/watchers could still PATCH ticket mutable fields.
+- static_review: pass; `canModifyTicket` limits PATCH to admin, creator, assignee, and owner-role collaborators.
+- ui_review: pass; status buttons and assignee/priority selects are disabled for non-modifying collaborators.
+- scope_review: pass; no schema, docs, or broad role matrix redesign.
 
 ## Validation Lane
 
-- stale-text reverse search for notification read-all POST wording, stale WT-009 next-candidate wording, and old README smoke wording: pass after updates.
-- `git diff --check -- README.md docs .servo`: pass.
 - `npm run lint`: pass.
+- `npm run build`: pass.
 - `$env:DATABASE_URL='file:./dev.db'; npm run db:validate`: pass.
+- clean temp DB migrate + seed + `npm run smoke`: pass; smoke asserts collaborator status control is disabled and PATCH returns 403.
 
 ## Policy Lane
 
-- worktree_policy: all scoped edits occurred in `WT-20260522-010-collaboration-docs-catch-up`; main checkout was not edited.
-- scope_control: no product code, schema, runtime configuration, or production-readiness decision was changed.
-- docs_truth_layer: only verified behavior and explicitly deferred boundaries were written to long-term docs.
+- worktree_policy: all edits occurred in `WT-20260523-016-ticket-modify-permission-hardening`.
+- local_artifacts: no database or runtime logs staged.
 
 ## Recommended Next Route
 
 - recommended_next_route: WorktrackScope.Close
 - approval_required: false
-- why: WT-010 satisfies the documentation catch-up acceptance criteria.

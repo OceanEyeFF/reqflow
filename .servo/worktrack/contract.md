@@ -1,9 +1,9 @@
 ---
 title: "Worktrack Contract"
 artifact_type: "worktrack-contract"
-worktrack_id: "WT-20260522-010-collaboration-docs-catch-up"
+worktrack_id: "WT-20260523-016-ticket-modify-permission-hardening"
 milestone_id: "MS-20260522-003"
-derived_from_milestone: "true"
+derived_from_milestone: "review-added"
 updated: "2026-05-23"
 owner: "servo-kernel"
 ---
@@ -12,42 +12,41 @@ owner: "servo-kernel"
 
 ## Metadata
 
-- worktrack_id: WT-20260522-010-collaboration-docs-catch-up
-- branch: worktrack/WT-20260522-010-collaboration-docs-catch-up
+- worktrack_id: WT-20260523-016-ticket-modify-permission-hardening
+- branch: worktrack/WT-20260523-016-ticket-modify-permission-hardening
 - baseline_branch: develop-aw
-- baseline_ref: c6e9954
+- baseline_ref: fc304d7
 - owner: servo-kernel
 - updated: 2026-05-23
 - contract_status: ready_for_close
 
 ## Node Type
 
-- type: docs
-- source_from_goal_charter: `.servo/goal-charter.md#Engineering Node Map`
+- type: bugfix
+- source_from_review: final CodeReview preflight after WT-010
 - baseline_form: commit-on-worktrack-branch
 - merge_required: yes
-- gate_criteria: review + policy
-- if_interrupted_strategy: checkpoint-or-recover
+- gate_criteria: test + review + policy
 
 ## Task Goal
 
-- Document verified collaboration behavior and non-production boundaries after WT-007, WT-008, and WT-009.
+- Close the review-found gap where ordinary collaborators/watchers could still PATCH ticket status, assignee, and priority.
 
 ## Scope
 
-- In scope: `README.md`, `docs/handoff.md`, and this worktrack's control artifacts.
-- Out of scope: product code, schema changes, new tests, production storage decisions, external messaging decisions, and broad documentation restructure.
+- In scope: ticket modify permission helper, ticket PATCH authorization, detail UI disabled controls for non-modifiers, and smoke assertion for collaborator PATCH 403.
+- Out of scope: broader role matrix redesign, member/comment permissions already closed by WT-009, schema changes, and production audit policy.
 
 ## Acceptance Criteria
 
-- README smoke coverage reflects attachments, notifications, comments, and collaborator flows.
-- Handoff checkpoint/status reflects WT-009 verified behavior and WT-010 docs catch-up.
-- Documentation distinguishes local verified behavior from deferred production object storage, scanning, external messaging, realtime, audit, and richer role-matrix decisions.
-- Stale text claiming the notification read-all route uses POST is absent.
+- Admin, creator, assignee, and owner-role collaborators can modify ticket fields.
+- Ordinary collaborators/watchers can read/comment but cannot PATCH ticket mutable fields.
+- UI disables status, assignee, and priority controls for non-modifying collaborators.
+- Smoke proves an added collaborator receives 403 when attempting ticket PATCH.
 
 ## Verification Requirements
 
-- stale-text search for collaboration docs
-- `git diff --check -- README.md docs .servo`
 - `npm run lint`
+- `npm run build`
 - `$env:DATABASE_URL='file:./dev.db'; npm run db:validate`
+- clean temp DB migration + seed + `npm run smoke`

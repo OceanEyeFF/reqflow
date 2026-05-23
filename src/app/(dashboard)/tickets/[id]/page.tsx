@@ -298,11 +298,12 @@ export default function TicketDetailPage() {
   }
 
   const currentMemberRole = ticket.members.find((member) => member.user.id === currentUser?.id)?.role;
-  const canModifyMembers =
+  const canModifyTicket =
     currentUser?.role === "admin" ||
     currentUser?.id === ticket.creator.id ||
     currentUser?.id === ticket.assignee?.id ||
     currentMemberRole === "owner";
+  const canModifyMembers = canModifyTicket;
   const memberCandidates = users.filter(
     (user) =>
       user.id !== ticket.creator.id &&
@@ -514,6 +515,7 @@ export default function TicketDetailPage() {
                     key={key}
                     variant={ticket.status === value ? "default" : "outline"}
                     size="sm"
+                    disabled={!canModifyTicket}
                     onClick={() => handleStatusChange(value)}
                   >
                     {STATUS_LABELS[value]}
@@ -534,6 +536,7 @@ export default function TicketDetailPage() {
                 <select
                   className="mt-1 w-full h-9 rounded-md border border-input bg-background px-3 text-sm"
                   value={ticket.assignee?.id || ""}
+                  disabled={!canModifyTicket}
                   onChange={(e) => handleAssigneeChange(e.target.value)}
                 >
                   <option value="">未指派</option>
@@ -550,6 +553,7 @@ export default function TicketDetailPage() {
                 <select
                   className="mt-1 w-full h-9 rounded-md border border-input bg-background px-3 text-sm"
                   value={ticket.priority}
+                  disabled={!canModifyTicket}
                   onChange={(e) => handlePriorityChange(e.target.value)}
                 >
                   {Object.entries(TICKET_PRIORITY).map(([key, value]) => (
