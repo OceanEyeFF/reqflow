@@ -4,12 +4,16 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { notifyTicketAssigned, notifyStatusChanged } from "@/lib/notifications";
 import { canAccessTicket, canModifyTicket } from "@/lib/ticket-access";
+import { TICKET_PRIORITY, TICKET_STATUS } from "@/types";
 
 type TicketPatchBody = {
   status?: string;
   assigneeId?: string | null;
   priority?: string;
 };
+
+const VALID_TICKET_STATUSES: string[] = Object.values(TICKET_STATUS);
+const VALID_TICKET_PRIORITIES: string[] = Object.values(TICKET_PRIORITY);
 
 export async function GET(
   request: NextRequest,
@@ -62,7 +66,10 @@ export async function PATCH(
   }
 
   const { id } = await params;
-  const body = (await request.json()) as TicketPatchBody;
+  const body = (await request.json().catch(() => null)) as TicketPatchBody | null;
+  if (!body || typeof body !== "object") {
+    return Response.json({ error: "无效的请求数据" }, { status: 400 });
+  }
 
   const ticket = await prisma.ticket.findUnique({ where: { id } });
   if (!ticket) {
@@ -77,7 +84,13 @@ export async function PATCH(
   const logs: Prisma.TicketLogCreateManyInput[] = [];
 
   // Handle status change
-  if (body.status && body.status !== ticket.status) {
+  if (body.status !== undefined) {
+    if (typeof body.status !== "string" || !VALID_TICKET_STATUSES.includes(body.status)) {
+      return Response.json({ error: "无效的工单状态" }, { status: 400 });
+    }
+  }
+
+  if (body.status !== undefined && body.status !== ticket.status) {
     updateData.status = body.status;
     if (body.status === "closed") {
       updateData.closedAt = new Date();
@@ -92,6 +105,21 @@ export async function PATCH(
   }
 
   // Handle assignee change
+  if (body.assigneeId !== undefined) {
+    if (body.assigneeId !== null && (typeof body.assigneeId !== "string" || body.assigneeId.length === 0)) {
+      return Response.json({ error: "无效的负责人" }, { status: 400 });
+    }
+    if (body.assigneeId !== null) {
+      const assignee = await prisma.user.findUnique({
+        where: { id: body.assigneeId },
+        select: { id: true },
+      });
+      if (!assignee) {
+        return Response.json({ error: "负责人不存在" }, { status: 404 });
+      }
+    }
+  }
+
   if (body.assigneeId !== undefined && body.assigneeId !== ticket.assigneeId) {
     updateData.assigneeId = body.assigneeId;
     logs.push({
@@ -104,7 +132,13 @@ export async function PATCH(
   }
 
   // Handle priority change
-  if (body.priority && body.priority !== ticket.priority) {
+  if (body.priority !== undefined) {
+    if (typeof body.priority !== "string" || !VALID_TICKET_PRIORITIES.includes(body.priority)) {
+      return Response.json({ error: "无效的优先级" }, { status: 400 });
+    }
+  }
+
+  if (body.priority !== undefined && body.priority !== ticket.priority) {
     updateData.priority = body.priority;
     logs.push({
       ticketId: id,
@@ -133,7 +167,7 @@ export async function PATCH(
   }
 
   // Notify on status change
-  if (body.status && body.status !== ticket.status) {
+  if (body.status !== undefined && body.status !== ticket.status) {
     await notifyStatusChanged(id, ticket.title, body.status, ticket.creatorId, ticket.assigneeId, session.user.id);
   }
 

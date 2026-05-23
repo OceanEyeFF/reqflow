@@ -53,6 +53,23 @@ test("authenticated user can reach core ticket workflow", async ({ page, browser
   await expect(page.getByText("附件 (0)")).toBeVisible();
   await page.screenshot({ path: "test-results/smoke/02-ticket-detail.png", fullPage: true });
 
+  const invalidStatusPatch = await page.request.patch(`/api/tickets/${ticketId}`, {
+    data: { status: "invalid_status" },
+  });
+  expect(invalidStatusPatch.status()).toBe(400);
+  const invalidPriorityPatch = await page.request.patch(`/api/tickets/${ticketId}`, {
+    data: { priority: "invalid_priority" },
+  });
+  expect(invalidPriorityPatch.status()).toBe(400);
+  const invalidAssigneePatch = await page.request.patch(`/api/tickets/${ticketId}`, {
+    data: { assigneeId: "missing-user-id" },
+  });
+  expect(invalidAssigneePatch.status()).toBe(404);
+  const emptyAssigneePatch = await page.request.patch(`/api/tickets/${ticketId}`, {
+    data: { assigneeId: "" },
+  });
+  expect(emptyAssigneePatch.status()).toBe(400);
+
   const attachmentName = "wt007-smoke-attachment.txt";
   await page.getByLabel("选择附件").setInputFiles({
     name: attachmentName,

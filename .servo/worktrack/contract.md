@@ -1,7 +1,7 @@
 ---
 title: "Worktrack Contract"
 artifact_type: "worktrack-contract"
-worktrack_id: "WT-20260523-016-ticket-modify-permission-hardening"
+worktrack_id: "WT-20260523-017-ms003-final-code-review"
 milestone_id: "MS-20260522-003"
 derived_from_milestone: "review-added"
 updated: "2026-05-23"
@@ -12,37 +12,38 @@ owner: "servo-kernel"
 
 ## Metadata
 
-- worktrack_id: WT-20260523-016-ticket-modify-permission-hardening
-- branch: worktrack/WT-20260523-016-ticket-modify-permission-hardening
+- worktrack_id: WT-20260523-017-ms003-final-code-review
+- branch: worktrack/WT-20260523-017-ms003-final-code-review
 - baseline_branch: develop-aw
-- baseline_ref: fc304d7
+- baseline_ref: ffd66b9
 - owner: servo-kernel
 - updated: 2026-05-23
 - contract_status: ready_for_close
 
 ## Node Type
 
-- type: bugfix
-- source_from_review: final CodeReview preflight after WT-010
+- type: review
+- source_from_user_request: programmer requested an explicit CodeReview Worktrack for MS-003.
 - baseline_form: commit-on-worktrack-branch
 - merge_required: yes
-- gate_criteria: test + review + policy
+- gate_criteria: review + test + policy
+- if_interrupted_strategy: checkpoint-or-recover
 
 ## Task Goal
 
-- Close the review-found gap where ordinary collaborators/watchers could still PATCH ticket status, assignee, and priority.
+- Perform and record a formal MS-003 CodeReview worktrack, fixing any blocking defects found during review.
 
 ## Scope
 
-- In scope: ticket modify permission helper, ticket PATCH authorization, detail UI disabled controls for non-modifiers, and smoke assertion for collaborator PATCH 403.
-- Out of scope: broader role matrix redesign, member/comment permissions already closed by WT-009, schema changes, and production audit policy.
+- In scope: review MS-003 collaboration changes, permission boundaries, accepted smoke coverage, docs freshness, Gate evidence, and directly blocking review fixes.
+- Out of scope: new product features, broad role model redesign, production storage/messaging decisions, schema changes, and unrelated cleanup.
 
 ## Acceptance Criteria
 
-- Admin, creator, assignee, and owner-role collaborators can modify ticket fields.
-- Ordinary collaborators/watchers can read/comment but cannot PATCH ticket mutable fields.
-- UI disables status, assignee, and priority controls for non-modifying collaborators.
-- Smoke proves an added collaborator receives 403 when attempting ticket PATCH.
+- CodeReview findings are recorded in worktrack evidence.
+- Any blocking review finding is either fixed in this worktrack or explicitly converted to a follow-up blocker.
+- Validation commands pass after review fixes.
+- MS-003 milestone and repo status can reference this worktrack as final review evidence.
 
 ## Verification Requirements
 
@@ -50,3 +51,5 @@ owner: "servo-kernel"
 - `npm run build`
 - `$env:DATABASE_URL='file:./dev.db'; npm run db:validate`
 - clean temp DB migration + seed + `npm run smoke`
+- screenshot review for the member/comment permission-disabled state
+- stale-text reverse search for old notification method and README smoke wording
