@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 17
-- planned: 0
+- total: 24
+- planned: 7
 - active: 0
 - completed: 17
 - blocked: 0
@@ -205,3 +205,82 @@
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260524-017/contract.md
 - branch: worktrack/wt-20260524-017-supplemental-code-review (merged)
+
+## M4: 项目整洁度与 AI 适配治理 (MS-20260524-001)
+
+### WT-20260524-018
+
+- worktrack_id: WT-20260524-018
+- title: 脏状态盘点与治理策略矩阵
+- milestone_id: MS-20260524-001
+- node_type: docs
+- status: planned
+- priority: 1
+- contract_path: .servo/worktrack/WT-20260524-018/contract.md
+- branch: worktrack/wt-20260524-018-dirty-state-matrix
+
+### WT-20260524-019
+
+- worktrack_id: WT-20260524-019
+- title: `.gitignore` 与临时产物治理
+- milestone_id: MS-20260524-001
+- node_type: refactor
+- status: planned
+- priority: 2
+- contract_path: .servo/worktrack/WT-20260524-019/contract.md
+- branch: worktrack/wt-20260524-019-ignore-temp-artifacts
+
+### WT-20260524-020
+
+- worktrack_id: WT-20260524-020
+- title: Worktree 与分支熵清理
+- milestone_id: MS-20260524-001
+- node_type: refactor
+- status: planned
+- priority: 3
+- contract_path: .servo/worktrack/WT-20260524-020/contract.md
+- branch: worktrack/wt-20260524-020-worktree-branch-cleanup
+
+### WT-20260524-021
+
+- worktrack_id: WT-20260524-021
+- title: AI 协作入口规范化
+- milestone_id: MS-20260524-001
+- node_type: docs
+- status: planned
+- priority: 4
+- contract_path: .servo/worktrack/WT-20260524-021/contract.md
+- branch: worktrack/wt-20260524-021-ai-collaboration-entrypoints
+
+### WT-20260524-022
+
+- worktrack_id: WT-20260524-022
+- title: Prisma dev DB 状态治理
+- milestone_id: MS-20260524-001
+- node_type: refactor
+- status: planned
+- priority: 5
+- contract_path: .servo/worktrack/WT-20260524-022/contract.md
+- branch: worktrack/wt-20260524-022-prisma-dev-db-governance
+
+### WT-20260524-023
+
+- worktrack_id: WT-20260524-023
+- title: 文档与 RepoStatus 同步
+- milestone_id: MS-20260524-001
+- node_type: docs
+- status: planned
+- priority: 6
+- contract_path: .servo/worktrack/WT-20260524-023/contract.md
+- branch: worktrack/wt-20260524-023-docs-repostatus-sync
+
+### WT-20260524-024
+
+- worktrack_id: WT-20260524-024
+- title: M4 最终 CodeReview Worktrack
+- milestone_id: MS-20260524-001
+- node_type: review
+- status: planned
+- priority: 7
+- contract_path: .servo/worktrack/WT-20260524-024/contract.md
+- branch: worktrack/wt-20260524-024-m4-final-code-review

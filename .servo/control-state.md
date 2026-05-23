@@ -18,10 +18,10 @@
 
 ## Active Milestone
 
-- active_milestone:
-- milestone_title:
-- milestone_status: none
-- milestone_pipeline_summary: total=3 planned=0 active=0 completed=3 superseded=0
+- active_milestone: MS-20260524-001
+- milestone_title: 项目整洁度与 AI 适配治理
+- milestone_status: active
+- milestone_pipeline_summary: total=4 planned=0 active=1 completed=3 superseded=0
 
 ## Baseline Branch
 
@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Observe: M3 accepted by programmer; await next repo goal
+- RepoScope.Decide: MS-20260524-001 active; initialize WT-20260524-018 脏状态盘点与治理策略矩阵
 
 ## Linked Formal Documents
 
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 30045cbe49bfba90141baf743ed4cb26dd525717
+- latest_observed_checkpoint: 865a183f61b6a1c89e3e018739950a56e9fcdd9e
 - last_doc_catch_up_checkpoint: 30045cbe49bfba90141baf743ed4cb26dd525717
-- milestone_input_checkpoint:
+- milestone_input_checkpoint: 865a183f61b6a1c89e3e018739950a56e9fcdd9e
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-24
@@ -105,5 +105,6 @@
 
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
-- Phase 9 当前阶段: M3 API route handler 集成测试已验收
+- Phase 9 上一阶段: M3 API route handler 集成测试已验收
+- Phase 9 当前阶段: MS-20260524-001 项目整洁度与 AI 适配治理已激活
 - 分治策略: 已完成测试夹具 → API 模块覆盖 → 文档与回归收口 → 最终 CodeReview

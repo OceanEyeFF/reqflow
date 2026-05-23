@@ -4,9 +4,9 @@
 
 ## Pipeline Summary
 
-- total: 3
+- total: 4
 - planned: 0
-- active: 0
+- active: 1
 - completed: 3
 - superseded: 0
 
@@ -55,3 +55,18 @@
 - created_at: 2026-05-23
 - updated: 2026-05-23
 - updated_by: harness-kernel
+
+### MS-20260524-001
+
+- milestone_id: MS-20260524-001
+- title: 项目整洁度与 AI 适配治理
+- milestone_kind: goal-driven
+- status: active
+- priority: 4
+- depends_on_milestones: [MS-20260523-003]
+- worktrack_list: [WT-20260524-018, WT-20260524-019, WT-20260524-020, WT-20260524-021, WT-20260524-022, WT-20260524-023, WT-20260524-024]
+- created_by: fdch0
+- created_at: 2026-05-24
+- updated: 2026-05-24
+- updated_by: harness-kernel
+- activation_rules: current_active_milestone == none and depends_on_milestones completed
