@@ -10,7 +10,7 @@
 Phase 1-8 全部完成并合并到 develop。Phase 9 的基本面与分模块治理已完成，当前质量基线已有验证：
 - `npm run build` 通过
 - `npm run lint` 通过，ESLint 0 warning
-- `npm run test` 通过，2 个测试文件，29 个测试
+- `npm run test` 通过，3 个测试文件，34 个测试
 - README 已更新为 ReqFlow 项目信息
 
 ## Principal Contradictions
@@ -34,8 +34,8 @@ Phase 1-8 全部完成并合并到 develop。Phase 9 的基本面与分模块治
 1. **M3: API route handler 集成测试** — 为 tickets、comments、members、attachments、notifications 的关键成功/失败路径建立 Prisma/SQLite 测试夹具与 route handler 覆盖
 
 建议按以下 worktrack 顺序推进：
-1. WT-20260523-011: API 集成测试夹具与测试环境
-2. WT-20260523-012: Tickets API route handler 集成测试
+1. WT-20260523-011: API 集成测试夹具与测试环境 — completed
+2. WT-20260523-012: Tickets API route handler 集成测试 — next
 3. WT-20260523-013: Comments/Members/Logs API route handler 集成测试
 4. WT-20260523-014: Attachments/Notifications API route handler 集成测试
 5. WT-20260523-015: M3 测试文档与回归验证收口

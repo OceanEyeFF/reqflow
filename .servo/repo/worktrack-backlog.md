@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 15
-- planned: 5
+- planned: 4
 - active: 0
-- completed: 10
+- completed: 11
 - blocked: 0
 - deferred: 0
 
@@ -133,10 +133,10 @@
 - title: API 集成测试夹具与测试环境
 - milestone_id: MS-20260523-003
 - node_type: test
-- status: planned
+- status: completed
 - priority: 1
-- contract_path:
-- branch:
+- contract_path: .servo/worktrack/WT-20260523-011/contract.md
+- branch: worktrack/wt-20260523-011-api-test-fixtures (merged)
 
 ### WT-20260523-012
 

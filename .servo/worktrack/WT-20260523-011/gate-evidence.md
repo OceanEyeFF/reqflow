@@ -33,10 +33,10 @@
 - worktree_validation:
   - `node node_modules/eslint/bin/eslint.js . --max-warnings=0`: pass
   - `node node_modules/vitest/vitest.mjs run`: pass, 3 test files, 34 tests
-- post_merge_validation_required:
-  - `npm run lint`
-  - `npm run test`
-  - `npm run build`
+- post_merge_validation:
+  - `npm run lint`: pass
+  - `npm run test`: pass, 3 test files, 34 tests
+  - `npm run build`: pass
 - helper_tests: `src/test/api-test-helpers.test.ts`
 
 ## Policy Lane

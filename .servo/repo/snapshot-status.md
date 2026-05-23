@@ -4,7 +4,7 @@
 
 - updated: 2026-05-23
 - baseline_branch: develop
-- baseline_commit: ef9ac90b222a2caeffc12134877bce944a385c99
+- baseline_commit: c1d84761ae7b6693c9ed27573c4ff6e65d379a62
 
 ## Codebase State
 
@@ -48,7 +48,7 @@ reqflow/
 |------|------|
 | `npm run build` | 通过 (2026-05-23) |
 | `npm run lint` | 通过，ESLint 0 warning (2026-05-23) |
-| `npm run test` | 通过，2 个测试文件，29 个测试 (2026-05-23) |
+| `npm run test` | 通过，3 个测试文件，34 个测试 (2026-05-23) |
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
 
 ### 已知 Issues (来自 handoff.md)
@@ -69,4 +69,5 @@ reqflow/
 - active_milestone: MS-20260523-003
 - title: API route handler 集成测试
 - purpose: 为核心 API route handler 建立可重复的集成测试覆盖，保护后续重构和缺陷修复。
-- planned_worktracks: WT-20260523-011, WT-20260523-012, WT-20260523-013, WT-20260523-014, WT-20260523-015
+- completed_worktracks: WT-20260523-011
+- planned_worktracks: WT-20260523-012, WT-20260523-013, WT-20260523-014, WT-20260523-015
