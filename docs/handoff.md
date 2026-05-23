@@ -5,7 +5,7 @@
 **项目名称**: ReqFlow - 轻量级公司内部工单需求协作系统  
 **仓库路径**: `E:\repos\personal\reqflow`  
 **Harness 基线分支**: `develop-aw`  
-**当前交接状态**: MiniMax 初始化代码已纳入 Harness 评估；验证环境、lint 质量基线、runtime smoke 基线、dashboard/ticket flow 修复、附件工作流和通知用户界面已建立。
+**当前交接状态**: MiniMax 初始化代码已纳入 Harness 评估；验证环境、lint 质量基线、runtime smoke 基线、dashboard/ticket flow 修复、附件、通知、评论和协作者本地验收事实已建立。
 **技术栈**: Next.js 16.2.6 + React 19.2.4 + TypeScript + TailwindCSS v4 + Prisma 5 + SQLite + NextAuth v5 beta
 
 ---
@@ -13,7 +13,7 @@
 ## 已验证基线
 
 - 基线 worktree: `E:\repos\personal\reqflow\.worktrees\develop-aw`
-- 最新已验证业务 checkpoint: `8568578686d0cec1d6732784771381bfb63b05ae`
+- 最新已验证业务 checkpoint: `0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92`
 - 最新已验收 checkpoint: `4179629cdb71cd00c0e52c09dc346035d8147f82`
 - 当前 Milestone: `MS-20260522-003` - Collaboration Surface Acceptance
 - 已完成 worktrack:
@@ -29,7 +29,7 @@
   - `WT-20260522-008-notification-user-surface`: 建立通知铃铛、未读列表、单条已读、全部已读和通知跳转工单的 smoke 截图证据。
   - `WT-20260522-009-member-comment-interaction-hardening`: 建立非参与者访问拒绝、协作者添加/改角色、成员通知跳转和成员评论 smoke 证据。
 - 当前 milestone: `MS-20260522-003` - Collaboration Surface Acceptance。
-- 当前 worktrack: N/A；下一步候选为 `WT-20260522-010-collaboration-docs-catch-up`。
+- 当前 worktrack: `WT-20260522-010-collaboration-docs-catch-up`；下一步为 MS-003 Gate 与最终 CodeReview。
 
 ---
 
@@ -74,7 +74,7 @@ npm run smoke
 - `npm run lint`: 通过，0 errors。
 - `npm run build`: 通过，Next.js 16.2.6 production build 和 TypeScript check 通过。
 - `npm run db:validate`: 通过；需要先把 `.env.example` 复制为被忽略的 `.env`。
-- `npm run smoke`: 通过；使用 Playwright + 本机 Chrome channel 启动 Next dev server，覆盖登录、工作台、工单列表、工单详情、附件上传/下载/删除、新建工单、通知未读/已读操作、通知跳转和退出。
+- `npm run smoke`: 通过；使用 Playwright + 本机 Chrome channel 启动 Next dev server，覆盖登录、工作台、工单列表、工单详情、附件上传/下载/删除、协作者添加/改角色、成员评论、通知未读/已读操作、通知跳转、新建工单和退出。
 
 说明：
 
@@ -232,4 +232,4 @@ cd .worktrees/WT-xxxx
 ---
 
 *交接更新时间: 2026-05-23*
-*交接来源: Harness `WT-20260522-009-member-comment-interaction-hardening`*
+*交接来源: Harness `WT-20260522-010-collaboration-docs-catch-up`*
