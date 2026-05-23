@@ -6,6 +6,8 @@ import type { PrismaClient } from "@prisma/client";
 import type { Session } from "next-auth";
 import type { Mock } from "vitest";
 
+type NextRequestInit = NonNullable<ConstructorParameters<typeof NextRequest>[1]>;
+
 export type TestSessionUser = {
   id: string;
   name?: string | null;
@@ -107,7 +109,7 @@ export function jsonRequest(
   init: Omit<RequestInit, "body"> = {}
 ): NextRequest {
   const { headers, signal, ...rest } = init;
-  const requestInit: RequestInit = {
+  const requestInit: NextRequestInit = {
     ...rest,
     method: rest.method ?? "POST",
     headers: {
@@ -122,7 +124,7 @@ export function jsonRequest(
 
 export function getRequest(url: string, init: RequestInit = {}): NextRequest {
   const { signal, ...rest } = init;
-  const requestInit: RequestInit = { method: "GET", ...rest };
+  const requestInit: NextRequestInit = { method: "GET", ...rest };
   if (signal) requestInit.signal = signal;
   return new NextRequest(url, requestInit);
 }
