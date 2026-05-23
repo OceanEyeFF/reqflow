@@ -16,7 +16,7 @@ describe("api-test-helpers", () => {
   it("creates isolated Prisma sqlite URLs under prisma/test-dbs", () => {
     const url = createTestDatabaseUrl("tickets route");
 
-    expect(url).toMatch(/^file:\.\/test-dbs\/tickets-route-\d+-\d+\.db$/);
+    expect(url).toMatch(/\/prisma\/test-dbs\/tickets-route-\d+-\d+\.db$/);
     removeTestDatabase(url);
   });
 

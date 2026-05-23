@@ -19,6 +19,7 @@
 ### Supporting Detail
 - changed_files: `src/app/api/tickets/route.test.ts`, `src/app/api/tickets/[id]/route.test.ts`, `src/test/api-test-helpers.ts`, `vitest.config.ts`
 - scope_check: covers tickets collection/detail route handlers, reusable Prisma seed helpers, and serialized API test execution
+- gate_fix: test database URLs use absolute SQLite `file:` paths so Prisma CLI schema push and Prisma Client connect to the same database
 
 ## Validation Lane
 

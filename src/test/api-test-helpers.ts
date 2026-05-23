@@ -28,7 +28,10 @@ const testDbDir = path.join(process.cwd(), "prisma", "test-dbs");
 export function createTestDatabaseUrl(label: string): string {
   mkdirSync(testDbDir, { recursive: true });
   const safeLabel = label.replace(/[^a-zA-Z0-9_-]/g, "-").slice(0, 48);
-  return `file:./test-dbs/${safeLabel}-${process.pid}-${Date.now()}.db`;
+  const dbPath = path
+    .join(testDbDir, `${safeLabel}-${process.pid}-${Date.now()}.db`)
+    .replace(/\\/g, "/");
+  return `file:${dbPath}`;
 }
 
 export function pushTestDatabaseSchema(databaseUrl: string): void {
@@ -51,12 +54,12 @@ export function pushTestDatabaseSchema(databaseUrl: string): void {
 }
 
 export function removeTestDatabase(databaseUrl: string): void {
-  const prefix = "file:./test-dbs/";
+  const prefix = "file:";
   if (!databaseUrl.startsWith(prefix)) return;
 
-  const dbName = databaseUrl.slice(prefix.length);
+  const dbPath = databaseUrl.slice(prefix.length);
   for (const suffix of ["", "-journal", "-wal", "-shm"]) {
-    const filePath = path.join(testDbDir, `${dbName}${suffix}`);
+    const filePath = `${dbPath}${suffix}`;
     if (existsSync(filePath)) {
       rmSync(filePath, { force: true });
     }
