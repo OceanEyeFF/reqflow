@@ -162,6 +162,23 @@ owner: "servo-kernel"
 - completed_at: 2026-05-23
 - updated: 2026-05-23
 
+### WT-20260523-016-ticket-modify-permission-hardening
+
+- worktrack_id: WT-20260523-016-ticket-modify-permission-hardening
+- milestone_id: MS-20260522-003
+- status: done
+- node_type: bugfix
+- scope: restrict mutable ticket PATCH fields to admin, creator, assignee, and owner-role collaborators
+- branch: worktrack/WT-20260523-016-ticket-modify-permission-hardening
+- baseline_branch: develop-aw
+- base_ref: fc304d7
+- merge_commit: 541bbd73bf3383ea59c4760c1f95457e482dad0f
+- validation: lint pass; build pass; db:validate pass; clean temp DB migrate/seed/smoke pass with collaborator PATCH 403 assertion
+- intake_route: final-code-review-derived
+- evidence_refs: `.servo/worktrack/gate-evidence.md`
+- completed_at: 2026-05-23
+- updated: 2026-05-23
+
 ### WT-20260522-010-collaboration-docs-catch-up
 
 - worktrack_id: WT-20260522-010-collaboration-docs-catch-up

@@ -63,6 +63,7 @@ Notes:
 - Attachments are stored under ignored local `storage/uploads` and downloaded through authenticated ticket attachment routes.
 - Notifications are in-app only: the header bell shows unread count, a menu lists notifications, and read actions call `PATCH` notification APIs.
 - Comments and collaborator lists require ticket access. Admins, creators, assignees, and owner-role collaborators can modify collaborators.
+- Ticket status, assignee, and priority changes are limited to admins, creators, assignees, and owner-role collaborators.
 - Collaborator roles are `owner`, `collaborator`, and `watcher`; the ticket detail page supports adding collaborators, changing roles, and removing collaborators.
 
 Local verification does not imply production object storage, malware scanning, email/push delivery, realtime updates, full audit policy, or a richer role matrix.

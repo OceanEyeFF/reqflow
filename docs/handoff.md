@@ -29,6 +29,7 @@
   - `WT-20260522-008-notification-user-surface`: 建立通知铃铛、未读列表、单条已读、全部已读和通知跳转工单的 smoke 截图证据。
   - `WT-20260522-009-member-comment-interaction-hardening`: 建立非参与者访问拒绝、协作者添加/改角色、成员通知跳转和成员评论 smoke 证据。
   - `WT-20260522-010-collaboration-docs-catch-up`: 追平 README 和 handoff 中的协作验收事实与非生产边界。
+  - `WT-20260523-016-ticket-modify-permission-hardening`: 修正普通协作者/关注者仍可 PATCH 工单可变字段的最终审查问题。
 - 当前 milestone: `MS-20260522-003` - Collaboration Surface Acceptance。
 - 当前 worktrack: N/A；下一步为 MS-003 Gate、最终 CodeReview 和画面验收。
 
@@ -164,6 +165,7 @@ npm run smoke
   - 可修改成员范围: admin、工单发起人、负责人、owner 协作者。
   - 支持角色: `owner`, `collaborator`, `watcher`。
   - 页面支持添加协作者、修改协作者角色、移除协作者，并显示相关操作记录。
+- 工单状态、负责人和优先级变更仅允许 admin、工单发起人、负责人和 owner 协作者执行；普通协作者/关注者保留读取与评论能力。
 - 当前交接确认本地权限和用户可见行为；不声明完整生产审计、复杂角色矩阵或实时协作能力已经完成。
 
 ---

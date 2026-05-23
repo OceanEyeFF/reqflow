@@ -71,6 +71,7 @@ owner: "servo-kernel"
   - WT-20260522-008-notification-user-surface (done, feature)
   - WT-20260522-009-member-comment-interaction-hardening (done, bugfix)
   - WT-20260522-010-collaboration-docs-catch-up (done, docs)
+  - WT-20260523-016-ticket-modify-permission-hardening (done, bugfix, review-added)
 - created_by: programmer-confirmed-harness
 - created_at: 2026-05-22
 - updated_by: harness-skill

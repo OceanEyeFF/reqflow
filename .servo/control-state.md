@@ -95,20 +95,20 @@ owner: "servo-kernel"
 > 记录最近一次 worktrack 关闭后的已验证基线，供后续续跑时快速定位。
 > `latest_observed_checkpoint` 与 `last_doc_catch_up_checkpoint` 是 git hash 幂等性锚点，用于避免对同一代码基线重复执行 repo-refresh 和 doc-catch-up。空值表示锚点尚未建立，首次观察必须完整刷新；harness-skill 启动时通过 git rev-parse HEAD 对比这两个字段决定是否跳过重复刷新。
 
-- last_verified_checkpoint: 409de4ecbae5e0c69c42e4e4e66f685e33e66e2f
-- latest_observed_checkpoint: 409de4ecbae5e0c69c42e4e4e66f685e33e66e2f
+- last_verified_checkpoint: 541bbd73bf3383ea59c4760c1f95457e482dad0f
+- latest_observed_checkpoint: 541bbd73bf3383ea59c4760c1f95457e482dad0f
 - last_doc_catch_up_checkpoint: 409de4ecbae5e0c69c42e4e4e66f685e33e66e2f
-- milestone_input_checkpoint: sha256:424c888b367af4a1176ccd5830ae45ced0bf239530f615f4f90378fdbc16f5a9
+- milestone_input_checkpoint: sha256:a1c74971542e3fbafb2888d4603ca1af19432b68f80713e29453258258222bdd
 - checkpoint_type: git-commit
-- checkpoint_ref: 409de4ecbae5e0c69c42e4e4e66f685e33e66e2f
+- checkpoint_ref: 541bbd73bf3383ea59c4760c1f95457e482dad0f
 - verified_at: 2026-05-23
 - if_no_commit_reason: N/A
 - alternative_traceability: N/A
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 22
-- autonomous_worktracks_opened: 8
+- autonomy_budget_remaining: 21
+- autonomous_worktracks_opened: 9
 
 ## Notes
 
@@ -135,3 +135,4 @@ owner: "servo-kernel"
 - Worktrack `WT-20260522-008-notification-user-surface` closed and merged into `develop-aw` at `8568578686d0cec1d6732784771381bfb63b05ae`; next candidate is `WT-20260522-009-member-comment-interaction-hardening`.
 - Worktrack `WT-20260522-009-member-comment-interaction-hardening` closed and merged into `develop-aw` at `0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92`; next candidate is `WT-20260522-010-collaboration-docs-catch-up`.
 - Worktrack `WT-20260522-010-collaboration-docs-catch-up` closed and merged into `develop-aw` at `409de4ecbae5e0c69c42e4e4e66f685e33e66e2f`; all MS-003 planned worktracks are closed and milestone Gate/final CodeReview are next.
+- Review-added worktrack `WT-20260523-016-ticket-modify-permission-hardening` closed and merged into `develop-aw` at `541bbd73bf3383ea59c4760c1f95457e482dad0f`; final CodeReview should restart from this checkpoint.

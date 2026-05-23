@@ -37,6 +37,7 @@ owner: "servo-kernel"
 - `WT-20260522-008-notification-user-surface` completed and merged into `develop-aw` at `8568578686d0cec1d6732784771381bfb63b05ae`.
 - `WT-20260522-009-member-comment-interaction-hardening` completed and merged into `develop-aw` at `0e1807a251bc3c79e0967b8ceda6a3ee09c7ae92`.
 - `WT-20260522-010-collaboration-docs-catch-up` completed and merged into `develop-aw` at `409de4ecbae5e0c69c42e4e4e66f685e33e66e2f`.
+- Review-added `WT-20260523-016-ticket-modify-permission-hardening` completed and merged into `develop-aw` at `541bbd73bf3383ea59c4760c1f95457e482dad0f`.
 - Lint, build, and Prisma validation pass on the accepted baseline after documented local setup.
 - Operator-facing handoff docs now reflect the verified Harness baseline.
 - Runtime smoke testing found and fixed a post-login routing bug: `/` previously rendered the create-next-app default page, and now renders the authenticated dashboard.
