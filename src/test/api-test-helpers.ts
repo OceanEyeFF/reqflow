@@ -106,19 +106,25 @@ export function jsonRequest(
   body: unknown,
   init: Omit<RequestInit, "body"> = {}
 ): NextRequest {
-  return new NextRequest(url, {
-    method: init.method ?? "POST",
-    ...init,
+  const { headers, signal, ...rest } = init;
+  const requestInit: RequestInit = {
+    ...rest,
+    method: rest.method ?? "POST",
     headers: {
       "content-type": "application/json",
-      ...init.headers,
+      ...headers,
     },
     body: JSON.stringify(body),
-  });
+  };
+  if (signal) requestInit.signal = signal;
+  return new NextRequest(url, requestInit);
 }
 
 export function getRequest(url: string, init: RequestInit = {}): NextRequest {
-  return new NextRequest(url, { method: "GET", ...init });
+  const { signal, ...rest } = init;
+  const requestInit: RequestInit = { method: "GET", ...rest };
+  if (signal) requestInit.signal = signal;
+  return new NextRequest(url, requestInit);
 }
 
 export function routeParams<T extends Record<string, string>>(params: T): {
