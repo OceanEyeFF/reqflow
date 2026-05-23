@@ -76,7 +76,7 @@ reqflow/
 | `npm run dev`        | 启动开发服务器   |
 | `npm run build`      | 生产构建         |
 | `npm run lint`       | 代码检查         |
-| `npm run test`       | 运行单元测试     |
+| `npm run test`       | 运行 Vitest 单元/集成测试 |
 | `npm run db:seed`    | 填充测试数据     |
 | `npx prisma studio`  | 数据库管理界面   |
 
@@ -85,3 +85,4 @@ reqflow/
 - 需要 Node.js 18+ 环境
 - 数据库文件位于 `prisma/dev.db`（SQLite）
 - 上传文件存储在 `public/uploads/` 目录
+- API route 集成测试使用隔离 SQLite 数据库，测试数据文件位于 `prisma/test-dbs/` 并由测试清理
