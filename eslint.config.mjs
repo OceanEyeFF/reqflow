@@ -12,6 +12,17 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Repo-local agent/control/runtime artifacts are not application source.
+    ".agents/**",
+    ".claude/**",
+    ".harness/**",
+    ".mavis/**",
+    ".opencode/**",
+    ".playwright-mcp/**",
+    ".worktrees/**",
+    "coverage/**",
+    "src/generated/**",
+    "prisma/prisma/**",
   ]),
 ]);
 

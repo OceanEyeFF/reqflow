@@ -76,6 +76,7 @@ reqflow/
 | `npm run dev`        | 启动开发服务器   |
 | `npm run build`      | 生产构建         |
 | `npm run lint`       | 代码检查         |
+| `npm run test`       | 运行单元测试     |
 | `npm run db:seed`    | 填充测试数据     |
 | `npx prisma studio`  | 数据库管理界面   |
 
