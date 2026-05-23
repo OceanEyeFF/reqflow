@@ -11,6 +11,12 @@
 
 ## 已完成的工作
 
+### Phase 6-8（2026-05-17 完成）
+- ✅ 协作者权限 + 角色变更 API
+- ✅ 角色颜色 Badge + 「我参与的工单」Tab
+- ✅ 附件上传 API + 拖拽上传 UI
+- ✅ 通知系统 + 铃铛 Badge + 通知列表
+
 ### 1. Git 环境
 - ✅ `master` 分支（初始空提交）
 - ✅ `develop` 分支（已合并 scaffold 代码）
@@ -60,20 +66,104 @@
 
 ## 待完成的工作（按优先级）
 
-### 高优先级
-1. **附件上传功能** - Phase 7
-2. **通知系统** - Phase 8（站内通知 / 邮件通知）
-3. **移动端适配** - 响应式优化
+## Phase 6: 协作者功能完善
 
-### 中优先级
-4. **用户管理页面** - 管理员可见的用户 CRUD
-5. **工单标签功能** - 给工单打标签分类
-6. **工单搜索** - 全文搜索
+**状态**: ✅ 已完成
+**合并分支**: `develop`
+**时间**: 2026-05-17
 
-### 低优先级（未来扩展）
-7. **统计报表** - 工单完成率、平均处理时间等
-8. **飞书/钉钉集成** - 消息推送
-9. **数据库迁移** - 从 SQLite 迁移到 PostgreSQL
+**后端**:
+- `canModifyMembers` 权限校验 helper（owner/checker 可操作）
+- `PATCH /api/tickets/[id]/members/role` 角色变更 API（含操作日志）
+
+**前端**:
+- 角色颜色 Badge（owner=violet, collaborator=green, watcher=gray）
+- 工单卡片成员数 + 角色展示
+- Dashboard「我参与的工单」Tab 切换
+
+**Worktree 分支**: `feature/phase6-collaborators`（已清理）
+
+---
+
+## Phase 7: 附件上传
+
+**状态**: ✅ 已完成
+**合并分支**: `develop`
+**时间**: 2026-05-17
+
+**数据库**:
+- `TicketAttachment` 模型（fileName, fileUrl, fileSize, mimeType, uploadedBy, ticketId）
+
+**后端**:
+- `POST /api/tickets/[id]/attachments` — 上传（含文件大小校验 10MB）
+- `GET /api/tickets/[id]/attachments` — 列表
+- `DELETE /api/tickets/[id]/attachments/[attachmentId]` — 删除
+
+**前端**:
+- 拖拽上传区 + 点击上传
+- 进度条 + 上传状态反馈
+- 附件列表（文件名、大小、上传者）
+- 图片点击预览（Lightbox modal）
+
+**存储**: `public/uploads/` 本地目录
+
+**Worktree 分支**: `feature/phase7-attachments`（已清理）
+
+---
+
+## Phase 8: 通知系统
+
+**状态**: ✅ 已完成
+**合并分支**: `develop`
+**时间**: 2026-05-17
+
+**数据库**:
+- `Notification` 模型（type, title, content, isRead, userId, ticketId, triggeredBy）
+
+**通知类型**:
+- `assigned` — 被分配为负责人
+- `mentioned` — 被提及
+- `member_added` — 被添加为协作者
+- `comment_added` — 工单有新评论
+
+**后端**:
+- `GET /api/notifications` — 列表 + `unreadCount`（轮询 30s）
+- `PATCH /api/notifications/[id]` — 标记已读
+- `POST /api/notifications/read-all` — 全部已读
+
+**前端**:
+- `NotificationBell` 组件（铃铛 + 未读数 Badge）
+- 通知下拉面板（最新 5 条）
+- `/notifications` 通知列表页
+
+**轮询间隔**: 30 秒
+
+**Worktree 分支**: `feature/phase8-notifications`（已清理）
+
+---
+
+## 实施顺序
+
+```
+Phase 6 ✅ → Phase 7 ✅ → Phase 8 ✅
+(全部完成，2026-05-17)
+```
+
+---
+
+## 已知问题 / 注意事项
+
+1. **TailwindCSS v4**: 当前使用 TailwindCSS v4，有一些破坏性变更（如 `@apply border-border` 需要改成直接写 CSS 变量）
+2. **NextAuth v5**: 使用 beta 版本，API 有变化，需要关注官方更新
+3. **Prisma v5**: 已从 v7 回退到 v5，以获得更好的稳定性
+4. **SQLite 限制**: SQLite 不适合生产环境并发写入，后续考虑迁移到 PostgreSQL
+5. **邮件通知**: Phase 8 暂不包含邮件通知（SMTP 配置待定），仅支持站内通知
+6. **Windows 验证限制**: Windows 非交互式 shell 中无法启动 Next.js dev server 进行运行时测试，依赖 Build + Code Review 作为验证手段
+
+---
+
+*交接时间: 2026-05-23 (UTC+8)*
+*交接人: Mavis (mavis team orchestrator)*
 
 ---
 
@@ -119,25 +209,11 @@ npm run dev
    ```
 
 2. **接下来的 Phase**：
-   - Phase 6: 协作者功能（已实现后端，前端可完善）
-   - Phase 7: 附件上传（需要增加文件存储）
-   - Phase 8: 通知系统
+   - Phase 6-8 已全部完成（协作者功能、附件上传、通知系统），详见上文各 Phase 段落
+   - 后续可参考上方「待完成的工作」列表继续开发
 
 3. **数据库变更**：修改 `prisma/schema.prisma` 后运行：
    ```bash
    npx prisma migrate dev --name <migration_name>
    ```
 
----
-
-## 已知问题 / 注意事项
-
-1. **TailwindCSS v4**: 当前使用 TailwindCSS v4，有一些破坏性变更（如 `@apply border-border` 需要改成直接写 CSS 变量）
-2. **NextAuth v5**: 使用 beta 版本，API 有变化，需要关注官方更新
-3. **Prisma v5**: 已从 v7 回退到 v5，以获得更好的稳定性
-4. **SQLite 限制**: SQLite 不适合生产环境并发写入，后续考虑迁移到 PostgreSQL
-
----
-
-*交接时间: 2026-05-17 10:05 (UTC+8)*
-*交接人: Mavis (mavis team orchestrator)*
