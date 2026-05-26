@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 24
-- planned: 5
+- planned: 4
 - active: 0
-- completed: 19
+- completed: 20
 - blocked: 0
 - deferred: 0
 
@@ -236,10 +236,10 @@
 - title: Worktree 与分支熵清理
 - milestone_id: MS-20260524-001
 - node_type: refactor
-- status: planned
+- status: completed
 - priority: 3
 - contract_path: .servo/worktrack/WT-20260524-020/contract.md
-- branch: worktrack/wt-20260524-020-worktree-branch-cleanup
+- branch: worktrack/wt-20260524-020-worktree-branch-cleanup (merged)
 
 ### WT-20260524-021
 
