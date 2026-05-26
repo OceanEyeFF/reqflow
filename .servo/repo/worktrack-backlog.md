@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 24
-- planned: 4
+- planned: 3
 - active: 0
-- completed: 20
+- completed: 21
 - blocked: 0
 - deferred: 0
 
@@ -247,10 +247,10 @@
 - title: AI 协作入口规范化
 - milestone_id: MS-20260524-001
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 4
 - contract_path: .servo/worktrack/WT-20260524-021/contract.md
-- branch: worktrack/wt-20260524-021-ai-collaboration-entrypoints
+- branch: worktrack/wt-20260524-021-ai-collaboration-entrypoints (merged)
 
 ### WT-20260524-022
 

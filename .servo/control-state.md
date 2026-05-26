@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: MS-20260524-001 active; initialize WT-20260524-021 AI 协作入口规范化
+- RepoScope.Decide: MS-20260524-001 active; initialize WT-20260524-022 Prisma dev DB 状态治理
 
 ## Linked Formal Documents
 
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: b79c83fc331d4b0397041ab849b827f97ad5cb0a
+- latest_observed_checkpoint: 5fc2074d4706ebd2bcd1b421fb1df99fd752adf9
 - last_doc_catch_up_checkpoint: 30045cbe49bfba90141baf743ed4cb26dd525717
-- milestone_input_checkpoint: b79c83fc331d4b0397041ab849b827f97ad5cb0a
+- milestone_input_checkpoint: 5fc2074d4706ebd2bcd1b421fb1df99fd752adf9
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-26
