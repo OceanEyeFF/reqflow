@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 24
-- planned: 6
+- planned: 5
 - active: 0
-- completed: 18
+- completed: 19
 - blocked: 0
 - deferred: 0
 
@@ -225,10 +225,10 @@
 - title: `.gitignore` 与临时产物治理
 - milestone_id: MS-20260524-001
 - node_type: refactor
-- status: planned
+- status: completed
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260524-019/contract.md
-- branch: worktrack/wt-20260524-019-ignore-temp-artifacts
+- branch: worktrack/wt-20260524-019-ignore-temp-artifacts (merged)
 
 ### WT-20260524-020
 

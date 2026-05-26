@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: MS-20260524-001 active; initialize WT-20260524-019 `.gitignore` 与临时产物治理
+- RepoScope.Decide: MS-20260524-001 active; initialize WT-20260524-020 Worktree 与分支熵清理
 
 ## Linked Formal Documents
 
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: bad8b6654b12432414b3bfc54c4f84be6cbf82cd
+- latest_observed_checkpoint: aba94113ad3d06ca99a38e509b53a7d9f6ffbd9b
 - last_doc_catch_up_checkpoint: 30045cbe49bfba90141baf743ed4cb26dd525717
-- milestone_input_checkpoint: bad8b6654b12432414b3bfc54c4f84be6cbf82cd
+- milestone_input_checkpoint: aba94113ad3d06ca99a38e509b53a7d9f6ffbd9b
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-26
