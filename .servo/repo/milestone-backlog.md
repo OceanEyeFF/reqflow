@@ -6,8 +6,8 @@
 
 - total: 4
 - planned: 0
-- active: 1
-- completed: 3
+- active: 0
+- completed: 4
 - superseded: 0
 
 ## Milestones
@@ -61,12 +61,14 @@
 - milestone_id: MS-20260524-001
 - title: 项目整洁度与 AI 适配治理
 - milestone_kind: goal-driven
-- status: active
+- status: completed
 - priority: 4
 - depends_on_milestones: [MS-20260523-003]
 - worktrack_list: [WT-20260524-018, WT-20260524-019, WT-20260524-020, WT-20260524-021, WT-20260524-022, WT-20260524-023, WT-20260524-024]
 - created_by: fdch0
 - created_at: 2026-05-24
-- updated: 2026-05-24
+- updated: 2026-05-26
 - updated_by: harness-kernel
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
+- accepted_by: fdch0
+- accepted_at: 2026-05-26 23:33:49 +08:00

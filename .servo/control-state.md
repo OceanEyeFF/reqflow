@@ -18,10 +18,10 @@
 
 ## Active Milestone
 
-- active_milestone: MS-20260524-001
+- active_milestone:
 - milestone_title: 项目整洁度与 AI 适配治理
-- milestone_status: active
-- milestone_pipeline_summary: total=4 planned=0 active=1 completed=3 superseded=0
+- milestone_status: none
+- milestone_pipeline_summary: total=4 planned=0 active=0 completed=4 superseded=0
 
 ## Baseline Branch
 
@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Handback: MS-20260524-001 7/7 worktracks complete; Milestone Gate pass; waiting for programmer final acceptance
+- RepoScope.Observe: MS-20260524-001 accepted by programmer; no active milestone
 
 ## Linked Formal Documents
 
@@ -43,9 +43,9 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: true
-- reason: MS-20260524-001 is goal-driven; final milestone acceptance is programmer-owned
-- approval_scope: accept or reject MS-20260524-001 final handback
+- needs_programmer_approval: false
+- reason:
+- approval_scope:
 - approval_persistence: one-shot
 
 ## Continuation Authority
@@ -73,8 +73,8 @@
 
 ## Handback Guard
 
-- handoff_state: awaiting_programmer_final_acceptance
-- last_stop_reason: Milestone Gate passed; programmer final acceptance required
+- handoff_state: none
+- last_stop_reason:
 - last_handback_signature:
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 2534e8634ed298bccabf58591dac61dd08d2bfd0
-- last_doc_catch_up_checkpoint: 2534e8634ed298bccabf58591dac61dd08d2bfd0
-- milestone_input_checkpoint: 2534e8634ed298bccabf58591dac61dd08d2bfd0
+- latest_observed_checkpoint: 87903be9dcd65c1769040a54b214e93303014851
+- last_doc_catch_up_checkpoint: 87903be9dcd65c1769040a54b214e93303014851
+- milestone_input_checkpoint: 87903be9dcd65c1769040a54b214e93303014851
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-26

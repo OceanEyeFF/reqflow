@@ -93,7 +93,9 @@ reqflow/
 - active_or_next_worktrack: Milestone Gate handback
 - remaining_worktracks: none
 - milestone_gate_verdict: pass
-- final_acceptance: pending programmer decision
+- final_acceptance: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-05-26 23:33:49 +08:00
 
 ### M4 Governance Facts
 
