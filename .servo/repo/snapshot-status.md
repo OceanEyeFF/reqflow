@@ -4,7 +4,7 @@
 
 - updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: 865bb9fbcac98e408cbfe5cec9e8ae9695569bca
+- baseline_commit: 955fcaa3aca7887189bd3a4605c1a84d599631a1
 
 ## Codebase State
 
@@ -53,6 +53,7 @@ reqflow/
 | `npm run test` | 通过，10 个测试文件，71 个测试 (2026-05-26, WT-20260524-024) |
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
 | GitHub Actions CI baseline | 已建立，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build` (2026-05-27, WT-20260526-026) |
+| Cloud readiness boundary | 已建立，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、uploads、SQLite production risk、deployment platform boundary (2026-05-27, WT-20260526-028) |
 
 ### 已知 Issues (来自 handoff.md)
 
@@ -103,15 +104,16 @@ reqflow/
 - milestone_id: MS-20260526-001
 - title: GitHub CI 与上云前决策基线
 - status: active
-- progress: 3/6 completed at baseline `865bb9fbcac98e408cbfe5cec9e8ae9695569bca`
-- completed_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027
-- planned_worktracks: WT-20260526-028, WT-20260526-029, WT-20260526-030
-- active_or_next_worktrack: WT-20260526-028 上云前环境与部署边界文档
-- remaining_worktracks: WT-20260526-028, WT-20260526-029, WT-20260526-030
+- progress: 4/6 completed at baseline `955fcaa3aca7887189bd3a4605c1a84d599631a1`
+- completed_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027, WT-20260526-028
+- planned_worktracks: WT-20260526-029, WT-20260526-030
+- active_or_next_worktrack: WT-20260526-029 AI MVP 技术决策 Brief
+- remaining_worktracks: WT-20260526-029, WT-20260526-030
 - scope_boundary: PostgreSQL/pgvector migration and AI feature implementation are out of MS5 scope.
 - CI_baseline: `.github/workflows/ci.yml` exists and uses `npm ci`, Prisma generate, `npm run lint`, `npm run test`, Prisma SQLite build DB preparation, and `npm run build`.
 - remote_CI: GitHub Actions run `26462219177` completed with conclusion `success`; job `lint, test, build` also succeeded.
-- next_boundary: WT-20260526-028 should document cloud-readiness environment/deployment boundaries without choosing paid services, production secrets, PostgreSQL migration, or AI implementation.
+- cloud_readiness_boundary: `docs/cloud-readiness-boundary.md` documents environment variables, `AUTH_SECRET`, `DATABASE_URL`, upload storage, SQLite production risk, deployment platform requirements, and explicit non-goals for PostgreSQL/pgvector migration, AI implementation, production secrets, paid provider selection, and Gitee.
+- next_boundary: WT-20260526-029 should document the AI MVP technical decision brief without implementing AI, adding PostgreSQL/pgvector, selecting a paid provider, or creating production secrets.
 
 ### Planned Milestone
 

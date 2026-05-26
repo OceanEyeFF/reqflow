@@ -12,7 +12,7 @@
 ### T3: Link entrypoints [completed]
 - Add README and handoff references to the new document.
 
-### T4: Validate and close [in_progress]
+### T4: Validate and close [completed]
 - Run `git diff --check`.
 - Run targeted consistency checks.
 - Write WT-028 gate evidence and refresh repo state.
