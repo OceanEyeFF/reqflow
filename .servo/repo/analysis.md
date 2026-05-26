@@ -18,7 +18,7 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 - WT-20260524-023: docs and RepoStatus synchronization
 - WT-20260524-024: final governance review
 
-当前 active milestone 是 `MS-20260526-001 / GitHub CI 与上云前决策基线`，4/6 completed。`WT-20260526-025 / RepoStatus 刷新`、`WT-20260526-026 / GitHub Actions CI 基线`、`WT-20260526-027 / GitHub 推送与 CI 验证` 与 `WT-20260526-028 / 上云前环境与部署边界文档` 已完成；下一项是 `WT-20260526-029 / AI MVP 技术决策 Brief`。
+当前 active milestone 是 `MS-20260526-001 / GitHub CI 与上云前决策基线`，5/6 completed。`WT-20260526-025 / RepoStatus 刷新`、`WT-20260526-026 / GitHub Actions CI 基线`、`WT-20260526-027 / GitHub 推送与 CI 验证`、`WT-20260526-028 / 上云前环境与部署边界文档` 与 `WT-20260526-029 / AI MVP 技术决策 Brief` 已完成；下一项是 `WT-20260526-030 / MS5 最终验收`。
 
 当前 planned milestone 是 `MS-20260526-002 / AI 需求说明优化 MVP`，依赖 MS5 完成。
 
@@ -29,10 +29,11 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 - GitHub Actions baseline workflow 已建立，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`
 - GitHub Actions run `26462219177` 对 `d9ffff92b6dd599d9cef9455304a4386bc0fb93d` 通过，job `lint, test, build` conclusion `success`
 - `docs/cloud-readiness-boundary.md` 已建立上云前边界，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、上传目录、SQLite 生产风险和部署平台能力边界
+- `docs/ai-mvp-technical-brief.md` 已建立 AI MVP 技术边界，覆盖轻量 MVP、人工确认、知识来源、OpenAI 接入、`OPENAI_API_KEY` 服务端 secret 边界和无 PostgreSQL/pgvector 依赖
 
 ## Principal Contradictions
 
-1. **上云边界已落文档 vs AI MVP 技术决策未落文档**: GitHub CI 与 cloud-readiness boundary 已完成；下一风险是 MS6 前置的 AI MVP brief 尚未明确人工确认、知识库来源、OpenAI 接入边界和无 PostgreSQL/pgvector 依赖。
+1. **MS5 核心材料已齐备 vs 最终集成验收未完成**: GitHub CI、远端 Actions 证据、cloud-readiness boundary 和 AI MVP technical brief 已完成；下一风险是这些材料是否互相一致、是否仍严格排除 PostgreSQL/pgvector migration、AI implementation、production secrets、paid provider selection 和 Gitee push requirement。
 2. **可见未跟踪目录 vs 不可批量处理**: `.agents/.claude/.harness/.mavis/.worktrees` 等仍可见，但已被分类为需要逐项判断的治理对象，不应通过粗暴 ignore 或删除制造表面 clean。
 3. **本地 SQLite 便利性 vs 生产部署要求**: 开发 DB 已改为 local-only runtime artifact；生产数据库迁移和云端环境变量仍需独立部署 worktrack 处理。
 4. **远端主线已同步 vs 生产部署要求未定义**: GitHub 已同步，Gitee 已由用户降级为非当前重点；生产部署仍需要环境变量、存储和数据库边界。
@@ -56,11 +57,10 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 1. **M4: 项目整洁度与 AI 适配治理** — completed, 7/7 completed, milestone gate pass, accepted by programmer
 
 当前 active milestone：
-1. **MS5: GitHub CI 与上云前决策基线** — active, 4/6 completed
+1. **MS5: GitHub CI 与上云前决策基线** — active, 5/6 completed
 
 建议按以下 worktrack 顺序推进：
-1. WT-20260526-029: AI MVP 技术决策 Brief — document lightweight MVP boundaries, manual confirmation, knowledge source, OpenAI integration boundary, and no PG/pgvector dependency
-2. WT-20260526-030: MS5 最终验收 — verify remote CI, cloud boundary, AI brief, and MS5 scope exclusions are mutually consistent
+1. WT-20260526-030: MS5 最终验收 — verify remote CI, cloud boundary, AI brief, and MS5 scope exclusions are mutually consistent; final milestone acceptance remains a programmer decision
 
 ## Unknowns / Next Options
 

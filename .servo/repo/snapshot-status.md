@@ -4,7 +4,7 @@
 
 - updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: 955fcaa3aca7887189bd3a4605c1a84d599631a1
+- baseline_commit: c835aa1c459b13d50e8692104117133351b78f7c
 
 ## Codebase State
 
@@ -54,6 +54,7 @@ reqflow/
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
 | GitHub Actions CI baseline | 已建立，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build` (2026-05-27, WT-20260526-026) |
 | Cloud readiness boundary | 已建立，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、uploads、SQLite production risk、deployment platform boundary (2026-05-27, WT-20260526-028) |
+| AI MVP technical brief | 已建立，覆盖 lightweight MVP、manual confirmation、knowledge source、OpenAI Responses API boundary、`OPENAI_API_KEY` secret handling、no PG/pgvector dependency (2026-05-27, WT-20260526-029) |
 
 ### 已知 Issues (来自 handoff.md)
 
@@ -104,16 +105,17 @@ reqflow/
 - milestone_id: MS-20260526-001
 - title: GitHub CI 与上云前决策基线
 - status: active
-- progress: 4/6 completed at baseline `955fcaa3aca7887189bd3a4605c1a84d599631a1`
-- completed_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027, WT-20260526-028
-- planned_worktracks: WT-20260526-029, WT-20260526-030
-- active_or_next_worktrack: WT-20260526-029 AI MVP 技术决策 Brief
-- remaining_worktracks: WT-20260526-029, WT-20260526-030
+- progress: 5/6 completed at baseline `c835aa1c459b13d50e8692104117133351b78f7c`
+- completed_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029
+- planned_worktracks: WT-20260526-030
+- active_or_next_worktrack: WT-20260526-030 MS5 最终验收
+- remaining_worktracks: WT-20260526-030
 - scope_boundary: PostgreSQL/pgvector migration and AI feature implementation are out of MS5 scope.
 - CI_baseline: `.github/workflows/ci.yml` exists and uses `npm ci`, Prisma generate, `npm run lint`, `npm run test`, Prisma SQLite build DB preparation, and `npm run build`.
 - remote_CI: GitHub Actions run `26462219177` completed with conclusion `success`; job `lint, test, build` also succeeded.
 - cloud_readiness_boundary: `docs/cloud-readiness-boundary.md` documents environment variables, `AUTH_SECRET`, `DATABASE_URL`, upload storage, SQLite production risk, deployment platform requirements, and explicit non-goals for PostgreSQL/pgvector migration, AI implementation, production secrets, paid provider selection, and Gitee.
-- next_boundary: WT-20260526-029 should document the AI MVP technical decision brief without implementing AI, adding PostgreSQL/pgvector, selecting a paid provider, or creating production secrets.
+- ai_mvp_technical_brief: `docs/ai-mvp-technical-brief.md` documents lightweight MVP scope, manual confirmation, knowledge sources, OpenAI Responses API direction, server-side `OPENAI_API_KEY` handling, privacy/persistence/testing boundaries, and no PostgreSQL/pgvector or vector database dependency.
+- next_boundary: WT-20260526-030 should perform MS5 final review, verifying remote CI, cloud boundary, AI brief, and MS5 scope exclusions are mutually consistent; final milestone acceptance remains a programmer decision.
 
 ### Planned Milestone
 
