@@ -162,8 +162,9 @@ Phase 6 ✅ → Phase 7 ✅ → Phase 8 ✅
 5. **邮件通知**: Phase 8 暂不包含邮件通知（SMTP 配置待定），仅支持站内通知
 6. **本地数据库治理**: `dev.db`、`prisma/dev.db`、`prisma/dev.db-journal` 和嵌套 `prisma/prisma/` 属于本地运行时产物，已从 Git 跟踪中移除并被 `.gitignore` 覆盖
 7. **上云前边界**: `.env`、`AUTH_SECRET`、`DATABASE_URL`、上传目录、SQLite 生产风险和部署平台选择边界见 `docs/cloud-readiness-boundary.md`
-8. **Worktree 纪律**: 所有代码或文档改动必须在 `.worktrees/<task>` worktree 中完成，合并回 `develop` 后清理 worktree
-9. **AI 协作入口**: `AGENTS.md` 是主入口；`CLAUDE.md` 仅指向主入口；`.agents/.claude/.harness/.mavis` 等未注册目录不能批量提交或删除，需按治理文档逐项处理
+8. **AI MVP 技术边界**: 轻量 MVP、人工确认、知识来源、OpenAI 接入和无 PG/pgvector 依赖见 `docs/ai-mvp-technical-brief.md`
+9. **Worktree 纪律**: 所有代码或文档改动必须在 `.worktrees/<task>` worktree 中完成，合并回 `develop` 后清理 worktree
+10. **AI 协作入口**: `AGENTS.md` 是主入口；`CLAUDE.md` 仅指向主入口；`.agents/.claude/.harness/.mavis` 等未注册目录不能批量提交或删除，需按治理文档逐项处理
 
 ---
 
@@ -212,6 +213,7 @@ npm run dev
 | `docs/worktree-branch-audit.md` | Worktree/分支清理审计 |
 | `docs/prisma-dev-db-governance.md` | 本地 SQLite DB 治理策略 |
 | `docs/cloud-readiness-boundary.md` | 上云前环境、存储、数据库和部署平台边界 |
+| `docs/ai-mvp-technical-brief.md` | AI MVP 轻量实现、人工确认、知识来源和 OpenAI 接入边界 |
 
 ---
 
