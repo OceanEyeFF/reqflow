@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 24
-- planned: 1
+- planned: 0
 - active: 0
-- completed: 23
+- completed: 24
 - blocked: 0
 - deferred: 0
 
@@ -280,7 +280,7 @@
 - title: M4 最终 CodeReview Worktrack
 - milestone_id: MS-20260524-001
 - node_type: review
-- status: planned
+- status: completed
 - priority: 7
 - contract_path: .servo/worktrack/WT-20260524-024/contract.md
-- branch: worktrack/wt-20260524-024-m4-final-code-review
+- branch: worktrack/wt-20260524-024-m4-final-code-review (merged)

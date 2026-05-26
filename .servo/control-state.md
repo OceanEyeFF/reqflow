@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: MS-20260524-001 active; initialize WT-20260524-024 M4 最终 CodeReview Worktrack
+- RepoScope.Handback: MS-20260524-001 7/7 worktracks complete; Milestone Gate pass; waiting for programmer final acceptance
 
 ## Linked Formal Documents
 
@@ -43,9 +43,9 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: false
-- reason:
-- approval_scope:
+- needs_programmer_approval: true
+- reason: MS-20260524-001 is goal-driven; final milestone acceptance is programmer-owned
+- approval_scope: accept or reject MS-20260524-001 final handback
 - approval_persistence: one-shot
 
 ## Continuation Authority
@@ -73,8 +73,8 @@
 
 ## Handback Guard
 
-- handoff_state: none
-- last_stop_reason:
+- handoff_state: awaiting_programmer_final_acceptance
+- last_stop_reason: Milestone Gate passed; programmer final acceptance required
 - last_handback_signature:
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: c4f96e7024514ffd6e9acef087ded8498c029d38
-- last_doc_catch_up_checkpoint: c4f96e7024514ffd6e9acef087ded8498c029d38
-- milestone_input_checkpoint: c4f96e7024514ffd6e9acef087ded8498c029d38
+- latest_observed_checkpoint: 2534e8634ed298bccabf58591dac61dd08d2bfd0
+- last_doc_catch_up_checkpoint: 2534e8634ed298bccabf58591dac61dd08d2bfd0
+- milestone_input_checkpoint: 2534e8634ed298bccabf58591dac61dd08d2bfd0
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-26
@@ -95,8 +95,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 22
-- autonomous_worktracks_opened: 8
+- autonomy_budget_remaining: 21
+- autonomous_worktracks_opened: 9
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-23
 - autonomy_budget_notes: 用户授予30个连续Worktrack额度，低危险操作可自行审批

@@ -18,7 +18,7 @@
 - Run `npm run build`.
 - Run targeted git/worktree/DB policy checks.
 
-### T4: Gate and closeout [in_progress]
+### T4: Gate and closeout [completed]
 - Record final review verdict and residual risks.
 - Merge to `develop`.
 - Update milestone progress to 7/7 and hand back for programmer final acceptance.

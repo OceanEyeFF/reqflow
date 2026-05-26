@@ -88,11 +88,12 @@ reqflow/
 - milestone_id: MS-20260524-001
 - title: 项目整洁度与 AI 适配治理
 - status: active
-- progress: 6/7 completed at baseline `f5851cff7f1395c1b5319d153656b311a5996350`
-- completed_worktracks: WT-20260524-018, WT-20260524-019, WT-20260524-020, WT-20260524-021, WT-20260524-022, WT-20260524-023
-- active_or_next_worktrack: WT-20260524-024 M4 最终 CodeReview Worktrack
-- remaining_worktracks: WT-20260524-024
-- final_acceptance: pending programmer decision after WT-024 and Milestone Gate
+- progress: 7/7 completed at baseline `2534e8634ed298bccabf58591dac61dd08d2bfd0`
+- completed_worktracks: WT-20260524-018, WT-20260524-019, WT-20260524-020, WT-20260524-021, WT-20260524-022, WT-20260524-023, WT-20260524-024
+- active_or_next_worktrack: Milestone Gate handback
+- remaining_worktracks: none
+- milestone_gate_verdict: pass
+- final_acceptance: pending programmer decision
 
 ### M4 Governance Facts
 
