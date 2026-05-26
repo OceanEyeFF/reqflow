@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 0ae55242ed43ae41dacd4e328a9136796b6720d4
-- last_doc_catch_up_checkpoint: 0ae55242ed43ae41dacd4e328a9136796b6720d4
-- milestone_input_checkpoint: 0ae55242ed43ae41dacd4e328a9136796b6720d4
+- latest_observed_checkpoint: 59c3493c8249506ea1c69c5cf3559111d219cd21
+- last_doc_catch_up_checkpoint: 59c3493c8249506ea1c69c5cf3559111d219cd21
+- milestone_input_checkpoint: 59c3493c8249506ea1c69c5cf3559111d219cd21
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
