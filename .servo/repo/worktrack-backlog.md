@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 24
-- planned: 7
+- planned: 6
 - active: 0
-- completed: 17
+- completed: 18
 - blocked: 0
 - deferred: 0
 
@@ -214,10 +214,10 @@
 - title: 脏状态盘点与治理策略矩阵
 - milestone_id: MS-20260524-001
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 1
 - contract_path: .servo/worktrack/WT-20260524-018/contract.md
-- branch: worktrack/wt-20260524-018-dirty-state-matrix
+- branch: worktrack/wt-20260524-018-dirty-state-matrix (merged)
 
 ### WT-20260524-019
 
