@@ -4,7 +4,7 @@
 
 - updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: 0ae55242ed43ae41dacd4e328a9136796b6720d4
+- baseline_commit: 865bb9fbcac98e408cbfe5cec9e8ae9695569bca
 
 ## Codebase State
 
@@ -67,7 +67,7 @@ reqflow/
 1. MS-20260524-001 项目整洁度与 AI 适配治理已完成并由用户验收。
 2. `git status` 仍可见未纳入版本库的 `.agents/`, `.claude/`, `.harness/`, `.mavis/`, `.worktrees/`, `.local-backup/`, `docs/phase6-8-plan.md`；这些不是低价值忽略噪声，需按治理文档逐项保留、迁移、延期或由用户决策。
 3. `.worktrees/develop-aw` 是注册 worktree，分支 divergent 且 dirty，已明确保留，不自动删除。
-4. `develop` 领先远端，GitHub Actions 基础 CI workflow 已建立；GitHub 推送与远端 CI 运行验证尚未执行，Gitee 继续 deferred。
+4. `develop` 已推送到 GitHub `origin/develop`，GitHub Actions CI run `26462219177` 对 commit `d9ffff92b6dd599d9cef9455304a4386bc0fb93d` 通过；Gitee 继续 deferred。
 
 ### Accepted Milestone
 
@@ -103,14 +103,15 @@ reqflow/
 - milestone_id: MS-20260526-001
 - title: GitHub CI 与上云前决策基线
 - status: active
-- progress: 2/6 completed at baseline `0ae55242ed43ae41dacd4e328a9136796b6720d4`
-- completed_worktracks: WT-20260526-025, WT-20260526-026
-- planned_worktracks: WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
-- active_or_next_worktrack: WT-20260526-027 GitHub 推送与 CI 验证
-- remaining_worktracks: WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
+- progress: 3/6 completed at baseline `865bb9fbcac98e408cbfe5cec9e8ae9695569bca`
+- completed_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027
+- planned_worktracks: WT-20260526-028, WT-20260526-029, WT-20260526-030
+- active_or_next_worktrack: WT-20260526-028 上云前环境与部署边界文档
+- remaining_worktracks: WT-20260526-028, WT-20260526-029, WT-20260526-030
 - scope_boundary: PostgreSQL/pgvector migration and AI feature implementation are out of MS5 scope.
 - CI_baseline: `.github/workflows/ci.yml` exists and uses `npm ci`, Prisma generate, `npm run lint`, `npm run test`, Prisma SQLite build DB preparation, and `npm run build`.
-- next_boundary: WT-20260526-027 may push to GitHub and verify the GitHub Actions run; if credentials or remote interaction fail, handback.
+- remote_CI: GitHub Actions run `26462219177` completed with conclusion `success`; job `lint, test, build` also succeeded.
+- next_boundary: WT-20260526-028 should document cloud-readiness environment/deployment boundaries without choosing paid services, production secrets, PostgreSQL migration, or AI implementation.
 
 ### Planned Milestone
 
