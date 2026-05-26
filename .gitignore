@@ -22,6 +22,10 @@
 /dev.db-journal
 /prisma/dev.db
 /prisma/dev.db-journal
+/prisma/ci.db
+/prisma/ci.db-journal
+/prisma/ci.db-wal
+/prisma/ci.db-shm
 /prisma/prisma/
 
 # next.js
