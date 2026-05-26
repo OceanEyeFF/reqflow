@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 24
-- planned: 3
+- planned: 2
 - active: 0
-- completed: 21
+- completed: 22
 - blocked: 0
 - deferred: 0
 
@@ -258,10 +258,10 @@
 - title: Prisma dev DB 状态治理
 - milestone_id: MS-20260524-001
 - node_type: refactor
-- status: planned
+- status: completed
 - priority: 5
 - contract_path: .servo/worktrack/WT-20260524-022/contract.md
-- branch: worktrack/wt-20260524-022-prisma-dev-db-governance
+- branch: worktrack/wt-20260524-022-prisma-dev-db-governance (merged)
 
 ### WT-20260524-023
 
