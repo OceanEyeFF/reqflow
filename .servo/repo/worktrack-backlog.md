@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 36
-- planned: 7
+- planned: 6
 - active: 0
-- completed: 29
+- completed: 30
 - blocked: 0
 - deferred: 0
 
@@ -348,10 +348,10 @@
 - title: MS5 最终验收
 - milestone_id: MS-20260526-001
 - node_type: review
-- status: planned
+- status: completed
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260526-030/contract.md
-- branch: worktrack/wt-20260526-030-ms5-final-review
+- branch: worktrack/wt-20260526-030-ms5-final-review (merged)
 
 ## M6: AI 需求说明优化 MVP (MS-20260526-002)
 
