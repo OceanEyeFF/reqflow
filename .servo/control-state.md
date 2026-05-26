@@ -21,7 +21,7 @@
 - active_milestone: MS-20260526-001
 - milestone_title: GitHub CI 与上云前决策基线
 - milestone_status: active
-- milestone_pipeline_summary: total=6 planned=0 active=1 completed=5 superseded=0
+- milestone_pipeline_summary: total=6 planned=0 active=1 completed=6 superseded=0
 
 ## Baseline Branch
 
@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: WT-20260526-029 completed; continue to WT-20260526-030 MS5 最终验收
+- RepoScope.Handback: WT-20260526-030 completed; MS-20260526-001 final acceptance pending programmer decision
 
 ## Linked Formal Documents
 
@@ -44,8 +44,8 @@
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: user granted 30 continuous Worktrack budget and WT-20260526-030 remains inside active MS5 scope
-- approval_scope: continue to WT-20260526-030 MS5 最终验收
+- reason: MS-20260526-001 all worktracks completed; final milestone acceptance requires programmer decision
+- approval_scope: programmer final acceptance decision for MS-20260526-001
 - approval_persistence: current execution cycle
 
 ## Continuation Authority
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 4e35b3c28787b73bc0776015ea3a1bea9862a27e
-- last_doc_catch_up_checkpoint: 4e35b3c28787b73bc0776015ea3a1bea9862a27e
-- milestone_input_checkpoint: 4e35b3c28787b73bc0776015ea3a1bea9862a27e
+- latest_observed_checkpoint: 193f62270aa49db4b1eac867e5912dab469a4090
+- last_doc_catch_up_checkpoint: 193f62270aa49db4b1eac867e5912dab469a4090
+- milestone_input_checkpoint: 193f62270aa49db4b1eac867e5912dab469a4090
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
@@ -95,8 +95,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 17
-- autonomous_worktracks_opened: 13
+- autonomy_budget_remaining: 16
+- autonomous_worktracks_opened: 14
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-23
 - autonomy_budget_notes: 用户授予30个连续Worktrack额度，低危险操作可自行审批
@@ -106,5 +106,5 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260526-001 GitHub CI 与上云前决策基线进行中，WT-20260526-029 已完成
+- Phase 9 当前阶段: MS-20260526-001 GitHub CI 与上云前决策基线 6/6 worktracks 已完成，等待用户最终验收
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → AI 需求说明优化 MVP

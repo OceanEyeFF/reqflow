@@ -4,7 +4,7 @@
 
 - updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: c835aa1c459b13d50e8692104117133351b78f7c
+- baseline_commit: 193f62270aa49db4b1eac867e5912dab469a4090
 
 ## Codebase State
 
@@ -105,17 +105,18 @@ reqflow/
 - milestone_id: MS-20260526-001
 - title: GitHub CI 与上云前决策基线
 - status: active
-- progress: 5/6 completed at baseline `c835aa1c459b13d50e8692104117133351b78f7c`
-- completed_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029
-- planned_worktracks: WT-20260526-030
-- active_or_next_worktrack: WT-20260526-030 MS5 最终验收
-- remaining_worktracks: WT-20260526-030
+- progress: 6/6 completed at baseline `193f62270aa49db4b1eac867e5912dab469a4090`
+- completed_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
+- planned_worktracks: none
+- active_or_next_worktrack: Milestone Gate handback
+- remaining_worktracks: none
 - scope_boundary: PostgreSQL/pgvector migration and AI feature implementation are out of MS5 scope.
 - CI_baseline: `.github/workflows/ci.yml` exists and uses `npm ci`, Prisma generate, `npm run lint`, `npm run test`, Prisma SQLite build DB preparation, and `npm run build`.
-- remote_CI: GitHub Actions run `26462219177` completed with conclusion `success`; job `lint, test, build` also succeeded.
+- remote_CI: GitHub Actions run `26464643535` for current `origin/develop` commit `40f4c11d119d70c839347de870813a5474c195f5` completed with conclusion `success`; job `77921525748` (`lint, test, build`) also succeeded.
 - cloud_readiness_boundary: `docs/cloud-readiness-boundary.md` documents environment variables, `AUTH_SECRET`, `DATABASE_URL`, upload storage, SQLite production risk, deployment platform requirements, and explicit non-goals for PostgreSQL/pgvector migration, AI implementation, production secrets, paid provider selection, and Gitee.
 - ai_mvp_technical_brief: `docs/ai-mvp-technical-brief.md` documents lightweight MVP scope, manual confirmation, knowledge sources, OpenAI Responses API direction, server-side `OPENAI_API_KEY` handling, privacy/persistence/testing boundaries, and no PostgreSQL/pgvector or vector database dependency.
-- next_boundary: WT-20260526-030 should perform MS5 final review, verifying remote CI, cloud boundary, AI brief, and MS5 scope exclusions are mutually consistent; final milestone acceptance remains a programmer decision.
+- final_review: `docs/ms5-final-review.md` verifies current GitHub remote CI, cloud boundary, AI brief, and MS5 scope exclusions are mutually consistent.
+- next_boundary: MS-20260526-001 final acceptance remains a programmer decision; do not auto-advance to MS6 until accepted.
 
 ### Planned Milestone
 
