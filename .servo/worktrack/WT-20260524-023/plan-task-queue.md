@@ -19,7 +19,7 @@
 - Run `npm run test`.
 - Run `npm run build`.
 
-### T5: Gate and closeout [in_progress]
+### T5: Gate and closeout [completed]
 - Complete evidence.
 - Merge to `develop`.
 - Update milestone and backlog progress.

@@ -7,7 +7,7 @@
 - milestone_id: MS-20260524-001
 - derived_from_milestone: true
 - node_type: docs
-- status: ready_for_closeout
+- status: completed
 - created_at: 2026-05-26
 - updated: 2026-05-26
 

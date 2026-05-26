@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 24
-- planned: 2
+- planned: 1
 - active: 0
-- completed: 22
+- completed: 23
 - blocked: 0
 - deferred: 0
 
@@ -269,10 +269,10 @@
 - title: 文档与 RepoStatus 同步
 - milestone_id: MS-20260524-001
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260524-023/contract.md
-- branch: worktrack/wt-20260524-023-docs-repostatus-sync
+- branch: worktrack/wt-20260524-023-docs-repostatus-sync (merged)
 
 ### WT-20260524-024
 
