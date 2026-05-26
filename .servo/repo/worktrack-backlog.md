@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 36
-- planned: 11
+- planned: 10
 - active: 0
-- completed: 25
+- completed: 26
 - blocked: 0
 - deferred: 0
 
@@ -304,10 +304,10 @@
 - title: GitHub Actions CI 基线
 - milestone_id: MS-20260526-001
 - node_type: refactor
-- status: planned
+- status: completed
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260526-026/contract.md
-- branch: worktrack/wt-20260526-026-github-actions-ci
+- branch: worktrack/wt-20260526-026-github-actions-ci (merged)
 
 ### WT-20260526-027
 

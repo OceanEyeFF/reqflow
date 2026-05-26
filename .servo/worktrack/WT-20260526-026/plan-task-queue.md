@@ -18,7 +18,7 @@
 - Run `npm run test`.
 - Run `npm run build`.
 
-### T4: Gate and close [in_progress]
+### T4: Gate and close [completed]
 - Write WT-026 gate evidence.
 - Merge WT-026 back to `develop`.
 - Refresh repo and milestone state so WT-027 becomes the next MS5 worktrack.
