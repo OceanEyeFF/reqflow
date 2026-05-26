@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 36
-- planned: 9
+- planned: 8
 - active: 0
-- completed: 27
+- completed: 28
 - blocked: 0
 - deferred: 0
 
@@ -326,10 +326,10 @@
 - title: 上云前环境与部署边界文档
 - milestone_id: MS-20260526-001
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 4
 - contract_path: .servo/worktrack/WT-20260526-028/contract.md
-- branch: worktrack/wt-20260526-028-cloud-boundary-docs
+- branch: worktrack/wt-20260526-028-cloud-boundary-docs (merged)
 
 ### WT-20260526-029
 
