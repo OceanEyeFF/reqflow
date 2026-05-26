@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 36
-- planned: 12
+- planned: 11
 - active: 0
-- completed: 24
+- completed: 25
 - blocked: 0
 - deferred: 0
 
@@ -293,10 +293,10 @@
 - title: RepoStatus 刷新
 - milestone_id: MS-20260526-001
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 1
 - contract_path: .servo/worktrack/WT-20260526-025/contract.md
-- branch: worktrack/wt-20260526-025-repostatus-refresh
+- branch: worktrack/wt-20260526-025-repostatus-refresh (merged)
 
 ### WT-20260526-026
 

@@ -13,7 +13,7 @@
 - Run `git diff --check`.
 - Run targeted status/consistency checks.
 
-### T4: Close WT-025 only [in_progress]
+### T4: Close WT-025 only [completed]
 - Merge WT-025.
 - Update progress to 1/6.
 - Stop and provide handoff without starting WT-026.

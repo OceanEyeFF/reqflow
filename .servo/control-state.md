@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: MS-20260526-001 active; initialize WT-20260526-025 RepoStatus 刷新
+- RepoScope.Handback: WT-20260526-025 completed; user requested stop before WT-20260526-026
 
 ## Linked Formal Documents
 
@@ -43,9 +43,9 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: false
-- reason:
-- approval_scope:
+- needs_programmer_approval: true
+- reason: user explicitly authorized only WT-20260526-025 in this turn
+- approval_scope: continue to WT-20260526-026 GitHub Actions CI 基线
 - approval_persistence: one-shot
 
 ## Continuation Authority
@@ -73,8 +73,8 @@
 
 ## Handback Guard
 
-- handoff_state: none
-- last_stop_reason:
+- handoff_state: awaiting_user_permission_for_next_worktrack
+- last_stop_reason: WT-20260526-025 completed; no extra worktrack permission granted
 - last_handback_signature:
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 6f50e89ea624ea1f9d1aef9256f63f0489f17368
-- last_doc_catch_up_checkpoint: 6f50e89ea624ea1f9d1aef9256f63f0489f17368
-- milestone_input_checkpoint: 6f50e89ea624ea1f9d1aef9256f63f0489f17368
+- latest_observed_checkpoint: bfff5d60b7868f21d8c07081d4b649111ae35d6c
+- last_doc_catch_up_checkpoint: bfff5d60b7868f21d8c07081d4b649111ae35d6c
+- milestone_input_checkpoint: bfff5d60b7868f21d8c07081d4b649111ae35d6c
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-26

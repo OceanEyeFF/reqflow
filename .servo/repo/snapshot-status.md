@@ -102,12 +102,13 @@ reqflow/
 - milestone_id: MS-20260526-001
 - title: GitHub CI 与上云前决策基线
 - status: active
-- progress: 0/6 completed at baseline `870a8b8bc4a8ce7f5b3a6080bff10012c3911648`
-- planned_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
-- active_or_next_worktrack: WT-20260526-025 RepoStatus 刷新
-- remaining_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
+- progress: 1/6 completed at baseline `bfff5d60b7868f21d8c07081d4b649111ae35d6c`
+- completed_worktracks: WT-20260526-025
+- planned_worktracks: WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
+- active_or_next_worktrack: WT-20260526-026 GitHub Actions CI 基线
+- remaining_worktracks: WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
 - scope_boundary: PostgreSQL/pgvector migration and AI feature implementation are out of MS5 scope.
-- turn_boundary: current user instruction permits WT-20260526-025 only; do not continue into WT-20260526-026 in this turn.
+- turn_boundary: WT-20260526-025 is complete; do not continue into WT-20260526-026 without new user permission.
 
 ### Planned Milestone
 
