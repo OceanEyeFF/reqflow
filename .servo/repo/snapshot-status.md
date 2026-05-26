@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- updated: 2026-05-26
+- updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: 0d42fd562118d3bc7b3c61641cd3811cc12dcd1b
+- baseline_commit: 870a8b8bc4a8ce7f5b3a6080bff10012c3911648
 
 ## Codebase State
 
@@ -48,9 +48,9 @@ reqflow/
 
 | 指标 | 状态 |
 |------|------|
-| `npm run build` | 通过 (2026-05-26, WT-20260524-022) |
-| `npm run lint` | 通过，ESLint 0 warning (2026-05-26, WT-20260524-022) |
-| `npm run test` | 通过，10 个测试文件，71 个测试 (2026-05-26, WT-20260524-022) |
+| `npm run build` | 通过 (2026-05-26, WT-20260524-024) |
+| `npm run lint` | 通过，ESLint 0 warning (2026-05-26, WT-20260524-024) |
+| `npm run test` | 通过，10 个测试文件，71 个测试 (2026-05-26, WT-20260524-024) |
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
 
 ### 已知 Issues (来自 handoff.md)
@@ -63,10 +63,10 @@ reqflow/
 
 ### 当前治理缺口
 
-1. M4 项目整洁度与 AI 适配治理已完成 WT-018 至 WT-023，剩余 WT-024 最终 CodeReview。
+1. MS-20260524-001 项目整洁度与 AI 适配治理已完成并由用户验收。
 2. `git status` 仍可见未纳入版本库的 `.agents/`, `.claude/`, `.harness/`, `.mavis/`, `.worktrees/`, `.local-backup/`, `docs/phase6-8-plan.md`；这些不是低价值忽略噪声，需按治理文档逐项保留、迁移、延期或由用户决策。
 3. `.worktrees/develop-aw` 是注册 worktree，分支 divergent 且 dirty，已明确保留，不自动删除。
-4. `develop` 领先远端，GitHub 推送与 CI 尚未在本 milestone 中执行；Gitee 推送被用户降级为非当前重点。
+4. `develop` 领先远端，GitHub 推送与 CI 尚未执行；MS-20260526-001 将按 GitHub-first 路线处理，Gitee 继续 deferred。
 
 ### Accepted Milestone
 
@@ -83,11 +83,11 @@ reqflow/
 - WT-20260523-016: 最终 CodeReview Worktrack
 - WT-20260524-017: 补充 CodeReview Worktrack
 
-### Active Milestone
+### Recently Accepted Milestone
 
 - milestone_id: MS-20260524-001
 - title: 项目整洁度与 AI 适配治理
-- status: active
+- status: completed
 - progress: 7/7 completed at baseline `2534e8634ed298bccabf58591dac61dd08d2bfd0`
 - completed_worktracks: WT-20260524-018, WT-20260524-019, WT-20260524-020, WT-20260524-021, WT-20260524-022, WT-20260524-023, WT-20260524-024
 - active_or_next_worktrack: Milestone Gate handback
@@ -96,6 +96,26 @@ reqflow/
 - final_acceptance: accepted
 - accepted_by: fdch0
 - accepted_at: 2026-05-26 23:33:49 +08:00
+
+### Active Milestone
+
+- milestone_id: MS-20260526-001
+- title: GitHub CI 与上云前决策基线
+- status: active
+- progress: 0/6 completed at baseline `870a8b8bc4a8ce7f5b3a6080bff10012c3911648`
+- planned_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
+- active_or_next_worktrack: WT-20260526-025 RepoStatus 刷新
+- remaining_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
+- scope_boundary: PostgreSQL/pgvector migration and AI feature implementation are out of MS5 scope.
+- turn_boundary: current user instruction permits WT-20260526-025 only; do not continue into WT-20260526-026 in this turn.
+
+### Planned Milestone
+
+- milestone_id: MS-20260526-002
+- title: AI 需求说明优化 MVP
+- status: planned
+- depends_on_milestones: MS-20260526-001
+- scope_boundary: AI MVP must not depend on PostgreSQL/pgvector unless a future user decision changes the plan.
 
 ### M4 Governance Facts
 
