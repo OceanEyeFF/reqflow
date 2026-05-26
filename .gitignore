@@ -17,6 +17,13 @@
 # local test/browser harness output
 /.playwright-mcp/
 
+# local SQLite runtime databases
+/dev.db
+/dev.db-journal
+/prisma/dev.db
+/prisma/dev.db-journal
+/prisma/prisma/
+
 # next.js
 /.next/
 /out/
