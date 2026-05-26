@@ -21,6 +21,7 @@ This document records which AI-agent-facing files are canonical for this reposit
 | `.claude/` | local/generated unless explicitly promoted | Contains Claude-compatible skill mirrors and installer assets. Keep out of normal commits unless a specific artifact is intentionally curated. |
 | `.harness/` | governance candidate, not canonical yet | Contains older/adjacent harness-style docs. Review in documentation sync before committing or deleting. |
 | `.mavis/` | planning candidate, not canonical yet | Contains planning artifacts that may be useful history but are not the active control plane. Review in documentation sync. |
+| `.local-backup/` | local safety backup, not canonical | Contains operator-created local backups such as the pre-WT-022 SQLite DB copy. Do not commit or delete without an explicit cleanup decision. |
 | `.opencode/` | local tool runtime output | Ignore caches/dependencies; do not commit runtime state. |
 | `.playwright-mcp/` | local browser/session output | Ignore runtime state and snapshots unless intentionally exported as test evidence. |
 

@@ -63,7 +63,7 @@ reqflow/
 
 ### 当前治理缺口
 
-1. M4 项目整洁度与 AI 适配治理已完成 WT-018 至 WT-022，剩余 WT-023 文档/RepoStatus 同步与 WT-024 最终 CodeReview。
+1. M4 项目整洁度与 AI 适配治理已完成 WT-018 至 WT-023，剩余 WT-024 最终 CodeReview。
 2. `git status` 仍可见未纳入版本库的 `.agents/`, `.claude/`, `.harness/`, `.mavis/`, `.worktrees/`, `.local-backup/`, `docs/phase6-8-plan.md`；这些不是低价值忽略噪声，需按治理文档逐项保留、迁移、延期或由用户决策。
 3. `.worktrees/develop-aw` 是注册 worktree，分支 divergent 且 dirty，已明确保留，不自动删除。
 4. `develop` 领先远端，GitHub 推送与 CI 尚未在本 milestone 中执行；Gitee 推送被用户降级为非当前重点。
@@ -88,10 +88,10 @@ reqflow/
 - milestone_id: MS-20260524-001
 - title: 项目整洁度与 AI 适配治理
 - status: active
-- progress: 5/7 completed at baseline `0d42fd562118d3bc7b3c61641cd3811cc12dcd1b`
-- completed_worktracks: WT-20260524-018, WT-20260524-019, WT-20260524-020, WT-20260524-021, WT-20260524-022
-- active_or_next_worktrack: WT-20260524-023 文档与 RepoStatus 同步
-- remaining_worktracks: WT-20260524-023, WT-20260524-024
+- progress: 6/7 completed at baseline `f5851cff7f1395c1b5319d153656b311a5996350`
+- completed_worktracks: WT-20260524-018, WT-20260524-019, WT-20260524-020, WT-20260524-021, WT-20260524-022, WT-20260524-023
+- active_or_next_worktrack: WT-20260524-024 M4 最终 CodeReview Worktrack
+- remaining_worktracks: WT-20260524-024
 - final_acceptance: pending programmer decision after WT-024 and Milestone Gate
 
 ### M4 Governance Facts
