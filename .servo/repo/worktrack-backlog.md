@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 36
-- planned: 10
+- planned: 9
 - active: 0
-- completed: 26
+- completed: 27
 - blocked: 0
 - deferred: 0
 
@@ -315,10 +315,10 @@
 - title: GitHub 推送与 CI 验证
 - milestone_id: MS-20260526-001
 - node_type: refactor
-- status: planned
+- status: completed
 - priority: 3
 - contract_path: .servo/worktrack/WT-20260526-027/contract.md
-- branch: worktrack/wt-20260526-027-github-push-ci-verify
+- branch: worktrack/wt-20260526-027-github-push-ci-verify (merged)
 
 ### WT-20260526-028
 

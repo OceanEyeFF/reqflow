@@ -14,7 +14,7 @@
 - Observe the CI workflow run for the pushed commit.
 - Record pass/fail/blocker evidence.
 
-### T4: Gate and close [in_progress]
+### T4: Gate and close [completed]
 - Write WT-027 gate evidence.
 - Merge WT-027 artifacts back to `develop`.
 - Refresh repo and milestone state so WT-028 becomes the next MS5 worktrack when WT-027 passes.
