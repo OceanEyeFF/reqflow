@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 24
-- planned: 0
+- total: 36
+- planned: 12
 - active: 0
 - completed: 24
 - blocked: 0
@@ -284,3 +284,139 @@
 - priority: 7
 - contract_path: .servo/worktrack/WT-20260524-024/contract.md
 - branch: worktrack/wt-20260524-024-m4-final-code-review (merged)
+
+## M5: GitHub CI 与上云前决策基线 (MS-20260526-001)
+
+### WT-20260526-025
+
+- worktrack_id: WT-20260526-025
+- title: RepoStatus 刷新
+- milestone_id: MS-20260526-001
+- node_type: docs
+- status: planned
+- priority: 1
+- contract_path: .servo/worktrack/WT-20260526-025/contract.md
+- branch: worktrack/wt-20260526-025-repostatus-refresh
+
+### WT-20260526-026
+
+- worktrack_id: WT-20260526-026
+- title: GitHub Actions CI 基线
+- milestone_id: MS-20260526-001
+- node_type: refactor
+- status: planned
+- priority: 2
+- contract_path: .servo/worktrack/WT-20260526-026/contract.md
+- branch: worktrack/wt-20260526-026-github-actions-ci
+
+### WT-20260526-027
+
+- worktrack_id: WT-20260526-027
+- title: GitHub 推送与 CI 验证
+- milestone_id: MS-20260526-001
+- node_type: refactor
+- status: planned
+- priority: 3
+- contract_path: .servo/worktrack/WT-20260526-027/contract.md
+- branch: worktrack/wt-20260526-027-github-push-ci-verify
+
+### WT-20260526-028
+
+- worktrack_id: WT-20260526-028
+- title: 上云前环境与部署边界文档
+- milestone_id: MS-20260526-001
+- node_type: docs
+- status: planned
+- priority: 4
+- contract_path: .servo/worktrack/WT-20260526-028/contract.md
+- branch: worktrack/wt-20260526-028-cloud-boundary-docs
+
+### WT-20260526-029
+
+- worktrack_id: WT-20260526-029
+- title: AI MVP 技术决策 Brief
+- milestone_id: MS-20260526-001
+- node_type: docs
+- status: planned
+- priority: 5
+- contract_path: .servo/worktrack/WT-20260526-029/contract.md
+- branch: worktrack/wt-20260526-029-ai-mvp-brief
+
+### WT-20260526-030
+
+- worktrack_id: WT-20260526-030
+- title: MS5 最终验收
+- milestone_id: MS-20260526-001
+- node_type: review
+- status: planned
+- priority: 6
+- contract_path: .servo/worktrack/WT-20260526-030/contract.md
+- branch: worktrack/wt-20260526-030-ms5-final-review
+
+## M6: AI 需求说明优化 MVP (MS-20260526-002)
+
+### WT-20260526-031
+
+- worktrack_id: WT-20260526-031
+- title: AI 需求助手产品流设计
+- milestone_id: MS-20260526-002
+- node_type: docs
+- status: planned
+- priority: 1
+- contract_path: .servo/worktrack/WT-20260526-031/contract.md
+- branch: worktrack/wt-20260526-031-ai-flow-design
+
+### WT-20260526-032
+
+- worktrack_id: WT-20260526-032
+- title: 项目知识库最小语料整理
+- milestone_id: MS-20260526-002
+- node_type: docs
+- status: planned
+- priority: 2
+- contract_path: .servo/worktrack/WT-20260526-032/contract.md
+- branch: worktrack/wt-20260526-032-knowledge-corpus
+
+### WT-20260526-033
+
+- worktrack_id: WT-20260526-033
+- title: AI Draft API
+- milestone_id: MS-20260526-002
+- node_type: feature
+- status: planned
+- priority: 3
+- contract_path: .servo/worktrack/WT-20260526-033/contract.md
+- branch: worktrack/wt-20260526-033-ai-draft-api
+
+### WT-20260526-034
+
+- worktrack_id: WT-20260526-034
+- title: 前端草稿生成 UI
+- milestone_id: MS-20260526-002
+- node_type: feature
+- status: planned
+- priority: 4
+- contract_path: .servo/worktrack/WT-20260526-034/contract.md
+- branch: worktrack/wt-20260526-034-ai-draft-ui
+
+### WT-20260526-035
+
+- worktrack_id: WT-20260526-035
+- title: 安全与可控性治理
+- milestone_id: MS-20260526-002
+- node_type: refactor
+- status: planned
+- priority: 5
+- contract_path: .servo/worktrack/WT-20260526-035/contract.md
+- branch: worktrack/wt-20260526-035-ai-safety-governance
+
+### WT-20260526-036
+
+- worktrack_id: WT-20260526-036
+- title: AI MVP 测试与验收
+- milestone_id: MS-20260526-002
+- node_type: test
+- status: planned
+- priority: 6
+- contract_path: .servo/worktrack/WT-20260526-036/contract.md
+- branch: worktrack/wt-20260526-036-ai-mvp-validation
