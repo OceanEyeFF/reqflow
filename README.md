@@ -86,6 +86,7 @@ reqflow/
 - 本地 SQLite 数据库是运行时产物，不纳入 Git；使用 Prisma migration 和 seed 重建开发数据
 - 上传文件存储在 `public/uploads/` 目录
 - API route 集成测试使用隔离 SQLite 数据库，测试数据文件位于 `prisma/test-dbs/` 并由测试清理
+- 上云前环境变量、SQLite 风险、上传存储和部署平台边界见 `docs/cloud-readiness-boundary.md`
 - 代码改动必须在 Git worktree 中完成，详见 `AGENTS.md`
 - AI 协作入口以 `AGENTS.md` 为准，辅助说明见 `docs/ai-collaboration-entrypoints.md`
 - Repo hygiene 与本地 DB 治理说明见 `docs/repo-hygiene-matrix.md`、`docs/worktree-branch-audit.md` 和 `docs/prisma-dev-db-governance.md`
