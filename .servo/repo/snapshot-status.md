@@ -4,7 +4,7 @@
 
 - updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: 870a8b8bc4a8ce7f5b3a6080bff10012c3911648
+- baseline_commit: 0ae55242ed43ae41dacd4e328a9136796b6720d4
 
 ## Codebase State
 
@@ -52,6 +52,7 @@ reqflow/
 | `npm run lint` | 通过，ESLint 0 warning (2026-05-26, WT-20260524-024) |
 | `npm run test` | 通过，10 个测试文件，71 个测试 (2026-05-26, WT-20260524-024) |
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
+| GitHub Actions CI baseline | 已建立，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build` (2026-05-27, WT-20260526-026) |
 
 ### 已知 Issues (来自 handoff.md)
 
@@ -66,7 +67,7 @@ reqflow/
 1. MS-20260524-001 项目整洁度与 AI 适配治理已完成并由用户验收。
 2. `git status` 仍可见未纳入版本库的 `.agents/`, `.claude/`, `.harness/`, `.mavis/`, `.worktrees/`, `.local-backup/`, `docs/phase6-8-plan.md`；这些不是低价值忽略噪声，需按治理文档逐项保留、迁移、延期或由用户决策。
 3. `.worktrees/develop-aw` 是注册 worktree，分支 divergent 且 dirty，已明确保留，不自动删除。
-4. `develop` 领先远端，GitHub 推送与 CI 尚未执行；MS-20260526-001 将按 GitHub-first 路线处理，Gitee 继续 deferred。
+4. `develop` 领先远端，GitHub Actions 基础 CI workflow 已建立；GitHub 推送与远端 CI 运行验证尚未执行，Gitee 继续 deferred。
 
 ### Accepted Milestone
 
@@ -102,13 +103,14 @@ reqflow/
 - milestone_id: MS-20260526-001
 - title: GitHub CI 与上云前决策基线
 - status: active
-- progress: 1/6 completed at baseline `bfff5d60b7868f21d8c07081d4b649111ae35d6c`
-- completed_worktracks: WT-20260526-025
-- planned_worktracks: WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
-- active_or_next_worktrack: WT-20260526-026 GitHub Actions CI 基线
-- remaining_worktracks: WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
+- progress: 2/6 completed at baseline `0ae55242ed43ae41dacd4e328a9136796b6720d4`
+- completed_worktracks: WT-20260526-025, WT-20260526-026
+- planned_worktracks: WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
+- active_or_next_worktrack: WT-20260526-027 GitHub 推送与 CI 验证
+- remaining_worktracks: WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030
 - scope_boundary: PostgreSQL/pgvector migration and AI feature implementation are out of MS5 scope.
-- turn_boundary: WT-20260526-025 is complete; do not continue into WT-20260526-026 without new user permission.
+- CI_baseline: `.github/workflows/ci.yml` exists and uses `npm ci`, Prisma generate, `npm run lint`, `npm run test`, Prisma SQLite build DB preparation, and `npm run build`.
+- next_boundary: WT-20260526-027 may push to GitHub and verify the GitHub Actions run; if credentials or remote interaction fail, handback.
 
 ### Planned Milestone
 
@@ -121,7 +123,7 @@ reqflow/
 ### M4 Governance Facts
 
 - `docs/repo-hygiene-matrix.md` records dirty-state classification and ownership boundaries.
-- `.gitignore` covers logs, cookies, scratchpad, root QA screenshots, Playwright MCP output, `.opencode` runtime output, and local SQLite DB/journal files.
+- `.gitignore` covers logs, cookies, scratchpad, root QA screenshots, Playwright MCP output, `.opencode` runtime output, local SQLite DB/journal files, and CI-only `prisma/ci.db*` runtime files.
 - `docs/worktree-branch-audit.md` records stale worktree/branch cleanup and retained `develop-aw` risk.
 - `AGENTS.md` is the canonical AI collaboration and worktree discipline entrypoint; `docs/ai-collaboration-entrypoints.md` explains auxiliary/local tool boundaries.
 - `docs/prisma-dev-db-governance.md` records local-only SQLite DB policy; schema, migrations, and seed remain tracked.
