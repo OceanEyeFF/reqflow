@@ -6,6 +6,7 @@
 **仓库路径**: `E:\repos\personal\reqflow`
 **当前分支**: `develop`
 **技术栈**: Next.js 16 + TypeScript + TailwindCSS + Prisma 5 + SQLite + NextAuth
+**当前治理状态**: Phase 9 中的 M4「项目整洁度与 AI 适配治理」已完成大部分清理工作，仍需最终 CodeReview 和用户验收
 
 ---
 
@@ -54,6 +55,7 @@
 
 ### 6. 测试数据
 - ✅ `prisma/seed.ts` 已执行，预置 3 个用户 + 1 条示例工单
+- ✅ 本地 SQLite 数据库文件已改为 Git 外运行时产物；使用 migration + seed 重建，不再依赖 tracked `dev.db`
 
 **测试账号**:
 | 用户名 | 密码 | 角色 |
@@ -158,7 +160,9 @@ Phase 6 ✅ → Phase 7 ✅ → Phase 8 ✅
 3. **Prisma v5**: 已从 v7 回退到 v5，以获得更好的稳定性
 4. **SQLite 限制**: SQLite 不适合生产环境并发写入，后续考虑迁移到 PostgreSQL
 5. **邮件通知**: Phase 8 暂不包含邮件通知（SMTP 配置待定），仅支持站内通知
-6. **Windows 验证限制**: Windows 非交互式 shell 中无法启动 Next.js dev server 进行运行时测试，依赖 Build + Code Review 作为验证手段
+6. **本地数据库治理**: `dev.db`、`prisma/dev.db`、`prisma/dev.db-journal` 和嵌套 `prisma/prisma/` 属于本地运行时产物，已从 Git 跟踪中移除并被 `.gitignore` 覆盖
+7. **Worktree 纪律**: 所有代码或文档改动必须在 `.worktrees/<task>` worktree 中完成，合并回 `develop` 后清理 worktree
+8. **AI 协作入口**: `AGENTS.md` 是主入口；`CLAUDE.md` 仅指向主入口；`.agents/.claude/.harness/.mavis` 等未注册目录不能批量提交或删除，需按治理文档逐项处理
 
 ---
 
@@ -176,6 +180,12 @@ cd E:\repos\personal\reqflow
 # 安装依赖
 npm install
 
+# 初始化或更新本地数据库
+npx prisma migrate dev
+
+# 填充测试数据
+npm run db:seed
+
 # 启动开发服务器
 npm run dev
 
@@ -190,11 +200,16 @@ npm run dev
 | 文件 | 说明 |
 |------|------|
 | `prisma/schema.prisma` | 数据库模型定义 |
-| `prisma/dev.db` | SQLite 数据库文件 |
+| `prisma/migrations/` | 数据库迁移事实 |
+| `prisma/seed.ts` | 开发/演示数据种子 |
 | `src/auth/index.ts` | NextAuth 配置 |
 | `src/lib/prisma.ts` | Prisma Client 单例 |
 | `src/types/index.ts` | 常量定义（状态、优先级等） |
 | `src/app/(dashboard)/` | 所有需要登录的页面 |
+| `AGENTS.md` | AI agent 与 worktree 工作流主入口 |
+| `docs/repo-hygiene-matrix.md` | 脏状态分类与治理策略 |
+| `docs/worktree-branch-audit.md` | Worktree/分支清理审计 |
+| `docs/prisma-dev-db-governance.md` | 本地 SQLite DB 治理策略 |
 
 ---
 
@@ -203,14 +218,15 @@ npm run dev
 1. **使用 worktree 工作流**：
    ```bash
    git fetch origin
-   git worktree add .worktrees/feature-xxx -b feature/xxx origin/develop
+   git worktree add .worktrees/feature-xxx -b feature/xxx develop
    cd .worktrees/feature-xxx
    # 开发完成后合并回 develop
    ```
 
 2. **接下来的 Phase**：
-   - Phase 6-8 已全部完成（协作者功能、附件上传、通知系统），详见上文各 Phase 段落
-   - 后续可参考上方「待完成的工作」列表继续开发
+   - Phase 6-8 已全部完成（协作者功能、附件上传、通知系统）
+   - Phase 9 质量治理、M3 API route handler 集成测试已验收
+   - M4 项目整洁度与 AI 适配治理仍需最终 CodeReview 与用户验收后才能标记完成
 
 3. **数据库变更**：修改 `prisma/schema.prisma` 后运行：
    ```bash
