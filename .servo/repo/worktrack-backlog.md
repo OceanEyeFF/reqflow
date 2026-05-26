@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 36
-- planned: 8
+- planned: 7
 - active: 0
-- completed: 28
+- completed: 29
 - blocked: 0
 - deferred: 0
 
@@ -337,10 +337,10 @@
 - title: AI MVP 技术决策 Brief
 - milestone_id: MS-20260526-001
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 5
 - contract_path: .servo/worktrack/WT-20260526-029/contract.md
-- branch: worktrack/wt-20260526-029-ai-mvp-brief
+- branch: worktrack/wt-20260526-029-ai-mvp-brief (merged)
 
 ### WT-20260526-030
 
