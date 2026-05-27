@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 44
-- planned: 8
+- planned: 7
 - active: 0
-- completed: 36
+- completed: 37
 - blocked: 0
 - deferred: 0
 
@@ -427,10 +427,10 @@
 - title: 草稿确认与工单表单衔接
 - milestone_id: MS-20260526-002
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 5
 - contract_path: .servo/worktrack/WT-20260526-035/contract.md
-- branch: worktrack/wt-20260526-035-draft-confirmation-flow
+- branch: worktrack/wt-20260526-035-draft-confirmation-flow (merged)
 
 ### WT-20260526-036
 

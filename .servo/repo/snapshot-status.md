@@ -4,7 +4,7 @@
 
 - updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: b6037a458ace3a22e8edeb3fdb352f13ea84d17c
+- baseline_commit: 7d95655d4b43f10e1b183c5ac24c84ce89e5dbb9
 
 ## Codebase State
 
@@ -59,6 +59,7 @@ reqflow/
 | AI knowledge citation strategy | `docs/ai-knowledge-citation-strategy.md` 已建立，覆盖 8-source `rf-*` whitelist、provider-neutral citation shape、snippet rules、redaction/exclusion policy、empty-context fallback、no upload/zip/PG/pgvector dependency (2026-05-27, WT-20260526-032) |
 | AI draft API/provider adapter | `POST /api/ai/draft` and `src/lib/ai/*` 已建立，覆盖 server-side Deepseek adapter、mocked tests、auth、redaction、static knowledge snippets、missing-secret handling、no direct ticket mutation (2026-05-27, WT-20260526-033) |
 | AI discussion page UI | `/tickets/ai-discussion` 已建立，覆盖 discussion input、AI clarification、answers、draft preview、citations、empty knowledge、errors、accept/discard/reset controls；不直接创建工单 (2026-05-27, WT-20260526-034) |
+| AI draft ticket-form handoff | accepted AI draft 使用 browser `sessionStorage` staging，跳转 `/tickets/new?from=ai-draft` 并预填现有表单；最终仍需用户点击创建工单 (2026-05-27, WT-20260526-035) |
 
 ### 已知 Issues (来自 handoff.md)
 
@@ -130,18 +131,18 @@ reqflow/
 - milestone_id: MS-20260526-002
 - title: AI 需求生成 Discussion MVP
 - status: active
-- progress: 4/6 completed
+- progress: 5/6 completed
 - depends_on_milestones: MS-20260526-001
 - scope_boundary: MS6 uses Deepseek through a server-side adapter and focuses on discussion + structured draft + manual confirmation; administrator knowledge-base upload/docs zip import is deferred to MS7; no PostgreSQL/pgvector dependency.
-- completed_worktracks: WT-20260526-031, WT-20260526-032, WT-20260526-033, WT-20260526-034
-- active_or_next_worktrack: WT-20260526-035 intake pending
-- latest_evidence: WT-20260526-034 merged at `b6037a458ace3a22e8edeb3fdb352f13ea84d17c`; `npm run lint`, `npm run test`, and `npm run build` passed locally in the worktree after `npm ci`.
+- completed_worktracks: WT-20260526-031, WT-20260526-032, WT-20260526-033, WT-20260526-034, WT-20260526-035
+- active_or_next_worktrack: WT-20260526-036 intake pending
+- latest_evidence: WT-20260526-035 merged at `7d95655d4b43f10e1b183c5ac24c84ce89e5dbb9`; `npm run lint`, `npm run test`, and `npm run build` passed locally in the worktree after `npm ci`.
 
 ### Preparation Work
 
 - current_preparation_milestone: MS-20260526-002
-- current_preparation_item: WT-20260526-035 草稿确认与工单表单衔接 intake
-- preparation_goal: implement draft confirmation handoff into the existing `/tickets/new` form without bypassing final user submit.
+- current_preparation_item: WT-20260526-036 安全治理、测试与 MS6 验收 intake
+- preparation_goal: collect final safety, validation, CI, and manual acceptance evidence for MS6 without marking milestone accepted before programmer decision.
 - provider_decision: Deepseek
 - split_decision: administrator knowledge-base upload and docs-style zip import are planned under MS-20260527-001.
 

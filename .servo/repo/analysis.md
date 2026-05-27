@@ -28,7 +28,7 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 - WT-20260526-037: 严谨 CodeReview Worktrack
 - WT-20260526-038: Ticket 授权与上传安全加固
 
-当前 active milestone 是 `MS-20260526-002 / AI 需求生成 Discussion MVP`，依赖 MS5 完成，目前 4/6 completed。用户已确认 AI provider 使用 Deepseek，并确认管理员知识库上传/docs zip 导入拆分为 `MS-20260527-001 / 管理员项目知识库管理与导入`。WT-20260526-031 至 WT-20260526-034 已完成产品流、知识引用策略、authenticated server-side `POST /api/ai/draft` 和 `/tickets/ai-discussion` 页面；当前仍需 WT-035 完成草稿确认与现有工单表单衔接。
+当前 active milestone 是 `MS-20260526-002 / AI 需求生成 Discussion MVP`，依赖 MS5 完成，目前 5/6 completed。用户已确认 AI provider 使用 Deepseek，并确认管理员知识库上传/docs zip 导入拆分为 `MS-20260527-001 / 管理员项目知识库管理与导入`。WT-20260526-031 至 WT-20260526-035 已完成产品流、知识引用策略、authenticated server-side `POST /api/ai/draft`、`/tickets/ai-discussion` 页面，以及 accepted draft 到现有 `/tickets/new` 的人工确认 handoff。
 
 最近质量基线来自 WT-20260526-026：
 - `npm run build` 通过
@@ -54,7 +54,7 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 
 | 优先级 | 事项 | 理由 |
 |--------|------|------|
-| P0 | WT-20260526-035 intake | Discussion UI 已完成，下一步应把接受的草稿安全带入现有 `/tickets/new` 表单并保持最终人工提交 |
+| P0 | WT-20260526-036 intake | MS6 功能闭环已实现，下一步应完成安全治理、测试回归、远端 CI 观察和 MS6 验收证据 |
 | P1 | 上云前环境与部署执行 | 当前 SQLite/local-only DB 策略不等于生产部署方案，但 PG 暂不碰 |
 | P2 | 页面级交互回归测试 | 工单列表、详情、新建流程仍缺黑盒覆盖 |
 | P3 | 邮件/外部通知能力 | 当前仅有站内通知 |
@@ -68,13 +68,13 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 1. **M4: 项目整洁度与 AI 适配治理** — completed, 7/7 completed, milestone gate pass, accepted by programmer
 
 当前 active milestone：
-1. **MS6: AI 需求生成 Discussion MVP** — active, 4/6 completed, depends on accepted MS5
+1. **MS6: AI 需求生成 Discussion MVP** — active, 5/6 completed, depends on accepted MS5
 
 planned milestone：
 1. **MS7: 管理员项目知识库管理与导入** — planned, 0/6 completed, depends on MS6
 
 建议按以下 worktrack 顺序推进：
-1. Feature / WT-20260526-035 intake: 草稿确认与工单表单衔接。
+1. Test / WT-20260526-036 intake: 安全治理、测试与 MS6 验收。
 
 ## Unknowns / Next Options
 
