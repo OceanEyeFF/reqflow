@@ -7,7 +7,7 @@
 - milestone_id: MS-20260526-002
 - derived_from_milestone: true
 - node_type: review
-- status: planned
+- status: completed
 - created_at: 2026-05-27
 - updated: 2026-05-27
 
@@ -47,3 +47,6 @@ Evaluate MS6 from an expert product/architecture/security perspective before fin
 ## Notes
 
 - This worktrack runs after the dedicated CodeReview worktrack.
+- Completed expert evaluation evidence:
+  - `docs/ms6-expert-evaluation.md`
+  - `.servo/worktrack/WT-20260527-047/gate-evidence.md`
