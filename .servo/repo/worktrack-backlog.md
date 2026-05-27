@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 38
-- planned: 6
+- total: 44
+- planned: 12
 - active: 0
 - completed: 32
 - blocked: 0
@@ -375,70 +375,138 @@
 - contract_path: .servo/worktrack/WT-20260526-038/contract.md
 - branch: worktrack/wt-20260526-038-ticket-auth-upload-hardening (merged)
 
-## M6: AI 需求说明优化 MVP (MS-20260526-002)
+## M6: AI 需求生成 Discussion MVP (MS-20260526-002)
 
 ### WT-20260526-031
 
 - worktrack_id: WT-20260526-031
-- title: AI 需求助手产品流设计
+- title: Discussion 产品流与信息架构设计
 - milestone_id: MS-20260526-002
 - node_type: docs
 - status: planned
 - priority: 1
 - contract_path: .servo/worktrack/WT-20260526-031/contract.md
-- branch: worktrack/wt-20260526-031-ai-flow-design
+- branch: worktrack/wt-20260526-031-discussion-flow-design
 
 ### WT-20260526-032
 
 - worktrack_id: WT-20260526-032
-- title: 项目知识库最小语料整理
+- title: 最小内置知识语料与引用策略
 - milestone_id: MS-20260526-002
 - node_type: docs
 - status: planned
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260526-032/contract.md
-- branch: worktrack/wt-20260526-032-knowledge-corpus
+- branch: worktrack/wt-20260526-032-minimal-knowledge-citations
 
 ### WT-20260526-033
 
 - worktrack_id: WT-20260526-033
-- title: AI Draft API
+- title: Deepseek Draft API 与 Provider Adapter
 - milestone_id: MS-20260526-002
 - node_type: feature
 - status: planned
 - priority: 3
 - contract_path: .servo/worktrack/WT-20260526-033/contract.md
-- branch: worktrack/wt-20260526-033-ai-draft-api
+- branch: worktrack/wt-20260526-033-deepseek-draft-api
 
 ### WT-20260526-034
 
 - worktrack_id: WT-20260526-034
-- title: 前端草稿生成 UI
+- title: AI 需求生成 Discussion 页面 UI
 - milestone_id: MS-20260526-002
 - node_type: feature
 - status: planned
 - priority: 4
 - contract_path: .servo/worktrack/WT-20260526-034/contract.md
-- branch: worktrack/wt-20260526-034-ai-draft-ui
+- branch: worktrack/wt-20260526-034-discussion-ui
 
 ### WT-20260526-035
 
 - worktrack_id: WT-20260526-035
-- title: 安全与可控性治理
+- title: 草稿确认与工单表单衔接
 - milestone_id: MS-20260526-002
-- node_type: refactor
+- node_type: feature
 - status: planned
 - priority: 5
 - contract_path: .servo/worktrack/WT-20260526-035/contract.md
-- branch: worktrack/wt-20260526-035-ai-safety-governance
+- branch: worktrack/wt-20260526-035-draft-confirmation-flow
 
 ### WT-20260526-036
 
 - worktrack_id: WT-20260526-036
-- title: AI MVP 测试与验收
+- title: 安全治理、测试与 MS6 验收
 - milestone_id: MS-20260526-002
 - node_type: test
 - status: planned
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260526-036/contract.md
-- branch: worktrack/wt-20260526-036-ai-mvp-validation
+- branch: worktrack/wt-20260526-036-ai-discussion-validation
+
+## M7: 管理员项目知识库管理与导入 (MS-20260527-001)
+
+### WT-20260527-039
+
+- worktrack_id: WT-20260527-039
+- title: 管理员知识库上传产品与权限设计
+- milestone_id: MS-20260527-001
+- node_type: docs
+- status: planned
+- priority: 1
+- contract_path: .servo/worktrack/WT-20260527-039/contract.md
+- branch: worktrack/wt-20260527-039-admin-kb-upload-design
+
+### WT-20260527-040
+
+- worktrack_id: WT-20260527-040
+- title: 文档/zip 上传安全与私有存储
+- milestone_id: MS-20260527-001
+- node_type: feature
+- status: planned
+- priority: 2
+- contract_path: .servo/worktrack/WT-20260527-040/contract.md
+- branch: worktrack/wt-20260527-040-kb-upload-private-storage
+
+### WT-20260527-041
+
+- worktrack_id: WT-20260527-041
+- title: 文档解析、分块、来源/版本记录
+- milestone_id: MS-20260527-001
+- node_type: feature
+- status: planned
+- priority: 3
+- contract_path: .servo/worktrack/WT-20260527-041/contract.md
+- branch: worktrack/wt-20260527-041-kb-parse-versioning
+
+### WT-20260527-042
+
+- worktrack_id: WT-20260527-042
+- title: 轻量检索与引用片段选择
+- milestone_id: MS-20260527-001
+- node_type: feature
+- status: planned
+- priority: 4
+- contract_path: .servo/worktrack/WT-20260527-042/contract.md
+- branch: worktrack/wt-20260527-042-kb-lightweight-retrieval
+
+### WT-20260527-043
+
+- worktrack_id: WT-20260527-043
+- title: 管理员知识库 UI
+- milestone_id: MS-20260527-001
+- node_type: feature
+- status: planned
+- priority: 5
+- contract_path: .servo/worktrack/WT-20260527-043/contract.md
+- branch: worktrack/wt-20260527-043-admin-kb-ui
+
+### WT-20260527-044
+
+- worktrack_id: WT-20260527-044
+- title: 知识库导入验收与安全回归
+- milestone_id: MS-20260527-001
+- node_type: test
+- status: planned
+- priority: 6
+- contract_path: .servo/worktrack/WT-20260527-044/contract.md
+- branch: worktrack/wt-20260527-044-kb-import-validation

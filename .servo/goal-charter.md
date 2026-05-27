@@ -4,7 +4,7 @@
 
 - repo: reqflow
 - owner: fdch0
-- updated: 2026-05-23
+- updated: 2026-05-27
 - status: active
 
 ## Project Vision
@@ -19,6 +19,8 @@ ReqFlow — 一个稳定、可维护的轻量级内部工单需求协作系统�
 2. **分模块代码质量治理**: 按功能模块逐个进行问题排查、代码审查、重构和测试补充
 3. **已知问题修复**: 修复 handoff.md 中记录的已知问题和潜在隐患
 4. **测试覆盖**: 为核心 API 和关键业务逻辑添加测试
+5. **AI 需求生成 Discussion MVP**: 使用 Deepseek 在受控 discussion 页面中辅助用户生成结构化工单草稿，保持人工确认边界
+6. **管理员项目知识库管理与导入**: 在 AI discussion MVP 之后，提供管理员维护项目知识库的上传、解析、版本和引用能力
 
 ## Technical Direction
 
@@ -27,6 +29,9 @@ ReqFlow — 一个稳定、可维护的轻量级内部工单需求协作系统�
 - 每个 change 必须经过 `npm run build` 验证
 - 不在此阶段引入新的外部依赖（除非修复必须）
 - ESLint 0 warning 为质量基线
+- AI provider 使用 Deepseek，必须通过服务端 adapter 调用；Deepseek API key、base URL、模型、超时和限流不得进入客户端
+- MS6 只实现 discussion + Deepseek + 人工确认的核心闭环；管理员知识库上传和 docs 风格 zip 导入拆分到 MS7
+- MS6/MS7 均不默认引入 PostgreSQL/pgvector；如需要语义检索，必须单独重新评估
 
 ## Engineering Node Map
 
@@ -89,6 +94,8 @@ ReqFlow — 一个稳定、可维护的轻量级内部工单需求协作系统�
 - [ ] 代码 ESLint 0 warning
 - [ ] README.md 反映当前项目真实状态
 - [ ] 无明显重复代码模式（DRY）
+- [ ] AI 需求生成草稿必须人工确认后才进入工单流程
+- [ ] Deepseek 调用与知识上下文处理不暴露服务端 secret 或上传原始包
 
 ## System Invariants
 
@@ -97,9 +104,12 @@ ReqFlow — 一个稳定、可维护的轻量级内部工单需求协作系统�
 3. **Worktree 工作流**: 所有代码改动必须在 worktree 中完成
 4. **Build Gate**: 每个 Worktrack 合并前必须通过 `npm run build`
 5. **分支规范**: 功能分支命名 `feature/<name>`，修复分支 `fix/<name>`
+6. **AI 人工确认边界**: AI 输出只能作为草稿/建议，不能绕过用户确认直接创建或修改工单
+7. **Provider Secret 边界**: Deepseek 等外部 provider secret 只允许服务端读取，不得进入浏览器、提交文件、截图或工单内容
 
 ## Notes
 
 - Phase 9 整体目标：提升代码质量而非增加功能
 - 分治策略：先基本面 → 再按模块逐块治理
 - 不在此阶段引入 PostgreSQL 迁移或邮件通知等新功能
+- 2026-05-27: 用户确认 MS6 使用 Deepseek，并将管理员知识库上传/zip 导入拆分为 MS7

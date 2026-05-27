@@ -28,7 +28,7 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 - WT-20260526-037: 严谨 CodeReview Worktrack
 - WT-20260526-038: Ticket 授权与上传安全加固
 
-当前 active milestone 是 `MS-20260526-002 / AI 需求说明优化 MVP`，依赖 MS5 完成，目前 0/6 completed。
+当前 active milestone 是 `MS-20260526-002 / AI 需求生成 Discussion MVP`，依赖 MS5 完成，目前 0/6 completed。用户已确认 AI provider 使用 Deepseek，并确认管理员知识库上传/docs zip 导入拆分为 `MS-20260527-001 / 管理员项目知识库管理与导入`。
 
 最近质量基线来自 WT-20260526-026：
 - `npm run build` 通过
@@ -38,23 +38,23 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 - GitHub Actions run `26494518202` 对 `bd2789d4e404996b603833757dfa71859d2b0210` 通过，job `78019430374 / lint, test, build` conclusion `success`
 - GitHub Actions run `26494818503` 对 handback docs merge commit `a2fddc64b39e0f4ecb09d0ffee8587c27ce153d0` 通过，job `78020426471 / lint, test, build` conclusion `success`
 - `docs/cloud-readiness-boundary.md` 已建立上云前边界，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、上传目录、SQLite 生产风险和部署平台能力边界
-- `docs/ai-mvp-technical-brief.md` 已建立 AI MVP 技术边界，覆盖轻量 MVP、人工确认、知识来源、OpenAI 接入、`OPENAI_API_KEY` 服务端 secret 边界和无 PostgreSQL/pgvector 依赖
+- `docs/ai-mvp-technical-brief.md` 已建立 AI MVP 技术边界，并在本轮 planning 中调整为 Deepseek provider、discussion 页面主入口、MS7 知识库导入拆分和无 PostgreSQL/pgvector 依赖
 - GitHub Actions run `26464643535` 是 WT-030 旧远端 CI 证据，已被当前 run `26494518202` supersede
 - `docs/ms5-final-review.md` 已刷新最终 review 记录，结论为 WT-037 发现的阻断项已由 WT-038 修复，MS5 evidence ready for programmer acceptance decision
 
 ## Principal Contradictions
 
-1. **MS6 active vs implementation boundary**: MS5 已验收，MS6 已激活；AI MVP 可以进入 Worktrack intake，但仍不得静默引入 PostgreSQL/pgvector、生产 secret、付费服务或绕过人工确认。
+1. **MS6 discussion MVP vs MS7 knowledge-base import**: MS6 已收窄为 Deepseek-backed discussion MVP；管理员知识库上传、docs zip 导入、解析、版本和管理 UI 已拆入 MS7，不能在 MS6 静默扩大范围。
 2. **可见未跟踪目录 vs 不可批量处理**: `.agents/.claude/.harness/.mavis/.worktrees` 等仍可见，但已被分类为需要逐项判断的治理对象，不应通过粗暴 ignore 或删除制造表面 clean。
 3. **本地 SQLite 便利性 vs 生产部署要求**: 开发 DB 已改为 local-only runtime artifact；生产数据库迁移和云端环境变量仍需独立部署 worktrack 处理。
 4. **远端主线已同步 vs 生产部署要求未定义**: GitHub 已同步，Gitee 已由用户降级为非当前重点；生产部署仍需要环境变量、存储和数据库边界。
-5. **AI 需求已确认 vs 基础设施边界未落文档**: MS6 目标已 planned，但 MS5 仍需先写清 AI MVP 技术决策 Brief，明确不依赖 PostgreSQL/pgvector。
+5. **Deepseek provider 已确认 vs secret/计费仍需上线前决策**: MS6 可以设计 provider adapter，但真实 API key、模型、计费、生产 secret 和上线配置仍需用户或部署 worktrack 决策。
 
 ## Priority Assessment
 
 | 优先级 | 事项 | 理由 |
 |--------|------|------|
-| P0 | WT-20260526-031 intake | MS6 已激活，下一步应先做 AI 需求助手产品流设计，不直接实现 API/UI |
+| P0 | WT-20260526-031 intake | MS6 已激活并进入准备工作，下一步应先做 discussion 产品流与信息架构设计，不直接实现 API/UI |
 | P1 | 上云前环境与部署执行 | 当前 SQLite/local-only DB 策略不等于生产部署方案，但 PG 暂不碰 |
 | P2 | 页面级交互回归测试 | 工单列表、详情、新建流程仍缺黑盒覆盖 |
 | P3 | 邮件/外部通知能力 | 当前仅有站内通知 |
@@ -68,10 +68,13 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 1. **M4: 项目整洁度与 AI 适配治理** — completed, 7/7 completed, milestone gate pass, accepted by programmer
 
 当前 active milestone：
-1. **MS6: AI 需求说明优化 MVP** — active, 0/6 completed, depends on accepted MS5
+1. **MS6: AI 需求生成 Discussion MVP** — active, 0/6 completed, depends on accepted MS5
+
+planned milestone：
+1. **MS7: 管理员项目知识库管理与导入** — planned, 0/6 completed, depends on MS6
 
 建议按以下 worktrack 顺序推进：
-1. WT-20260526-031: AI 需求助手产品流设计。
+1. Preparation / WT-20260526-031 intake: Discussion 产品流与信息架构设计。
 
 ## Unknowns / Next Options
 
