@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 45
-- planned: 7
+- total: 47
+- planned: 9
 - active: 0
 - completed: 38
 - blocked: 0
@@ -442,6 +442,28 @@
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260526-036/contract.md
 - branch: worktrack/wt-20260526-036-ai-discussion-validation (merged)
+
+### WT-20260527-046
+
+- worktrack_id: WT-20260527-046
+- title: MS6 CodeReview 专用评审
+- milestone_id: MS-20260526-002
+- node_type: review
+- status: planned
+- priority: 7
+- contract_path: .servo/worktrack/WT-20260527-046/contract.md
+- branch: worktrack/wt-20260527-046-ms6-code-review
+
+### WT-20260527-047
+
+- worktrack_id: WT-20260527-047
+- title: MS6 专家评议评估
+- milestone_id: MS-20260526-002
+- node_type: review
+- status: planned
+- priority: 8
+- contract_path: .servo/worktrack/WT-20260527-047/contract.md
+- branch: worktrack/wt-20260527-047-ms6-expert-evaluation
 
 ## M7: 管理员项目知识库管理与导入 (MS-20260527-001)
 

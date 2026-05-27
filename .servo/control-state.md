@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Handback: WT-20260526-036 completed and merged; MS-20260526-002 has 6/6 worktracks completed and is ready for programmer acceptance decision
+- RepoScope.Decide: programmer supplemented MS6 with CodeReview and expert evaluation worktracks; next action is WT-20260527-046 MS6 CodeReview 专用评审
 
 ## Linked Formal Documents
 
@@ -43,9 +43,9 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: true
-- reason: MS-20260526-002 final milestone acceptance is explicitly programmer-owned
-- approval_scope: MS-20260526-002 final acceptance
+- needs_programmer_approval: false
+- reason: programmer explicitly added supplemental MS6 review worktracks before final acceptance
+- approval_scope: N/A
 - approval_persistence: current execution cycle
 
 ## Continuation Authority
@@ -106,6 +106,6 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已完成 WT-20260526-031 至 WT-20260526-036；MS6 gate pass，等待程序员最终验收决定；MS-20260527-001 管理员知识库管理与导入保持 planned，未自动启动
+- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已完成 WT-20260526-031 至 WT-20260526-036；程序员在最终验收前补充 WT-20260527-046 CodeReview 和 WT-20260527-047 专家评议，MS6 gate 失效待重跑；MS-20260527-001 管理员知识库管理与导入保持 planned，未自动启动
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入
