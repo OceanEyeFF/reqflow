@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 56
-- planned: 9
+- planned: 8
 - active: 0
-- completed: 47
+- completed: 48
 - blocked: 0
 - deferred: 0
 
@@ -550,10 +550,10 @@
 - title: zip 上传文件夹化修复
 - milestone_id: MS-20260527-001
 - node_type: fix
-- status: planned
+- status: completed
 - priority: 8
 - contract_path: .servo/worktrack/WT-20260528-048/contract.md
-- branch: worktrack/wt-20260528-048-zip-folder-upload-fix
+- branch: worktrack/wt-20260528-048-zip-folder-upload-fix (merged)
 
 ### WT-20260528-049
 

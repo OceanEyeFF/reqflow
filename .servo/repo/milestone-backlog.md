@@ -122,7 +122,8 @@
 - updated_by: harness-kernel
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
 - acceptance_reopened: 2026-05-28 user upload UI feedback
-- pending_addenda: [WT-20260528-048, WT-20260528-049, WT-20260528-050]
+- pending_addenda: [WT-20260528-049, WT-20260528-050]
+- latest_addendum_completed: WT-20260528-048 at 520b42e
 
 ### MS-20260528-001
 
