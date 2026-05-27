@@ -1,10 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { readPrivateKnowledgeFile } from "./private-storage";
 import { validateZipEntries } from "./upload-validation";
+import { readZipEntries } from "./zip-reader";
 
 const MAX_CHUNK_LENGTH = 900;
 const MIN_CHUNK_LENGTH = 80;
-const LOCAL_FILE_HEADER = 0x04034b50;
 
 export class KnowledgeParseError extends Error {}
 
@@ -106,24 +106,9 @@ export function chunkDocument(document: ParsedDocument): Array<{
 
 function parseStoredZipDocuments(buffer: Buffer): ParsedDocument[] {
   validateZipEntries(buffer);
-  const documents: ParsedDocument[] = [];
-  let offset = 0;
-  while (offset + 30 <= buffer.length) {
-    if (buffer.readUInt32LE(offset) !== LOCAL_FILE_HEADER) break;
-    const compressedSize = buffer.readUInt32LE(offset + 18);
-    const fileNameLength = buffer.readUInt16LE(offset + 26);
-    const extraLength = buffer.readUInt16LE(offset + 28);
-    const nameStart = offset + 30;
-    const nameEnd = nameStart + fileNameLength;
-    const sourcePath = buffer.toString("utf8", nameStart, nameEnd);
-    const contentStart = nameEnd + extraLength;
-    const contentEnd = contentStart + compressedSize;
-    if (!sourcePath.endsWith("/")) {
-      documents.push({ sourcePath, text: decodeText(buffer.subarray(contentStart, contentEnd)) });
-    }
-    offset = contentEnd;
-  }
-  return documents;
+  return readZipEntries(buffer)
+    .filter((entry) => !entry.name.endsWith("/"))
+    .map((entry) => ({ sourcePath: entry.name, text: decodeText(entry.content) }));
 }
 
 function decodeText(buffer: Buffer): string {
