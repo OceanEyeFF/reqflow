@@ -100,11 +100,11 @@ reqflow/
 - accepted_by: fdch0
 - accepted_at: 2026-05-26 23:33:49 +08:00
 
-### Active Milestone
+### Accepted Milestone
 
 - milestone_id: MS-20260526-001
 - title: GitHub CI 与上云前决策基线
-- status: active
+- status: completed
 - progress: 8/8 completed at baseline `bd2789d4e404996b603833757dfa71859d2b0210`
 - completed_worktracks: WT-20260526-025, WT-20260526-026, WT-20260526-027, WT-20260526-028, WT-20260526-029, WT-20260526-030, WT-20260526-037, WT-20260526-038
 - planned_worktracks: none
@@ -116,15 +116,20 @@ reqflow/
 - cloud_readiness_boundary: `docs/cloud-readiness-boundary.md` documents environment variables, `AUTH_SECRET`, `DATABASE_URL`, upload storage, SQLite production risk, deployment platform requirements, and explicit non-goals for PostgreSQL/pgvector migration, AI implementation, production secrets, paid provider selection, and Gitee.
 - ai_mvp_technical_brief: `docs/ai-mvp-technical-brief.md` documents lightweight MVP scope, manual confirmation, knowledge sources, OpenAI Responses API direction, server-side `OPENAI_API_KEY` handling, privacy/persistence/testing boundaries, and no PostgreSQL/pgvector or vector database dependency.
 - final_review: `docs/ms5-final-review.md` verifies current GitHub remote CI, cloud boundary, AI brief, WT-037 CodeReview, WT-038 hardening, and MS5 scope exclusions are mutually consistent.
-- next_boundary: MS-20260526-001 final acceptance remains a programmer decision; do not auto-advance to MS6 until accepted.
+- milestone_gate_verdict: pass
+- final_acceptance: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-05-27 14:47:38 +08:00
 
-### Planned Milestone
+### Active Milestone
 
 - milestone_id: MS-20260526-002
 - title: AI 需求说明优化 MVP
-- status: planned
+- status: active
+- progress: 0/6 completed
 - depends_on_milestones: MS-20260526-001
 - scope_boundary: AI MVP must not depend on PostgreSQL/pgvector unless a future user decision changes the plan.
+- active_or_next_worktrack: WT-20260526-031 intake pending
 
 ### M4 Governance Facts
 

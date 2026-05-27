@@ -18,9 +18,17 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 - WT-20260524-023: docs and RepoStatus synchronization
 - WT-20260524-024: final governance review
 
-当前 active milestone 是 `MS-20260526-001 / GitHub CI 与上云前决策基线`，8/8 completed。WT-025 至 WT-030、WT-037、WT-038 均已完成；`docs/ms5-final-review.md` 已刷新最终 review 证据。下一步不是自动推进 MS6，而是 handback 等待 programmer 对 MS5 做最终验收决定。
+最近完成的 milestone 是 `MS-20260526-001 / GitHub CI 与上云前决策基线`。截至 baseline `e127633d2982ee01605a0316dabbaf990382aca3`，MS5 已完成 8/8 个 worktrack，通过 Milestone Gate，并由 programmer 最终验收：
+- WT-20260526-025: RepoStatus 刷新
+- WT-20260526-026: GitHub Actions CI 基线
+- WT-20260526-027: GitHub 推送与 CI 验证
+- WT-20260526-028: 上云前环境与部署边界文档
+- WT-20260526-029: AI MVP 技术决策 Brief
+- WT-20260526-030: MS5 最终验收
+- WT-20260526-037: 严谨 CodeReview Worktrack
+- WT-20260526-038: Ticket 授权与上传安全加固
 
-当前 planned milestone 是 `MS-20260526-002 / AI 需求说明优化 MVP`，依赖 MS5 完成。
+当前 active milestone 是 `MS-20260526-002 / AI 需求说明优化 MVP`，依赖 MS5 完成，目前 0/6 completed。
 
 最近质量基线来自 WT-20260526-026：
 - `npm run build` 通过
@@ -36,7 +44,7 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 
 ## Principal Contradictions
 
-1. **MS5 evidence ready vs final acceptance pending**: GitHub CI、远端 Actions 证据、cloud-readiness boundary、AI MVP technical brief、rigorous CodeReview、security hardening 和 final review 均已完成；goal-driven milestone 的最终验收仍必须由 programmer 决定。
+1. **MS6 active vs implementation boundary**: MS5 已验收，MS6 已激活；AI MVP 可以进入 Worktrack intake，但仍不得静默引入 PostgreSQL/pgvector、生产 secret、付费服务或绕过人工确认。
 2. **可见未跟踪目录 vs 不可批量处理**: `.agents/.claude/.harness/.mavis/.worktrees` 等仍可见，但已被分类为需要逐项判断的治理对象，不应通过粗暴 ignore 或删除制造表面 clean。
 3. **本地 SQLite 便利性 vs 生产部署要求**: 开发 DB 已改为 local-only runtime artifact；生产数据库迁移和云端环境变量仍需独立部署 worktrack 处理。
 4. **远端主线已同步 vs 生产部署要求未定义**: GitHub 已同步，Gitee 已由用户降级为非当前重点；生产部署仍需要环境变量、存储和数据库边界。
@@ -46,7 +54,7 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 
 | 优先级 | 事项 | 理由 |
 |--------|------|------|
-| P0 | MS5 final acceptance decision | 所有 MS5 worktrack 和最新 GitHub Actions 已通过，下一步必须由用户决定是否接受 |
+| P0 | WT-20260526-031 intake | MS6 已激活，下一步应先做 AI 需求助手产品流设计，不直接实现 API/UI |
 | P1 | 上云前环境与部署执行 | 当前 SQLite/local-only DB 策略不等于生产部署方案，但 PG 暂不碰 |
 | P2 | 页面级交互回归测试 | 工单列表、详情、新建流程仍缺黑盒覆盖 |
 | P3 | 邮件/外部通知能力 | 当前仅有站内通知 |
@@ -60,10 +68,10 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 1. **M4: 项目整洁度与 AI 适配治理** — completed, 7/7 completed, milestone gate pass, accepted by programmer
 
 当前 active milestone：
-1. **MS5: GitHub CI 与上云前决策基线** — active, 8/8 completed, final acceptance pending programmer decision
+1. **MS6: AI 需求说明优化 MVP** — active, 0/6 completed, depends on accepted MS5
 
 建议按以下 worktrack 顺序推进：
-1. Handback: 请 programmer 审阅 `docs/ms5-final-review.md`、`docs/ms5-rigorous-code-review.md`、GitHub Actions run `26494518202` 与 `26494818503`、`docs/cloud-readiness-boundary.md`、`docs/ai-mvp-technical-brief.md`，并决定是否接受 MS-20260526-001。
+1. WT-20260526-031: AI 需求助手产品流设计。
 
 ## Unknowns / Next Options
 
