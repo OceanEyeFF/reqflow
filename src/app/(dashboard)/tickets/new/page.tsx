@@ -8,7 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { TICKET_TYPE, TICKET_PRIORITY } from "@/types";
-import { AI_DRAFT_STORAGE_KEY, clearStagedAiDraft, parseStagedAiDraft } from "@/lib/ai/draft-handoff";
+import {
+  AI_DRAFT_STORAGE_KEY,
+  clearStagedAiDraft,
+  confirmStagedAiDraft,
+  parseStagedAiDraft,
+} from "@/lib/ai/draft-handoff";
 
 type User = {
   id: string;
@@ -29,6 +34,7 @@ export default function NewTicketPage() {
   const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const storedAiDraft = useSyncExternalStore(subscribeAiDraftStorage, getAiDraftStorageSnapshot, () => null);
 
   useEffect(() => {
@@ -44,6 +50,8 @@ export default function NewTicketPage() {
       users={users}
       loading={loading}
       setLoading={setLoading}
+      submitError={submitError}
+      setSubmitError={setSubmitError}
       router={router}
     />
   );
@@ -54,37 +62,57 @@ function NewTicketForm({
   users,
   loading,
   setLoading,
+  submitError,
+  setSubmitError,
   router,
 }: {
   storedAiDraft: string | null;
   users: User[];
   loading: boolean;
   setLoading: (loading: boolean) => void;
+  submitError: string;
+  setSubmitError: (error: string) => void;
   router: ReturnType<typeof useRouter>;
 }) {
+  const parsedDraft = parseStagedAiDraft(storedAiDraft);
   const [form, setForm] = useState(() => {
-    const draft = parseStagedAiDraft(storedAiDraft);
-    if (!draft) return emptyForm;
+    if (!parsedDraft) return emptyForm;
 
     return {
       ...emptyForm,
-      title: draft.title,
-      description: draft.description,
-      type: draft.type,
-      priority: draft.priority,
+      title: parsedDraft.title,
+      description: parsedDraft.description,
+      type: parsedDraft.type,
+      priority: parsedDraft.priority,
     };
   });
-  const [aiDraftLoaded, setAiDraftLoaded] = useState(() => Boolean(parseStagedAiDraft(storedAiDraft)));
+  const [aiDraftLoaded, setAiDraftLoaded] = useState(() => Boolean(parsedDraft));
+  const [aiDraftConfirmed, setAiDraftConfirmed] = useState(() => Boolean(parsedDraft?.confirmedAt));
 
   function clearAiDraft() {
     clearStagedAiDraft(sessionStorage);
     setAiDraftLoaded(false);
+    setAiDraftConfirmed(false);
+    setSubmitError("");
     setForm(emptyForm);
+  }
+
+  function confirmAiDraft() {
+    const confirmedDraft = confirmStagedAiDraft(sessionStorage);
+    if (!confirmedDraft) return;
+    setAiDraftConfirmed(true);
+    setSubmitError("");
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (aiDraftLoaded && !aiDraftConfirmed) {
+      setSubmitError("请先确认已检查 AI 草稿，再创建工单。");
+      return;
+    }
+
     setLoading(true);
+    setSubmitError("");
 
     const res = await fetch("/api/tickets", {
       method: "POST",
@@ -99,6 +127,8 @@ function NewTicketForm({
       }
       router.push(`/tickets/${data.ticket.id}`);
     } else {
+      const data = await res.json().catch(() => ({ error: "创建工单失败" }));
+      setSubmitError(data.error || "创建工单失败");
       setLoading(false);
     }
   }
@@ -113,12 +143,23 @@ function NewTicketForm({
       {aiDraftLoaded && (
         <Card className="border-green-200 bg-green-50">
           <CardContent className="flex flex-col gap-3 pt-6 text-sm text-green-800 sm:flex-row sm:items-center sm:justify-between">
-            <p>已载入 AI 草稿。请检查并编辑字段，确认无误后再手动创建工单。</p>
-            <Button type="button" variant="outline" size="sm" onClick={clearAiDraft}>
-              清除草稿
-            </Button>
+            <p>{aiDraftConfirmed ? "AI 草稿已确认。你仍可继续编辑字段，然后手动创建工单。" : "已载入 AI 草稿。请检查并编辑字段，确认无误后再手动创建工单。"}</p>
+            <div className="flex flex-wrap gap-2">
+              {!aiDraftConfirmed && (
+                <Button type="button" variant="secondary" size="sm" onClick={confirmAiDraft}>
+                  确认草稿
+                </Button>
+              )}
+              <Button type="button" variant="outline" size="sm" onClick={clearAiDraft}>
+                清除草稿
+              </Button>
+            </div>
           </CardContent>
         </Card>
+      )}
+
+      {submitError && (
+        <div className="rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700">{submitError}</div>
       )}
 
       <Card>
@@ -204,7 +245,7 @@ function NewTicketForm({
             </div>
 
             <div className="flex gap-4">
-              <Button type="submit" disabled={loading}>
+              <Button type="submit" disabled={loading || (aiDraftLoaded && !aiDraftConfirmed)}>
                 {loading ? "创建中..." : "创建工单"}
               </Button>
               <Button type="button" variant="outline" onClick={() => router.back()}>

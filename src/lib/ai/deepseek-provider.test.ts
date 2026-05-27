@@ -126,6 +126,46 @@ describe("createDeepseekProvider", () => {
     );
   });
 
+  it("normalizes nested clarification questions returned by OpenAI-compatible providers", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        Response.json({
+          choices: [
+            {
+              message: {
+                content: JSON.stringify({
+                  kind: "clarification",
+                  result: {
+                    questions: [{ question: "目标用户是谁？", reason: "确认使用场景" }],
+                    canDraftNow: false,
+                  },
+                }),
+              },
+            },
+          ],
+        })
+      )
+    );
+
+    const provider = createDeepseekProvider({
+      apiKey: "test-key",
+      baseUrl: "https://example.test",
+      model: "deepseek-v4-flash",
+      timeoutMs: 1000,
+    });
+
+    const result = await provider.generate({ mode: "clarify", requirement: "需要审批流", answers: [], knowledge: [] });
+
+    expect(result).toMatchObject({
+      kind: "clarification",
+      result: {
+        questions: [{ id: "q1", question: "目标用户是谁？", reason: "确认使用场景" }],
+        canDraftNow: false,
+      },
+    });
+  });
+
   it("wraps provider failures", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => new Response("bad", { status: 500 })));
     const provider = createDeepseekProvider({

@@ -126,14 +126,19 @@ function normalizeDeepseekResponse(response: DeepseekResponse, request: DraftPro
     kind?: string;
     questions?: Array<{ id?: string; question?: string; reason?: string }>;
     canDraftNow?: boolean;
+    result?: {
+      questions?: Array<{ id?: string; question?: string; reason?: string }>;
+      canDraftNow?: boolean;
+    };
   };
   const citations = toDraftCitations(request.knowledge);
 
   if (request.mode === "clarify" || parsed.kind === "clarification") {
+    const questions = parsed.result?.questions ?? parsed.questions ?? [];
     return {
       kind: "clarification",
       result: {
-        questions: (parsed.questions ?? [])
+        questions: questions
           .filter((question) => question.question)
           .slice(0, 5)
           .map((question, index) => ({
@@ -141,7 +146,7 @@ function normalizeDeepseekResponse(response: DeepseekResponse, request: DraftPro
             question: question.question || "",
             reason: question.reason || "Clarifies the requirement scope.",
           })),
-        canDraftNow: Boolean(parsed.canDraftNow),
+        canDraftNow: Boolean(parsed.result?.canDraftNow ?? parsed.canDraftNow),
       },
       citations,
       emptyKnowledge: request.knowledge.length === 0,
