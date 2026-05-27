@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 47
-- planned: 8
+- planned: 7
 - active: 0
-- completed: 39
+- completed: 40
 - blocked: 0
 - deferred: 0
 
@@ -460,10 +460,10 @@
 - title: MS6 专家评议评估
 - milestone_id: MS-20260526-002
 - node_type: review
-- status: planned
+- status: completed
 - priority: 8
 - contract_path: .servo/worktrack/WT-20260527-047/contract.md
-- branch: worktrack/wt-20260527-047-ms6-expert-evaluation
+- branch: worktrack/wt-20260527-047-ms6-expert-evaluation (merged)
 
 ## M7: 管理员项目知识库管理与导入 (MS-20260527-001)
 

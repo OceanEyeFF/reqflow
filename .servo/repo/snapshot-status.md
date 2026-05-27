@@ -4,7 +4,7 @@
 
 - updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: 7e4afa76ee7e1937897c555b7b884baa33a02ad4
+- baseline_commit: cc0c8da03fc1382e4d7af7b720e23dc4fd76eec6
 
 ## Codebase State
 
@@ -61,6 +61,7 @@ reqflow/
 | AI discussion page UI | `/tickets/ai-discussion` 已建立，覆盖 discussion input、AI clarification、answers、draft preview、citations、empty knowledge、errors、accept/discard/reset controls；不直接创建工单 (2026-05-27, WT-20260526-034) |
 | AI draft ticket-form handoff | accepted AI draft 使用 browser `sessionStorage` staging，跳转 `/tickets/new?from=ai-draft` 并预填现有表单；最终仍需用户点击创建工单 (2026-05-27, WT-20260526-035) |
 | AI discussion MVP final validation | `docs/ms6-ai-discussion-validation.md` 和 `.servo/worktrack/WT-20260526-036/gate-evidence.md` 记录安全治理、DeepSeek 官方 API 复核、draft handoff helper 测试、hydration-safe prefill、malformed JSON 400、无 MS7 scope 混入，以及 MS6 等待程序员验收决定 (2026-05-27, WT-20260526-036) |
+| MS6 supplemental reviews | `docs/ms6-code-review.md` 和 `docs/ms6-expert-evaluation.md` 记录 CodeReview 与专家评议。未发现 Critical/High 或 final-acceptance blocker；MS6 gate verdict 重新变为 pass，等待程序员最终验收 (2026-05-27, WT-20260527-046, WT-20260527-047) |
 
 ### 已知 Issues (来自 handoff.md)
 
@@ -132,22 +133,22 @@ reqflow/
 - milestone_id: MS-20260526-002
 - title: AI 需求生成 Discussion MVP
 - status: active
-- progress: 7/8 completed
+- progress: 8/8 completed
 - depends_on_milestones: MS-20260526-001
 - scope_boundary: MS6 uses Deepseek through a server-side adapter and focuses on discussion + structured draft + manual confirmation; administrator knowledge-base upload/docs zip import is deferred to MS7; no PostgreSQL/pgvector dependency.
-- completed_worktracks: WT-20260526-031, WT-20260526-032, WT-20260526-033, WT-20260526-034, WT-20260526-035, WT-20260526-036
-- active_or_next_worktrack: WT-20260527-047 MS6 专家评议评估
-- latest_evidence: WT-20260526-036 merged at `7e4afa76ee7e1937897c555b7b884baa33a02ad4`; `npm ci`, `git diff --check`, targeted policy searches, `npm run lint`, `npm run test` (15 files / 104 tests), and `npm run build` passed locally in the worktree. GitHub Actions run `26502063963` completed with conclusion `success` for handback commit `b5d50b8b8043dc8a35264cf96553955a4697ba8d`.
-- milestone_gate_verdict: stale_after_scope_supplement
+- completed_worktracks: WT-20260526-031, WT-20260526-032, WT-20260526-033, WT-20260526-034, WT-20260526-035, WT-20260526-036, WT-20260527-046, WT-20260527-047
+- active_or_next_worktrack: Milestone Gate handback
+- latest_evidence: WT-20260527-047 merged at `cc0c8da03fc1382e4d7af7b720e23dc4fd76eec6`; expert evaluation found no MS6 final-acceptance blocker. Fresh WT-047 validation passed with `npm ci`, `git diff --check`, `npm run lint`, `npm run test` (15 files / 104 tests), and `npm run build`. GitHub Actions run `26502063963` previously completed with conclusion `success` for MS6 validation handback commit `b5d50b8b8043dc8a35264cf96553955a4697ba8d`.
+- milestone_gate_verdict: pass
 - final_acceptance: pending_programmer_decision
-- completed_supplemental_worktracks: WT-20260527-046
-- planned_supplemental_worktracks: WT-20260527-047
+- completed_supplemental_worktracks: WT-20260527-046, WT-20260527-047
+- planned_supplemental_worktracks: none
 
 ### Preparation Work
 
 - current_preparation_milestone: MS-20260526-002
-- current_preparation_item: WT-20260527-047 MS6 专家评议评估
-- preparation_goal: complete supplemental MS6 expert evaluation before returning to final programmer acceptance handback.
+- current_preparation_item: MS6 final programmer acceptance handback
+- preparation_goal: wait for programmer acceptance decision before closing MS6 or activating MS7.
 - provider_decision: Deepseek
 - split_decision: administrator knowledge-base upload and docs-style zip import are planned under MS-20260527-001.
 

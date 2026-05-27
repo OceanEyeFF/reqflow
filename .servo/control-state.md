@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: WT-20260527-046 completed and merged; next action is WT-20260527-047 MS6 专家评议评估
+- RepoScope.Handback: MS6 completed 8/8 worktracks and gate verdict is pass; waiting for programmer final acceptance decision
 
 ## Linked Formal Documents
 
@@ -43,9 +43,9 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: false
-- reason: programmer explicitly added supplemental MS6 review worktracks before final acceptance
-- approval_scope: N/A
+- needs_programmer_approval: true
+- reason: MS6 milestone final acceptance must be decided by programmer
+- approval_scope: MS-20260526-002 final acceptance
 - approval_persistence: current execution cycle
 
 ## Continuation Authority
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: b5d50b8b8043dc8a35264cf96553955a4697ba8d
-- last_doc_catch_up_checkpoint: b5d50b8b8043dc8a35264cf96553955a4697ba8d
-- milestone_input_checkpoint: b5d50b8b8043dc8a35264cf96553955a4697ba8d
+- latest_observed_checkpoint: cc0c8da03fc1382e4d7af7b720e23dc4fd76eec6
+- last_doc_catch_up_checkpoint: cc0c8da03fc1382e4d7af7b720e23dc4fd76eec6
+- milestone_input_checkpoint: cc0c8da03fc1382e4d7af7b720e23dc4fd76eec6
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
@@ -95,8 +95,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 14
-- autonomous_worktracks_opened: 16
+- autonomy_budget_remaining: 13
+- autonomous_worktracks_opened: 17
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-23
 - autonomy_budget_notes: 用户授予30个连续Worktrack额度，低危险操作可自行审批
@@ -106,6 +106,6 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已完成 WT-20260526-031 至 WT-20260527-046；程序员在最终验收前补充 WT-20260527-047 专家评议，MS6 gate 失效待重跑；MS-20260527-001 管理员知识库管理与导入保持 planned，未自动启动
+- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已完成 WT-20260526-031 至 WT-20260527-047；MS6 gate verdict pass，等待程序员最终验收；MS-20260527-001 管理员知识库管理与导入保持 planned，未自动启动
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入
