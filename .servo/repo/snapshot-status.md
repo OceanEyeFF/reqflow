@@ -4,7 +4,7 @@
 
 - updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: fb588bace4c582682329fa6173870d203c14aa24
+- baseline_commit: 12e75148c6beb54897031b74d68d461edb6f895d
 
 ## Codebase State
 
@@ -56,6 +56,7 @@ reqflow/
 | Cloud readiness boundary | 已建立，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、uploads、SQLite production risk、deployment platform boundary (2026-05-27, WT-20260526-028) |
 | AI MVP technical brief | 已建立并在 MS6/MS7 planning 中调整，当前 provider 决策为 Deepseek；MS6 聚焦 discussion MVP，MS7 承接管理员知识库上传/导入；no PG/pgvector dependency (2026-05-27) |
 | AI discussion product flow | `docs/ai-discussion-product-flow.md` 已建立，覆盖 discussion state machine、draft schema、manual confirmation、current ticket form handoff、Deepseek boundary、MS6/MS7 split、no PG/pgvector dependency (2026-05-27, WT-20260526-031) |
+| AI knowledge citation strategy | `docs/ai-knowledge-citation-strategy.md` 已建立，覆盖 8-source `rf-*` whitelist、provider-neutral citation shape、snippet rules、redaction/exclusion policy、empty-context fallback、no upload/zip/PG/pgvector dependency (2026-05-27, WT-20260526-032) |
 
 ### 已知 Issues (来自 handoff.md)
 
@@ -127,18 +128,18 @@ reqflow/
 - milestone_id: MS-20260526-002
 - title: AI 需求生成 Discussion MVP
 - status: active
-- progress: 1/6 completed
+- progress: 2/6 completed
 - depends_on_milestones: MS-20260526-001
 - scope_boundary: MS6 uses Deepseek through a server-side adapter and focuses on discussion + structured draft + manual confirmation; administrator knowledge-base upload/docs zip import is deferred to MS7; no PostgreSQL/pgvector dependency.
-- completed_worktracks: WT-20260526-031
-- active_or_next_worktrack: WT-20260526-032 intake pending
-- latest_evidence: WT-20260526-031 merged at `fb588bace4c582682329fa6173870d203c14aa24`; `npm run lint`, `npm run test`, and `npm run build` passed locally in the worktree after `npm ci`.
+- completed_worktracks: WT-20260526-031, WT-20260526-032
+- active_or_next_worktrack: WT-20260526-033 intake pending
+- latest_evidence: WT-20260526-032 merged at `12e75148c6beb54897031b74d68d461edb6f895d`; `npm run lint`, `npm run test`, and `npm run build` passed locally in the worktree after `npm ci`.
 
 ### Preparation Work
 
 - current_preparation_milestone: MS-20260526-002
-- current_preparation_item: WT-20260526-032 最小内置知识语料与引用策略 intake
-- preparation_goal: lock minimal built-in knowledge corpus, citation source IDs, snippet rules, and empty-context fallback before Deepseek API implementation begins.
+- current_preparation_item: WT-20260526-033 Deepseek Draft API 与 Provider Adapter intake
+- preparation_goal: implement server-side draft API/provider adapter with mocked Deepseek tests, source whitelist assembly, citation fallback, auth, redaction, timeout/rate guard, and no client secret exposure.
 - provider_decision: Deepseek
 - split_decision: administrator knowledge-base upload and docs-style zip import are planned under MS-20260527-001.
 

@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 44
-- planned: 11
+- planned: 10
 - active: 0
-- completed: 33
+- completed: 34
 - blocked: 0
 - deferred: 0
 
@@ -394,10 +394,10 @@
 - title: 最小内置知识语料与引用策略
 - milestone_id: MS-20260526-002
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260526-032/contract.md
-- branch: worktrack/wt-20260526-032-minimal-knowledge-citations
+- branch: worktrack/wt-20260526-032-minimal-knowledge-citations (merged)
 
 ### WT-20260526-033
 

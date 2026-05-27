@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: WT-20260526-031 completed and merged; next action is WT-20260526-032 minimal built-in knowledge corpus and citation strategy intake
+- RepoScope.Decide: WT-20260526-032 completed and merged; next action is WT-20260526-033 Deepseek draft API and provider adapter intake
 
 ## Linked Formal Documents
 
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: fb588bace4c582682329fa6173870d203c14aa24
-- last_doc_catch_up_checkpoint: fb588bace4c582682329fa6173870d203c14aa24
-- milestone_input_checkpoint: fb588bace4c582682329fa6173870d203c14aa24
+- latest_observed_checkpoint: 12e75148c6beb54897031b74d68d461edb6f895d
+- last_doc_catch_up_checkpoint: 12e75148c6beb54897031b74d68d461edb6f895d
+- milestone_input_checkpoint: 12e75148c6beb54897031b74d68d461edb6f895d
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
@@ -106,5 +106,5 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已完成 WT-20260526-031 产品流设计；下一步 WT-20260526-032 最小内置知识语料与引用策略；MS-20260527-001 管理员知识库管理与导入保持 planned
+- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已完成 WT-20260526-031 和 WT-20260526-032；下一步 WT-20260526-033 Deepseek Draft API 与 Provider Adapter；MS-20260527-001 管理员知识库管理与导入保持 planned
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入
