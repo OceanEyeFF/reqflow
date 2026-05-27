@@ -15,24 +15,52 @@ type User = {
   username: string;
 };
 
+type StagedAiDraft = {
+  title: string;
+  description: string;
+  type: string;
+  priority: string;
+  stagedAt: string;
+};
+
+const emptyForm = {
+  title: "",
+  description: "",
+  type: "需求",
+  priority: "medium",
+  assigneeId: "",
+  dueDate: "",
+};
+
 export default function NewTicketPage() {
   const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({
-    title: "",
-    description: "",
-    type: "需求",
-    priority: "medium",
-    assigneeId: "",
-    dueDate: "",
+  const [form, setForm] = useState(() => {
+    const draft = readStagedAiDraft();
+    if (!draft) return emptyForm;
+
+    return {
+      ...emptyForm,
+      title: draft.title,
+      description: draft.description,
+      type: draft.type,
+      priority: draft.priority,
+    };
   });
+  const [aiDraftLoaded, setAiDraftLoaded] = useState(() => Boolean(readStagedAiDraft()));
 
   useEffect(() => {
     fetch("/api/users")
       .then((res) => res.json())
       .then((data) => setUsers(data.users || []));
   }, []);
+
+  function clearAiDraft() {
+    sessionStorage.removeItem("reqflow.aiDraft");
+    setAiDraftLoaded(false);
+    setForm(emptyForm);
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -58,6 +86,17 @@ export default function NewTicketPage() {
         <h2 className="text-2xl font-bold">新建工单</h2>
         <p className="text-gray-500">创建一个新的工单需求</p>
       </div>
+
+      {aiDraftLoaded && (
+        <Card className="border-green-200 bg-green-50">
+          <CardContent className="flex flex-col gap-3 pt-6 text-sm text-green-800 sm:flex-row sm:items-center sm:justify-between">
+            <p>已载入 AI 草稿。请检查并编辑字段，确认无误后再手动创建工单。</p>
+            <Button type="button" variant="outline" size="sm" onClick={clearAiDraft}>
+              清除草稿
+            </Button>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardContent className="pt-6">
@@ -154,4 +193,36 @@ export default function NewTicketPage() {
       </Card>
     </div>
   );
+}
+
+function readStagedAiDraft(): StagedAiDraft | null {
+  if (typeof window === "undefined") return null;
+
+  const storedDraft = sessionStorage.getItem("reqflow.aiDraft");
+  if (!storedDraft) return null;
+
+  try {
+    const draft = JSON.parse(storedDraft) as Partial<StagedAiDraft>;
+    if (
+      typeof draft.title !== "string" ||
+      typeof draft.description !== "string" ||
+      typeof draft.type !== "string" ||
+      typeof draft.priority !== "string" ||
+      typeof draft.stagedAt !== "string"
+    ) {
+      sessionStorage.removeItem("reqflow.aiDraft");
+      return null;
+    }
+
+    return {
+      title: draft.title,
+      description: draft.description,
+      type: draft.type,
+      priority: draft.priority,
+      stagedAt: draft.stagedAt,
+    };
+  } catch {
+    sessionStorage.removeItem("reqflow.aiDraft");
+    return null;
+  }
 }

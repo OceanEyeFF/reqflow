@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { AlertCircle, Check, HelpCircle, RefreshCcw, Send, Sparkles, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -50,6 +51,7 @@ type AnswerMap = Record<string, string>;
 type PageState = "empty" | "clarifying" | "draft_ready" | "accepted" | "failed";
 
 export default function AiDiscussionPage() {
+  const router = useRouter();
   const [requirement, setRequirement] = useState("");
   const [questions, setQuestions] = useState<ClarificationQuestion[]>([]);
   const [answers, setAnswers] = useState<AnswerMap>({});
@@ -121,6 +123,23 @@ export default function AiDiscussionPage() {
     setEmptyKnowledge(false);
     setStatus("empty");
     setError("");
+  }
+
+  function acceptDraft() {
+    if (!draft) return;
+
+    sessionStorage.setItem(
+      "reqflow.aiDraft",
+      JSON.stringify({
+        title: draft.title,
+        description: formatDraftDescription(draft),
+        type: "需求",
+        priority: draft.suggestedPriority,
+        stagedAt: new Date().toISOString(),
+      })
+    );
+    setStatus("accepted");
+    router.push("/tickets/new?from=ai-draft");
   }
 
   const canSubmit = requirement.trim().length >= 8 && !loading;
@@ -213,7 +232,7 @@ export default function AiDiscussionPage() {
           <DraftPreview
             draft={draft}
             status={status}
-            onAccept={() => setStatus("accepted")}
+            onAccept={acceptDraft}
             onDiscard={() => {
               setDraft(null);
               setStatus(questions.length > 0 ? "clarifying" : "empty");
@@ -228,7 +247,7 @@ export default function AiDiscussionPage() {
             </CardHeader>
             <CardContent className="space-y-3 text-sm text-gray-600">
               <p>AI 只生成草稿和追问，不会创建工单。</p>
-              <p>接受草稿只表示进入人工确认阶段；带入现有工单表单由后续衔接完成。</p>
+              <p>接受草稿只会预填现有工单表单，不会自动提交。</p>
               <p>最终仍需要你在工单表单里检查并提交。</p>
             </CardContent>
           </Card>
@@ -262,6 +281,28 @@ export default function AiDiscussionPage() {
       </div>
     </div>
   );
+}
+
+function formatDraftDescription(draft: AiRequirementDraft): string {
+  const sections = [
+    ["背景", draft.background],
+    ["用户故事", draft.userStory],
+    ["验收标准", numberedList(draft.acceptanceCriteria)],
+    ["待确认问题", numberedList(draft.pendingQuestions)],
+    [
+      "引用片段",
+      draft.citations.map((citation) => `- ${citation.sourceTitle}: ${citation.snippet}`).join("\n"),
+    ],
+  ];
+
+  return sections
+    .filter(([, content]) => content.trim().length > 0)
+    .map(([title, content]) => `${title}\n${content}`)
+    .join("\n\n");
+}
+
+function numberedList(items: string[]): string {
+  return items.map((item, index) => `${index + 1}. ${item}`).join("\n");
 }
 
 function DraftPreview({
