@@ -7,12 +7,21 @@ import {
   disconnectPrisma,
   mockAuthSession,
   mockNoSession,
+  jsonRequest,
   readJson,
   seedUser,
 } from "@/test/api-test-helpers";
 
+const mocks = vi.hoisted(() => ({
+  deletePrivateKnowledgeFile: vi.fn(),
+}));
+
 vi.mock("@/auth", () => ({
   auth: vi.fn(),
+}));
+
+vi.mock("@/lib/knowledge/private-storage", () => ({
+  deletePrivateKnowledgeFile: mocks.deletePrivateKnowledgeFile,
 }));
 
 type Route = typeof import("./route");
@@ -39,6 +48,7 @@ beforeAll(async () => {
 
 beforeEach(async () => {
   auth.mockReset();
+  mocks.deletePrivateKnowledgeFile.mockReset();
   await clearDatabase(prisma);
 });
 
@@ -107,6 +117,53 @@ describe("GET /api/admin/knowledge/sources", () => {
   });
 });
 
+describe("DELETE /api/admin/knowledge/sources", () => {
+  it("requires authentication", async () => {
+    mockNoSession(auth);
+
+    const response = await route.DELETE(jsonRequest("http://localhost/api/admin/knowledge/sources", { confirmation: "CLEAR_KNOWLEDGE" }, { method: "DELETE" }));
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 401, body: { error: "未登录" } });
+  });
+
+  it("requires admin role", async () => {
+    mockAuthSession(auth, { id: "user-1", role: "user" });
+
+    const response = await route.DELETE(jsonRequest("http://localhost/api/admin/knowledge/sources", { confirmation: "CLEAR_KNOWLEDGE" }, { method: "DELETE" }));
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 403, body: { error: "需要管理员权限" } });
+  });
+
+  it("requires an explicit clear confirmation phrase", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+
+    const response = await route.DELETE(jsonRequest("http://localhost/api/admin/knowledge/sources", { confirmation: "wrong" }, { method: "DELETE" }));
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 400, body: { error: "确认短语不正确" } });
+  });
+
+  it("clears all sources and parsed snippets for admins", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+    await seedKnowledgeSource(admin.id, { title: "A", storageKey: "private/a.md" });
+    await seedKnowledgeSource(admin.id, { title: "B", storageKey: "private/b.md" });
+
+    const response = await route.DELETE(jsonRequest("http://localhost/api/admin/knowledge/sources", { confirmation: "CLEAR_KNOWLEDGE" }, { method: "DELETE" }));
+    const result = await readJson<{ deletedCount: number; storageCleanupErrors: string[] }>(response);
+
+    expect(result).toEqual({ status: 200, body: { deletedCount: 2, storageCleanupErrors: [], success: true } });
+    await expect(prisma.knowledgeSource.count()).resolves.toBe(0);
+    await expect(prisma.knowledgeSourceVersion.count()).resolves.toBe(0);
+    await expect(prisma.knowledgeSnippet.count()).resolves.toBe(0);
+    expect(mocks.deletePrivateKnowledgeFile).toHaveBeenCalledWith("private/a.md");
+    expect(mocks.deletePrivateKnowledgeFile).toHaveBeenCalledWith("private/b.md");
+  });
+});
+
 async function seedKnowledgeSource(
   userId: string,
   overrides: {
@@ -115,6 +172,7 @@ async function seedKnowledgeSource(
     originalFilename?: string;
     sourcePath?: string;
     section?: string;
+    storageKey?: string;
   } = {}
 ) {
   const source = await prisma.knowledgeSource.create({
@@ -129,7 +187,7 @@ async function seedKnowledgeSource(
     data: {
       sourceId: source.id,
       originalFilename: overrides.originalFilename ?? "guide.md",
-      storageKey: "private/storage-key.md",
+      storageKey: overrides.storageKey ?? "private/storage-key.md",
       mimeType: "text/markdown",
       fileSize: 120,
       contentHash: "hash",

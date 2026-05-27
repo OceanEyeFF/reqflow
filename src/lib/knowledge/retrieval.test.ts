@@ -1,4 +1,4 @@
-import { beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { PrismaClient } from "@prisma/client";
 import {
   clearDatabase,
@@ -7,7 +7,17 @@ import {
   seedUser,
 } from "@/test/api-test-helpers";
 
+const mocks = vi.hoisted(() => ({
+  deletePrivateKnowledgeFile: vi.fn(),
+}));
+
+vi.mock("./private-storage", () => ({
+  deletePrivateKnowledgeFile: mocks.deletePrivateKnowledgeFile,
+}));
+
 let prisma: PrismaClient;
+let deleteKnowledgeSource: typeof import("./cleanup").deleteKnowledgeSource;
+let clearKnowledgeSources: typeof import("./cleanup").clearKnowledgeSources;
 let selectKnowledgeSnippets: typeof import("./retrieval").selectKnowledgeSnippets;
 let tokenize: typeof import("./retrieval").tokenize;
 
@@ -18,6 +28,9 @@ beforeAll(async () => {
   const prismaModule = await import("@/lib/prisma");
   prisma = prismaModule.prisma;
   const retrievalModule = await import("./retrieval");
+  const cleanupModule = await import("./cleanup");
+  deleteKnowledgeSource = cleanupModule.deleteKnowledgeSource;
+  clearKnowledgeSources = cleanupModule.clearKnowledgeSources;
   selectKnowledgeSnippets = retrievalModule.selectKnowledgeSnippets;
   tokenize = retrievalModule.tokenize;
 
@@ -28,6 +41,7 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+  mocks.deletePrivateKnowledgeFile.mockReset();
   await clearDatabase(prisma);
 });
 
@@ -77,6 +91,37 @@ describe("selectKnowledgeSnippets", () => {
     });
 
     await expect(selectKnowledgeSnippets("审批 管理员")).resolves.toEqual([]);
+  });
+
+  it("excludes snippets after source deletion", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const source = await seedSnippet(admin.id, {
+      sourceEnabled: true,
+      sourceStatus: "ready",
+      versionStatus: "ready",
+      snippetEnabled: true,
+      content: "审批流程需要记录每个管理员确认步骤。",
+    });
+
+    await expect(selectKnowledgeSnippets("管理员 审批 流程")).resolves.toHaveLength(1);
+    await deleteKnowledgeSource(source.id);
+
+    await expect(selectKnowledgeSnippets("管理员 审批 流程")).resolves.toEqual([]);
+  });
+
+  it("excludes snippets after full knowledge clear", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    await seedSnippet(admin.id, {
+      sourceEnabled: true,
+      sourceStatus: "ready",
+      versionStatus: "ready",
+      snippetEnabled: true,
+      content: "审批流程需要记录每个管理员确认步骤。",
+    });
+
+    await clearKnowledgeSources();
+
+    await expect(selectKnowledgeSnippets("管理员 审批 流程")).resolves.toEqual([]);
   });
 });
 

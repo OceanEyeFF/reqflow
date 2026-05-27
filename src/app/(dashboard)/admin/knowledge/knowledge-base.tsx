@@ -10,6 +10,7 @@ import {
   Loader2,
   Power,
   RefreshCw,
+  Trash2,
   Upload,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -144,6 +145,39 @@ export function AdminKnowledgeBase() {
     });
   }
 
+  async function deleteSource(source: KnowledgeSource) {
+    if (!window.confirm(`删除知识来源「${source.title}」？此操作会移除原始文件和已解析片段。`)) return;
+    await runAction(`delete:${source.id}`, async () => {
+      const response = await fetch(`/api/admin/knowledge/sources/${source.id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ confirmation: "DELETE_SOURCE" }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "删除知识来源失败");
+      setMessage(data.storageCleanupErrors?.length ? "知识来源已删除，部分原始文件需要手动清理" : "知识来源已删除");
+    });
+  }
+
+  async function clearSources() {
+    if (sources.length === 0) return;
+    if (!window.confirm("清空全部知识来源？此操作会移除所有原始文件和已解析片段。")) return;
+    await runAction("clear:sources", async () => {
+      const response = await fetch("/api/admin/knowledge/sources", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ confirmation: "CLEAR_KNOWLEDGE" }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "清空知识库失败");
+      setMessage(
+        data.storageCleanupErrors?.length
+          ? `已清空 ${data.deletedCount} 个知识来源，部分原始文件需要手动清理`
+          : `已清空 ${data.deletedCount} 个知识来源`
+      );
+    });
+  }
+
   async function runAction(id: string, action: () => Promise<void>) {
     setBusyId(id);
     setError("");
@@ -165,10 +199,16 @@ export function AdminKnowledgeBase() {
           <h2 className="text-2xl font-bold">管理员知识库</h2>
           <p className="mt-1 text-sm text-gray-500">上传私有文档或 docs zip，解析后作为 AI 草稿的可追踪引用片段</p>
         </div>
-        <Button type="button" variant="outline" onClick={loadSources} disabled={loading}>
-          <RefreshCw className={loading ? "h-4 w-4 animate-spin" : "h-4 w-4"} />
-          刷新
-        </Button>
+        <div className="flex flex-wrap gap-2">
+          <Button type="button" variant="outline" onClick={loadSources} disabled={loading}>
+            <RefreshCw className={loading ? "h-4 w-4 animate-spin" : "h-4 w-4"} />
+            刷新
+          </Button>
+          <Button type="button" variant="outline" onClick={clearSources} disabled={sources.length === 0 || busyId === "clear:sources"}>
+            {busyId === "clear:sources" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+            全清
+          </Button>
+        </div>
       </div>
 
       <div className="grid gap-4 md:grid-cols-3">
@@ -242,6 +282,7 @@ export function AdminKnowledgeBase() {
               onParse={parseVersion}
               onToggleSource={toggleSource}
               onToggleSnippet={toggleSnippet}
+              onDeleteSource={deleteSource}
             />
           ))
         )}
@@ -265,12 +306,14 @@ function SourceCard({
   onParse,
   onToggleSource,
   onToggleSnippet,
+  onDeleteSource,
 }: {
   source: KnowledgeSource;
   busyId: string;
   onParse: (versionId: string) => Promise<void>;
   onToggleSource: (source: KnowledgeSource) => Promise<void>;
   onToggleSnippet: (snippet: KnowledgeSnippet) => Promise<void>;
+  onDeleteSource: (source: KnowledgeSource) => Promise<void>;
 }) {
   const latestVersion = source.versions[0];
   const canEnable = source.status === "ready" || source.status === "enabled";
@@ -313,6 +356,16 @@ function SourceCard({
             >
               {busyId === `source:${source.id}` ? <Loader2 className="h-4 w-4 animate-spin" /> : <Power className="h-4 w-4" />}
               {source.enabled ? "停用" : "启用"}
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => onDeleteSource(source)}
+              disabled={busyId === `delete:${source.id}`}
+            >
+              {busyId === `delete:${source.id}` ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+              删除
             </Button>
           </div>
         </div>

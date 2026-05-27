@@ -3,22 +3,22 @@
 ## Metadata
 
 - worktrack_id: WT-20260528-049
-- status: planned
+- status: completed
 - updated: 2026-05-28
 
 ## Queue
 
 | id | task | status | acceptance_slice |
 |----|------|--------|------------------|
-| T1 | Inspect current source/version/snippet/storage cleanup paths. | ready | Delete strategy clear |
-| T2 | Add admin delete and clear API actions. | pending | Cleanup operations exist |
-| T3 | Add UI controls with confirmation semantics. | pending | Operator can clean mistakes |
-| T4 | Add security and retrieval regression tests. | pending | Non-admin blocked and stale snippets excluded |
-| T5 | Run lint/test/build and record evidence. | pending | Gates pass |
+| T1 | Inspect current source/version/snippet/storage cleanup paths. | completed | Hard delete with cascade and best-effort private file cleanup selected |
+| T2 | Add admin delete and clear API actions. | completed | `DELETE /sources/[id]` and `DELETE /sources` added with confirmation phrases |
+| T3 | Add UI controls with confirmation semantics. | completed | Single-source delete and full clear controls added |
+| T4 | Add security and retrieval regression tests. | completed | Non-admin blocked and stale snippets excluded after cleanup |
+| T5 | Run lint/test/build and record evidence. | completed | Gates pass |
 
 ## Current Next Action
 
-- selected_task_id: T1
+- selected_task_id: none
 - dispatch_ready: false
 
 ## Validation Plan
