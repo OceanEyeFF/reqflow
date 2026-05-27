@@ -52,7 +52,7 @@ reqflow/
 | `npm run lint` | 通过，ESLint 0 warning (2026-05-27, WT-20260526-036) |
 | `npm run test` | 通过，15 个测试文件，104 个测试 (2026-05-27, WT-20260526-036) |
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
-| GitHub Actions CI baseline | 已建立并刷新，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`；run `26494518202` success for code baseline `bd2789d4e404996b603833757dfa71859d2b0210`; handback docs run `26494818503` success for `a2fddc64b39e0f4ecb09d0ffee8587c27ce153d0` (2026-05-27, WT-20260526-038) |
+| GitHub Actions CI baseline | 已建立并刷新，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`；run `26502063963` success for MS6 validation handback `b5d50b8b8043dc8a35264cf96553955a4697ba8d` (2026-05-27, WT-20260526-036) |
 | Cloud readiness boundary | 已建立，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、uploads、SQLite production risk、deployment platform boundary (2026-05-27, WT-20260526-028) |
 | AI MVP technical brief | 已建立并在 MS6/MS7 planning 中调整，当前 provider 决策为 Deepseek；MS6 聚焦 discussion MVP，MS7 承接管理员知识库上传/导入；no PG/pgvector dependency (2026-05-27) |
 | AI discussion product flow | `docs/ai-discussion-product-flow.md` 已建立，覆盖 discussion state machine、draft schema、manual confirmation、current ticket form handoff、Deepseek boundary、MS6/MS7 split、no PG/pgvector dependency (2026-05-27, WT-20260526-031) |
@@ -137,7 +137,7 @@ reqflow/
 - scope_boundary: MS6 uses Deepseek through a server-side adapter and focuses on discussion + structured draft + manual confirmation; administrator knowledge-base upload/docs zip import is deferred to MS7; no PostgreSQL/pgvector dependency.
 - completed_worktracks: WT-20260526-031, WT-20260526-032, WT-20260526-033, WT-20260526-034, WT-20260526-035, WT-20260526-036
 - active_or_next_worktrack: Milestone Gate handback
-- latest_evidence: WT-20260526-036 merged at `7e4afa76ee7e1937897c555b7b884baa33a02ad4`; `npm ci`, `git diff --check`, targeted policy searches, `npm run lint`, `npm run test` (15 files / 104 tests), and `npm run build` passed locally in the worktree.
+- latest_evidence: WT-20260526-036 merged at `7e4afa76ee7e1937897c555b7b884baa33a02ad4`; `npm ci`, `git diff --check`, targeted policy searches, `npm run lint`, `npm run test` (15 files / 104 tests), and `npm run build` passed locally in the worktree. GitHub Actions run `26502063963` completed with conclusion `success` for handback commit `b5d50b8b8043dc8a35264cf96553955a4697ba8d`.
 - milestone_gate_verdict: pass
 - final_acceptance: pending_programmer_decision
 

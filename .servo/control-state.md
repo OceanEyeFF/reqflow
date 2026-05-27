@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 7e4afa76ee7e1937897c555b7b884baa33a02ad4
-- last_doc_catch_up_checkpoint: 7e4afa76ee7e1937897c555b7b884baa33a02ad4
-- milestone_input_checkpoint: 7e4afa76ee7e1937897c555b7b884baa33a02ad4
+- latest_observed_checkpoint: b5d50b8b8043dc8a35264cf96553955a4697ba8d
+- last_doc_catch_up_checkpoint: b5d50b8b8043dc8a35264cf96553955a4697ba8d
+- milestone_input_checkpoint: b5d50b8b8043dc8a35264cf96553955a4697ba8d
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
@@ -107,4 +107,5 @@
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
 - Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已完成 WT-20260526-031 至 WT-20260526-036；MS6 gate pass，等待程序员最终验收决定；MS-20260527-001 管理员知识库管理与导入保持 planned，未自动启动
+- remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入
