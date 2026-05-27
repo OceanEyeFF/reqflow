@@ -67,6 +67,7 @@ export function removeTestDatabase(databaseUrl: string): void {
 }
 
 export async function clearDatabase(prisma: PrismaClient): Promise<void> {
+  await prisma.knowledgeSnippet.deleteMany();
   await prisma.knowledgeSourceVersion.deleteMany();
   await prisma.knowledgeSource.deleteMany();
   await prisma.aiProviderConfig.deleteMany();

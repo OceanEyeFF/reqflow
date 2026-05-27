@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { randomUUID } from "node:crypto";
 
@@ -16,4 +16,13 @@ export async function writePrivateKnowledgeFile(buffer: Buffer, extension: strin
   await mkdir(path.dirname(resolvedFile), { recursive: true });
   await writeFile(resolvedFile, buffer);
   return storageKey.replace(/\\/g, "/");
+}
+
+export async function readPrivateKnowledgeFile(storageKey: string): Promise<Buffer> {
+  const resolvedRoot = path.resolve(STORAGE_ROOT);
+  const resolvedFile = path.resolve(path.join(STORAGE_ROOT, storageKey));
+  if (!resolvedFile.startsWith(resolvedRoot + path.sep)) {
+    throw new Error("Invalid storage key");
+  }
+  return readFile(resolvedFile);
 }
