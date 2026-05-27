@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 47
-- planned: 0
+- total: 56
+- planned: 9
 - active: 0
 - completed: 47
 - blocked: 0
@@ -543,3 +543,104 @@
 - priority: 7
 - contract_path: .servo/worktrack/WT-20260527-044/contract.md
 - branch: worktrack/wt-20260527-044-kb-import-validation (merged)
+
+### WT-20260528-048
+
+- worktrack_id: WT-20260528-048
+- title: zip 上传文件夹化修复
+- milestone_id: MS-20260527-001
+- node_type: fix
+- status: planned
+- priority: 8
+- contract_path: .servo/worktrack/WT-20260528-048/contract.md
+- branch: worktrack/wt-20260528-048-zip-folder-upload-fix
+
+### WT-20260528-049
+
+- worktrack_id: WT-20260528-049
+- title: 知识来源删除与全清补缺
+- milestone_id: MS-20260527-001
+- node_type: fix
+- status: planned
+- priority: 9
+- contract_path: .servo/worktrack/WT-20260528-049/contract.md
+- branch: worktrack/wt-20260528-049-knowledge-delete-cleanup
+
+### WT-20260528-050
+
+- worktrack_id: WT-20260528-050
+- title: Provider 手动验收记录模板
+- milestone_id: MS-20260527-001
+- node_type: docs
+- status: planned
+- priority: 10
+- contract_path: .servo/worktrack/WT-20260528-050/contract.md
+- branch: worktrack/wt-20260528-050-provider-manual-test-template
+
+## M8: 知识库文件夹化管理与模块化 AI 草稿范围 (MS-20260528-001)
+
+### WT-20260528-051
+
+- worktrack_id: WT-20260528-051
+- title: 多文件上传与文件夹化导入
+- milestone_id: MS-20260528-001
+- node_type: feature
+- status: planned
+- priority: 1
+- contract_path: .servo/worktrack/WT-20260528-051/contract.md
+- branch: worktrack/wt-20260528-051-multi-file-folder-import
+
+### WT-20260528-052
+
+- worktrack_id: WT-20260528-052
+- title: 知识库分组与文件夹模型
+- milestone_id: MS-20260528-001
+- node_type: feature
+- status: planned
+- priority: 2
+- contract_path: .servo/worktrack/WT-20260528-052/contract.md
+- branch: worktrack/wt-20260528-052-knowledge-folder-model
+
+### WT-20260528-053
+
+- worktrack_id: WT-20260528-053
+- title: 旧版本全清与批量删除
+- milestone_id: MS-20260528-001
+- node_type: feature
+- status: planned
+- priority: 3
+- contract_path: .servo/worktrack/WT-20260528-053/contract.md
+- branch: worktrack/wt-20260528-053-bulk-delete-cleanup
+
+### WT-20260528-054
+
+- worktrack_id: WT-20260528-054
+- title: 多开发环境与 ABC 模块切换
+- milestone_id: MS-20260528-001
+- node_type: feature
+- status: planned
+- priority: 4
+- contract_path: .servo/worktrack/WT-20260528-054/contract.md
+- branch: worktrack/wt-20260528-054-module-scope-switching
+
+### WT-20260528-055
+
+- worktrack_id: WT-20260528-055
+- title: AI 草稿按模块选择知识库范围
+- milestone_id: MS-20260528-001
+- node_type: feature
+- status: planned
+- priority: 5
+- contract_path: .servo/worktrack/WT-20260528-055/contract.md
+- branch: worktrack/wt-20260528-055-ai-module-knowledge-scope
+
+### WT-20260528-056
+
+- worktrack_id: WT-20260528-056
+- title: MS8 集成验收与迁移回归
+- milestone_id: MS-20260528-001
+- node_type: test
+- status: planned
+- priority: 6
+- contract_path: .servo/worktrack/WT-20260528-056/contract.md
+- branch: worktrack/wt-20260528-056-ms8-validation

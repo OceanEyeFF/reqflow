@@ -4,7 +4,7 @@
 
 ## Metadata
 
-- updated: 2026-05-27
+- updated: 2026-05-28
 - owner: fdch0
 
 ## Current Control Level
@@ -14,17 +14,17 @@
 
 ## Active Worktrack
 
-- active_worktrack: WT-20260527-044
-- worktrack_title: 知识库导入验收与安全回归
-- worktrack_status: completed
+- active_worktrack: none
+- worktrack_title: none
+- worktrack_status: planned_queue
 - target_milestone_id: MS-20260527-001
 
 ## Active Milestone
 
 - active_milestone: MS-20260527-001
 - milestone_title: 管理员项目知识库管理与导入
-- milestone_status: awaiting_programmer_acceptance
-- milestone_pipeline_summary: total=7 planned=0 active=0 completed=7 superseded=0
+- milestone_status: active
+- milestone_pipeline_summary: total=10 planned=3 active=0 completed=7 superseded=0
 
 ## Baseline Branch
 
@@ -32,15 +32,15 @@
 
 ## Current Next Action
 
-- RepoScope.Handback: WT-20260527-044 completed and merged; MS7 is ready for programmer acceptance review.
+- RepoScope.Init: MS7 acceptance handback reopened by programmer feedback; WT-20260528-048, WT-20260528-049, and WT-20260528-050 registered as planned MS7 addenda; MS8 initialized as planned.
 
 ## Linked Formal Documents
 
 - repo_snapshot: .servo/repo/snapshot-status.md
 - repo_analysis: .servo/repo/analysis.md
-- worktrack_contract: .servo/worktrack/WT-20260527-044/contract.md
-- plan_task_queue: .servo/worktrack/WT-20260527-044/plan-task-queue.md
-- gate_evidence: .servo/worktrack/WT-20260527-044/gate-evidence.md
+- worktrack_contract: N/A
+- plan_task_queue: N/A
+- gate_evidence: N/A
 - milestone_backlog: .servo/repo/milestone-backlog.md
 - worktrack_backlog: .servo/repo/worktrack-backlog.md
 
@@ -87,9 +87,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: dc818a9e67d153716620e3cfa86613be021ffe9c
-- last_doc_catch_up_checkpoint: dc818a9e67d153716620e3cfa86613be021ffe9c
-- milestone_input_checkpoint: dc818a9e67d153716620e3cfa86613be021ffe9c
+- latest_observed_checkpoint: b2baeac
+- last_doc_catch_up_checkpoint: b2baeac
+- milestone_input_checkpoint: b2baeac
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
@@ -109,11 +109,13 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入 7/7 Worktrack 已完成，等待用户最终验收
+- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入根据用户上传界面反馈追加 3 个补缺 Worktrack，当前 7/10 completed，等待调度 WT-20260528-048
 - latest_acceptance: MS-20260526-002 accepted by fdch0 on 2026-05-27
 - latest_repo_baseline: b93935da269ed14ce85c28c799d0f4dd7cd9361c (`merge: accept MS6 milestone`)
 - latest_completed_worktrack: WT-20260527-044 completed and merged at dc818a9e67d153716620e3cfa86613be021ffe9c
-- next_worktrack_candidate: none; MS7 final acceptance is programmer-only.
+- next_worktrack_candidate: WT-20260528-048 zip 上传文件夹化修复; MS7 final acceptance remains programmer-only.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
+- ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
+- planned_next_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入
