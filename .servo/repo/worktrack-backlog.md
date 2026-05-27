@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 47
-- planned: 1
+- planned: 0
 - active: 1
-- completed: 45
+- completed: 46
 - blocked: 0
 - deferred: 0
 
@@ -528,10 +528,10 @@
 - title: 管理员知识库 UI
 - milestone_id: MS-20260527-001
 - node_type: feature
-- status: active
+- status: completed
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260527-043/contract.md
-- branch: worktrack/wt-20260527-043-admin-kb-ui
+- branch: worktrack/wt-20260527-043-admin-kb-ui (merged)
 
 ### WT-20260527-044
 
@@ -539,7 +539,7 @@
 - title: 知识库导入验收与安全回归
 - milestone_id: MS-20260527-001
 - node_type: test
-- status: planned
+- status: active
 - priority: 7
 - contract_path: .servo/worktrack/WT-20260527-044/contract.md
 - branch: worktrack/wt-20260527-044-kb-import-validation
