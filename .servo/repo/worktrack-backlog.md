@@ -4,10 +4,10 @@
 
 ## Summary
 
-- total: 36
-- planned: 6
+- total: 38
+- planned: 7
 - active: 0
-- completed: 30
+- completed: 31
 - blocked: 0
 - deferred: 0
 
@@ -352,6 +352,28 @@
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260526-030/contract.md
 - branch: worktrack/wt-20260526-030-ms5-final-review (merged)
+
+### WT-20260526-037
+
+- worktrack_id: WT-20260526-037
+- title: 严谨 CodeReview Worktrack
+- milestone_id: MS-20260526-001
+- node_type: review
+- status: completed
+- priority: 7
+- contract_path: .servo/worktrack/WT-20260526-037/contract.md
+- branch: worktrack/wt-20260526-037-rigorous-code-review (merged)
+
+### WT-20260526-038
+
+- worktrack_id: WT-20260526-038
+- title: Ticket 授权与上传安全加固
+- milestone_id: MS-20260526-001
+- node_type: refactor
+- status: planned
+- priority: 8
+- contract_path: .servo/worktrack/WT-20260526-038/contract.md
+- branch: worktrack/wt-20260526-038-ticket-auth-upload-hardening
 
 ## M6: AI 需求说明优化 MVP (MS-20260526-002)
 
