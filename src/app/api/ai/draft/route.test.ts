@@ -57,6 +57,22 @@ describe("POST /api/ai/draft", () => {
     expect(providerGenerate).not.toHaveBeenCalled();
   });
 
+  it("rejects malformed JSON as a bad request", async () => {
+    mockAuthSession(auth, { id: "user-1" });
+
+    const response = await route.POST(
+      new Request("http://localhost/api/ai/draft", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: "{bad-json",
+      })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 400, body: { error: "请求 JSON 格式不正确" } });
+    expect(providerGenerate).not.toHaveBeenCalled();
+  });
+
   it("returns mocked clarification result without creating a ticket", async () => {
     mockAuthSession(auth, { id: "user-1" });
     providerGenerate.mockResolvedValue({

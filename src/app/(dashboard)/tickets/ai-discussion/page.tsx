@@ -10,22 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PRIORITY_LABELS } from "@/types";
-
-type DraftCitation = {
-  sourceId: string;
-  sourceTitle: string;
-  snippet: string;
-};
-
-type AiRequirementDraft = {
-  title: string;
-  background: string;
-  userStory: string;
-  acceptanceCriteria: string[];
-  pendingQuestions: string[];
-  suggestedPriority: "low" | "medium" | "high" | "urgent";
-  citations: DraftCitation[];
-};
+import { stageAiDraft, type AiRequirementDraft, type DraftCitation } from "@/lib/ai/draft-handoff";
 
 type ClarificationQuestion = {
   id: string;
@@ -128,16 +113,7 @@ export default function AiDiscussionPage() {
   function acceptDraft() {
     if (!draft) return;
 
-    sessionStorage.setItem(
-      "reqflow.aiDraft",
-      JSON.stringify({
-        title: draft.title,
-        description: formatDraftDescription(draft),
-        type: "需求",
-        priority: draft.suggestedPriority,
-        stagedAt: new Date().toISOString(),
-      })
-    );
+    stageAiDraft(sessionStorage, draft);
     setStatus("accepted");
     router.push("/tickets/new?from=ai-draft");
   }
@@ -281,28 +257,6 @@ export default function AiDiscussionPage() {
       </div>
     </div>
   );
-}
-
-function formatDraftDescription(draft: AiRequirementDraft): string {
-  const sections = [
-    ["背景", draft.background],
-    ["用户故事", draft.userStory],
-    ["验收标准", numberedList(draft.acceptanceCriteria)],
-    ["待确认问题", numberedList(draft.pendingQuestions)],
-    [
-      "引用片段",
-      draft.citations.map((citation) => `- ${citation.sourceTitle}: ${citation.snippet}`).join("\n"),
-    ],
-  ];
-
-  return sections
-    .filter(([, content]) => content.trim().length > 0)
-    .map(([title, content]) => `${title}\n${content}`)
-    .join("\n\n");
-}
-
-function numberedList(items: string[]): string {
-  return items.map((item, index) => `${index + 1}. ${item}`).join("\n");
 }
 
 function DraftPreview({
