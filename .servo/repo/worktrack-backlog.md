@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 47
-- planned: 4
+- planned: 3
 - active: 1
-- completed: 42
+- completed: 43
 - blocked: 0
 - deferred: 0
 
@@ -495,10 +495,10 @@
 - title: 文档/zip 上传安全与私有存储
 - milestone_id: MS-20260527-001
 - node_type: feature
-- status: active
+- status: completed
 - priority: 3
 - contract_path: .servo/worktrack/WT-20260527-040/contract.md
-- branch: worktrack/wt-20260527-040-kb-upload-private-storage
+- branch: worktrack/wt-20260527-040-kb-upload-private-storage (merged)
 
 ### WT-20260527-041
 
@@ -506,7 +506,7 @@
 - title: 文档解析、分块、来源/版本记录
 - milestone_id: MS-20260527-001
 - node_type: feature
-- status: planned
+- status: active
 - priority: 4
 - contract_path: .servo/worktrack/WT-20260527-041/contract.md
 - branch: worktrack/wt-20260527-041-kb-parse-versioning
