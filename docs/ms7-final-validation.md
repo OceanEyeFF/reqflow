@@ -7,7 +7,7 @@
 - validated_at: 2026-05-27
 - final_acceptance_owner: fdch0
 
-MS7 的计划 Worktrack 已全部实现并通过本地验证。此报告只给出验收证据和风险边界，不代表自动接受 milestone；最终接受必须由用户决定。
+MS7 的计划 Worktrack 已全部实现并通过本地验证。此报告只给出验收证据和风险边界，不代表自动接受 milestone；最终接受必须由用户决定。Provider 外部可用性需要按 `docs/ms7-provider-manual-validation-template.md` 记录人工验收结果。
 
 ## Completion Signal Map
 
@@ -29,6 +29,13 @@ MS7 的计划 Worktrack 已全部实现并通过本地验证。此报告只给�
 - `npm run build`: passed with the known worktree multi-lockfile warning only.
 - `git diff --check`: passed.
 
+## Manual Provider Validation
+
+- Manual record template: `docs/ms7-provider-manual-validation-template.md`.
+- This template distinguishes Provider test connection from AI draft end-to-end generation.
+- It covers DeepSeek API key mode, local LMStudio/Ollama OpenAI-compatible no-key mode, negative/failure cases, citation behavior, and acceptance sign-off.
+- The template explicitly forbids recording real API keys, bearer tokens, `.env` values, provider dashboard secrets, or unredacted screenshots.
+
 ## Security Review
 
 - Admin-only management is enforced through `requireAdmin()` for provider config, knowledge upload, source list, source toggle, snippet toggle, and parse routes.
@@ -41,8 +48,8 @@ MS7 的计划 Worktrack 已全部实现并通过本地验证。此报告只给�
 ## Residual Risks
 
 - API keys are stored in the existing application database as the MS7 MVP persistence strategy; production secret-manager integration is out of scope and should be revisited before production deployment.
-- Knowledge file deletion, source superseding, bulk operations, object storage, PDF/DOCX/OCR, and semantic retrieval remain out of scope.
-- The UI was build-verified but not browser-session verified in this worktrack; final operator acceptance should include a short manual path: admin login, upload markdown, parse, enable source, confirm AI draft citation.
+- Knowledge source deletion and whole-knowledge clear are now implemented as MS7 addenda; richer recycle-bin, bulk selection, folder lifecycle, object storage, PDF/DOCX/OCR, and semantic retrieval remain out of scope.
+- The UI was build-verified but not fully browser-session verified in this worktrack; final operator acceptance should include a short manual path: admin login, upload markdown or zip, parse, enable source, confirm AI draft citation, and complete the Provider manual validation template.
 
 ## Handback
 
