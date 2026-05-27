@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 47
-- planned: 3
+- planned: 2
 - active: 1
-- completed: 43
+- completed: 44
 - blocked: 0
 - deferred: 0
 
@@ -506,10 +506,10 @@
 - title: 文档解析、分块、来源/版本记录
 - milestone_id: MS-20260527-001
 - node_type: feature
-- status: active
+- status: completed
 - priority: 4
 - contract_path: .servo/worktrack/WT-20260527-041/contract.md
-- branch: worktrack/wt-20260527-041-kb-parse-versioning
+- branch: worktrack/wt-20260527-041-kb-parse-versioning (merged)
 
 ### WT-20260527-042
 
@@ -517,7 +517,7 @@
 - title: 轻量检索与引用片段选择
 - milestone_id: MS-20260527-001
 - node_type: feature
-- status: planned
+- status: active
 - priority: 5
 - contract_path: .servo/worktrack/WT-20260527-042/contract.md
 - branch: worktrack/wt-20260527-042-kb-lightweight-retrieval
