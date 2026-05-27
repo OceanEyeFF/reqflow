@@ -18,10 +18,10 @@
 
 ## Active Milestone
 
-- active_milestone: MS-20260526-002
-- milestone_title: AI 需求生成 Discussion MVP
-- milestone_status: active
-- milestone_pipeline_summary: total=7 planned=1 active=1 completed=5 superseded=0
+- active_milestone:
+- milestone_title:
+- milestone_status: none
+- milestone_pipeline_summary: total=7 planned=1 active=0 completed=6 superseded=0
 
 ## Baseline Branch
 
@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Handback: MS6 completed 8/8 worktracks and gate verdict is pass; waiting for programmer final acceptance decision
+- RepoScope.Observe: MS6 accepted by programmer; next planned milestone is MS-20260527-001, not yet activated
 
 ## Linked Formal Documents
 
@@ -43,9 +43,9 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: true
-- reason: MS6 milestone final acceptance must be decided by programmer
-- approval_scope: MS-20260526-002 final acceptance
+- needs_programmer_approval: false
+- reason: programmer accepted MS6
+- approval_scope: N/A
 - approval_persistence: current execution cycle
 
 ## Continuation Authority
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: cc0c8da03fc1382e4d7af7b720e23dc4fd76eec6
-- last_doc_catch_up_checkpoint: cc0c8da03fc1382e4d7af7b720e23dc4fd76eec6
-- milestone_input_checkpoint: cc0c8da03fc1382e4d7af7b720e23dc4fd76eec6
+- latest_observed_checkpoint: 852764b01c847fe4eaa0681a2801f16d82625914
+- last_doc_catch_up_checkpoint: 852764b01c847fe4eaa0681a2801f16d82625914
+- milestone_input_checkpoint: 852764b01c847fe4eaa0681a2801f16d82625914
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
@@ -106,6 +106,7 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已完成 WT-20260526-031 至 WT-20260527-047；MS6 gate verdict pass，等待程序员最终验收；MS-20260527-001 管理员知识库管理与导入保持 planned，未自动启动
+- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已由程序员验收通过；MS-20260527-001 管理员知识库管理与导入保持 planned，未自动启动
+- latest_acceptance: MS-20260526-002 accepted by fdch0 on 2026-05-27
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入

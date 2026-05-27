@@ -6,8 +6,8 @@
 
 - total: 7
 - planned: 1
-- active: 1
-- completed: 5
+- active: 0
+- completed: 6
 - superseded: 0
 
 ## Milestones
@@ -95,7 +95,7 @@
 - milestone_id: MS-20260526-002
 - title: AI 需求生成 Discussion MVP
 - milestone_kind: goal-driven
-- status: active
+- status: completed
 - priority: 6
 - depends_on_milestones: [MS-20260526-001]
 - worktrack_list: [WT-20260526-031, WT-20260526-032, WT-20260526-033, WT-20260526-034, WT-20260526-035, WT-20260526-036, WT-20260527-046, WT-20260527-047]
@@ -104,6 +104,8 @@
 - updated: 2026-05-27
 - updated_by: harness-kernel
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
+- accepted_by: fdch0
+- accepted_at: 2026-05-27
 
 ### MS-20260527-001
 
