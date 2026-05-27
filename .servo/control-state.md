@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Verify: WT-20260526-038 completed locally; merge, push `develop`, observe fresh GitHub Actions CI, then hand back for MS-20260526-001 programmer final acceptance decision
+- RepoScope.Handback: WT-20260526-038 merged and fresh GitHub Actions CI succeeded; MS-20260526-001 final acceptance pending programmer decision
 
 ## Linked Formal Documents
 
@@ -44,8 +44,8 @@
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: WT-20260526-038 changed source and tests; fresh GitHub CI evidence is required before MS-20260526-001 final acceptance handback
-- approval_scope: merge WT-20260526-038, push `develop` to GitHub, observe CI, and hand back; programmer final milestone acceptance remains excluded
+- reason: MS-20260526-001 all worktracks completed and fresh GitHub CI evidence recorded; final milestone acceptance requires programmer decision
+- approval_scope: programmer final acceptance decision for MS-20260526-001
 - approval_persistence: current execution cycle
 
 ## Continuation Authority
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 9f6d0581dcb1a83a9dea55332a8bd71b88f5d2d7
-- last_doc_catch_up_checkpoint: 9f6d0581dcb1a83a9dea55332a8bd71b88f5d2d7
-- milestone_input_checkpoint: 9f6d0581dcb1a83a9dea55332a8bd71b88f5d2d7
+- latest_observed_checkpoint: bd2789d4e404996b603833757dfa71859d2b0210
+- last_doc_catch_up_checkpoint: bd2789d4e404996b603833757dfa71859d2b0210
+- milestone_input_checkpoint: bd2789d4e404996b603833757dfa71859d2b0210
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
@@ -106,5 +106,5 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260526-001 GitHub CI 与上云前决策基线追加 WT-20260526-037 严谨 CodeReview；WT-20260526-038 已本地修复阻断项，等待合并、远端 CI 刷新后再交给用户最终验收
+- Phase 9 当前阶段: MS-20260526-001 GitHub CI 与上云前决策基线 8/8 worktracks 已完成，WT-20260526-038 修复已推送并通过 GitHub Actions，等待用户最终验收
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → AI 需求说明优化 MVP
