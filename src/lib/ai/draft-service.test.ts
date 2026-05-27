@@ -2,6 +2,10 @@ import { describe, expect, it, vi } from "vitest";
 import { generateRequirementDraft, parseDraftRequest } from "./draft-service";
 import type { DraftProvider } from "./types";
 
+vi.mock("@/lib/knowledge/retrieval", () => ({
+  selectKnowledgeSnippets: vi.fn(async () => []),
+}));
+
 describe("parseDraftRequest", () => {
   it("rejects weak requirement input", () => {
     expect(() => parseDraftRequest({ requirement: "短" })).toThrow("需求描述太短");

@@ -1,4 +1,5 @@
 import type { DraftCitation, KnowledgeCitation } from "./types";
+import { selectKnowledgeSnippets } from "@/lib/knowledge/retrieval";
 
 type KnowledgeSource = {
   sourceId: string;
@@ -89,6 +90,7 @@ export function knowledgeSources(): KnowledgeSource[] {
 }
 
 export async function assembleKnowledgeContext(requirement: string): Promise<KnowledgeCitation[]> {
+  const persisted = await selectKnowledgeSnippets(requirement);
   const loweredRequirement = requirement.toLowerCase();
   const selected = SOURCES.filter(
     (source) => source.sourceId === "rf-ai-mvp-boundary" || source.sourceId === "rf-ai-discussion-flow"
@@ -103,7 +105,7 @@ export async function assembleKnowledgeContext(requirement: string): Promise<Kno
     .sort((a, b) => b.score - a.score)
     .map(({ source }) => source);
 
-  return [...selected, ...scored].slice(0, 5).map(citationFromSource);
+  return [...persisted, ...selected.map(citationFromSource), ...scored.map(citationFromSource)].slice(0, 5);
 }
 
 export function toDraftCitations(citations: KnowledgeCitation[]): DraftCitation[] {
