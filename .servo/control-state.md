@@ -24,7 +24,7 @@
 - active_milestone: MS-20260527-001
 - milestone_title: 管理员项目知识库管理与导入
 - milestone_status: active
-- milestone_pipeline_summary: total=10 planned=2 active=0 completed=8 superseded=0
+- milestone_pipeline_summary: total=10 planned=1 active=0 completed=9 superseded=0
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Observe: WT-20260528-048 completed and merged; MS7 addenda now continue with WT-20260528-049 deletion/cleanup.
+- RepoScope.Observe: WT-20260528-049 completed and merged; MS7 addenda now continue with WT-20260528-050 Provider manual test template.
 
 ## Linked Formal Documents
 
@@ -87,7 +87,7 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 520b42e
+- latest_observed_checkpoint: 1edb11e
 - last_doc_catch_up_checkpoint: b2baeac
 - milestone_input_checkpoint: b2baeac
 - checkpoint_type: git-commit
@@ -109,11 +109,11 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入根据用户上传界面反馈追加 3 个补缺 Worktrack，当前 8/10 completed，等待调度 WT-20260528-049
+- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入根据用户上传界面反馈追加 3 个补缺 Worktrack，当前 9/10 completed，等待调度 WT-20260528-050
 - latest_acceptance: MS-20260526-002 accepted by fdch0 on 2026-05-27
 - latest_repo_baseline: b93935da269ed14ce85c28c799d0f4dd7cd9361c (`merge: accept MS6 milestone`)
-- latest_completed_worktrack: WT-20260528-048 completed and merged at 520b42e
-- next_worktrack_candidate: WT-20260528-049 知识来源删除与全清补缺; MS7 final acceptance remains programmer-only.
+- latest_completed_worktrack: WT-20260528-049 completed and merged at 1edb11e
+- next_worktrack_candidate: WT-20260528-050 Provider 手动验收记录模板; MS7 final acceptance remains programmer-only.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
 - planned_next_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围

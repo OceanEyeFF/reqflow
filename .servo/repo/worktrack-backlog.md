@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 56
-- planned: 8
+- planned: 7
 - active: 0
-- completed: 48
+- completed: 49
 - blocked: 0
 - deferred: 0
 
@@ -561,10 +561,10 @@
 - title: 知识来源删除与全清补缺
 - milestone_id: MS-20260527-001
 - node_type: fix
-- status: planned
+- status: completed
 - priority: 9
 - contract_path: .servo/worktrack/WT-20260528-049/contract.md
-- branch: worktrack/wt-20260528-049-knowledge-delete-cleanup
+- branch: worktrack/wt-20260528-049-knowledge-delete-cleanup (merged)
 
 ### WT-20260528-050
 
