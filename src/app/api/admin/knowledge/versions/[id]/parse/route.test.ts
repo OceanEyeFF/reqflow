@@ -46,4 +46,17 @@ describe("POST /api/admin/knowledge/versions/[id]/parse", () => {
 
     expect(result).toEqual({ status: 401, body: { error: "未登录" } });
   });
+
+  it("requires admin role", async () => {
+    const authModule = await import("@/auth");
+    const auth = vi.mocked<typeof authFn>(authModule.auth);
+    auth.mockReset();
+    mockAuthSession(auth, { id: "user-1", role: "user" });
+    const route: Route = await import("./route");
+
+    const response = await route.POST(new Request("http://localhost/api/admin/knowledge/versions/v1/parse"), routeParams({ id: "v1" }));
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 403, body: { error: "需要管理员权限" } });
+  });
 });

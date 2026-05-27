@@ -7,6 +7,7 @@ import {
   disconnectPrisma,
   jsonRequest,
   mockAuthSession,
+  mockNoSession,
   readJson,
   routeParams,
   seedUser,
@@ -44,6 +45,30 @@ beforeEach(async () => {
 });
 
 describe("PATCH /api/admin/knowledge/snippets/[id]", () => {
+  it("requires authentication", async () => {
+    mockNoSession(auth);
+
+    const response = await route.PATCH(
+      jsonRequest("http://localhost/api/admin/knowledge/snippets/snippet-1", { enabled: false }, { method: "PATCH" }),
+      routeParams({ id: "snippet-1" })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 401, body: { error: "未登录" } });
+  });
+
+  it("requires admin role", async () => {
+    mockAuthSession(auth, { id: "user-1", role: "user" });
+
+    const response = await route.PATCH(
+      jsonRequest("http://localhost/api/admin/knowledge/snippets/snippet-1", { enabled: false }, { method: "PATCH" }),
+      routeParams({ id: "snippet-1" })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 403, body: { error: "需要管理员权限" } });
+  });
+
   it("toggles snippet enabled state", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     mockAuthSession(auth, { id: admin.id, role: "admin" });
