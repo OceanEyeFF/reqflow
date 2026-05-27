@@ -16,7 +16,7 @@
 
 - active_worktrack: none
 - worktrack_title: none
-- worktrack_status: planned_queue
+- worktrack_status: milestone_handback_ready
 - target_milestone_id: MS-20260527-001
 
 ## Active Milestone
@@ -24,7 +24,7 @@
 - active_milestone: MS-20260527-001
 - milestone_title: 管理员项目知识库管理与导入
 - milestone_status: active
-- milestone_pipeline_summary: total=10 planned=1 active=0 completed=9 superseded=0
+- milestone_pipeline_summary: total=10 planned=0 active=0 completed=10 superseded=0
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Observe: WT-20260528-049 completed and merged; MS7 addenda now continue with WT-20260528-050 Provider manual test template.
+- RepoScope.Observe: WT-20260528-050 completed and merged; MS7 addenda are resolved and milestone is ready for programmer acceptance review.
 
 ## Linked Formal Documents
 
@@ -87,7 +87,7 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 1edb11e
+- latest_observed_checkpoint: a53e00f
 - last_doc_catch_up_checkpoint: b2baeac
 - milestone_input_checkpoint: b2baeac
 - checkpoint_type: git-commit
@@ -98,8 +98,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 24
-- autonomous_worktracks_opened: 6
+- autonomy_budget_remaining: 21
+- autonomous_worktracks_opened: 9
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-27
 - autonomy_budget_notes: MS7 执行周期授权；低危险 Worktrack 可自行审批，危险操作、上下文噪声明显或需要用户业务判断时必须 handback。
@@ -109,11 +109,11 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入根据用户上传界面反馈追加 3 个补缺 Worktrack，当前 9/10 completed，等待调度 WT-20260528-050
+- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入根据用户上传界面反馈追加 3 个补缺 Worktrack，当前 10/10 completed，等待用户最终验收 MS7
 - latest_acceptance: MS-20260526-002 accepted by fdch0 on 2026-05-27
 - latest_repo_baseline: b93935da269ed14ce85c28c799d0f4dd7cd9361c (`merge: accept MS6 milestone`)
-- latest_completed_worktrack: WT-20260528-049 completed and merged at 1edb11e
-- next_worktrack_candidate: WT-20260528-050 Provider 手动验收记录模板; MS7 final acceptance remains programmer-only.
+- latest_completed_worktrack: WT-20260528-050 completed and merged at a53e00f
+- next_worktrack_candidate: MS7 programmer final acceptance review; MS7 final acceptance remains programmer-only.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
 - planned_next_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围
