@@ -44,9 +44,14 @@ export default async function DashboardLayout({
                   工单
                 </Link>
                 {session.user.role === "admin" && (
-                  <Link {...navProps("/admin/ai-provider")}>
-                    AI Provider
-                  </Link>
+                  <>
+                    <Link {...navProps("/admin/knowledge")}>
+                      知识库
+                    </Link>
+                    <Link {...navProps("/admin/ai-provider")}>
+                      AI Provider
+                    </Link>
+                  </>
                 )}
               </nav>
             </div>
