@@ -18,24 +18,24 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 - WT-20260524-023: docs and RepoStatus synchronization
 - WT-20260524-024: final governance review
 
-当前 active milestone 是 `MS-20260526-001 / GitHub CI 与上云前决策基线`，6/6 completed。WT-025 至 WT-030 均已完成；`docs/ms5-final-review.md` 已记录最终 review 证据。下一步不是自动推进 MS6，而是 handback 等待 programmer 对 MS5 做最终验收决定。
+当前 active milestone 是 `MS-20260526-001 / GitHub CI 与上云前决策基线`，8/8 completed。WT-025 至 WT-030、WT-037、WT-038 均已完成；`docs/ms5-final-review.md` 已刷新最终 review 证据。下一步不是自动推进 MS6，而是 handback 等待 programmer 对 MS5 做最终验收决定。
 
 当前 planned milestone 是 `MS-20260526-002 / AI 需求说明优化 MVP`，依赖 MS5 完成。
 
 最近质量基线来自 WT-20260526-026：
 - `npm run build` 通过
 - `npm run lint` 通过，ESLint 0 warning
-- `npm run test` 通过，10 个测试文件，71 个测试
+- `npm run test` 通过，10 个测试文件，83 个测试
 - GitHub Actions baseline workflow 已建立，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`
-- GitHub Actions run `26462219177` 对 `d9ffff92b6dd599d9cef9455304a4386bc0fb93d` 通过，job `lint, test, build` conclusion `success`
+- GitHub Actions run `26494518202` 对 `bd2789d4e404996b603833757dfa71859d2b0210` 通过，job `78019430374 / lint, test, build` conclusion `success`
 - `docs/cloud-readiness-boundary.md` 已建立上云前边界，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、上传目录、SQLite 生产风险和部署平台能力边界
 - `docs/ai-mvp-technical-brief.md` 已建立 AI MVP 技术边界，覆盖轻量 MVP、人工确认、知识来源、OpenAI 接入、`OPENAI_API_KEY` 服务端 secret 边界和无 PostgreSQL/pgvector 依赖
-- GitHub Actions run `26464643535` 对当前 `origin/develop` commit `40f4c11d119d70c839347de870813a5474c195f5` 通过，job `77921525748 / lint, test, build` conclusion `success`
-- `docs/ms5-final-review.md` 已建立最终 review 记录，结论为 MS5 evidence ready for programmer acceptance decision
+- GitHub Actions run `26464643535` 是 WT-030 旧远端 CI 证据，已被当前 run `26494518202` supersede
+- `docs/ms5-final-review.md` 已刷新最终 review 记录，结论为 WT-037 发现的阻断项已由 WT-038 修复，MS5 evidence ready for programmer acceptance decision
 
 ## Principal Contradictions
 
-1. **MS5 evidence ready vs final acceptance pending**: GitHub CI、远端 Actions 证据、cloud-readiness boundary、AI MVP technical brief 和 final review 均已完成；goal-driven milestone 的最终验收仍必须由 programmer 决定。
+1. **MS5 evidence ready vs final acceptance pending**: GitHub CI、远端 Actions 证据、cloud-readiness boundary、AI MVP technical brief、rigorous CodeReview、security hardening 和 final review 均已完成；goal-driven milestone 的最终验收仍必须由 programmer 决定。
 2. **可见未跟踪目录 vs 不可批量处理**: `.agents/.claude/.harness/.mavis/.worktrees` 等仍可见，但已被分类为需要逐项判断的治理对象，不应通过粗暴 ignore 或删除制造表面 clean。
 3. **本地 SQLite 便利性 vs 生产部署要求**: 开发 DB 已改为 local-only runtime artifact；生产数据库迁移和云端环境变量仍需独立部署 worktrack 处理。
 4. **远端主线已同步 vs 生产部署要求未定义**: GitHub 已同步，Gitee 已由用户降级为非当前重点；生产部署仍需要环境变量、存储和数据库边界。
@@ -45,8 +45,8 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 
 | 优先级 | 事项 | 理由 |
 |--------|------|------|
-| P0 | 上云前环境与部署边界 | 当前 SQLite/local-only DB 策略不等于生产部署方案，但 PG 暂不碰 |
-| P0 | AI MVP 技术决策 Brief | MS6 前置，必须明确无 PG 依赖、人工确认和知识库边界 |
+| P0 | MS5 final acceptance decision | 所有 MS5 worktrack 和最新 GitHub Actions 已通过，下一步必须由用户决定是否接受 |
+| P1 | 上云前环境与部署执行 | 当前 SQLite/local-only DB 策略不等于生产部署方案，但 PG 暂不碰 |
 | P2 | 页面级交互回归测试 | 工单列表、详情、新建流程仍缺黑盒覆盖 |
 | P3 | 邮件/外部通知能力 | 当前仅有站内通知 |
 
@@ -59,10 +59,10 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 1. **M4: 项目整洁度与 AI 适配治理** — completed, 7/7 completed, milestone gate pass, accepted by programmer
 
 当前 active milestone：
-1. **MS5: GitHub CI 与上云前决策基线** — active, 6/6 completed, final acceptance pending programmer decision
+1. **MS5: GitHub CI 与上云前决策基线** — active, 8/8 completed, final acceptance pending programmer decision
 
 建议按以下 worktrack 顺序推进：
-1. Handback: 请 programmer 审阅 `docs/ms5-final-review.md`、GitHub Actions run `26464643535`、`docs/cloud-readiness-boundary.md`、`docs/ai-mvp-technical-brief.md`，并决定是否接受 MS-20260526-001。
+1. Handback: 请 programmer 审阅 `docs/ms5-final-review.md`、`docs/ms5-rigorous-code-review.md`、GitHub Actions run `26494518202`、`docs/cloud-readiness-boundary.md`、`docs/ai-mvp-technical-brief.md`，并决定是否接受 MS-20260526-001。
 
 ## Unknowns / Next Options
 

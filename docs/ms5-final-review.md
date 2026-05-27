@@ -10,21 +10,22 @@ Final milestone acceptance is still a programmer decision. This review only stat
 |------|----------|--------|
 | Repo status refresh | WT-20260526-025 | Pass |
 | GitHub Actions CI baseline | `.github/workflows/ci.yml`, WT-20260526-026 | Pass |
-| GitHub remote push and CI | `origin/develop`, GitHub Actions run `26464643535` | Pass |
+| GitHub remote push and CI | `origin/develop`, GitHub Actions run `26494518202` | Pass |
+| Rigorous CodeReview and hardening follow-up | WT-20260526-037, WT-20260526-038 | Pass |
 | Cloud readiness boundary | `docs/cloud-readiness-boundary.md`, WT-20260526-028 | Pass |
 | AI MVP technical boundary | `docs/ai-mvp-technical-brief.md`, WT-20260526-029 | Pass |
 | MS5 scope exclusions | Milestone artifact, review report, boundary docs | Pass |
 
 ## Current GitHub Evidence
 
-- Local `develop` reviewed at `40f4c11d119d70c839347de870813a5474c195f5`.
-- GitHub `origin/develop` points to `40f4c11d119d70c839347de870813a5474c195f5`.
-- GitHub Actions run `26464643535` completed with conclusion `success`.
-- GitHub Actions job `77921525748` named `lint, test, build` completed with conclusion `success`.
-- Run URL: https://github.com/OceanEyeFF/reqflow/actions/runs/26464643535
-- Job URL: https://github.com/OceanEyeFF/reqflow/actions/runs/26464643535/job/77921525748
+- Local `develop` reviewed at `bd2789d4e404996b603833757dfa71859d2b0210`.
+- GitHub `origin/develop` points to `bd2789d4e404996b603833757dfa71859d2b0210`.
+- GitHub Actions run `26494518202` completed with conclusion `success`.
+- GitHub Actions job `78019430374` named `lint, test, build` completed with conclusion `success`.
+- Run URL: https://github.com/OceanEyeFF/reqflow/actions/runs/26494518202
+- Job URL: https://github.com/OceanEyeFF/reqflow/actions/runs/26494518202/job/78019430374
 
-The current run supersedes the earlier WT-027 run `26462219177` for final MS5 review because it validates the current `develop` after WT-028 and WT-029 documentation merges.
+The current run supersedes the earlier WT-027 run `26462219177` and WT-030 run `26464643535` for final MS5 review because it validates the current `develop` after WT-037 and WT-038.
 
 ## CI Baseline Review
 
@@ -84,6 +85,7 @@ The brief treats the current OpenAI model guidance as implementation-time inform
 | Did MS5 implement AI features? | No. WT-029 is a docs-only technical boundary. |
 | Did MS5 create production secrets or choose paid services? | No. Both boundary docs prohibit this in MS5. |
 | Did MS5 mark final milestone acceptance automatically? | No. Programmer final acceptance remains pending. |
+| Did the added CodeReview blocker get resolved before handback? | Yes. WT-038 fixed ticket authorization and upload validation gaps and current GitHub Actions passed. |
 
 ## Residual Risks
 
