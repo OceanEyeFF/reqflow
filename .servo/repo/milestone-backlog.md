@@ -4,8 +4,8 @@
 
 ## Pipeline Summary
 
-- total: 7
-- planned: 0
+- total: 8
+- planned: 1
 - active: 1
 - completed: 6
 - superseded: 0
@@ -115,9 +115,26 @@
 - status: active
 - priority: 7
 - depends_on_milestones: [MS-20260526-002]
-- worktrack_list: [WT-20260527-039, WT-20260527-045, WT-20260527-040, WT-20260527-041, WT-20260527-042, WT-20260527-043, WT-20260527-044]
+- worktrack_list: [WT-20260527-039, WT-20260527-045, WT-20260527-040, WT-20260527-041, WT-20260527-042, WT-20260527-043, WT-20260527-044, WT-20260528-048, WT-20260528-049, WT-20260528-050]
 - created_by: fdch0
 - created_at: 2026-05-27
-- updated: 2026-05-27
+- updated: 2026-05-28
+- updated_by: harness-kernel
+- activation_rules: current_active_milestone == none and depends_on_milestones completed
+- acceptance_reopened: 2026-05-28 user upload UI feedback
+- pending_addenda: [WT-20260528-048, WT-20260528-049, WT-20260528-050]
+
+### MS-20260528-001
+
+- milestone_id: MS-20260528-001
+- title: 知识库文件夹化管理与模块化 AI 草稿范围
+- milestone_kind: goal-driven
+- status: planned
+- priority: 8
+- depends_on_milestones: [MS-20260527-001]
+- worktrack_list: [WT-20260528-051, WT-20260528-052, WT-20260528-053, WT-20260528-054, WT-20260528-055, WT-20260528-056]
+- created_by: fdch0
+- created_at: 2026-05-28
+- updated: 2026-05-28
 - updated_by: harness-kernel
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
