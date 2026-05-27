@@ -52,6 +52,15 @@ describe("GET /api/admin/knowledge/sources", () => {
     expect(result).toEqual({ status: 401, body: { error: "未登录" } });
   });
 
+  it("requires admin role", async () => {
+    mockAuthSession(auth, { id: "user-1", role: "user" });
+
+    const response = await route.GET();
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 403, body: { error: "需要管理员权限" } });
+  });
+
   it("returns admin knowledge source views without private storage keys", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     mockAuthSession(auth, { id: admin.id, role: "admin" });
