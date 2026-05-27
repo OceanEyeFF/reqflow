@@ -28,6 +28,7 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 - `npm run test` 通过，10 个测试文件，83 个测试
 - GitHub Actions baseline workflow 已建立，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`
 - GitHub Actions run `26494518202` 对 `bd2789d4e404996b603833757dfa71859d2b0210` 通过，job `78019430374 / lint, test, build` conclusion `success`
+- GitHub Actions run `26494818503` 对 handback docs merge commit `a2fddc64b39e0f4ecb09d0ffee8587c27ce153d0` 通过，job `78020426471 / lint, test, build` conclusion `success`
 - `docs/cloud-readiness-boundary.md` 已建立上云前边界，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、上传目录、SQLite 生产风险和部署平台能力边界
 - `docs/ai-mvp-technical-brief.md` 已建立 AI MVP 技术边界，覆盖轻量 MVP、人工确认、知识来源、OpenAI 接入、`OPENAI_API_KEY` 服务端 secret 边界和无 PostgreSQL/pgvector 依赖
 - GitHub Actions run `26464643535` 是 WT-030 旧远端 CI 证据，已被当前 run `26494518202` supersede
@@ -62,7 +63,7 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 1. **MS5: GitHub CI 与上云前决策基线** — active, 8/8 completed, final acceptance pending programmer decision
 
 建议按以下 worktrack 顺序推进：
-1. Handback: 请 programmer 审阅 `docs/ms5-final-review.md`、`docs/ms5-rigorous-code-review.md`、GitHub Actions run `26494518202`、`docs/cloud-readiness-boundary.md`、`docs/ai-mvp-technical-brief.md`，并决定是否接受 MS-20260526-001。
+1. Handback: 请 programmer 审阅 `docs/ms5-final-review.md`、`docs/ms5-rigorous-code-review.md`、GitHub Actions run `26494518202` 与 `26494818503`、`docs/cloud-readiness-boundary.md`、`docs/ai-mvp-technical-brief.md`，并决定是否接受 MS-20260526-001。
 
 ## Unknowns / Next Options
 
