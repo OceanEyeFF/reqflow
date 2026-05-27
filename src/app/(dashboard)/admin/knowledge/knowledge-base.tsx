@@ -321,7 +321,7 @@ function SourceCard({
         {latestVersion && (
           <div className="grid gap-3 rounded-md border bg-gray-50 p-3 text-sm md:grid-cols-4">
             <Field label="版本" value={`v${latestVersion.version}`} />
-            <Field label="文件" value={latestVersion.originalFilename} />
+            <Field label={latestVersion.importType === "zip" ? "文件夹" : "文件"} value={latestVersion.originalFilename} />
             <Field label="大小" value={formatBytes(latestVersion.fileSize)} />
             <Field label="片段" value={`${latestVersion.snippetCount}`} />
             {latestVersion.errorCode && (
@@ -336,7 +336,7 @@ function SourceCard({
         <div className="space-y-3">
           <div className="flex items-center gap-2 text-sm font-medium">
             <Eye className="h-4 w-4" />
-            片段预览
+            {latestVersion?.importType === "zip" ? "文件夹片段预览" : "片段预览"}
           </div>
           {source.snippets.length === 0 ? (
             <p className="rounded-md border border-dashed p-4 text-sm text-gray-500">解析后显示片段</p>

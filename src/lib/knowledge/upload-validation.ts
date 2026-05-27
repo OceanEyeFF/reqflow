@@ -1,11 +1,11 @@
 import path from "node:path";
+import { KnowledgeZipError, readZipEntries } from "./zip-reader";
 
 const ALLOWED_DOCUMENT_EXTENSIONS = new Set([".md", ".markdown", ".txt", ".json"]);
 const ZIP_EXTENSION = ".zip";
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const MAX_ZIP_ENTRIES = 200;
 const MAX_ZIP_UNCOMPRESSED_SIZE = 20 * 1024 * 1024;
-const LOCAL_FILE_HEADER = 0x04034b50;
 
 export class KnowledgeUploadValidationError extends Error {}
 
@@ -44,29 +44,24 @@ export function validateKnowledgeUpload(file: File, buffer: Buffer): ValidatedKn
 }
 
 export function validateZipEntries(buffer: Buffer): number {
-  let offset = 0;
   let entryCount = 0;
   let totalUncompressedSize = 0;
 
-  while (offset + 30 <= buffer.length) {
-    const signature = buffer.readUInt32LE(offset);
-    if (signature !== LOCAL_FILE_HEADER) break;
-
-    const compressedSize = buffer.readUInt32LE(offset + 18);
-    const uncompressedSize = buffer.readUInt32LE(offset + 22);
-    const fileNameLength = buffer.readUInt16LE(offset + 26);
-    const extraLength = buffer.readUInt16LE(offset + 28);
-    const nameStart = offset + 30;
-    const nameEnd = nameStart + fileNameLength;
-    if (nameEnd > buffer.length) {
-      throw new KnowledgeUploadValidationError("zip 文件结构不正确");
+  let entries;
+  try {
+    entries = readZipEntries(buffer);
+  } catch (error) {
+    if (error instanceof KnowledgeZipError) {
+      throw new KnowledgeUploadValidationError(error.message);
     }
-
-    const entryName = buffer.toString("utf8", nameStart, nameEnd);
+    throw error;
+  }
+  for (const entry of entries) {
+    const entryName = entry.name;
     validateZipEntryName(entryName);
     if (!entryName.endsWith("/")) {
       entryCount += 1;
-      totalUncompressedSize += uncompressedSize;
+      totalUncompressedSize += entry.uncompressedSize || entry.content.length;
       if (entryCount > MAX_ZIP_ENTRIES) {
         throw new KnowledgeUploadValidationError("zip 文件条目过多");
       }
@@ -74,8 +69,6 @@ export function validateZipEntries(buffer: Buffer): number {
         throw new KnowledgeUploadValidationError("zip 解压内容超过限制");
       }
     }
-
-    offset = nameEnd + extraLength + compressedSize;
   }
 
   if (entryCount === 0) {

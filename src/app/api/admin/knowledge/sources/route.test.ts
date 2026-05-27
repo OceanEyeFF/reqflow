@@ -81,12 +81,45 @@ describe("GET /api/admin/knowledge/sources", () => {
     expect(JSON.stringify(result.body)).not.toContain(".local-data");
     expect(JSON.stringify(result.body)).not.toContain("public/uploads");
   });
+
+  it("groups zip snippets by folder-like inner paths", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+    await seedKnowledgeSource(admin.id, {
+      title: "docs.zip",
+      importType: "zip",
+      originalFilename: "docs.zip",
+      sourcePath: "module-a/api/guide.md",
+      section: "Guide",
+    });
+
+    const response = await route.GET();
+    const result = await readJson<{ sources: Array<{ title: string; versions: Array<{ importType: string }>; snippets: Array<{ sourcePath: string }> }> }>(
+      response
+    );
+
+    expect(result.status).toBe(200);
+    expect(result.body.sources[0]).toMatchObject({
+      title: "docs.zip",
+      versions: [expect.objectContaining({ importType: "zip" })],
+      snippets: [expect.objectContaining({ sourcePath: "module-a/api/guide.md" })],
+    });
+  });
 });
 
-async function seedKnowledgeSource(userId: string) {
+async function seedKnowledgeSource(
+  userId: string,
+  overrides: {
+    title?: string;
+    importType?: string;
+    originalFilename?: string;
+    sourcePath?: string;
+    section?: string;
+  } = {}
+) {
   const source = await prisma.knowledgeSource.create({
     data: {
-      title: "Admin guide",
+      title: overrides.title ?? "Admin guide",
       status: "ready",
       enabled: true,
       createdById: userId,
@@ -95,12 +128,12 @@ async function seedKnowledgeSource(userId: string) {
   const version = await prisma.knowledgeSourceVersion.create({
     data: {
       sourceId: source.id,
-      originalFilename: "guide.md",
+      originalFilename: overrides.originalFilename ?? "guide.md",
       storageKey: "private/storage-key.md",
       mimeType: "text/markdown",
       fileSize: 120,
       contentHash: "hash",
-      importType: "document",
+      importType: overrides.importType ?? "document",
       status: "ready",
       createdById: userId,
     },
@@ -109,8 +142,8 @@ async function seedKnowledgeSource(userId: string) {
     data: {
       sourceId: source.id,
       versionId: version.id,
-      sourcePath: "docs/guide.md",
-      section: "Guide",
+      sourcePath: overrides.sourcePath ?? "docs/guide.md",
+      section: overrides.section ?? "Guide",
       content: "管理员知识库片段内容",
       chunkIndex: 0,
       enabled: true,
