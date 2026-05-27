@@ -33,6 +33,8 @@ model User {
   sessions         Session[]
   attachments      TicketAttachment[]
   aiProviderConfigs AiProviderConfig[]
+  knowledgeSources  KnowledgeSource[]
+  knowledgeVersions KnowledgeSourceVersion[]
 }
 
 // ─── NextAuth ───────────────────────────────────────────
@@ -183,4 +185,39 @@ model AiProviderConfig {
   updatedBy User? @relation(fields: [updatedById], references: [id])
 
   @@unique([name])
+}
+
+// ─── 知识库导入 ─────────────────────────────────────────
+model KnowledgeSource {
+  id          String   @id @default(cuid())
+  title       String
+  status      String   @default("uploaded")
+  enabled     Boolean  @default(false)
+  createdById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdBy User?                    @relation(fields: [createdById], references: [id])
+  versions  KnowledgeSourceVersion[]
+}
+
+model KnowledgeSourceVersion {
+  id               String   @id @default(cuid())
+  sourceId         String
+  version          Int      @default(1)
+  originalFilename String
+  storageKey       String
+  mimeType         String
+  fileSize         Int
+  contentHash      String
+  importType       String
+  status           String   @default("uploaded")
+  errorCode        String?
+  createdById      String?
+  createdAt        DateTime @default(now())
+
+  source    KnowledgeSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  createdBy User?           @relation(fields: [createdById], references: [id])
+
+  @@unique([sourceId, version])
 }
