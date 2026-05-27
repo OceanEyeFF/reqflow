@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 47
-- planned: 6
+- planned: 5
 - active: 1
-- completed: 40
+- completed: 41
 - blocked: 0
 - deferred: 0
 
@@ -473,10 +473,10 @@
 - title: 管理员知识库上传产品与权限设计
 - milestone_id: MS-20260527-001
 - node_type: docs
-- status: active
+- status: completed
 - priority: 1
 - contract_path: .servo/worktrack/WT-20260527-039/contract.md
-- branch: worktrack/wt-20260527-039-admin-kb-upload-design
+- branch: worktrack/wt-20260527-039-admin-kb-upload-design (merged)
 
 ### WT-20260527-045
 
@@ -484,7 +484,7 @@
 - title: 管理员 AI Provider 配置
 - milestone_id: MS-20260527-001
 - node_type: feature
-- status: planned
+- status: active
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260527-045/contract.md
 - branch: worktrack/wt-20260527-045-ai-provider-admin-config
