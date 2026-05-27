@@ -19,9 +19,9 @@
 ## Active Milestone
 
 - active_milestone: MS-20260526-002
-- milestone_title: AI 需求说明优化 MVP
+- milestone_title: AI 需求生成 Discussion MVP
 - milestone_status: active
-- milestone_pipeline_summary: total=6 planned=6 active=0 completed=0 superseded=0
+- milestone_pipeline_summary: total=7 planned=1 active=1 completed=5 superseded=0
 
 ## Baseline Branch
 
@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Observe: MS-20260526-001 accepted by programmer; MS-20260526-002 activated as the next milestone, awaiting next Worktrack intake
+- RepoScope.Prepare: MS-20260526-002 scope narrowed to Deepseek-backed discussion MVP; MS-20260527-001 registered for administrator knowledge-base import; next action is WT-20260526-031 intake preparation
 
 ## Linked Formal Documents
 
@@ -106,5 +106,5 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260526-001 GitHub CI 与上云前决策基线已由用户验收完成；MS-20260526-002 AI 需求说明优化 MVP 已激活，等待下一轮 Worktrack intake
-- 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → AI 需求说明优化 MVP
+- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已激活并进入准备工作；MS-20260527-001 管理员项目知识库管理与导入已注册为 planned
+- 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入

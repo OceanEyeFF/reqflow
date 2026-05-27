@@ -4,8 +4,8 @@
 
 ## Pipeline Summary
 
-- total: 6
-- planned: 0
+- total: 7
+- planned: 1
 - active: 1
 - completed: 5
 - superseded: 0
@@ -93,7 +93,7 @@
 ### MS-20260526-002
 
 - milestone_id: MS-20260526-002
-- title: AI 需求说明优化 MVP
+- title: AI 需求生成 Discussion MVP
 - milestone_kind: goal-driven
 - status: active
 - priority: 6
@@ -101,6 +101,21 @@
 - worktrack_list: [WT-20260526-031, WT-20260526-032, WT-20260526-033, WT-20260526-034, WT-20260526-035, WT-20260526-036]
 - created_by: fdch0
 - created_at: 2026-05-26
+- updated: 2026-05-27
+- updated_by: harness-kernel
+- activation_rules: current_active_milestone == none and depends_on_milestones completed
+
+### MS-20260527-001
+
+- milestone_id: MS-20260527-001
+- title: 管理员项目知识库管理与导入
+- milestone_kind: goal-driven
+- status: planned
+- priority: 7
+- depends_on_milestones: [MS-20260526-002]
+- worktrack_list: [WT-20260527-039, WT-20260527-040, WT-20260527-041, WT-20260527-042, WT-20260527-043, WT-20260527-044]
+- created_by: fdch0
+- created_at: 2026-05-27
 - updated: 2026-05-27
 - updated_by: harness-kernel
 - activation_rules: current_active_milestone == none and depends_on_milestones completed

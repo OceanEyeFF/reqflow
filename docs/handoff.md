@@ -6,7 +6,7 @@
 **仓库路径**: `E:\repos\personal\reqflow`
 **当前分支**: `develop`
 **技术栈**: Next.js 16 + TypeScript + TailwindCSS + Prisma 5 + SQLite + NextAuth
-**当前治理状态**: Phase 9 中的 M4「项目整洁度与 AI 适配治理」已完成大部分清理工作，仍需最终 CodeReview 和用户验收
+**当前治理状态**: MS5「GitHub CI 与上云前决策基线」已验收；MS6「AI 需求生成 Discussion MVP」已激活并进入准备工作；MS7「管理员项目知识库管理与导入」已注册为 planned
 
 ---
 
@@ -162,7 +162,7 @@ Phase 6 ✅ → Phase 7 ✅ → Phase 8 ✅
 5. **邮件通知**: Phase 8 暂不包含邮件通知（SMTP 配置待定），仅支持站内通知
 6. **本地数据库治理**: `dev.db`、`prisma/dev.db`、`prisma/dev.db-journal` 和嵌套 `prisma/prisma/` 属于本地运行时产物，已从 Git 跟踪中移除并被 `.gitignore` 覆盖
 7. **上云前边界**: `.env`、`AUTH_SECRET`、`DATABASE_URL`、上传目录、SQLite 生产风险和部署平台选择边界见 `docs/cloud-readiness-boundary.md`
-8. **AI MVP 技术边界**: 轻量 MVP、人工确认、知识来源、OpenAI 接入和无 PG/pgvector 依赖见 `docs/ai-mvp-technical-brief.md`
+8. **AI MVP 技术边界**: 轻量 MVP、人工确认、知识来源、Deepseek 接入、MS6 discussion MVP、MS7 管理员知识库导入拆分和无 PG/pgvector 依赖见 `docs/ai-mvp-technical-brief.md`
 9. **Worktree 纪律**: 所有代码或文档改动必须在 `.worktrees/<task>` worktree 中完成，合并回 `develop` 后清理 worktree
 10. **AI 协作入口**: `AGENTS.md` 是主入口；`CLAUDE.md` 仅指向主入口；`.agents/.claude/.harness/.mavis` 等未注册目录不能批量提交或删除，需按治理文档逐项处理
 
@@ -213,7 +213,7 @@ npm run dev
 | `docs/worktree-branch-audit.md` | Worktree/分支清理审计 |
 | `docs/prisma-dev-db-governance.md` | 本地 SQLite DB 治理策略 |
 | `docs/cloud-readiness-boundary.md` | 上云前环境、存储、数据库和部署平台边界 |
-| `docs/ai-mvp-technical-brief.md` | AI MVP 轻量实现、人工确认、知识来源和 OpenAI 接入边界 |
+| `docs/ai-mvp-technical-brief.md` | AI MVP 轻量实现、人工确认、知识来源、Deepseek 接入和 MS6/MS7 拆分边界 |
 
 ---
 
@@ -229,8 +229,8 @@ npm run dev
 
 2. **接下来的 Phase**：
    - Phase 6-8 已全部完成（协作者功能、附件上传、通知系统）
-   - Phase 9 质量治理、M3 API route handler 集成测试已验收
-   - M4 项目整洁度与 AI 适配治理仍需最终 CodeReview 与用户验收后才能标记完成
+   - Phase 9 质量治理、M3 API route handler 集成测试、M4 项目整洁度与 AI 适配治理、MS5 GitHub CI 与上云前决策基线均已验收
+   - MS6 AI 需求生成 Discussion MVP 已激活并进入准备工作；MS7 管理员项目知识库管理与导入已注册为 planned
 
 3. **数据库变更**：修改 `prisma/schema.prisma` 后运行：
    ```bash

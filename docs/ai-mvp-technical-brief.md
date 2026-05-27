@@ -1,32 +1,39 @@
 # AI MVP Technical Brief
 
-This document records the technical decision boundary for the first ReqFlow AI MVP. It is a pre-implementation brief, not an implementation plan or a provider purchase decision.
+This document records the technical decision boundary for the first ReqFlow AI MVP. It is a pre-implementation brief and has been updated after the programmer selected Deepseek as the AI provider.
 
-Checked against official OpenAI documentation on 2026-05-27:
+Original MS5 provider research checked official OpenAI documentation on 2026-05-27:
 
 - Latest model guide: https://developers.openai.com/api/docs/guides/latest-model
 - Responses API migration guide: https://developers.openai.com/api/docs/guides/migrate-to-responses
 - API authentication reference: https://developers.openai.com/api/reference/overview#authentication
 
+MS6 provider decision checked against official DeepSeek documentation on 2026-05-27:
+
+- DeepSeek API quick start: https://api-docs.deepseek.com/
+- DeepSeek API reference: https://api-docs.deepseek.com/api/deepseek-api
+- DeepSeek model list reference: https://api-docs.deepseek.com/api/list-models
+
 ## Decision Summary
 
-The MS6 AI MVP should start as a lightweight, server-side draft-assistance workflow:
+The MS6 AI MVP should start as a lightweight, server-side Deepseek-backed discussion workflow:
 
-- Users provide existing ticket or requirement context.
-- The AI produces a draft improvement, clarification, or rewrite.
+- Users open an AI requirement-generation discussion page and describe a vague requirement.
+- The AI can ask clarification questions and then produce a structured ticket draft.
 - A human reviews, edits, and explicitly confirms before any ticket content is saved.
-- The MVP uses curated project knowledge from tracked docs and selected ticket context.
+- The MVP uses repo-stable docs or a small built-in corpus as inspectable knowledge context.
+- Administrator-maintained knowledge-base upload and docs-style zip import are split into MS7.
 - The MVP does not require PostgreSQL, pgvector, vector search, autonomous ticket mutation, or background agents.
 
 ## MVP Use Case
 
-The first useful slice is requirement text improvement:
+The first useful slice is requirement discussion to ticket draft:
 
 | Input | AI Output | Required Human Action |
 |-------|-----------|-----------------------|
-| Raw requirement text | Clearer requirement draft | Review and accept/edit |
-| Existing ticket summary and comments | Suggested clarification questions | Choose which questions to keep |
-| Ticket title and description | Structured acceptance checklist draft | Review and confirm before save |
+| Raw requirement text | Clarifying questions | Answer, skip, or edit |
+| Discussion context | Structured ticket draft | Review and accept/edit |
+| Draft plus knowledge snippets | Acceptance criteria and open questions | Confirm before ticket flow |
 
 The MVP should optimize for controllability and traceability over automation depth.
 
@@ -67,23 +74,33 @@ Not required for the MVP:
 - Background indexing.
 - Cross-project knowledge ingestion.
 - Upload-content parsing.
+- Administrator document upload.
+- Docs-style zip import.
+
+Administrator-maintained knowledge-base upload, private storage, parsing, chunking, source/version records, and lightweight retrieval are planned for `MS-20260527-001 / 管理员项目知识库管理与导入`.
 
 If later retrieval quality requires semantic search, that should become a separate architecture worktrack with database, privacy, cost, and migration review.
 
-## OpenAI Integration Boundary
+## Deepseek Integration Boundary
 
-Official OpenAI documentation currently recommends the Responses API for new projects, especially reasoning, tool-calling, and multi-turn workflows. ReqFlow should treat that as the default integration direction for the future implementation worktrack.
+The programmer selected Deepseek as the provider for MS6. Implementation worktracks must check Deepseek official API documentation before coding provider-specific endpoint, model, authentication, streaming, timeout, and error handling details.
+
+Official DeepSeek docs currently identify:
+
+- OpenAI-compatible base URL: `https://api.deepseek.com`
+- Authentication: Bearer token
+- Current model examples: `deepseek-v4-flash` and `deepseek-v4-pro`
+- Legacy model names `deepseek-chat` and `deepseek-reasoner` are marked for deprecation on 2026-07-24 in the quick-start docs.
 
 Initial implementation posture for MS6:
 
 - Server-side only API calls.
-- `OPENAI_API_KEY` supplied through environment variables or a server-side secret manager.
+- `DEEPSEEK_API_KEY` supplied through environment variables or a server-side secret manager.
 - No API key in browser code, committed files, screenshots, tickets, or docs.
-- No client-side direct OpenAI requests.
-- Default to a single request/response draft workflow before considering tools, background jobs, or multi-turn state.
-- Keep model selection configurable so future OpenAI model guidance can be adopted without code churn.
-
-The OpenAI latest-model guide identified `gpt-5.5` as current on 2026-05-27. The MVP should not hard-code that as a permanent product invariant. A future implementation worktrack should re-check the official model guide before setting the default model.
+- No client-side direct Deepseek requests.
+- Default to a discussion-to-draft workflow before considering background jobs or autonomous actions.
+- Keep provider adapter, base URL, model, timeout, and rate/cost guards configurable.
+- Frontend and business logic must depend on an internal provider-neutral draft contract, not Deepseek-specific response shapes.
 
 ## Environment Variables
 
@@ -91,8 +108,9 @@ Future AI implementation may require:
 
 | Variable | Purpose | Boundary |
 |----------|---------|----------|
-| `OPENAI_API_KEY` | Server-side OpenAI API authentication | Required only when AI implementation begins. Must never be exposed client-side. |
-| `OPENAI_MODEL` | Operator-selected model slug | Optional; should have a documented default checked against current official docs. |
+| `DEEPSEEK_API_KEY` | Server-side Deepseek API authentication | Required only when real provider calls begin. Must never be exposed client-side. |
+| `DEEPSEEK_BASE_URL` | Deepseek-compatible API base URL | Optional; defaults must be checked against official docs during implementation. |
+| `DEEPSEEK_MODEL` | Operator-selected model slug | Optional; should have a documented default checked against current official docs. |
 
 Do not add these variables to committed `.env` files. If examples are added later, they must use placeholder values only.
 
@@ -135,28 +153,38 @@ The future implementation worktrack should include tests before acceptance:
 - No client exposure of provider secrets.
 - Mocked provider responses for deterministic route tests.
 - Manual-confirmation flow coverage: generated draft does not save until accepted.
-- Failure states for missing `OPENAI_API_KEY`, provider error, and rate/cost guard behavior.
+- Failure states for missing `DEEPSEEK_API_KEY`, provider error, and rate/cost guard behavior.
 
 The current WT-029 is documentation-only and does not add tests.
 
 ## Explicit Non-Goals
 
 - No AI implementation in MS5.
-- No OpenAI SDK installation in MS5.
+- No Deepseek SDK/provider package installation in MS5.
 - No production API key or secret creation in MS5.
 - No paid plan or provider purchase decision in MS5.
 - No PostgreSQL migration in MS5.
 - No pgvector or vector database in MS5.
 - No autonomous ticket mutation in the MVP boundary.
+- No administrator knowledge-base upload or docs-style zip import in MS6; this is MS7 scope.
 - No Gitee push requirement unless the user changes priority.
 
 ## Follow-Up Worktracks
 
 Recommended MS6 sequence:
 
-1. Product flow design for the AI draft assistant.
-2. Curated project knowledge corpus and prompt boundary.
-3. Server-side AI draft API with mocked tests and secret handling.
-4. Frontend draft UI with explicit accept/edit/discard controls.
-5. Safety and controllability checks.
-6. AI MVP validation with representative tickets.
+1. Discussion product flow and information architecture.
+2. Minimal built-in knowledge corpus and citation strategy.
+3. Deepseek draft API and provider adapter with mocked tests and secret handling.
+4. AI requirement-generation discussion page UI.
+5. Draft confirmation and existing ticket form handoff.
+6. Safety governance, tests, and MS6 validation.
+
+Recommended MS7 sequence:
+
+1. Administrator knowledge-base upload product and permission design.
+2. Document/docs-zip upload security and private storage.
+3. Document parsing, chunking, source/version records.
+4. Lightweight retrieval and citation snippet selection.
+5. Administrator knowledge-base UI.
+6. Knowledge-base import validation and security regression.

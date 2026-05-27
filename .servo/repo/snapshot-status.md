@@ -54,7 +54,7 @@ reqflow/
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
 | GitHub Actions CI baseline | 已建立并刷新，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`；run `26494518202` success for code baseline `bd2789d4e404996b603833757dfa71859d2b0210`; handback docs run `26494818503` success for `a2fddc64b39e0f4ecb09d0ffee8587c27ce153d0` (2026-05-27, WT-20260526-038) |
 | Cloud readiness boundary | 已建立，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、uploads、SQLite production risk、deployment platform boundary (2026-05-27, WT-20260526-028) |
-| AI MVP technical brief | 已建立，覆盖 lightweight MVP、manual confirmation、knowledge source、OpenAI Responses API boundary、`OPENAI_API_KEY` secret handling、no PG/pgvector dependency (2026-05-27, WT-20260526-029) |
+| AI MVP technical brief | 已建立并在 MS6/MS7 planning 中调整，当前 provider 决策为 Deepseek；MS6 聚焦 discussion MVP，MS7 承接管理员知识库上传/导入；no PG/pgvector dependency (2026-05-27) |
 
 ### 已知 Issues (来自 handoff.md)
 
@@ -114,7 +114,7 @@ reqflow/
 - CI_baseline: `.github/workflows/ci.yml` exists and uses `npm ci`, Prisma generate, `npm run lint`, `npm run test`, Prisma SQLite build DB preparation, and `npm run build`.
 - remote_CI: GitHub Actions run `26494518202` for code baseline `bd2789d4e404996b603833757dfa71859d2b0210` completed with conclusion `success`; job `78019430374` (`lint, test, build`) also succeeded. Handback docs run `26494818503` for commit `a2fddc64b39e0f4ecb09d0ffee8587c27ce153d0` also completed with conclusion `success`; job `78020426471` succeeded.
 - cloud_readiness_boundary: `docs/cloud-readiness-boundary.md` documents environment variables, `AUTH_SECRET`, `DATABASE_URL`, upload storage, SQLite production risk, deployment platform requirements, and explicit non-goals for PostgreSQL/pgvector migration, AI implementation, production secrets, paid provider selection, and Gitee.
-- ai_mvp_technical_brief: `docs/ai-mvp-technical-brief.md` documents lightweight MVP scope, manual confirmation, knowledge sources, OpenAI Responses API direction, server-side `OPENAI_API_KEY` handling, privacy/persistence/testing boundaries, and no PostgreSQL/pgvector or vector database dependency.
+- ai_mvp_technical_brief: `docs/ai-mvp-technical-brief.md` documents lightweight MVP scope, manual confirmation, knowledge sources, Deepseek provider boundary, server-side `DEEPSEEK_API_KEY` handling, MS6 discussion MVP, MS7 administrator knowledge-base import split, privacy/persistence/testing boundaries, and no PostgreSQL/pgvector or vector database dependency.
 - final_review: `docs/ms5-final-review.md` verifies current GitHub remote CI, cloud boundary, AI brief, WT-037 CodeReview, WT-038 hardening, and MS5 scope exclusions are mutually consistent.
 - milestone_gate_verdict: pass
 - final_acceptance: accepted
@@ -124,12 +124,29 @@ reqflow/
 ### Active Milestone
 
 - milestone_id: MS-20260526-002
-- title: AI 需求说明优化 MVP
+- title: AI 需求生成 Discussion MVP
 - status: active
 - progress: 0/6 completed
 - depends_on_milestones: MS-20260526-001
-- scope_boundary: AI MVP must not depend on PostgreSQL/pgvector unless a future user decision changes the plan.
+- scope_boundary: MS6 uses Deepseek through a server-side adapter and focuses on discussion + structured draft + manual confirmation; administrator knowledge-base upload/docs zip import is deferred to MS7; no PostgreSQL/pgvector dependency.
 - active_or_next_worktrack: WT-20260526-031 intake pending
+
+### Preparation Work
+
+- current_preparation_milestone: MS-20260526-002
+- current_preparation_item: WT-20260526-031 Discussion 产品流与信息架构设计 intake
+- preparation_goal: lock discussion page flow, draft schema, Deepseek provider boundary, manual confirmation boundary, and downstream MS6/MS7 split before implementation begins.
+- provider_decision: Deepseek
+- split_decision: administrator knowledge-base upload and docs-style zip import are planned under MS-20260527-001.
+
+### Planned Milestone
+
+- milestone_id: MS-20260527-001
+- title: 管理员项目知识库管理与导入
+- status: planned
+- progress: 0/6 completed
+- depends_on_milestones: MS-20260526-002
+- scope_boundary: admin-only document/docs-zip upload, private storage, parsing, chunking, version/source records, lightweight retrieval, and citation tracing; no PostgreSQL/pgvector dependency.
 
 ### M4 Governance Facts
 
