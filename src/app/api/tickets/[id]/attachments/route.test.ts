@@ -31,6 +31,7 @@ let auth: ReturnType<typeof vi.mocked<typeof authFn>>;
 let route: AttachmentsRoute;
 let uploader: User;
 let otherUser: User;
+let participant: User;
 let ticket: Ticket;
 let createdUploadPaths: string[] = [];
 
@@ -66,10 +67,14 @@ function formWithFile(file: File): FormData {
 async function seedScenario() {
   uploader = await seedUser(prisma, { id: "attachment-uploader", username: "attachment-uploader" });
   otherUser = await seedUser(prisma, { id: "attachment-other", username: "attachment-other" });
+  participant = await seedUser(prisma, { id: "attachment-participant", username: "attachment-participant" });
   ticket = await seedTicket(prisma, {
     id: "attachment-ticket",
     creatorId: uploader.id,
     title: "Attachment target",
+  });
+  await prisma.ticketMember.create({
+    data: { ticketId: ticket.id, userId: participant.id, role: "collaborator" },
   });
 }
 
@@ -122,6 +127,17 @@ describe("GET /api/tickets/[id]/attachments", () => {
 
     expect(result).toEqual({ status: 404, body: { error: "工单不存在" } });
   });
+  it("rejects users who are not ticket participants", async () => {
+    mockAuthSession(auth, { id: otherUser.id, role: "user" });
+
+    const response = await route.GET(
+      getRequest(`http://localhost/api/tickets/${ticket.id}/attachments`),
+      routeParams({ id: ticket.id })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 403, body: { error: "无权访问该工单" } });
+  });
 });
 
 describe("POST /api/tickets/[id]/attachments", () => {
@@ -160,6 +176,45 @@ describe("POST /api/tickets/[id]/attachments", () => {
       prisma.ticketAttachment.findUnique({ where: { id: result.body.attachment.id } })
     ).resolves.toBeTruthy();
   });
+
+  it("rejects users who are not ticket participants", async () => {
+    mockAuthSession(auth, { id: otherUser.id, role: "user" });
+    const file = new File(["attachment body"], "route-test.pdf", { type: "application/pdf" });
+
+    const response = await route.POST(
+      formRequest(`http://localhost/api/tickets/${ticket.id}/attachments`, formWithFile(file)),
+      routeParams({ id: ticket.id })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 403, body: { error: "无权访问该工单" } });
+  });
+
+  it("rejects dangerous extensions even when the MIME type is spoofed", async () => {
+    mockAuthSession(auth, { id: uploader.id, role: "user" });
+    const file = new File(["<script>alert(1)</script>"], "spoofed.html", { type: "image/png" });
+
+    const response = await route.POST(
+      formRequest(`http://localhost/api/tickets/${ticket.id}/attachments`, formWithFile(file)),
+      routeParams({ id: ticket.id })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 400, body: { error: "不支持的文件类型" } });
+  });
+
+  it("rejects MIME and extension mismatches", async () => {
+    mockAuthSession(auth, { id: uploader.id, role: "user" });
+    const file = new File(["not really a png"], "mismatch.png", { type: "application/pdf" });
+
+    const response = await route.POST(
+      formRequest(`http://localhost/api/tickets/${ticket.id}/attachments`, formWithFile(file)),
+      routeParams({ id: ticket.id })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 400, body: { error: "不支持的文件类型" } });
+  });
 });
 
 describe("DELETE /api/tickets/[id]/attachments", () => {
@@ -183,7 +238,24 @@ describe("DELETE /api/tickets/[id]/attachments", () => {
     });
   }
 
-  it("rejects users who do not own the attachment", async () => {
+  it("rejects participants who do not own the attachment", async () => {
+    const attachment = await seedAttachment();
+    mockAuthSession(auth, { id: participant.id, role: "user" });
+
+    const response = await route.DELETE(
+      getRequest(
+        `http://localhost/api/tickets/${ticket.id}/attachments?attachmentId=${attachment.id}`,
+        { method: "DELETE" }
+      ),
+      routeParams({ id: ticket.id })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 403, body: { error: "无权删除该附件" } });
+    expect(existsSync(uploadPathFromUrl(attachment.fileUrl))).toBe(true);
+  });
+
+  it("rejects users who are not ticket participants", async () => {
     const attachment = await seedAttachment();
     mockAuthSession(auth, { id: otherUser.id, role: "user" });
 
@@ -196,7 +268,7 @@ describe("DELETE /api/tickets/[id]/attachments", () => {
     );
     const result = await readJson<{ error: string }>(response);
 
-    expect(result).toEqual({ status: 403, body: { error: "无权删除该附件" } });
+    expect(result).toEqual({ status: 403, body: { error: "无权访问该工单" } });
     expect(existsSync(uploadPathFromUrl(attachment.fileUrl))).toBe(true);
   });
 

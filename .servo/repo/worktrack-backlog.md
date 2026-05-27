@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 38
-- planned: 7
+- planned: 6
 - active: 0
-- completed: 31
+- completed: 32
 - blocked: 0
 - deferred: 0
 
@@ -370,10 +370,10 @@
 - title: Ticket 授权与上传安全加固
 - milestone_id: MS-20260526-001
 - node_type: refactor
-- status: planned
+- status: completed
 - priority: 8
 - contract_path: .servo/worktrack/WT-20260526-038/contract.md
-- branch: worktrack/wt-20260526-038-ticket-auth-upload-hardening
+- branch: worktrack/wt-20260526-038-ticket-auth-upload-hardening (merged)
 
 ## M6: AI 需求说明优化 MVP (MS-20260526-002)
 

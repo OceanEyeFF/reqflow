@@ -4,30 +4,28 @@ import { existsSync } from "fs";
 import path from "path";
 import { requireAuth } from "@/lib/auth-helper";
 import { prisma } from "@/lib/prisma";
+import { requireTicketAccess, ticketAccessErrorResponse } from "@/lib/ticket-access";
 
-const ALLOWED_MIME_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "image/gif",
-  "image/webp",
-  "application/pdf",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  "application/vnd.ms-excel",
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  "application/zip",
-];
-
-const ALLOWED_EXTENSIONS = [".doc", ".docx", ".xls", ".xlsx", ".zip"];
+const ALLOWED_FILE_TYPES: Record<string, readonly string[]> = {
+  ".jpg": ["image/jpeg"],
+  ".jpeg": ["image/jpeg"],
+  ".png": ["image/png"],
+  ".gif": ["image/gif"],
+  ".webp": ["image/webp"],
+  ".pdf": ["application/pdf"],
+  ".doc": ["application/msword"],
+  ".docx": ["application/vnd.openxmlformats-officedocument.wordprocessingml.document"],
+  ".xls": ["application/vnd.ms-excel"],
+  ".xlsx": ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"],
+  ".zip": ["application/zip"],
+};
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 function isAllowedType(mimeType: string, filename: string): boolean {
-  if (ALLOWED_MIME_TYPES.includes(mimeType)) {
-    return true;
-  }
   const ext = path.extname(filename).toLowerCase();
-  return ALLOWED_EXTENSIONS.includes(ext);
+  const allowedMimeTypes = ALLOWED_FILE_TYPES[ext];
+  return Boolean(allowedMimeTypes?.includes(mimeType));
 }
 
 async function ensureUploadsDir() {
@@ -43,8 +41,9 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await requireAuth();
+    const session = await requireAuth();
     const { id } = await params;
+    await requireTicketAccess(id, session);
 
     // Check if ticket exists
     const ticket = await prisma.ticket.findUnique({ where: { id } });
@@ -65,6 +64,8 @@ export async function GET(
     if (error instanceof Error && error.message === "未登录") {
       return Response.json({ error: "未登录" }, { status: 401 });
     }
+    const accessResponse = ticketAccessErrorResponse(error);
+    if (accessResponse) return accessResponse;
     console.error("Handler error:", error);
     return Response.json({ error: "服务器错误" }, { status: 500 });
   }
@@ -77,6 +78,7 @@ export async function POST(
   try {
     const session = await requireAuth();
     const { id } = await params;
+    await requireTicketAccess(id, session);
 
     // Check if ticket exists
     const ticket = await prisma.ticket.findUnique({ where: { id } });
@@ -144,6 +146,8 @@ export async function POST(
     if (error instanceof Error && error.message === "未登录") {
       return Response.json({ error: "未登录" }, { status: 401 });
     }
+    const accessResponse = ticketAccessErrorResponse(error);
+    if (accessResponse) return accessResponse;
     console.error("Handler error:", error);
     return Response.json({ error: "服务器错误" }, { status: 500 });
   }
@@ -175,6 +179,8 @@ export async function DELETE(
       return Response.json({ error: "附件不属于该工单" }, { status: 400 });
     }
 
+    await requireTicketAccess(id, session);
+
     // Only the uploader can delete their own attachments (or admin)
     if (attachment.userId !== session.user.id && session.user.role !== "admin") {
       return Response.json({ error: "无权删除该附件" }, { status: 403 });
@@ -196,6 +202,8 @@ export async function DELETE(
     if (error instanceof Error && error.message === "未登录") {
       return Response.json({ error: "未登录" }, { status: 401 });
     }
+    const accessResponse = ticketAccessErrorResponse(error);
+    if (accessResponse) return accessResponse;
     console.error("Handler error:", error);
     return Response.json({ error: "服务器错误" }, { status: 500 });
   }

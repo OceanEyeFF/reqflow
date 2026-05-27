@@ -21,7 +21,7 @@
 - active_milestone: MS-20260526-001
 - milestone_title: GitHub CI 与上云前决策基线
 - milestone_status: active
-- milestone_pipeline_summary: total=8 planned=1 active=0 completed=7 superseded=0
+- milestone_pipeline_summary: total=8 planned=0 active=0 completed=8 superseded=0
 
 ## Baseline Branch
 
@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: WT-20260526-037 completed with blockers registered; initialize WT-20260526-038 ticket authorization/upload hardening before MS-20260526-001 final acceptance
+- RepoScope.Verify: WT-20260526-038 completed locally; merge, push `develop`, observe fresh GitHub Actions CI, then hand back for MS-20260526-001 programmer final acceptance decision
 
 ## Linked Formal Documents
 
@@ -44,8 +44,8 @@
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: WT-20260526-037 found blocking ticket authorization gaps and upload validation risk; follow-up WT-20260526-038 is required before MS-20260526-001 final acceptance
-- approval_scope: initialize and execute WT-20260526-038 under current worktrack budget; programmer final milestone acceptance remains excluded
+- reason: WT-20260526-038 changed source and tests; fresh GitHub CI evidence is required before MS-20260526-001 final acceptance handback
+- approval_scope: merge WT-20260526-038, push `develop` to GitHub, observe CI, and hand back; programmer final milestone acceptance remains excluded
 - approval_persistence: current execution cycle
 
 ## Continuation Authority
@@ -106,5 +106,5 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260526-001 GitHub CI 与上云前决策基线追加 WT-20260526-037 严谨 CodeReview；WT-037 已发现阻断项并转入 WT-20260526-038 修复，完成后再等待用户最终验收
+- Phase 9 当前阶段: MS-20260526-001 GitHub CI 与上云前决策基线追加 WT-20260526-037 严谨 CodeReview；WT-20260526-038 已本地修复阻断项，等待合并、远端 CI 刷新后再交给用户最终验收
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → AI 需求说明优化 MVP

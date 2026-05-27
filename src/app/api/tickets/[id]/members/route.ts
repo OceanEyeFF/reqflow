@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { requireAuth } from "@/lib/auth-helper";
 import { prisma } from "@/lib/prisma";
 import { notifyMemberAdded } from "@/lib/notifications";
+import { requireTicketAccess, ticketAccessErrorResponse } from "@/lib/ticket-access";
 
 // Helper: check if user can modify members (creator, assignee, or owner role)
 async function canModifyMembers(ticketId: string, userId: string): Promise<boolean> {
@@ -30,9 +31,10 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await requireAuth();
+    const session = await requireAuth();
 
     const { id } = await params;
+    await requireTicketAccess(id, session);
 
     const members = await prisma.ticketMember.findMany({
       where: { ticketId: id },
@@ -46,6 +48,8 @@ export async function GET(
     if (error instanceof Error && error.message === "未登录") {
       return Response.json({ error: "未登录" }, { status: 401 });
     }
+    const accessResponse = ticketAccessErrorResponse(error);
+    if (accessResponse) return accessResponse;
     console.error("Members GET error:", error);
     return Response.json({ error: "服务器错误" }, { status: 500 });
   }

@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-helper";
 import { notifyTicketAssigned, notifyStatusChanged } from "@/lib/notifications";
+import { requireTicketAccess, ticketAccessErrorResponse } from "@/lib/ticket-access";
 import { TICKET_STATUS, TICKET_PRIORITY } from "@/types";
 
 export async function GET(
@@ -9,9 +10,10 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await requireAuth();
+    const session = await requireAuth();
 
     const { id } = await params;
+    await requireTicketAccess(id, session);
 
     const ticket = await prisma.ticket.findUnique({
       where: { id },
@@ -41,6 +43,8 @@ export async function GET(
     if (error instanceof Error && error.message === "未登录") {
       return Response.json({ error: "未登录" }, { status: 401 });
     }
+    const accessResponse = ticketAccessErrorResponse(error);
+    if (accessResponse) return accessResponse;
     console.error(error);
     return Response.json({ error: "服务器错误" }, { status: 500 });
   }
@@ -55,6 +59,7 @@ export async function PATCH(
 
     const { id } = await params;
     const body = await request.json();
+    await requireTicketAccess(id, session);
 
     const ticket = await prisma.ticket.findUnique({ where: { id } });
     if (!ticket) {
@@ -138,6 +143,8 @@ export async function PATCH(
     if (error instanceof Error && error.message === "未登录") {
       return Response.json({ error: "未登录" }, { status: 401 });
     }
+    const accessResponse = ticketAccessErrorResponse(error);
+    if (accessResponse) return accessResponse;
     console.error(error);
     return Response.json({ error: "服务器错误" }, { status: 500 });
   }
