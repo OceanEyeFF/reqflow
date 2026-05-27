@@ -5,7 +5,7 @@ import { AiDraftValidationError, generateRequirementDraft } from "@/lib/ai/draft
 export async function POST(request: Request) {
   try {
     await requireAuth();
-    const body = await request.json();
+    const body = await parseJsonBody(request);
     const result = await generateRequirementDraft(body, createDeepseekProvider());
 
     return Response.json(result);
@@ -25,5 +25,13 @@ export async function POST(request: Request) {
 
     console.error("AI draft POST error:", error);
     return Response.json({ error: "服务器错误" }, { status: 500 });
+  }
+}
+
+async function parseJsonBody(request: Request): Promise<unknown> {
+  try {
+    return await request.json();
+  } catch {
+    throw new AiDraftValidationError("请求 JSON 格式不正确");
   }
 }

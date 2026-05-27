@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -8,19 +8,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { TICKET_TYPE, TICKET_PRIORITY } from "@/types";
+import { AI_DRAFT_STORAGE_KEY, clearStagedAiDraft, parseStagedAiDraft } from "@/lib/ai/draft-handoff";
 
 type User = {
   id: string;
   displayName: string;
   username: string;
-};
-
-type StagedAiDraft = {
-  title: string;
-  description: string;
-  type: string;
-  priority: string;
-  stagedAt: string;
 };
 
 const emptyForm = {
@@ -36,8 +29,41 @@ export default function NewTicketPage() {
   const router = useRouter();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(false);
+  const storedAiDraft = useSyncExternalStore(subscribeAiDraftStorage, getAiDraftStorageSnapshot, () => null);
+
+  useEffect(() => {
+    fetch("/api/users")
+      .then((res) => res.json())
+      .then((data) => setUsers(data.users || []));
+  }, []);
+
+  return (
+    <NewTicketForm
+      key={storedAiDraft ?? "empty-ai-draft"}
+      storedAiDraft={storedAiDraft}
+      users={users}
+      loading={loading}
+      setLoading={setLoading}
+      router={router}
+    />
+  );
+}
+
+function NewTicketForm({
+  storedAiDraft,
+  users,
+  loading,
+  setLoading,
+  router,
+}: {
+  storedAiDraft: string | null;
+  users: User[];
+  loading: boolean;
+  setLoading: (loading: boolean) => void;
+  router: ReturnType<typeof useRouter>;
+}) {
   const [form, setForm] = useState(() => {
-    const draft = readStagedAiDraft();
+    const draft = parseStagedAiDraft(storedAiDraft);
     if (!draft) return emptyForm;
 
     return {
@@ -48,16 +74,10 @@ export default function NewTicketPage() {
       priority: draft.priority,
     };
   });
-  const [aiDraftLoaded, setAiDraftLoaded] = useState(() => Boolean(readStagedAiDraft()));
-
-  useEffect(() => {
-    fetch("/api/users")
-      .then((res) => res.json())
-      .then((data) => setUsers(data.users || []));
-  }, []);
+  const [aiDraftLoaded, setAiDraftLoaded] = useState(() => Boolean(parseStagedAiDraft(storedAiDraft)));
 
   function clearAiDraft() {
-    sessionStorage.removeItem("reqflow.aiDraft");
+    clearStagedAiDraft(sessionStorage);
     setAiDraftLoaded(false);
     setForm(emptyForm);
   }
@@ -74,6 +94,9 @@ export default function NewTicketPage() {
 
     if (res.ok) {
       const data = await res.json();
+      if (aiDraftLoaded) {
+        clearStagedAiDraft(sessionStorage);
+      }
       router.push(`/tickets/${data.ticket.id}`);
     } else {
       setLoading(false);
@@ -195,34 +218,13 @@ export default function NewTicketPage() {
   );
 }
 
-function readStagedAiDraft(): StagedAiDraft | null {
-  if (typeof window === "undefined") return null;
+function subscribeAiDraftStorage(onStoreChange: () => void): () => void {
+  window.addEventListener("storage", onStoreChange);
+  queueMicrotask(onStoreChange);
 
-  const storedDraft = sessionStorage.getItem("reqflow.aiDraft");
-  if (!storedDraft) return null;
+  return () => window.removeEventListener("storage", onStoreChange);
+}
 
-  try {
-    const draft = JSON.parse(storedDraft) as Partial<StagedAiDraft>;
-    if (
-      typeof draft.title !== "string" ||
-      typeof draft.description !== "string" ||
-      typeof draft.type !== "string" ||
-      typeof draft.priority !== "string" ||
-      typeof draft.stagedAt !== "string"
-    ) {
-      sessionStorage.removeItem("reqflow.aiDraft");
-      return null;
-    }
-
-    return {
-      title: draft.title,
-      description: draft.description,
-      type: draft.type,
-      priority: draft.priority,
-      stagedAt: draft.stagedAt,
-    };
-  } catch {
-    sessionStorage.removeItem("reqflow.aiDraft");
-    return null;
-  }
+function getAiDraftStorageSnapshot(): string | null {
+  return sessionStorage.getItem(AI_DRAFT_STORAGE_KEY);
 }
