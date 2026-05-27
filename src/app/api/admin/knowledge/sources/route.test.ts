@@ -1,0 +1,111 @@
+import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
+import type { PrismaClient } from "@prisma/client";
+import type { auth as authFn } from "@/auth";
+import {
+  clearDatabase,
+  createTestDatabaseUrl,
+  disconnectPrisma,
+  mockAuthSession,
+  mockNoSession,
+  readJson,
+  seedUser,
+} from "@/test/api-test-helpers";
+
+vi.mock("@/auth", () => ({
+  auth: vi.fn(),
+}));
+
+type Route = typeof import("./route");
+
+let prisma: PrismaClient;
+let auth: ReturnType<typeof vi.mocked<typeof authFn>>;
+let route: Route;
+
+beforeAll(async () => {
+  process.env.DATABASE_URL = createTestDatabaseUrl("admin-knowledge-sources-route");
+  const helpers = await import("@/test/api-test-helpers");
+  helpers.pushTestDatabaseSchema(process.env.DATABASE_URL);
+  const prismaModule = await import("@/lib/prisma");
+  prisma = prismaModule.prisma;
+  const authModule = await import("@/auth");
+  auth = vi.mocked(authModule.auth);
+  route = await import("./route");
+
+  return async () => {
+    await disconnectPrisma(prisma);
+    helpers.removeTestDatabase(process.env.DATABASE_URL);
+  };
+});
+
+beforeEach(async () => {
+  auth.mockReset();
+  await clearDatabase(prisma);
+});
+
+describe("GET /api/admin/knowledge/sources", () => {
+  it("requires authentication", async () => {
+    mockNoSession(auth);
+
+    const response = await route.GET();
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 401, body: { error: "未登录" } });
+  });
+
+  it("returns admin knowledge source views without private storage keys", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+    await seedKnowledgeSource(admin.id);
+
+    const response = await route.GET();
+    const result = await readJson<{ sources: Array<{ title: string; versions: unknown[]; snippets: unknown[] }> }>(
+      response
+    );
+
+    expect(result.status).toBe(200);
+    expect(result.body.sources[0]).toMatchObject({
+      title: "Admin guide",
+      versions: [expect.objectContaining({ originalFilename: "guide.md", status: "ready" })],
+      snippets: [expect.objectContaining({ sourcePath: "docs/guide.md", section: "Guide" })],
+    });
+    expect(JSON.stringify(result.body)).not.toContain("private/storage-key");
+    expect(JSON.stringify(result.body)).not.toContain(".local-data");
+    expect(JSON.stringify(result.body)).not.toContain("public/uploads");
+  });
+});
+
+async function seedKnowledgeSource(userId: string) {
+  const source = await prisma.knowledgeSource.create({
+    data: {
+      title: "Admin guide",
+      status: "ready",
+      enabled: true,
+      createdById: userId,
+    },
+  });
+  const version = await prisma.knowledgeSourceVersion.create({
+    data: {
+      sourceId: source.id,
+      originalFilename: "guide.md",
+      storageKey: "private/storage-key.md",
+      mimeType: "text/markdown",
+      fileSize: 120,
+      contentHash: "hash",
+      importType: "document",
+      status: "ready",
+      createdById: userId,
+    },
+  });
+  await prisma.knowledgeSnippet.create({
+    data: {
+      sourceId: source.id,
+      versionId: version.id,
+      sourcePath: "docs/guide.md",
+      section: "Guide",
+      content: "管理员知识库片段内容",
+      chunkIndex: 0,
+      enabled: true,
+    },
+  });
+  return source;
+}
