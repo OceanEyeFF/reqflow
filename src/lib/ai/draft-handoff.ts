@@ -22,6 +22,7 @@ export type StagedAiDraft = {
   type: string;
   priority: string;
   stagedAt: string;
+  confirmedAt?: string;
 };
 
 type DraftStorage = Pick<Storage, "getItem" | "removeItem" | "setItem">;
@@ -61,6 +62,18 @@ export function stageAiDraft(
   return stagedDraft;
 }
 
+export function confirmStagedAiDraft(
+  storage: DraftStorage,
+  confirmedAt = new Date().toISOString()
+): StagedAiDraft | null {
+  const draft = readStagedAiDraft(storage);
+  if (!draft) return null;
+
+  const confirmedDraft = { ...draft, confirmedAt };
+  storage.setItem(AI_DRAFT_STORAGE_KEY, JSON.stringify(confirmedDraft));
+  return confirmedDraft;
+}
+
 export function readStagedAiDraft(storage?: DraftStorage): StagedAiDraft | null {
   if (!storage) return null;
 
@@ -96,6 +109,7 @@ export function parseStagedAiDraft(storedDraft: string | null): StagedAiDraft | 
       type: draft.type,
       priority: draft.priority,
       stagedAt: draft.stagedAt,
+      confirmedAt: typeof draft.confirmedAt === "string" ? draft.confirmedAt : undefined,
     };
   } catch {
     return null;

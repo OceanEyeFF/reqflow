@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   AI_DRAFT_STORAGE_KEY,
   clearStagedAiDraft,
+  confirmStagedAiDraft,
   formatDraftDescription,
   parseStagedAiDraft,
   readStagedAiDraft,
@@ -91,5 +92,15 @@ describe("AI draft handoff", () => {
     clearStagedAiDraft(storage);
 
     expect(readStagedAiDraft(storage)).toBeNull();
+  });
+
+  it("records explicit confirmation before ticket creation", () => {
+    const storage = createMemoryStorage();
+    stageAiDraft(storage, draft, "2026-05-27T00:00:00.000Z");
+
+    const confirmed = confirmStagedAiDraft(storage, "2026-05-27T00:01:00.000Z");
+
+    expect(confirmed).toMatchObject({ title: "审批流", confirmedAt: "2026-05-27T00:01:00.000Z" });
+    expect(readStagedAiDraft(storage)).toMatchObject({ confirmedAt: "2026-05-27T00:01:00.000Z" });
   });
 });
