@@ -5,8 +5,8 @@
 ## Summary
 
 - total: 47
-- planned: 7
-- active: 0
+- planned: 6
+- active: 1
 - completed: 40
 - blocked: 0
 - deferred: 0
@@ -473,7 +473,7 @@
 - title: 管理员知识库上传产品与权限设计
 - milestone_id: MS-20260527-001
 - node_type: docs
-- status: planned
+- status: active
 - priority: 1
 - contract_path: .servo/worktrack/WT-20260527-039/contract.md
 - branch: worktrack/wt-20260527-039-admin-kb-upload-design

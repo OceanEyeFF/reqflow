@@ -14,14 +14,17 @@
 
 ## Active Worktrack
 
--
+- active_worktrack: WT-20260527-039
+- worktrack_title: 管理员知识库上传产品与权限设计
+- worktrack_status: initializing
+- target_milestone_id: MS-20260527-001
 
 ## Active Milestone
 
-- active_milestone:
-- milestone_title:
-- milestone_status: none
-- milestone_pipeline_summary: total=7 planned=1 active=0 completed=6 superseded=0
+- active_milestone: MS-20260527-001
+- milestone_title: 管理员项目知识库管理与导入
+- milestone_status: active
+- milestone_pipeline_summary: total=7 planned=0 active=1 completed=6 superseded=0
 
 ## Baseline Branch
 
@@ -29,31 +32,31 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: MS6 accepted by programmer; MS-20260527-001 is the only planned milestone, dependency satisfied, ready for programmer-reviewed activation.
+- WorktrackScope.Init: MS7 activated by programmer instruction; initializing WT-20260527-039 as the first planned MS7 worktrack.
 
 ## Linked Formal Documents
 
 - repo_snapshot: .servo/repo/snapshot-status.md
 - repo_analysis: .servo/repo/analysis.md
-- worktrack_contract:
-- plan_task_queue:
-- gate_evidence:
+- worktrack_contract: .servo/worktrack/WT-20260527-039/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260527-039/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260527-039/gate-evidence.md
 - milestone_backlog: .servo/repo/milestone-backlog.md
 - worktrack_backlog: .servo/repo/worktrack-backlog.md
 
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: programmer accepted MS6
-- approval_scope: N/A
-- approval_persistence: current execution cycle
+- reason: programmer explicitly approved loading MS7 and granted 30 continuous Worktrack budget with low-risk Worktrack self-approval, SubAgent use, continuous work, strict acceptance, and automatic backlog additions when needed.
+- approval_scope: MS-20260527-001 execution cycle; milestone final acceptance remains programmer-only.
+- approval_persistence: current MS7 execution cycle
 
 ## Continuation Authority
 
 - post_contract_autonomy: delegated-minimal
 - autonomy_scope: current-goal-only
-- max_auto_new_worktracks: 1
-- stop_after_autonomous_slice: yes
+- max_auto_new_worktracks: 30
+- stop_after_autonomous_slice: no
 - subagent_dispatch_mode: auto
 - subagent_dispatch_mode_override_scope: worktrack-contract-primary
 - subagent_default_model:
@@ -69,7 +72,7 @@
   - attempted_carrier:
   - carrier_decision:
   - fallback_reason:
-- persistent_authority_notes: 用户授予30个Worktrack执行额度，低危险操作可自行审批，SubAgent委派已批准
+- persistent_authority_notes: 用户在 2026-05-27 明确授予 MS7 执行周期 30 个连续 Worktrack 额度，允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack；MS7 milestone final acceptance 仍由用户决定。
 
 ## Handback Guard
 
@@ -95,20 +98,20 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 13
-- autonomous_worktracks_opened: 17
+- autonomy_budget_remaining: 30
+- autonomous_worktracks_opened: 0
 - autonomy_budget_granted_by: fdch0
-- autonomy_budget_granted_at: 2026-05-23
-- autonomy_budget_notes: 用户授予30个连续Worktrack额度，低危险操作可自行审批
+- autonomy_budget_granted_at: 2026-05-27
+- autonomy_budget_notes: MS7 执行周期授权；低危险 Worktrack 可自行审批，危险操作、上下文噪声明显或需要用户业务判断时必须 handback。
 
 ## Notes
 
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已由程序员验收通过；MS-20260527-001 管理员知识库管理与导入保持 planned，未自动启动
+- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已按用户指令激活；当前初始化 WT-20260527-039 管理员知识库上传产品与权限设计
 - latest_acceptance: MS-20260526-002 accepted by fdch0 on 2026-05-27
 - latest_repo_baseline: b93935da269ed14ce85c28c799d0f4dd7cd9361c (`merge: accept MS6 milestone`)
-- next_milestone_candidate: MS-20260527-001 管理员项目知识库管理与导入; planned 0/7, depends_on MS-20260526-002 satisfied, activation still requires RepoScope decision / programmer review boundary.
+- next_worktrack_candidate: WT-20260527-039 管理员知识库上传产品与权限设计; docs node; first MS7 worktrack.
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入
