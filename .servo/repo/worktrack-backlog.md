@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 47
-- planned: 5
+- planned: 4
 - active: 1
-- completed: 41
+- completed: 42
 - blocked: 0
 - deferred: 0
 
@@ -484,10 +484,10 @@
 - title: 管理员 AI Provider 配置
 - milestone_id: MS-20260527-001
 - node_type: feature
-- status: active
+- status: completed
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260527-045/contract.md
-- branch: worktrack/wt-20260527-045-ai-provider-admin-config
+- branch: worktrack/wt-20260527-045-ai-provider-admin-config (merged)
 
 ### WT-20260527-040
 
@@ -495,7 +495,7 @@
 - title: 文档/zip 上传安全与私有存储
 - milestone_id: MS-20260527-001
 - node_type: feature
-- status: planned
+- status: active
 - priority: 3
 - contract_path: .servo/worktrack/WT-20260527-040/contract.md
 - branch: worktrack/wt-20260527-040-kb-upload-private-storage

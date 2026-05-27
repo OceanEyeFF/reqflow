@@ -14,8 +14,8 @@
 
 ## Active Worktrack
 
-- active_worktrack: WT-20260527-045
-- worktrack_title: 管理员 AI Provider 配置
+- active_worktrack: WT-20260527-040
+- worktrack_title: 文档/zip 上传安全与私有存储
 - worktrack_status: initializing
 - target_milestone_id: MS-20260527-001
 
@@ -32,15 +32,15 @@
 
 ## Current Next Action
 
-- WorktrackScope.Init: WT-20260527-039 completed and merged; initializing WT-20260527-045 as the next MS7 worktrack.
+- WorktrackScope.Init: WT-20260527-045 completed and merged; initializing WT-20260527-040 as the next MS7 worktrack.
 
 ## Linked Formal Documents
 
 - repo_snapshot: .servo/repo/snapshot-status.md
 - repo_analysis: .servo/repo/analysis.md
-- worktrack_contract: .servo/worktrack/WT-20260527-045/contract.md
-- plan_task_queue: .servo/worktrack/WT-20260527-045/plan-task-queue.md
-- gate_evidence: .servo/worktrack/WT-20260527-045/gate-evidence.md
+- worktrack_contract: .servo/worktrack/WT-20260527-040/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260527-040/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260527-040/gate-evidence.md
 - milestone_backlog: .servo/repo/milestone-backlog.md
 - worktrack_backlog: .servo/repo/worktrack-backlog.md
 
@@ -87,9 +87,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: f8c765f09262ed238aeccc5531e90cb265313893
-- last_doc_catch_up_checkpoint: f8c765f09262ed238aeccc5531e90cb265313893
-- milestone_input_checkpoint: f8c765f09262ed238aeccc5531e90cb265313893
+- latest_observed_checkpoint: 0d4cfbcac7a6fb0453d6fea1a3d730aeda3d3d46
+- last_doc_catch_up_checkpoint: 0d4cfbcac7a6fb0453d6fea1a3d730aeda3d3d46
+- milestone_input_checkpoint: 0d4cfbcac7a6fb0453d6fea1a3d730aeda3d3d46
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
@@ -98,8 +98,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 29
-- autonomous_worktracks_opened: 1
+- autonomy_budget_remaining: 28
+- autonomous_worktracks_opened: 2
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-27
 - autonomy_budget_notes: MS7 执行周期授权；低危险 Worktrack 可自行审批，危险操作、上下文噪声明显或需要用户业务判断时必须 handback。
@@ -109,10 +109,10 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已激活；WT-20260527-039 管理员知识库上传产品与权限设计已完成，当前准备 WT-20260527-045 管理员 AI Provider 配置
+- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已激活；WT-20260527-039 和 WT-20260527-045 已完成，当前准备 WT-20260527-040 文档/zip 上传安全与私有存储
 - latest_acceptance: MS-20260526-002 accepted by fdch0 on 2026-05-27
 - latest_repo_baseline: b93935da269ed14ce85c28c799d0f4dd7cd9361c (`merge: accept MS6 milestone`)
-- latest_completed_worktrack: WT-20260527-039 completed and merged at f8c765f09262ed238aeccc5531e90cb265313893
-- next_worktrack_candidate: WT-20260527-045 管理员 AI Provider 配置; feature node; second MS7 worktrack.
+- latest_completed_worktrack: WT-20260527-045 completed and merged at 0d4cfbcac7a6fb0453d6fea1a3d730aeda3d3d46
+- next_worktrack_candidate: WT-20260527-040 文档/zip 上传安全与私有存储; feature node; third MS7 worktrack.
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入
