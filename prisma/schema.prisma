@@ -199,6 +199,7 @@ model KnowledgeSource {
 
   createdBy User?                    @relation(fields: [createdById], references: [id])
   versions  KnowledgeSourceVersion[]
+  snippets  KnowledgeSnippet[]
 }
 
 model KnowledgeSourceVersion {
@@ -218,6 +219,24 @@ model KnowledgeSourceVersion {
 
   source    KnowledgeSource @relation(fields: [sourceId], references: [id], onDelete: Cascade)
   createdBy User?           @relation(fields: [createdById], references: [id])
+  snippets  KnowledgeSnippet[]
 
   @@unique([sourceId, version])
+}
+
+model KnowledgeSnippet {
+  id          String   @id @default(cuid())
+  sourceId    String
+  versionId   String
+  sourcePath  String
+  section     String?
+  content     String
+  chunkIndex  Int
+  enabled     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  source  KnowledgeSource        @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  version KnowledgeSourceVersion @relation(fields: [versionId], references: [id], onDelete: Cascade)
+
+  @@unique([versionId, sourcePath, chunkIndex])
 }
