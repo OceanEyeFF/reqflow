@@ -2,7 +2,7 @@
 
 This document records the final review evidence for `MS-20260526-001 / GitHub CI 与上云前决策基线`.
 
-Final milestone acceptance is still a programmer decision. This review only states whether the evidence is ready for handback.
+Final milestone acceptance was a programmer decision. This review records the handback evidence; the milestone was later accepted by `fdch0` on 2026-05-27 14:47:38 +08:00.
 
 ## Scope Reviewed
 
@@ -98,6 +98,6 @@ The brief treats the current OpenAI model guidance as implementation-time inform
 
 ## Review Verdict
 
-MS5 final review evidence is ready for programmer acceptance decision.
+MS5 final review evidence was ready for programmer acceptance decision and was subsequently accepted by the programmer.
 
-This review does not itself accept or complete `MS-20260526-001`.
+This review did not itself accept or complete `MS-20260526-001`; final acceptance is recorded in the milestone artifact and backlog.
