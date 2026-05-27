@@ -1,5 +1,9 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { assembleKnowledgeContext, knowledgeSources, toDraftCitations } from "./knowledge";
+
+vi.mock("@/lib/knowledge/retrieval", () => ({
+  selectKnowledgeSnippets: vi.fn(async () => []),
+}));
 
 describe("knowledgeSources", () => {
   it("uses the MS6 rf source whitelist", () => {

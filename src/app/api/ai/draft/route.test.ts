@@ -26,6 +26,10 @@ vi.mock("@/lib/ai/provider-config", () => ({
   getEffectiveProviderConfig,
 }));
 
+vi.mock("@/lib/knowledge/retrieval", () => ({
+  selectKnowledgeSnippets: vi.fn(async () => []),
+}));
+
 type Route = typeof import("./route");
 
 let auth: ReturnType<typeof vi.mocked<typeof authFn>>;
