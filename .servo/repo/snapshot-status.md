@@ -4,7 +4,7 @@
 
 - updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: 12e75148c6beb54897031b74d68d461edb6f895d
+- baseline_commit: 5878d2a85da574d63e07850a66504ebeccd5a7c5
 
 ## Codebase State
 
@@ -57,6 +57,7 @@ reqflow/
 | AI MVP technical brief | 已建立并在 MS6/MS7 planning 中调整，当前 provider 决策为 Deepseek；MS6 聚焦 discussion MVP，MS7 承接管理员知识库上传/导入；no PG/pgvector dependency (2026-05-27) |
 | AI discussion product flow | `docs/ai-discussion-product-flow.md` 已建立，覆盖 discussion state machine、draft schema、manual confirmation、current ticket form handoff、Deepseek boundary、MS6/MS7 split、no PG/pgvector dependency (2026-05-27, WT-20260526-031) |
 | AI knowledge citation strategy | `docs/ai-knowledge-citation-strategy.md` 已建立，覆盖 8-source `rf-*` whitelist、provider-neutral citation shape、snippet rules、redaction/exclusion policy、empty-context fallback、no upload/zip/PG/pgvector dependency (2026-05-27, WT-20260526-032) |
+| AI draft API/provider adapter | `POST /api/ai/draft` and `src/lib/ai/*` 已建立，覆盖 server-side Deepseek adapter、mocked tests、auth、redaction、static knowledge snippets、missing-secret handling、no direct ticket mutation (2026-05-27, WT-20260526-033) |
 
 ### 已知 Issues (来自 handoff.md)
 
@@ -128,18 +129,18 @@ reqflow/
 - milestone_id: MS-20260526-002
 - title: AI 需求生成 Discussion MVP
 - status: active
-- progress: 2/6 completed
+- progress: 3/6 completed
 - depends_on_milestones: MS-20260526-001
 - scope_boundary: MS6 uses Deepseek through a server-side adapter and focuses on discussion + structured draft + manual confirmation; administrator knowledge-base upload/docs zip import is deferred to MS7; no PostgreSQL/pgvector dependency.
-- completed_worktracks: WT-20260526-031, WT-20260526-032
-- active_or_next_worktrack: WT-20260526-033 intake pending
-- latest_evidence: WT-20260526-032 merged at `12e75148c6beb54897031b74d68d461edb6f895d`; `npm run lint`, `npm run test`, and `npm run build` passed locally in the worktree after `npm ci`.
+- completed_worktracks: WT-20260526-031, WT-20260526-032, WT-20260526-033
+- active_or_next_worktrack: WT-20260526-034 intake pending
+- latest_evidence: WT-20260526-033 merged at `5878d2a85da574d63e07850a66504ebeccd5a7c5`; `npm run lint`, `npm run test`, and `npm run build` passed locally in the worktree after `npm ci`.
 
 ### Preparation Work
 
 - current_preparation_milestone: MS-20260526-002
-- current_preparation_item: WT-20260526-033 Deepseek Draft API 与 Provider Adapter intake
-- preparation_goal: implement server-side draft API/provider adapter with mocked Deepseek tests, source whitelist assembly, citation fallback, auth, redaction, timeout/rate guard, and no client secret exposure.
+- current_preparation_item: WT-20260526-034 AI 需求生成 Discussion 页面 UI intake
+- preparation_goal: build discussion page UI around the internal draft API, with clarification, draft review, citations, failure states, and accept/edit/discard controls.
 - provider_decision: Deepseek
 - split_decision: administrator knowledge-base upload and docs-style zip import are planned under MS-20260527-001.
 

@@ -28,7 +28,7 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 - WT-20260526-037: 严谨 CodeReview Worktrack
 - WT-20260526-038: Ticket 授权与上传安全加固
 
-当前 active milestone 是 `MS-20260526-002 / AI 需求生成 Discussion MVP`，依赖 MS5 完成，目前 2/6 completed。用户已确认 AI provider 使用 Deepseek，并确认管理员知识库上传/docs zip 导入拆分为 `MS-20260527-001 / 管理员项目知识库管理与导入`。WT-20260526-031 已建立 `docs/ai-discussion-product-flow.md`；WT-20260526-032 已建立 `docs/ai-knowledge-citation-strategy.md`，定义 8-source `rf-*` whitelist、provider-neutral citation shape、snippet rules、redaction/exclusion policy、empty-context fallback 和后续 WT-033 至 WT-036 调整说明。
+当前 active milestone 是 `MS-20260526-002 / AI 需求生成 Discussion MVP`，依赖 MS5 完成，目前 3/6 completed。用户已确认 AI provider 使用 Deepseek，并确认管理员知识库上传/docs zip 导入拆分为 `MS-20260527-001 / 管理员项目知识库管理与导入`。WT-20260526-031 已建立 `docs/ai-discussion-product-flow.md`；WT-20260526-032 已建立 `docs/ai-knowledge-citation-strategy.md`；WT-20260526-033 已建立 authenticated server-side `POST /api/ai/draft` 和 Deepseek adapter boundary，使用 mock provider 测试，保持无真实 key CI、无直接 ticket mutation、无 PG/pgvector/upload/zip 范围。
 
 最近质量基线来自 WT-20260526-026：
 - `npm run build` 通过
@@ -54,7 +54,7 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 
 | 优先级 | 事项 | 理由 |
 |--------|------|------|
-| P0 | WT-20260526-033 intake | MS6 产品流和知识引用策略已完成，下一步应实现 server-side Deepseek draft API/provider adapter，使用 mock provider 保持 CI deterministic |
+| P0 | WT-20260526-034 intake | MS6 后端 draft API 已完成，下一步应构建 AI 需求生成 discussion 页面 UI，消费内部 draft API 并保持人工确认 |
 | P1 | 上云前环境与部署执行 | 当前 SQLite/local-only DB 策略不等于生产部署方案，但 PG 暂不碰 |
 | P2 | 页面级交互回归测试 | 工单列表、详情、新建流程仍缺黑盒覆盖 |
 | P3 | 邮件/外部通知能力 | 当前仅有站内通知 |
@@ -68,13 +68,13 @@ Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块�
 1. **M4: 项目整洁度与 AI 适配治理** — completed, 7/7 completed, milestone gate pass, accepted by programmer
 
 当前 active milestone：
-1. **MS6: AI 需求生成 Discussion MVP** — active, 2/6 completed, depends on accepted MS5
+1. **MS6: AI 需求生成 Discussion MVP** — active, 3/6 completed, depends on accepted MS5
 
 planned milestone：
 1. **MS7: 管理员项目知识库管理与导入** — planned, 0/6 completed, depends on MS6
 
 建议按以下 worktrack 顺序推进：
-1. Feature / WT-20260526-033 intake: Deepseek Draft API 与 Provider Adapter。
+1. Feature / WT-20260526-034 intake: AI 需求生成 Discussion 页面 UI。
 
 ## Unknowns / Next Options
 

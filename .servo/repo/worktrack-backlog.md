@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 44
-- planned: 10
+- planned: 9
 - active: 0
-- completed: 34
+- completed: 35
 - blocked: 0
 - deferred: 0
 
@@ -405,10 +405,10 @@
 - title: Deepseek Draft API 与 Provider Adapter
 - milestone_id: MS-20260526-002
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 3
 - contract_path: .servo/worktrack/WT-20260526-033/contract.md
-- branch: worktrack/wt-20260526-033-deepseek-draft-api
+- branch: worktrack/wt-20260526-033-deepseek-draft-api (merged)
 
 ### WT-20260526-034
 
