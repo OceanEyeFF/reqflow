@@ -113,7 +113,7 @@
 - status: planned
 - priority: 7
 - depends_on_milestones: [MS-20260526-002]
-- worktrack_list: [WT-20260527-039, WT-20260527-040, WT-20260527-041, WT-20260527-042, WT-20260527-043, WT-20260527-044]
+- worktrack_list: [WT-20260527-039, WT-20260527-045, WT-20260527-040, WT-20260527-041, WT-20260527-042, WT-20260527-043, WT-20260527-044]
 - created_by: fdch0
 - created_at: 2026-05-27
 - updated: 2026-05-27

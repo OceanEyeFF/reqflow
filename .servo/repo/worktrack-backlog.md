@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 44
-- planned: 6
+- total: 45
+- planned: 7
 - active: 0
 - completed: 38
 - blocked: 0
@@ -456,6 +456,17 @@
 - contract_path: .servo/worktrack/WT-20260527-039/contract.md
 - branch: worktrack/wt-20260527-039-admin-kb-upload-design
 
+### WT-20260527-045
+
+- worktrack_id: WT-20260527-045
+- title: 管理员 AI Provider 配置
+- milestone_id: MS-20260527-001
+- node_type: feature
+- status: planned
+- priority: 2
+- contract_path: .servo/worktrack/WT-20260527-045/contract.md
+- branch: worktrack/wt-20260527-045-ai-provider-admin-config
+
 ### WT-20260527-040
 
 - worktrack_id: WT-20260527-040
@@ -463,7 +474,7 @@
 - milestone_id: MS-20260527-001
 - node_type: feature
 - status: planned
-- priority: 2
+- priority: 3
 - contract_path: .servo/worktrack/WT-20260527-040/contract.md
 - branch: worktrack/wt-20260527-040-kb-upload-private-storage
 
@@ -474,7 +485,7 @@
 - milestone_id: MS-20260527-001
 - node_type: feature
 - status: planned
-- priority: 3
+- priority: 4
 - contract_path: .servo/worktrack/WT-20260527-041/contract.md
 - branch: worktrack/wt-20260527-041-kb-parse-versioning
 
@@ -485,7 +496,7 @@
 - milestone_id: MS-20260527-001
 - node_type: feature
 - status: planned
-- priority: 4
+- priority: 5
 - contract_path: .servo/worktrack/WT-20260527-042/contract.md
 - branch: worktrack/wt-20260527-042-kb-lightweight-retrieval
 
@@ -496,7 +507,7 @@
 - milestone_id: MS-20260527-001
 - node_type: feature
 - status: planned
-- priority: 5
+- priority: 6
 - contract_path: .servo/worktrack/WT-20260527-043/contract.md
 - branch: worktrack/wt-20260527-043-admin-kb-ui
 
@@ -507,6 +518,6 @@
 - milestone_id: MS-20260527-001
 - node_type: test
 - status: planned
-- priority: 6
+- priority: 7
 - contract_path: .servo/worktrack/WT-20260527-044/contract.md
 - branch: worktrack/wt-20260527-044-kb-import-validation
