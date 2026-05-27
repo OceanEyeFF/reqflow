@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 44
-- planned: 7
+- planned: 6
 - active: 0
-- completed: 37
+- completed: 38
 - blocked: 0
 - deferred: 0
 
@@ -438,10 +438,10 @@
 - title: 安全治理、测试与 MS6 验收
 - milestone_id: MS-20260526-002
 - node_type: test
-- status: planned
+- status: completed
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260526-036/contract.md
-- branch: worktrack/wt-20260526-036-ai-discussion-validation
+- branch: worktrack/wt-20260526-036-ai-discussion-validation (merged)
 
 ## M7: 管理员项目知识库管理与导入 (MS-20260527-001)
 

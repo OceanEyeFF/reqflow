@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: WT-20260526-035 completed and merged; next action is WT-20260526-036 safety governance, tests, and MS6 validation intake
+- RepoScope.Handback: WT-20260526-036 completed and merged; MS-20260526-002 has 6/6 worktracks completed and is ready for programmer acceptance decision
 
 ## Linked Formal Documents
 
@@ -43,9 +43,9 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: false
-- reason: MS-20260526-001 final acceptance was approved by programmer; no pending approval for milestone closeout
-- approval_scope: N/A
+- needs_programmer_approval: true
+- reason: MS-20260526-002 final milestone acceptance is explicitly programmer-owned
+- approval_scope: MS-20260526-002 final acceptance
 - approval_persistence: current execution cycle
 
 ## Continuation Authority
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 7d95655d4b43f10e1b183c5ac24c84ce89e5dbb9
-- last_doc_catch_up_checkpoint: 7d95655d4b43f10e1b183c5ac24c84ce89e5dbb9
-- milestone_input_checkpoint: 7d95655d4b43f10e1b183c5ac24c84ce89e5dbb9
+- latest_observed_checkpoint: 7e4afa76ee7e1937897c555b7b884baa33a02ad4
+- last_doc_catch_up_checkpoint: 7e4afa76ee7e1937897c555b7b884baa33a02ad4
+- milestone_input_checkpoint: 7e4afa76ee7e1937897c555b7b884baa33a02ad4
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
@@ -95,8 +95,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 15
-- autonomous_worktracks_opened: 15
+- autonomy_budget_remaining: 14
+- autonomous_worktracks_opened: 16
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-23
 - autonomy_budget_notes: 用户授予30个连续Worktrack额度，低危险操作可自行审批
@@ -106,5 +106,5 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已完成 WT-20260526-031 至 WT-20260526-035；下一步 WT-20260526-036 安全治理、测试与 MS6 验收；MS-20260527-001 管理员知识库管理与导入保持 planned
+- Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已完成 WT-20260526-031 至 WT-20260526-036；MS6 gate pass，等待程序员最终验收决定；MS-20260527-001 管理员知识库管理与导入保持 planned，未自动启动
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入
