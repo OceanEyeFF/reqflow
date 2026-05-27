@@ -4,7 +4,7 @@
 
 - updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: 852764b01c847fe4eaa0681a2801f16d82625914
+- baseline_commit: b93935da269ed14ce85c28c799d0f4dd7cd9361c
 
 ## Codebase State
 
@@ -60,8 +60,8 @@ reqflow/
 | AI draft API/provider adapter | `POST /api/ai/draft` and `src/lib/ai/*` 已建立，覆盖 server-side Deepseek adapter、mocked tests、auth、redaction、static knowledge snippets、missing-secret handling、no direct ticket mutation (2026-05-27, WT-20260526-033) |
 | AI discussion page UI | `/tickets/ai-discussion` 已建立，覆盖 discussion input、AI clarification、answers、draft preview、citations、empty knowledge、errors、accept/discard/reset controls；不直接创建工单 (2026-05-27, WT-20260526-034) |
 | AI draft ticket-form handoff | accepted AI draft 使用 browser `sessionStorage` staging，跳转 `/tickets/new?from=ai-draft` 并预填现有表单；最终仍需用户点击创建工单 (2026-05-27, WT-20260526-035) |
-| AI discussion MVP final validation | `docs/ms6-ai-discussion-validation.md` 和 `.servo/worktrack/WT-20260526-036/gate-evidence.md` 记录安全治理、DeepSeek 官方 API 复核、draft handoff helper 测试、hydration-safe prefill、malformed JSON 400、无 MS7 scope 混入，以及 MS6 等待程序员验收决定 (2026-05-27, WT-20260526-036) |
-| MS6 supplemental reviews | `docs/ms6-code-review.md` 和 `docs/ms6-expert-evaluation.md` 记录 CodeReview 与专家评议。未发现 Critical/High 或 final-acceptance blocker；MS6 gate verdict 重新变为 pass，等待程序员最终验收 (2026-05-27, WT-20260527-046, WT-20260527-047) |
+| AI discussion MVP final validation | `docs/ms6-ai-discussion-validation.md` 和 `.servo/worktrack/WT-20260526-036/gate-evidence.md` 记录安全治理、DeepSeek 官方 API 复核、draft handoff helper 测试、hydration-safe prefill、malformed JSON 400、无 MS7 scope 混入，以及 MS6 验收证据 (2026-05-27, WT-20260526-036) |
+| MS6 supplemental reviews | `docs/ms6-code-review.md` 和 `docs/ms6-expert-evaluation.md` 记录 CodeReview 与专家评议。未发现 Critical/High 或 final-acceptance blocker；MS6 gate verdict 重新变为 pass，并已由程序员在 `b93935da269ed14ce85c28c799d0f4dd7cd9361c` 验收合并 (2026-05-27, WT-20260527-046, WT-20260527-047) |
 
 ### 已知 Issues (来自 handoff.md)
 
@@ -133,7 +133,7 @@ reqflow/
 - milestone_id: MS-20260526-002
 - title: AI 需求生成 Discussion MVP
 - status: completed
-- progress: 8/8 completed at baseline `852764b01c847fe4eaa0681a2801f16d82625914`
+- progress: 8/8 completed and accepted at baseline `b93935da269ed14ce85c28c799d0f4dd7cd9361c`
 - depends_on_milestones: MS-20260526-001
 - scope_boundary: MS6 uses Deepseek through a server-side adapter and focuses on discussion + structured draft + manual confirmation; administrator knowledge-base upload/docs zip import is deferred to MS7; no PostgreSQL/pgvector dependency.
 - completed_worktracks: WT-20260526-031, WT-20260526-032, WT-20260526-033, WT-20260526-034, WT-20260526-035, WT-20260526-036, WT-20260527-046, WT-20260527-047
@@ -149,8 +149,8 @@ reqflow/
 ### Preparation Work
 
 - current_preparation_milestone: MS-20260527-001
-- current_preparation_item: MS7 remains planned until explicit next-cycle activation
-- preparation_goal: decide/activate MS7 after MS6 acceptance handoff.
+- current_preparation_item: MS7 remains planned; MS6 dependency is satisfied and the next RepoScope decision may activate MS7 after programmer review boundary.
+- preparation_goal: decide whether to activate MS7 and initialize the first planned worktrack without re-opening MS6 scope.
 - provider_decision: Deepseek
 - split_decision: administrator knowledge-base upload and docs-style zip import are planned under MS-20260527-001.
 

@@ -4,80 +4,75 @@
 
 - updated: 2026-05-27
 - based_on_snapshot: .servo/repo/snapshot-status.md
+- baseline_branch: develop
+- baseline_commit: b93935da269ed14ce85c28c799d0f4dd7cd9361c
 
 ## Current State Summary
 
-Phase 1-8 全部完成并合并到 `develop`。Phase 9 的基本面、分模块治理与 M3 API route handler 集成测试已完成并由用户验收。
+Phase 1-8 全部完成并合并到 `develop`。Phase 9 的项目基本面更新、分模块代码质量治理、API route handler 集成测试、项目整洁度与 AI 适配治理、GitHub CI 与上云前决策基线，以及 AI 需求生成 Discussion MVP 均已完成对应 milestone 验收。
 
-最近完成的 milestone 是 `MS-20260524-001 / 项目整洁度与 AI 适配治理`。截至 baseline `87903be9dcd65c1769040a54b214e93303014851`，M4 已完成 7/7 个 worktrack，通过 Milestone Gate，并由 programmer 最终验收：
-- WT-20260524-018: dirty-state strategy matrix
-- WT-20260524-019: `.gitignore` temp artifact governance
-- WT-20260524-020: worktree/branch cleanup
-- WT-20260524-021: AI collaboration entrypoints
-- WT-20260524-022: Prisma dev DB governance
-- WT-20260524-023: docs and RepoStatus synchronization
-- WT-20260524-024: final governance review
+最近完成的 milestone 是 `MS-20260526-002 / AI 需求生成 Discussion MVP`。截至 baseline `b93935da269ed14ce85c28c799d0f4dd7cd9361c`，MS6 已完成 8/8 个 worktrack，通过 Milestone Gate、补充 CodeReview 和专家评议，并由 programmer 最终验收：
+- WT-20260526-031: Discussion 产品流与信息架构设计
+- WT-20260526-032: 最小内置知识语料与引用策略
+- WT-20260526-033: Deepseek Draft API 与 Provider Adapter
+- WT-20260526-034: AI 需求生成 Discussion 页面 UI
+- WT-20260526-035: 草稿确认与工单表单衔接
+- WT-20260526-036: 安全治理、测试与 MS6 验收
+- WT-20260527-046: MS6 CodeReview 专用评审
+- WT-20260527-047: MS6 专家评议评估
 
-最近完成的 milestone 是 `MS-20260526-001 / GitHub CI 与上云前决策基线`。截至 baseline `e127633d2982ee01605a0316dabbaf990382aca3`，MS5 已完成 8/8 个 worktrack，通过 Milestone Gate，并由 programmer 最终验收：
-- WT-20260526-025: RepoStatus 刷新
-- WT-20260526-026: GitHub Actions CI 基线
-- WT-20260526-027: GitHub 推送与 CI 验证
-- WT-20260526-028: 上云前环境与部署边界文档
-- WT-20260526-029: AI MVP 技术决策 Brief
-- WT-20260526-030: MS5 最终验收
-- WT-20260526-037: 严谨 CodeReview Worktrack
-- WT-20260526-038: Ticket 授权与上传安全加固
+当前没有 active milestone。Pipeline 中唯一 planned milestone 是 `MS-20260527-001 / 管理员项目知识库管理与导入`，依赖 `MS-20260526-002`，该依赖已满足。MS7 包含 7 个 planned worktrack，按当前 backlog 顺序为：
+- WT-20260527-039: 管理员知识库上传产品与权限设计
+- WT-20260527-045: 管理员 AI Provider 配置
+- WT-20260527-040: 文档/zip 上传安全与私有存储
+- WT-20260527-041: 文档解析、分块、来源/版本记录
+- WT-20260527-042: 轻量检索与引用片段选择
+- WT-20260527-043: 管理员知识库 UI
+- WT-20260527-044: 知识库导入验收与安全回归
 
-当前 active milestone 是 `MS-20260526-002 / AI 需求生成 Discussion MVP`，依赖 MS5 完成，目前 5/6 completed。用户已确认 AI provider 使用 Deepseek，并确认管理员知识库上传/docs zip 导入拆分为 `MS-20260527-001 / 管理员项目知识库管理与导入`。WT-20260526-031 至 WT-20260526-035 已完成产品流、知识引用策略、authenticated server-side `POST /api/ai/draft`、`/tickets/ai-discussion` 页面，以及 accepted draft 到现有 `/tickets/new` 的人工确认 handoff。
-
-最近质量基线来自 WT-20260526-026：
-- `npm run build` 通过
-- `npm run lint` 通过，ESLint 0 warning
-- `npm run test` 通过，10 个测试文件，83 个测试
-- GitHub Actions baseline workflow 已建立，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`
-- GitHub Actions run `26494518202` 对 `bd2789d4e404996b603833757dfa71859d2b0210` 通过，job `78019430374 / lint, test, build` conclusion `success`
-- GitHub Actions run `26494818503` 对 handback docs merge commit `a2fddc64b39e0f4ecb09d0ffee8587c27ce153d0` 通过，job `78020426471 / lint, test, build` conclusion `success`
-- `docs/cloud-readiness-boundary.md` 已建立上云前边界，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、上传目录、SQLite 生产风险和部署平台能力边界
-- `docs/ai-mvp-technical-brief.md` 已建立 AI MVP 技术边界，并在本轮 planning 中调整为 Deepseek provider、discussion 页面主入口、MS7 知识库导入拆分和无 PostgreSQL/pgvector 依赖
-- GitHub Actions run `26464643535` 是 WT-030 旧远端 CI 证据，已被当前 run `26494518202` supersede
-- `docs/ms5-final-review.md` 已刷新最终 review 记录，结论为 WT-037 发现的阻断项已由 WT-038 修复，MS5 evidence ready for programmer acceptance decision
+最近质量基线：
+- `npm run lint`、`npm run test`、`npm run build` 在 MS6 validation/review 轮次通过；WT-047 fresh validation 记录包含 `npm ci`、`git diff --check`、`npm run lint`、`npm run test`（15 files / 104 tests）和 `npm run build`。
+- GitHub Actions run `26502063963` 对 MS6 validation handback commit `b5d50b8b8043dc8a35264cf96553955a4697ba8d` completed with conclusion `success`。
+- `develop` 当前基准为 `b93935da269ed14ce85c28c799d0f4dd7cd9361c`，merge message 为 `merge: accept MS6 milestone`。
 
 ## Principal Contradictions
 
-1. **MS6 discussion MVP vs MS7 knowledge-base import**: MS6 已收窄为 Deepseek-backed discussion MVP；管理员知识库上传、docs zip 导入、解析、版本和管理 UI 已拆入 MS7，不能在 MS6 静默扩大范围。
-2. **可见未跟踪目录 vs 不可批量处理**: `.agents/.claude/.harness/.mavis/.worktrees` 等仍可见，但已被分类为需要逐项判断的治理对象，不应通过粗暴 ignore 或删除制造表面 clean。
-3. **本地 SQLite 便利性 vs 生产部署要求**: 开发 DB 已改为 local-only runtime artifact；生产数据库迁移和云端环境变量仍需独立部署 worktrack 处理。
-4. **远端主线已同步 vs 生产部署要求未定义**: GitHub 已同步，Gitee 已由用户降级为非当前重点；生产部署仍需要环境变量、存储和数据库边界。
-5. **Deepseek provider 已确认 vs secret/计费仍需上线前决策**: MS6 可以设计 provider adapter，但真实 API key、模型、计费、生产 secret 和上线配置仍需用户或部署 worktrack 决策。
+1. **MS7 activation readiness vs programmer review boundary**: MS6 已验收且 MS7 依赖满足，但 MS7 仍处于 planned。下一步应由 RepoScope 判定激活 MS7，不应绕过 programmer review boundary 直接打开 feature worktrack。
+2. **AI provider configuration vs secret safety**: MS7 已包含管理员可配置 OpenAI-compatible endpoint/model/key 和 localhost no-key 模式；实现时必须保持 secret 仅服务端可读、响应只返回脱敏状态，并避免空 key 被误解释为云端 provider 配置。
+3. **Knowledge import MVP vs storage/retrieval expansion**: MS7 允许私有上传、解析、分块、轻量检索和引用追踪；PDF/DOCX/OCR、生产对象存储、PostgreSQL/pgvector 和第三方向量服务仍在默认范围外。
+4. **可见未跟踪目录 vs 不可批量处理**: `.agents/.claude/.harness/.mavis/.worktrees` 等仍可见，但已被分类为需要逐项判断的治理对象，不应通过粗暴 ignore 或删除制造表面 clean。
 
 ## Priority Assessment
 
 | 优先级 | 事项 | 理由 |
 |--------|------|------|
-| P0 | WT-20260526-036 intake | MS6 功能闭环已实现，下一步应完成安全治理、测试回归、远端 CI 观察和 MS6 验收证据 |
-| P1 | 上云前环境与部署执行 | 当前 SQLite/local-only DB 策略不等于生产部署方案，但 PG 暂不碰 |
-| P2 | 页面级交互回归测试 | 工单列表、详情、新建流程仍缺黑盒覆盖 |
-| P3 | 邮件/外部通知能力 | 当前仅有站内通知 |
+| P0 | MS7 activation decision | 当前无 active milestone，唯一 planned milestone 的依赖已满足，下一步应先激活 MS7 或明确保持观察。 |
+| P1 | WT-20260527-039 intake | 管理员知识库上传产品与权限设计是 MS7 的第一个 planned worktrack，可为上传、安全、版本和 UI 划定边界。 |
+| P1 | WT-20260527-045 intake | 用户明确追加管理员 AI Provider 配置；可在 MS7 内作为 provider/secret 边界的早期执行切片。 |
+| P2 | 上云前环境与部署执行 | 当前 SQLite/local-only DB 策略不等于生产部署方案，但 PostgreSQL/pgvector 暂不碰。 |
+| P3 | 页面级交互回归测试 | 工单列表、详情、新建流程仍缺黑盒覆盖，可在 MS7 后续或独立质量 milestone 中处理。 |
 
 ## Route Projection
 
 已验收 milestone：
-1. **M3: API route handler 集成测试** — 为 tickets、comments、members、attachments、notifications 的关键成功/失败路径建立 Prisma/SQLite 测试夹具与 route handler 覆盖
-
-已验收 milestone：
-1. **M4: 项目整洁度与 AI 适配治理** — completed, 7/7 completed, milestone gate pass, accepted by programmer
+1. **M3: API route handler 集成测试** — completed, accepted
+2. **M4: 项目整洁度与 AI 适配治理** — completed, accepted
+3. **MS5: GitHub CI 与上云前决策基线** — completed, accepted
+4. **MS6: AI 需求生成 Discussion MVP** — completed, accepted at `b93935da269ed14ce85c28c799d0f4dd7cd9361c`
 
 当前 active milestone：
-1. **MS6: AI 需求生成 Discussion MVP** — active, 5/6 completed, depends on accepted MS5
+1. none
 
 planned milestone：
-1. **MS7: 管理员项目知识库管理与导入** — planned, 0/6 completed, depends on MS6
+1. **MS7: 管理员项目知识库管理与导入** — planned, 0/7 completed, depends on accepted MS6
 
-建议按以下 worktrack 顺序推进：
-1. Test / WT-20260526-036 intake: 安全治理、测试与 MS6 验收。
+建议下一步：
+1. RepoScope.Decide / Milestone-First: activate `MS-20260527-001` if programmer review boundary permits.
+2. After activation, initialize the first ready worktrack from MS7 backlog. Default first slice remains `WT-20260527-039` unless programmer chooses to prioritize the explicitly appended `WT-20260527-045` provider configuration first.
 
 ## Unknowns / Next Options
 
-- `docs/phase6-8-plan.md`、`.harness/`、`.mavis/` 等未跟踪治理候选是否应迁入 canonical docs/control plane、归档、保留本地或删除，需要在 M4 final review 后由用户或后续 worktrack 决定。
-- 云端部署若推进，需要单独定义数据库、环境变量、GitHub Actions、托管平台与 secret 管理边界；PostgreSQL/pgvector 暂不碰。
-- 页面级回归测试是否引入 Playwright，还是先保持 Vitest 单元/集成测试，仍是后续质量路线选择。
+- MS7 first worktrack ordering may need programmer choice if provider configuration (`WT-20260527-045`) should precede product/upload design (`WT-20260527-039`).
+- AI Provider 配置的持久化方式、API key 加密/脱敏策略、localhost endpoint allowlist、测试连接语义和默认模型策略若超出 MVP 安全边界，需要用户确认。
+- 文档/zip 上传的文件类型、大小上限、存储位置和删除策略若超出 MVP 安全边界，需要用户确认。
+- `docs/phase6-8-plan.md`、`.harness/`、`.mavis/` 等未跟踪治理候选是否应迁入 canonical docs/control plane、归档、保留本地或删除，仍需后续治理判断。

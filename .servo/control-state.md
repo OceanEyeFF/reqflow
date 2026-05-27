@@ -29,7 +29,7 @@
 
 ## Current Next Action
 
-- RepoScope.Observe: MS6 accepted by programmer; next planned milestone is MS-20260527-001, not yet activated
+- RepoScope.Decide: MS6 accepted by programmer; MS-20260527-001 is the only planned milestone, dependency satisfied, ready for programmer-reviewed activation.
 
 ## Linked Formal Documents
 
@@ -84,9 +84,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 852764b01c847fe4eaa0681a2801f16d82625914
-- last_doc_catch_up_checkpoint: 852764b01c847fe4eaa0681a2801f16d82625914
-- milestone_input_checkpoint: 852764b01c847fe4eaa0681a2801f16d82625914
+- latest_observed_checkpoint: b93935da269ed14ce85c28c799d0f4dd7cd9361c
+- last_doc_catch_up_checkpoint: b93935da269ed14ce85c28c799d0f4dd7cd9361c
+- milestone_input_checkpoint: b93935da269ed14ce85c28c799d0f4dd7cd9361c
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
@@ -108,5 +108,7 @@
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
 - Phase 9 当前阶段: MS-20260526-002 AI 需求生成 Discussion MVP 已由程序员验收通过；MS-20260527-001 管理员知识库管理与导入保持 planned，未自动启动
 - latest_acceptance: MS-20260526-002 accepted by fdch0 on 2026-05-27
+- latest_repo_baseline: b93935da269ed14ce85c28c799d0f4dd7cd9361c (`merge: accept MS6 milestone`)
+- next_milestone_candidate: MS-20260527-001 管理员项目知识库管理与导入; planned 0/7, depends_on MS-20260526-002 satisfied, activation still requires RepoScope decision / programmer review boundary.
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入
