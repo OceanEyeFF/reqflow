@@ -7,7 +7,7 @@
 - milestone_id: MS-20260526-002
 - derived_from_milestone: true
 - node_type: review
-- status: planned
+- status: completed
 - created_at: 2026-05-27
 - updated: 2026-05-27
 
@@ -46,3 +46,4 @@ Perform a dedicated code review of the MS6 AI discussion implementation before f
 ## Notes
 
 - This worktrack invalidates the previous MS6 final handback until completed.
+- completed_evidence: `docs/ms6-code-review.md` and `.servo/worktrack/WT-20260527-046/gate-evidence.md`
