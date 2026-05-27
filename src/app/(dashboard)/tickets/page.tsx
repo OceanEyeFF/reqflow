@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { STATUS_LABELS, PRIORITY_LABELS, TYPE_LABELS, MEMBER_ROLE_LABELS } from "@/types";
 import type { TicketListItem } from "@/types";
-import { Plus, Search, Users } from "lucide-react";
+import { Plus, Search, Sparkles, Users } from "lucide-react";
 
 export default function TicketsPage() {
   const [tickets, setTickets] = useState<TicketListItem[]>([]);
@@ -75,14 +75,22 @@ export default function TicketsPage() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <h2 className="text-2xl font-bold">工单列表</h2>
-        <Link href="/tickets/new">
-          <Button>
-            <Plus className="w-4 h-4 mr-2" />
-            新建工单
-          </Button>
-        </Link>
+        <div className="flex flex-wrap gap-3">
+          <Link href="/tickets/ai-discussion">
+            <Button variant="secondary">
+              <Sparkles className="w-4 h-4 mr-2" />
+              AI 生成需求
+            </Button>
+          </Link>
+          <Link href="/tickets/new">
+            <Button>
+              <Plus className="w-4 h-4 mr-2" />
+              新建工单
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Filters */}
