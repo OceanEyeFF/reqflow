@@ -100,6 +100,32 @@ describe("createDeepseekProvider", () => {
     });
   });
 
+  it("allows localhost no-key providers without authorization header", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        Response.json({
+          choices: [{ message: { content: JSON.stringify({ kind: "clarification", questions: [] }) } }],
+        })
+      )
+    );
+
+    const provider = createDeepseekProvider({
+      baseUrl: "http://localhost:1234/v1",
+      model: "local-model",
+      timeoutMs: 1000,
+    });
+
+    await provider.generate({ mode: "clarify", requirement: "需要审批流", answers: [], knowledge: [] });
+
+    expect(fetch).toHaveBeenCalledWith(
+      "http://localhost:1234/v1/chat/completions",
+      expect.objectContaining({
+        headers: expect.not.objectContaining({ authorization: expect.any(String) }),
+      })
+    );
+  });
+
   it("wraps provider failures", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => new Response("bad", { status: 500 })));
     const provider = createDeepseekProvider({

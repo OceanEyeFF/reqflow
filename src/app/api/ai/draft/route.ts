@@ -1,12 +1,14 @@
 import { AuthError, requireAuth } from "@/lib/auth-helper";
 import { AiProviderConfigError, AiProviderError, createDeepseekProvider } from "@/lib/ai/deepseek-provider";
 import { AiDraftValidationError, generateRequirementDraft } from "@/lib/ai/draft-service";
+import { getEffectiveProviderConfig } from "@/lib/ai/provider-config";
 
 export async function POST(request: Request) {
   try {
     await requireAuth();
     const body = await parseJsonBody(request);
-    const result = await generateRequirementDraft(body, createDeepseekProvider());
+    const config = await getEffectiveProviderConfig();
+    const result = await generateRequirementDraft(body, createDeepseekProvider(config));
 
     return Response.json(result);
   } catch (error) {

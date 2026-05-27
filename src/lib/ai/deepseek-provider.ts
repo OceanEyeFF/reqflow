@@ -42,19 +42,26 @@ export function createDeepseekProvider(config = getDeepseekConfig()): DraftProvi
   return {
     async generate(request) {
       if (!config.apiKey) {
-        throw new AiProviderConfigError("Deepseek API key is not configured");
+        const baseUrl = config.baseUrl.toLowerCase();
+        if (!baseUrl.includes("localhost") && !baseUrl.includes("127.0.0.1") && !baseUrl.includes("[::1]")) {
+          throw new AiProviderConfigError("Deepseek API key is not configured");
+        }
       }
 
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), config.timeoutMs);
 
       try {
+        const headers: Record<string, string> = {
+          "content-type": "application/json",
+        };
+        if (config.apiKey) {
+          headers.authorization = `Bearer ${config.apiKey}`;
+        }
+
         const response = await fetch(`${config.baseUrl.replace(/\/$/, "")}/chat/completions`, {
           method: "POST",
-          headers: {
-            authorization: `Bearer ${config.apiKey}`,
-            "content-type": "application/json",
-          },
+          headers,
           body: JSON.stringify({
             model: config.model,
             messages: buildMessages(request),

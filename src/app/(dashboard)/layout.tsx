@@ -43,6 +43,11 @@ export default async function DashboardLayout({
                 <Link {...navProps("/tickets")}>
                   工单
                 </Link>
+                {session.user.role === "admin" && (
+                  <Link {...navProps("/admin/ai-provider")}>
+                    AI Provider
+                  </Link>
+                )}
               </nav>
             </div>
             <div className="flex items-center gap-4">

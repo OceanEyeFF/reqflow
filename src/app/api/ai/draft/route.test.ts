@@ -8,14 +8,23 @@ vi.mock("@/auth", () => ({
 }));
 
 const providerGenerate = vi.fn();
+const getEffectiveProviderConfig = vi.fn();
+let lastProviderConfig: unknown;
 
 vi.mock("@/lib/ai/deepseek-provider", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@/lib/ai/deepseek-provider")>();
   return {
     ...actual,
-    createDeepseekProvider: () => ({ generate: providerGenerate }),
+    createDeepseekProvider: (config: unknown) => {
+      lastProviderConfig = config;
+      return { generate: providerGenerate };
+    },
   };
 });
+
+vi.mock("@/lib/ai/provider-config", () => ({
+  getEffectiveProviderConfig,
+}));
 
 type Route = typeof import("./route");
 
@@ -32,6 +41,14 @@ beforeAll(async () => {
 beforeEach(() => {
   auth.mockReset();
   providerGenerate.mockReset();
+  lastProviderConfig = undefined;
+  getEffectiveProviderConfig.mockReset();
+  getEffectiveProviderConfig.mockResolvedValue({
+    apiKey: "test-key",
+    baseUrl: "https://api.example.test",
+    model: "model-x",
+    timeoutMs: 1000,
+  });
 });
 
 describe("POST /api/ai/draft", () => {
@@ -98,6 +115,7 @@ describe("POST /api/ai/draft", () => {
         knowledge: expect.any(Array),
       })
     );
+    expect(lastProviderConfig).toMatchObject({ model: "model-x" });
   });
 
   it("returns provider configuration errors without leaking secrets", async () => {
