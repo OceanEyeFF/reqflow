@@ -28,11 +28,13 @@ let auth: ReturnType<typeof vi.mocked<typeof authFn>>;
 let route: TicketRoute;
 let admin: User;
 let user: User;
+let outsider: User;
 let ticket: Ticket;
 
 async function seedScenario() {
   admin = await seedUser(prisma, { id: "admin-user", username: "admin-user", role: "admin" });
   user = await seedUser(prisma, { id: "regular-user", username: "regular-user", role: "user" });
+  outsider = await seedUser(prisma, { id: "outsider-user", username: "outsider-user", role: "user" });
   ticket = await seedTicket(prisma, {
     id: "ticket-1",
     creatorId: user.id,
@@ -89,6 +91,18 @@ describe("GET /api/tickets/[id]", () => {
 
     expect(result).toEqual({ status: 404, body: { error: "工单不存在" } });
   });
+
+  it("rejects users who are not ticket participants", async () => {
+    mockAuthSession(auth, { id: outsider.id, role: "user" });
+
+    const response = await route.GET(
+      getRequest(`http://localhost/api/tickets/${ticket.id}`),
+      routeParams({ id: ticket.id })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 403, body: { error: "无权访问该工单" } });
+  });
 });
 
 describe("PATCH /api/tickets/[id]", () => {
@@ -124,6 +138,22 @@ describe("PATCH /api/tickets/[id]", () => {
         where: { ticketId: ticket.id, action: "status_changed", oldValue: "pending", newValue: "processing" },
       })
     ).resolves.toBeTruthy();
+  });
+
+  it("rejects updates from users who are not ticket participants", async () => {
+    mockAuthSession(auth, { id: outsider.id, role: "user" });
+
+    const response = await route.PATCH(
+      jsonRequest(
+        `http://localhost/api/tickets/${ticket.id}`,
+        { status: "processing" },
+        { method: "PATCH" }
+      ),
+      routeParams({ id: ticket.id })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 403, body: { error: "无权访问该工单" } });
   });
 });
 

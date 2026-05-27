@@ -7,14 +7,14 @@
 - milestone_id: MS-20260526-001
 - derived_from_milestone: true
 - node_type: refactor
-- status: planned
+- status: completed
 - created_at: 2026-05-27
 - updated: 2026-05-27
 
 ## Worktrack Intake Review
 
 - repo_fundamentals: WT-20260526-037 rigorous CodeReview found blocking ticket object-level authorization gaps and a high-severity upload validation gap.
-- snapshot_freshness: local baseline for the finding is `7805fe20c412597d3fd11cc7837846ca0747da36`; WT-037 review artifacts are expected to merge before this worktrack starts.
+- snapshot_freshness: worktrack started from `develop` after WT-037 merge at `cff92a0`; remote CI freshness must be re-established after WT-038 merge because this worktrack changes application source and tests.
 - milestone_purpose_alignment: required before MS5 final programmer acceptance because the current code quality/security baseline is not acceptable for handback.
 - historical_conflict_risk: high; changes touch shared API authorization behavior and route tests.
 - worktrack_adjustment_recommendations: keep scope to participant/admin ticket access checks, upload MIME/extension hardening, and focused route tests.
@@ -25,7 +25,7 @@
 ## Baseline
 
 - baseline_branch: develop
-- baseline_ref: pending-after-WT-20260526-037-close
+- baseline_ref: cff92a0
 - work_branch: worktrack/wt-20260526-038-ticket-auth-upload-hardening
 - worktree_path: .worktrees/wt-20260526-038-ticket-auth-upload-hardening
 

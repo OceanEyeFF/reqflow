@@ -85,6 +85,30 @@ describe("GET /api/tickets", () => {
       "Created by user",
     ]);
   });
+
+  it("scopes non-admin scope=all to tickets involving the current user", async () => {
+    mockAuthSession(auth, { id: user.id, role: "user" });
+    const createdByUser = await seedTicket(prisma, { creatorId: user.id, title: "Created by user" });
+    const assignedToUser = await seedTicket(prisma, {
+      creatorId: admin.id,
+      assigneeId: user.id,
+      title: "Assigned to user",
+    });
+    const joinedByUser = await seedTicket(prisma, { creatorId: admin.id, title: "Joined by user" });
+    await prisma.ticketMember.create({
+      data: { ticketId: joinedByUser.id, userId: user.id, role: "collaborator" },
+    });
+    await seedTicket(prisma, { creatorId: admin.id, title: "Hidden from user" });
+
+    const response = await ticketsRoute.GET(getRequest("http://localhost/api/tickets?scope=all"));
+    const result = await readJson<{ tickets: Array<{ id: string; title: string }> }>(response);
+
+    expect(result.status).toBe(200);
+    expect(result.body.tickets.map((ticket) => ticket.id).sort()).toEqual(
+      [assignedToUser.id, createdByUser.id, joinedByUser.id].sort()
+    );
+    expect(result.body.tickets.map((ticket) => ticket.title)).not.toContain("Hidden from user");
+  });
 });
 
 describe("POST /api/tickets", () => {

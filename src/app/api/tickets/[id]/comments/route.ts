@@ -2,15 +2,17 @@ import { NextRequest } from "next/server";
 import { requireAuth } from "@/lib/auth-helper";
 import { prisma } from "@/lib/prisma";
 import { notifyNewComment } from "@/lib/notifications";
+import { requireTicketAccess, ticketAccessErrorResponse } from "@/lib/ticket-access";
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await requireAuth();
+    const session = await requireAuth();
 
     const { id } = await params;
+    await requireTicketAccess(id, session);
 
     const comments = await prisma.ticketComment.findMany({
       where: { ticketId: id },
@@ -25,6 +27,8 @@ export async function GET(
     if (error instanceof Error && error.message === "未登录") {
       return Response.json({ error: "未登录" }, { status: 401 });
     }
+    const accessResponse = ticketAccessErrorResponse(error);
+    if (accessResponse) return accessResponse;
     console.error("Comments GET error:", error);
     return Response.json({ error: "服务器错误" }, { status: 500 });
   }
@@ -38,6 +42,7 @@ export async function POST(
     const session = await requireAuth();
 
     const { id } = await params;
+    await requireTicketAccess(id, session);
     const body = await request.json();
     const { content } = body;
 
@@ -90,6 +95,8 @@ export async function POST(
     if (error instanceof Error && error.message === "未登录") {
       return Response.json({ error: "未登录" }, { status: 401 });
     }
+    const accessResponse = ticketAccessErrorResponse(error);
+    if (accessResponse) return accessResponse;
     console.error("Comments POST error:", error);
     return Response.json({ error: "服务器错误" }, { status: 500 });
   }

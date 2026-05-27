@@ -27,10 +27,12 @@ let prisma: PrismaClient;
 let auth: ReturnType<typeof vi.mocked<typeof authFn>>;
 let route: LogsRoute;
 let user: User;
+let outsider: User;
 let ticket: Ticket;
 
 async function seedScenario() {
   user = await seedUser(prisma, { id: "logs-user", username: "logs-user" });
+  outsider = await seedUser(prisma, { id: "logs-outsider", username: "logs-outsider" });
   ticket = await seedTicket(prisma, {
     id: "logs-ticket",
     creatorId: user.id,
@@ -101,5 +103,17 @@ describe("GET /api/tickets/[id]/logs", () => {
 
     expect(result.status).toBe(200);
     expect(result.body.logs.map((log) => log.action)).toEqual(["status_changed", "created"]);
+  });
+
+  it("rejects users who are not ticket participants", async () => {
+    mockAuthSession(auth, { id: outsider.id, role: "user" });
+
+    const response = await route.GET(
+      getRequest(`http://localhost/api/tickets/${ticket.id}/logs`),
+      routeParams({ id: ticket.id })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 403, body: { error: "无权访问该工单" } });
   });
 });

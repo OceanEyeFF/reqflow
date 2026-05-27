@@ -88,6 +88,18 @@ describe("GET /api/tickets/[id]/members", () => {
       expect.objectContaining({ userId: collaborator.id, role: "collaborator" }),
     ]);
   });
+
+  it("rejects users who are not ticket participants", async () => {
+    mockAuthSession(auth, { id: outsider.id, role: "user" });
+
+    const response = await route.GET(
+      getRequest(`http://localhost/api/tickets/${ticket.id}/members`),
+      routeParams({ id: ticket.id })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 403, body: { error: "无权访问该工单" } });
+  });
 });
 
 describe("POST /api/tickets/[id]/members", () => {

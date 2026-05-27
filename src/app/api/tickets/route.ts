@@ -2,6 +2,7 @@ import { NextRequest } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireAuth } from "@/lib/auth-helper";
 import { notifyTicketAssigned } from "@/lib/notifications";
+import { ticketParticipantWhere } from "@/lib/ticket-access";
 import { TICKET_TYPE, TICKET_PRIORITY } from "@/types";
 
 export async function GET(request: NextRequest) {
@@ -19,8 +20,11 @@ export async function GET(request: NextRequest) {
     // Build where clause based on scope
     const whereClause: Record<string, unknown> = {};
 
-    if (!isAdmin && scope !== "all") {
+    if (!isAdmin) {
       switch (scope) {
+        case "all":
+          Object.assign(whereClause, ticketParticipantWhere(session.user.id));
+          break;
         case "assigned_to_me":
           whereClause.assigneeId = session.user.id;
           break;
