@@ -4,7 +4,7 @@
 
 - updated: 2026-05-27
 - baseline_branch: develop
-- baseline_commit: bd2789d4e404996b603833757dfa71859d2b0210
+- baseline_commit: fb588bace4c582682329fa6173870d203c14aa24
 
 ## Codebase State
 
@@ -55,6 +55,7 @@ reqflow/
 | GitHub Actions CI baseline | 已建立并刷新，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`；run `26494518202` success for code baseline `bd2789d4e404996b603833757dfa71859d2b0210`; handback docs run `26494818503` success for `a2fddc64b39e0f4ecb09d0ffee8587c27ce153d0` (2026-05-27, WT-20260526-038) |
 | Cloud readiness boundary | 已建立，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、uploads、SQLite production risk、deployment platform boundary (2026-05-27, WT-20260526-028) |
 | AI MVP technical brief | 已建立并在 MS6/MS7 planning 中调整，当前 provider 决策为 Deepseek；MS6 聚焦 discussion MVP，MS7 承接管理员知识库上传/导入；no PG/pgvector dependency (2026-05-27) |
+| AI discussion product flow | `docs/ai-discussion-product-flow.md` 已建立，覆盖 discussion state machine、draft schema、manual confirmation、current ticket form handoff、Deepseek boundary、MS6/MS7 split、no PG/pgvector dependency (2026-05-27, WT-20260526-031) |
 
 ### 已知 Issues (来自 handoff.md)
 
@@ -126,16 +127,18 @@ reqflow/
 - milestone_id: MS-20260526-002
 - title: AI 需求生成 Discussion MVP
 - status: active
-- progress: 0/6 completed
+- progress: 1/6 completed
 - depends_on_milestones: MS-20260526-001
 - scope_boundary: MS6 uses Deepseek through a server-side adapter and focuses on discussion + structured draft + manual confirmation; administrator knowledge-base upload/docs zip import is deferred to MS7; no PostgreSQL/pgvector dependency.
-- active_or_next_worktrack: WT-20260526-031 intake pending
+- completed_worktracks: WT-20260526-031
+- active_or_next_worktrack: WT-20260526-032 intake pending
+- latest_evidence: WT-20260526-031 merged at `fb588bace4c582682329fa6173870d203c14aa24`; `npm run lint`, `npm run test`, and `npm run build` passed locally in the worktree after `npm ci`.
 
 ### Preparation Work
 
 - current_preparation_milestone: MS-20260526-002
-- current_preparation_item: WT-20260526-031 Discussion 产品流与信息架构设计 intake
-- preparation_goal: lock discussion page flow, draft schema, Deepseek provider boundary, manual confirmation boundary, and downstream MS6/MS7 split before implementation begins.
+- current_preparation_item: WT-20260526-032 最小内置知识语料与引用策略 intake
+- preparation_goal: lock minimal built-in knowledge corpus, citation source IDs, snippet rules, and empty-context fallback before Deepseek API implementation begins.
 - provider_decision: Deepseek
 - split_decision: administrator knowledge-base upload and docs-style zip import are planned under MS-20260527-001.
 

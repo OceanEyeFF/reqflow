@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 44
-- planned: 12
+- planned: 11
 - active: 0
-- completed: 32
+- completed: 33
 - blocked: 0
 - deferred: 0
 
@@ -383,10 +383,10 @@
 - title: Discussion 产品流与信息架构设计
 - milestone_id: MS-20260526-002
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 1
 - contract_path: .servo/worktrack/WT-20260526-031/contract.md
-- branch: worktrack/wt-20260526-031-discussion-flow-design
+- branch: worktrack/wt-20260526-031-discussion-flow-design (merged)
 
 ### WT-20260526-032
 
