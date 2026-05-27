@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 56
-- planned: 7
+- planned: 6
 - active: 0
-- completed: 49
+- completed: 50
 - blocked: 0
 - deferred: 0
 
@@ -572,10 +572,10 @@
 - title: Provider 手动验收记录模板
 - milestone_id: MS-20260527-001
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 10
 - contract_path: .servo/worktrack/WT-20260528-050/contract.md
-- branch: worktrack/wt-20260528-050-provider-manual-test-template
+- branch: worktrack/wt-20260528-050-provider-manual-test-template (merged)
 
 ## M8: 知识库文件夹化管理与模块化 AI 草稿范围 (MS-20260528-001)
 
