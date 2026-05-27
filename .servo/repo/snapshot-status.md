@@ -132,21 +132,22 @@ reqflow/
 - milestone_id: MS-20260526-002
 - title: AI 需求生成 Discussion MVP
 - status: active
-- progress: 6/8 completed
+- progress: 7/8 completed
 - depends_on_milestones: MS-20260526-001
 - scope_boundary: MS6 uses Deepseek through a server-side adapter and focuses on discussion + structured draft + manual confirmation; administrator knowledge-base upload/docs zip import is deferred to MS7; no PostgreSQL/pgvector dependency.
 - completed_worktracks: WT-20260526-031, WT-20260526-032, WT-20260526-033, WT-20260526-034, WT-20260526-035, WT-20260526-036
-- active_or_next_worktrack: WT-20260527-046 MS6 CodeReview 专用评审
+- active_or_next_worktrack: WT-20260527-047 MS6 专家评议评估
 - latest_evidence: WT-20260526-036 merged at `7e4afa76ee7e1937897c555b7b884baa33a02ad4`; `npm ci`, `git diff --check`, targeted policy searches, `npm run lint`, `npm run test` (15 files / 104 tests), and `npm run build` passed locally in the worktree. GitHub Actions run `26502063963` completed with conclusion `success` for handback commit `b5d50b8b8043dc8a35264cf96553955a4697ba8d`.
 - milestone_gate_verdict: stale_after_scope_supplement
 - final_acceptance: pending_programmer_decision
-- planned_supplemental_worktracks: WT-20260527-046, WT-20260527-047
+- completed_supplemental_worktracks: WT-20260527-046
+- planned_supplemental_worktracks: WT-20260527-047
 
 ### Preparation Work
 
 - current_preparation_milestone: MS-20260526-002
-- current_preparation_item: WT-20260527-046 MS6 CodeReview 专用评审
-- preparation_goal: complete supplemental MS6 CodeReview and expert evaluation before returning to final programmer acceptance handback.
+- current_preparation_item: WT-20260527-047 MS6 专家评议评估
+- preparation_goal: complete supplemental MS6 expert evaluation before returning to final programmer acceptance handback.
 - provider_decision: Deepseek
 - split_decision: administrator knowledge-base upload and docs-style zip import are planned under MS-20260527-001.
 

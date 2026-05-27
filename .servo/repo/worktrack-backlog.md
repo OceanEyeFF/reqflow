@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 47
-- planned: 9
+- planned: 8
 - active: 0
-- completed: 38
+- completed: 39
 - blocked: 0
 - deferred: 0
 
@@ -449,10 +449,10 @@
 - title: MS6 CodeReview 专用评审
 - milestone_id: MS-20260526-002
 - node_type: review
-- status: planned
+- status: completed
 - priority: 7
 - contract_path: .servo/worktrack/WT-20260527-046/contract.md
-- branch: worktrack/wt-20260527-046-ms6-code-review
+- branch: worktrack/wt-20260527-046-ms6-code-review (merged)
 
 ### WT-20260527-047
 
