@@ -10,12 +10,12 @@
 ## Current Control Level
 
 - repo_scope: active
-- worktrack_scope: closed
+- worktrack_scope: initializing
 
 ## Active Worktrack
 
-- active_worktrack: WT-20260527-042
-- worktrack_title: 轻量检索与引用片段选择
+- active_worktrack: WT-20260527-043
+- worktrack_title: 管理员知识库 UI
 - worktrack_status: initializing
 - target_milestone_id: MS-20260527-001
 
@@ -24,7 +24,7 @@
 - active_milestone: MS-20260527-001
 - milestone_title: 管理员项目知识库管理与导入
 - milestone_status: active
-- milestone_pipeline_summary: total=7 planned=0 active=1 completed=6 superseded=0
+- milestone_pipeline_summary: total=7 planned=1 active=1 completed=5 superseded=0
 
 ## Baseline Branch
 
@@ -32,15 +32,15 @@
 
 ## Current Next Action
 
-- WorktrackScope.Init: WT-20260527-041 completed and merged; initializing WT-20260527-042 as the next MS7 worktrack.
+- WorktrackScope.Init: WT-20260527-042 completed and merged; initializing WT-20260527-043 as the next MS7 worktrack.
 
 ## Linked Formal Documents
 
 - repo_snapshot: .servo/repo/snapshot-status.md
 - repo_analysis: .servo/repo/analysis.md
-- worktrack_contract: .servo/worktrack/WT-20260527-042/contract.md
-- plan_task_queue: .servo/worktrack/WT-20260527-042/plan-task-queue.md
-- gate_evidence: .servo/worktrack/WT-20260527-042/gate-evidence.md
+- worktrack_contract: .servo/worktrack/WT-20260527-043/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260527-043/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260527-043/gate-evidence.md
 - milestone_backlog: .servo/repo/milestone-backlog.md
 - worktrack_backlog: .servo/repo/worktrack-backlog.md
 
@@ -87,9 +87,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 10ff7dffbf30e50638ad340b21bb598640bbc08a
-- last_doc_catch_up_checkpoint: 10ff7dffbf30e50638ad340b21bb598640bbc08a
-- milestone_input_checkpoint: 10ff7dffbf30e50638ad340b21bb598640bbc08a
+- latest_observed_checkpoint: 1557b3b850548d1e86ef6fbffd14522609e9e99a
+- last_doc_catch_up_checkpoint: 1557b3b850548d1e86ef6fbffd14522609e9e99a
+- milestone_input_checkpoint: 1557b3b850548d1e86ef6fbffd14522609e9e99a
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-27
@@ -98,8 +98,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 26
-- autonomous_worktracks_opened: 4
+- autonomy_budget_remaining: 25
+- autonomous_worktracks_opened: 5
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-27
 - autonomy_budget_notes: MS7 执行周期授权；低危险 Worktrack 可自行审批，危险操作、上下文噪声明显或需要用户业务判断时必须 handback。
@@ -109,10 +109,10 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已激活；WT-039、WT-045、WT-040、WT-041 已完成，当前准备 WT-20260527-042 轻量检索与引用片段选择
+- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已激活；WT-039、WT-045、WT-040、WT-041、WT-042 已完成，当前准备 WT-20260527-043 管理员知识库 UI
 - latest_acceptance: MS-20260526-002 accepted by fdch0 on 2026-05-27
 - latest_repo_baseline: b93935da269ed14ce85c28c799d0f4dd7cd9361c (`merge: accept MS6 milestone`)
-- latest_completed_worktrack: WT-20260527-041 completed and merged at 10ff7dffbf30e50638ad340b21bb598640bbc08a
-- next_worktrack_candidate: WT-20260527-042 轻量检索与引用片段选择; feature node; fifth MS7 worktrack.
+- latest_completed_worktrack: WT-20260527-042 completed and merged at 1557b3b850548d1e86ef6fbffd14522609e9e99a
+- next_worktrack_candidate: WT-20260527-043 管理员知识库 UI; feature node; sixth MS7 worktrack.
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入
