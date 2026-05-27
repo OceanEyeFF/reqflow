@@ -1,6 +1,12 @@
 import { adminAuthErrorResponse, requireAdmin } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
 import { KnowledgeAdminValidationError, parseJsonBody, readEnabledFlag } from "@/lib/knowledge/admin-view";
+import {
+  DELETE_SOURCE_CONFIRMATION,
+  KnowledgeCleanupValidationError,
+  deleteKnowledgeSource,
+  readConfirmation,
+} from "@/lib/knowledge/cleanup";
 
 export async function PATCH(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
@@ -37,6 +43,32 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ id
       return Response.json({ error: error.message }, { status: 400 });
     }
     console.error("Knowledge source PATCH error:", error);
+    return Response.json({ error: "服务器错误" }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
+  try {
+    await requireAdmin();
+    const { id } = await params;
+    const body = await parseJsonBody(request);
+    readConfirmation(body, DELETE_SOURCE_CONFIRMATION);
+    const result = await deleteKnowledgeSource(id);
+    if (!result) {
+      return Response.json({ error: "知识来源不存在" }, { status: 404 });
+    }
+    return Response.json({
+      success: true,
+      deletedCount: result.deletedSourceCount,
+      storageCleanupErrors: result.storageCleanupErrors,
+    });
+  } catch (error) {
+    const authResponse = adminAuthErrorResponse(error);
+    if (authResponse) return authResponse;
+    if (error instanceof KnowledgeAdminValidationError || error instanceof KnowledgeCleanupValidationError) {
+      return Response.json({ error: error.message }, { status: 400 });
+    }
+    console.error("Knowledge source DELETE error:", error);
     return Response.json({ error: "服务器错误" }, { status: 500 });
   }
 }
