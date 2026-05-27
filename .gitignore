@@ -49,6 +49,7 @@ yarn-error.log*
 # local runtime/session artifacts
 cookies.txt
 scratchpad.md
+/.local-data/
 
 # root-level manual QA screenshots
 /*.png
