@@ -4,10 +4,10 @@
 
 ## Summary
 
-- total: 56
-- planned: 6
+- total: 60
+- planned: 9
 - active: 0
-- completed: 50
+- completed: 51
 - blocked: 0
 - deferred: 0
 
@@ -577,6 +577,17 @@
 - contract_path: .servo/worktrack/WT-20260528-050/contract.md
 - branch: worktrack/wt-20260528-050-provider-manual-test-template (merged)
 
+### WT-20260528-057
+
+- worktrack_id: WT-20260528-057
+- title: AI 草稿创建工单与追问渲染修复
+- milestone_id: MS-20260527-001
+- node_type: fix
+- status: completed
+- priority: 11
+- contract_path: .servo/worktrack/WT-20260528-057/contract.md
+- branch: worktrack/wt-20260528-057-ai-draft-handoff-bugfix (merged)
+
 ## M8: 知识库文件夹化管理与模块化 AI 草稿范围 (MS-20260528-001)
 
 ### WT-20260528-051
@@ -644,3 +655,36 @@
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260528-056/contract.md
 - branch: worktrack/wt-20260528-056-ms8-validation
+
+### WT-20260528-058
+
+- worktrack_id: WT-20260528-058
+- title: AI 草稿回答语言选项
+- milestone_id: MS-20260528-001
+- node_type: feature
+- status: planned
+- priority: 7
+- contract_path: TBD
+- branch: worktrack/wt-20260528-058-ai-draft-language-option
+
+### WT-20260528-059
+
+- worktrack_id: WT-20260528-059
+- title: AI 多套/拆分需求草稿
+- milestone_id: MS-20260528-001
+- node_type: feature
+- status: planned
+- priority: 8
+- contract_path: TBD
+- branch: worktrack/wt-20260528-059-ai-multi-draft-splitting
+
+### WT-20260528-060
+
+- worktrack_id: WT-20260528-060
+- title: docs 文档更新迭代与整理
+- milestone_id: MS-20260528-001
+- node_type: docs
+- status: planned
+- priority: 9
+- contract_path: TBD
+- branch: worktrack/wt-20260528-060-docs-refresh-organization
