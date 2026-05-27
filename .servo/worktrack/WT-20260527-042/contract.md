@@ -7,7 +7,7 @@
 - milestone_id: MS-20260527-001
 - derived_from_milestone: true
 - node_type: feature
-- status: active
+- status: completed
 - created_at: 2026-05-27
 - updated: 2026-05-27
 

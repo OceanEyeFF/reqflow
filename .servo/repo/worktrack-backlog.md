@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 47
-- planned: 2
+- planned: 1
 - active: 1
-- completed: 44
+- completed: 45
 - blocked: 0
 - deferred: 0
 
@@ -517,10 +517,10 @@
 - title: 轻量检索与引用片段选择
 - milestone_id: MS-20260527-001
 - node_type: feature
-- status: active
+- status: completed
 - priority: 5
 - contract_path: .servo/worktrack/WT-20260527-042/contract.md
-- branch: worktrack/wt-20260527-042-kb-lightweight-retrieval
+- branch: worktrack/wt-20260527-042-kb-lightweight-retrieval (merged)
 
 ### WT-20260527-043
 
@@ -528,7 +528,7 @@
 - title: 管理员知识库 UI
 - milestone_id: MS-20260527-001
 - node_type: feature
-- status: planned
+- status: active
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260527-043/contract.md
 - branch: worktrack/wt-20260527-043-admin-kb-ui
