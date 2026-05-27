@@ -6,8 +6,8 @@
 
 - total: 47
 - planned: 0
-- active: 1
-- completed: 46
+- active: 0
+- completed: 47
 - blocked: 0
 - deferred: 0
 
@@ -539,7 +539,7 @@
 - title: 知识库导入验收与安全回归
 - milestone_id: MS-20260527-001
 - node_type: test
-- status: active
+- status: completed
 - priority: 7
 - contract_path: .servo/worktrack/WT-20260527-044/contract.md
-- branch: worktrack/wt-20260527-044-kb-import-validation
+- branch: worktrack/wt-20260527-044-kb-import-validation (merged)
