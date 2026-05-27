@@ -90,4 +90,4 @@ reqflow/
 - AI MVP 技术决策边界见 `docs/ai-mvp-technical-brief.md`；当前 MS6 使用 Deepseek 并聚焦 AI 需求生成 discussion MVP，管理员知识库上传/zip 导入拆分到 MS7
 - 代码改动必须在 Git worktree 中完成，详见 `AGENTS.md`
 - AI 协作入口以 `AGENTS.md` 为准，辅助说明见 `docs/ai-collaboration-entrypoints.md`
-- Repo hygiene 与本地 DB 治理说明见 `docs/repo-hygiene-matrix.md`、`docs/worktree-branch-audit.md` 和 `docs/prisma-dev-db-governance.md`
+- Repo hygiene、本地 DB 治理、worktree 中 Prisma 依赖初始化说明见 `docs/repo-hygiene-matrix.md`、`docs/worktree-branch-audit.md` 和 `docs/prisma-dev-db-governance.md`

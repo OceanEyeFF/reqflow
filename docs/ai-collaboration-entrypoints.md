@@ -29,12 +29,15 @@ This document records which AI-agent-facing files are canonical for this reposit
 
 1. Start from `develop`.
 2. Create a dedicated Git worktree and branch for the active worktrack.
-3. Make changes only inside that worktree.
-4. Validate in the worktree.
-5. Merge back to `develop`.
-6. Remove the completed worktree.
+3. Initialize worktree dependencies before Prisma-backed validation: run `npm install` or `npm ci`, then `npx prisma generate`.
+4. Make changes only inside that worktree.
+5. Validate in the worktree.
+6. Merge back to `develop`.
+7. Remove the completed worktree.
 
 Direct edits in the main `develop` checkout are allowed only for read-only inspection or explicit Harness closeout/writeback steps that are already backed by completed worktree evidence.
+
+Do not rely on junctions from a worktree into the main checkout `node_modules` for normal validation. If a temporary dependency link is ever used, remove it before worktree cleanup and verify recursive deletion cannot target the main checkout dependency tree.
 
 ## Promotion Rules
 
