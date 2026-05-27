@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 44
-- planned: 9
+- planned: 8
 - active: 0
-- completed: 35
+- completed: 36
 - blocked: 0
 - deferred: 0
 
@@ -416,10 +416,10 @@
 - title: AI 需求生成 Discussion 页面 UI
 - milestone_id: MS-20260526-002
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 4
 - contract_path: .servo/worktrack/WT-20260526-034/contract.md
-- branch: worktrack/wt-20260526-034-discussion-ui
+- branch: worktrack/wt-20260526-034-discussion-ui (merged)
 
 ### WT-20260526-035
 
