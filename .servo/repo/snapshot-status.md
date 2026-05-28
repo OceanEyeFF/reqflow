@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- updated: 2026-05-27
+- updated: 2026-05-28
 - baseline_branch: develop
-- baseline_commit: b93935da269ed14ce85c28c799d0f4dd7cd9361c
+- baseline_commit: 8ac2a235bde15e2698be1f9bffa55b13f38c0805
 
 ## Codebase State
 
@@ -48,9 +48,9 @@ reqflow/
 
 | 指标 | 状态 |
 |------|------|
-| `npm run build` | 通过 (2026-05-27, WT-20260526-036) |
-| `npm run lint` | 通过，ESLint 0 warning (2026-05-27, WT-20260526-036) |
-| `npm run test` | 通过，15 个测试文件，104 个测试 (2026-05-27, WT-20260526-036) |
+| `npm run build` | 通过 (2026-05-28, WT-20260528-057) |
+| `npm run lint` | 通过，ESLint 0 warning (2026-05-28, WT-20260528-057) |
+| `npm run test` | 通过，25 个测试文件，159 个测试 (2026-05-28, WT-20260528-057) |
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
 | GitHub Actions CI baseline | 已建立并刷新，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`；run `26502063963` success for MS6 validation handback `b5d50b8b8043dc8a35264cf96553955a4697ba8d` (2026-05-27, WT-20260526-036) |
 | Cloud readiness boundary | 已建立，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、uploads、SQLite production risk、deployment platform boundary (2026-05-27, WT-20260526-028) |
@@ -146,22 +146,39 @@ reqflow/
 - completed_supplemental_worktracks: WT-20260527-046, WT-20260527-047
 - planned_supplemental_worktracks: none
 
-### Preparation Work
-
-- current_preparation_milestone: MS-20260527-001
-- current_preparation_item: MS7 remains planned; MS6 dependency is satisfied and the next RepoScope decision may activate MS7 after programmer review boundary.
-- preparation_goal: decide whether to activate MS7 and initialize the first planned worktrack without re-opening MS6 scope.
-- provider_decision: Deepseek
-- split_decision: administrator knowledge-base upload and docs-style zip import are planned under MS-20260527-001.
-
-### Planned Milestone
+### Accepted Milestone
 
 - milestone_id: MS-20260527-001
 - title: 管理员项目知识库管理与导入
-- status: planned
-- progress: 0/7 completed
+- status: completed
+- progress: 11/11 completed and accepted at baseline `8ac2a235bde15e2698be1f9bffa55b13f38c0805`
 - depends_on_milestones: MS-20260526-002
-- scope_boundary: admin-only AI provider config, document/docs-zip upload, private storage, parsing, chunking, version/source records, lightweight retrieval, and citation tracing; no PostgreSQL/pgvector dependency.
+- scope_boundary: admin-only AI Provider configuration, document/docs-zip upload, private storage, parsing/chunking, source/version records, lightweight retrieval, citation tracing, zip folder-like handling, source deletion/full clear controls, and provider manual validation template; no PostgreSQL/pgvector dependency.
+- completed_worktracks: WT-20260527-039, WT-20260527-045, WT-20260527-040, WT-20260527-041, WT-20260527-042, WT-20260527-043, WT-20260527-044, WT-20260528-048, WT-20260528-049, WT-20260528-050, WT-20260528-057
+- latest_evidence: WT-20260528-057 merged before acceptance; final validation before acceptance passed `npm run lint`, `npm run test` (25 files / 159 tests), and `npm run build`.
+- milestone_gate_verdict: pass
+- final_acceptance: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-05-28
+- acceptance_note: accepted after limited manual flow testing; DS API and local OpenAI-compatible API manual validation records remain operator-run checks.
+- next_planned_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围
+
+### Preparation Work
+
+- current_preparation_milestone: MS-20260528-001
+- current_preparation_item: MS8 remains planned; MS7 dependency is satisfied and the next RepoScope decision may activate MS8 after programmer review boundary.
+- preparation_goal: decide whether to activate MS8 and initialize the first planned worktrack without re-opening MS7 scope.
+- provider_decision: Deepseek
+- split_decision: folderized knowledge management, multi-file import, module scope switching, AI language/multi-draft behavior, and docs cleanup are planned under MS-20260528-001.
+
+### Planned Milestone
+
+- milestone_id: MS-20260528-001
+- title: 知识库文件夹化管理与模块化 AI 草稿范围
+- status: planned
+- progress: 0/9 completed
+- depends_on_milestones: MS-20260527-001
+- scope_boundary: multi-file/folder import, knowledge folder model, bulk delete cleanup, module/environment switching, AI knowledge scope selection, AI answer language option, multi-draft/splitting support, docs refresh, and MS8 integration validation.
 
 ### M4 Governance Facts
 
