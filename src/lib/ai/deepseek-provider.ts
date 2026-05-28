@@ -99,6 +99,8 @@ function buildMessages(request: DraftProviderRequest): DeepseekMessage[] {
         mode: request.mode,
         requirement: request.requirement,
         answers: request.answers,
+        answerLanguage: request.answerLanguage,
+        languageInstruction: languageInstruction(request.answerLanguage),
         knowledge: request.knowledge,
         output:
           request.mode === "clarify"
@@ -116,6 +118,12 @@ function buildMessages(request: DraftProviderRequest): DeepseekMessage[] {
       }),
     },
   ];
+}
+
+function languageInstruction(language: DraftProviderRequest["answerLanguage"]): string {
+  if (language === "zh") return "Respond in Chinese.";
+  if (language === "en") return "Respond in English.";
+  return "Respond in the same language as the user's requirement and answers.";
 }
 
 function normalizeDeepseekResponse(response: DeepseekResponse, request: DraftProviderRequest): AiDraftResult {

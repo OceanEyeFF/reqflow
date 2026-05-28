@@ -108,6 +108,7 @@ describe("POST /api/ai/draft", () => {
         mode: "clarify",
         requirement: "需要一个审批流程，可以追踪每一步状态",
         knowledgeBaseIds: ["base-a"],
+        answerLanguage: "zh",
       })
     );
     const result = await readJson<{ kind: string; emptyKnowledge: boolean }>(response);
@@ -118,6 +119,7 @@ describe("POST /api/ai/draft", () => {
       expect.objectContaining({
         mode: "clarify",
         knowledgeBaseIds: ["base-a"],
+        answerLanguage: "zh",
         knowledge: expect.any(Array),
       })
     );
