@@ -27,6 +27,7 @@ describe("parseDraftRequest", () => {
       requirement: "需要一个能追踪审批状态的需求",
       answers: [{ question: "谁使用？", answer: "项目经理" }],
       knowledgeBaseIds: [],
+      answerLanguage: "follow_input",
     });
   });
 
@@ -38,7 +39,25 @@ describe("parseDraftRequest", () => {
       })
     ).toMatchObject({
       knowledgeBaseIds: ["kb-1", "kb-2"],
+      answerLanguage: "follow_input",
     });
+  });
+
+  it("normalizes answer language", () => {
+    expect(
+      parseDraftRequest({
+        mode: "draft",
+        requirement: "需要一个能追踪审批状态的需求",
+        answerLanguage: "zh",
+      })
+    ).toMatchObject({ answerLanguage: "zh" });
+    expect(
+      parseDraftRequest({
+        mode: "draft",
+        requirement: "需要一个能追踪审批状态的需求",
+        answerLanguage: "bad",
+      })
+    ).toMatchObject({ answerLanguage: "follow_input" });
   });
 });
 
@@ -62,6 +81,7 @@ describe("generateRequirementDraft", () => {
       expect.objectContaining({
         requirement: expect.stringContaining("[redacted]"),
         knowledgeBaseIds: [],
+        answerLanguage: "follow_input",
       })
     );
     expect(JSON.stringify(vi.mocked(provider.generate).mock.calls)).not.toContain("real-secret");
@@ -79,7 +99,7 @@ describe("generateRequirementDraft", () => {
     };
 
     await generateRequirementDraft(
-      { requirement: "需要一个能追踪审批状态的需求", knowledgeBaseIds: ["base-a", "base-b"] },
+      { requirement: "需要一个能追踪审批状态的需求", knowledgeBaseIds: ["base-a", "base-b"], answerLanguage: "en" },
       provider
     );
 
@@ -89,6 +109,7 @@ describe("generateRequirementDraft", () => {
     expect(provider.generate).toHaveBeenCalledWith(
       expect.objectContaining({
         knowledgeBaseIds: ["base-a", "base-b"],
+        answerLanguage: "en",
       })
     );
   });

@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PRIORITY_LABELS } from "@/types";
 import { stageAiDraft, type AiRequirementDraft, type DraftCitation } from "@/lib/ai/draft-handoff";
+import type { DraftAnswerLanguage } from "@/lib/ai/types";
 
 type ClarificationQuestion = {
   id: string;
@@ -40,6 +41,11 @@ type KnowledgeBaseOption = {
   slug: string;
   sourceCount: number;
 };
+const LANGUAGE_OPTIONS: Array<{ value: DraftAnswerLanguage; label: string }> = [
+  { value: "follow_input", label: "跟随输入" },
+  { value: "zh", label: "中文" },
+  { value: "en", label: "English" },
+];
 
 export default function AiDiscussionPage() {
   const router = useRouter();
@@ -53,6 +59,7 @@ export default function AiDiscussionPage() {
   const [loading, setLoading] = useState<"clarify" | "draft" | null>(null);
   const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBaseOption[]>([]);
   const [selectedKnowledgeBaseIds, setSelectedKnowledgeBaseIds] = useState<Set<string>>(new Set());
+  const [answerLanguage, setAnswerLanguage] = useState<DraftAnswerLanguage>("follow_input");
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -87,6 +94,7 @@ export default function AiDiscussionPage() {
           mode,
           requirement: trimmedRequirement,
           knowledgeBaseIds: Array.from(selectedKnowledgeBaseIds),
+          answerLanguage,
           answers: questions.map((question) => ({
             question: question.question,
             answer: answers[question.id] || "",
@@ -211,6 +219,25 @@ export default function AiDiscussionPage() {
                   </div>
                 </div>
               )}
+              <div className="space-y-2">
+                <Label>回答语言</Label>
+                <div className="flex flex-wrap gap-2">
+                  {LANGUAGE_OPTIONS.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      onClick={() => setAnswerLanguage(option.value)}
+                      className={
+                        answerLanguage === option.value
+                          ? "rounded-md border border-gray-900 bg-gray-900 px-3 py-2 text-sm text-white"
+                          : "rounded-md border bg-white px-3 py-2 text-sm text-gray-700"
+                      }
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
               <div className="flex flex-wrap gap-3">
                 <Button type="button" onClick={() => requestAi("clarify")} disabled={!canSubmit}>
                   <HelpCircle className="h-4 w-4" />

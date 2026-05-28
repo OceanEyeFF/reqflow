@@ -25,6 +25,7 @@ export async function generateRequirementDraft(
     requirement: safeRequirement,
     answers: safeAnswers,
     knowledgeBaseIds: request.knowledgeBaseIds ?? [],
+    answerLanguage: request.answerLanguage ?? "follow_input",
     knowledge,
   });
 }
@@ -56,6 +57,10 @@ export function parseDraftRequest(input: unknown): DraftRequest {
         )
       ).slice(0, 20)
     : [];
+  const answerLanguage =
+    body.answerLanguage === "zh" || body.answerLanguage === "en" || body.answerLanguage === "follow_input"
+      ? body.answerLanguage
+      : "follow_input";
 
-  return { mode, requirement, answers, knowledgeBaseIds };
+  return { mode, requirement, answers, knowledgeBaseIds, answerLanguage };
 }

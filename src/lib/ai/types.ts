@@ -49,12 +49,14 @@ export type AiDraftResult =
     };
 
 export type DraftMode = "clarify" | "draft";
+export type DraftAnswerLanguage = "follow_input" | "zh" | "en";
 
 export type DraftRequest = {
   mode: DraftMode;
   requirement: string;
   answers?: Array<{ question: string; answer: string }>;
   knowledgeBaseIds?: string[];
+  answerLanguage?: DraftAnswerLanguage;
 };
 
 export type DraftProviderRequest = {
@@ -62,6 +64,7 @@ export type DraftProviderRequest = {
   requirement: string;
   answers: Array<{ question: string; answer: string }>;
   knowledgeBaseIds: string[];
+  answerLanguage: DraftAnswerLanguage;
   knowledge: KnowledgeCitation[];
 };
 

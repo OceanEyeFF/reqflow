@@ -37,7 +37,7 @@ describe("createDeepseekProvider", () => {
     });
 
     await expect(
-      provider.generate({ mode: "draft", requirement: "需要审批流", answers: [], knowledge: [] })
+      provider.generate({ mode: "draft", requirement: "需要审批流", answers: [], knowledgeBaseIds: [], answerLanguage: "follow_input", knowledge: [] })
     ).rejects.toBeInstanceOf(AiProviderConfigError);
   });
 
@@ -75,6 +75,8 @@ describe("createDeepseekProvider", () => {
       mode: "draft",
       requirement: "需要审批流",
       answers: [],
+      knowledgeBaseIds: [],
+      answerLanguage: "zh",
       knowledge: [
         {
           sourceId: "rf-ai-mvp-boundary",
@@ -93,6 +95,10 @@ describe("createDeepseekProvider", () => {
         headers: expect.objectContaining({ authorization: "Bearer test-key" }),
       })
     );
+    const body = JSON.parse(vi.mocked(fetch).mock.calls[0][1]?.body as string) as {
+      messages: Array<{ content: string }>;
+    };
+    expect(body.messages[1].content).toContain("Respond in Chinese.");
     expect(result).toMatchObject({
       kind: "draft",
       result: { title: "审批流", suggestedPriority: "high" },
@@ -116,7 +122,14 @@ describe("createDeepseekProvider", () => {
       timeoutMs: 1000,
     });
 
-    await provider.generate({ mode: "clarify", requirement: "需要审批流", answers: [], knowledge: [] });
+    await provider.generate({
+      mode: "clarify",
+      requirement: "需要审批流",
+      answers: [],
+      knowledgeBaseIds: [],
+      answerLanguage: "follow_input",
+      knowledge: [],
+    });
 
     expect(fetch).toHaveBeenCalledWith(
       "http://localhost:1234/v1/chat/completions",
@@ -155,7 +168,14 @@ describe("createDeepseekProvider", () => {
       timeoutMs: 1000,
     });
 
-    const result = await provider.generate({ mode: "clarify", requirement: "需要审批流", answers: [], knowledge: [] });
+    const result = await provider.generate({
+      mode: "clarify",
+      requirement: "需要审批流",
+      answers: [],
+      knowledgeBaseIds: [],
+      answerLanguage: "en",
+      knowledge: [],
+    });
 
     expect(result).toMatchObject({
       kind: "clarification",
@@ -176,7 +196,7 @@ describe("createDeepseekProvider", () => {
     });
 
     await expect(
-      provider.generate({ mode: "draft", requirement: "需要审批流", answers: [], knowledge: [] })
+      provider.generate({ mode: "draft", requirement: "需要审批流", answers: [], knowledgeBaseIds: [], answerLanguage: "follow_input", knowledge: [] })
     ).rejects.toBeInstanceOf(AiProviderError);
   });
 });
