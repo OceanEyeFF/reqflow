@@ -16,15 +16,15 @@
 
 - active_worktrack: none
 - worktrack_title: none
-- worktrack_status: milestone_handback_ready
-- target_milestone_id: MS-20260527-001
+- worktrack_status: none
+- target_milestone_id: none
 
 ## Active Milestone
 
-- active_milestone: MS-20260527-001
-- milestone_title: 管理员项目知识库管理与导入
-- milestone_status: active
-- milestone_pipeline_summary: total=11 planned=0 active=0 completed=11 superseded=0
+- active_milestone: none
+- milestone_title: none
+- milestone_status: none
+- milestone_pipeline_summary: total=8 planned=1 active=0 completed=7 superseded=0
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Observe: WT-20260528-057 completed and merged; MS7 acceptance-blocking AI draft handoff bugs are resolved. New AI language/multi-draft/docs cleanup requests are routed to later backlog.
+- RepoScope.Decide: MS7 was accepted by fdch0 on 2026-05-28 after limited manual flow testing. Next candidate is MS8 activation / first MS8 worktrack scheduling.
 
 ## Linked Formal Documents
 
@@ -47,9 +47,9 @@
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: programmer explicitly approved loading MS7 and granted 30 continuous Worktrack budget with low-risk Worktrack self-approval, SubAgent use, continuous work, strict acceptance, and automatic backlog additions when needed.
-- approval_scope: MS-20260527-001 execution cycle; milestone final acceptance remains programmer-only.
-- approval_persistence: current MS7 execution cycle
+- reason: MS7 final acceptance has been explicitly granted by fdch0; no further approval is required for the MS7 acceptance writeback.
+- approval_scope: MS-20260527-001 acceptance writeback complete; MS8 execution requires its own active milestone/worktrack control route.
+- approval_persistence: acceptance writeback only
 
 ## Continuation Authority
 
@@ -72,11 +72,11 @@
   - attempted_carrier:
   - carrier_decision:
   - fallback_reason:
-- persistent_authority_notes: 用户在 2026-05-27 明确授予 MS7 执行周期 30 个连续 Worktrack 额度，允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack；MS7 milestone final acceptance 仍由用户决定。
+- persistent_authority_notes: 用户在 2026-05-27 明确授予 MS7 执行周期 30 个连续 Worktrack 额度，允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack；MS7 milestone final acceptance 已由用户在 2026-05-28 明确通过。
 
 ## Handback Guard
 
-- handoff_state: continuous_execution
+- handoff_state: repo_scope_ready
 - last_stop_reason: N/A
 - last_handback_signature:
 - handback_reaffirmed_rounds: 0
@@ -87,19 +87,19 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 3fd4581
+- latest_observed_checkpoint: 8ac2a235bde15e2698be1f9bffa55b13f38c0805
 - last_doc_catch_up_checkpoint: b2baeac
-- milestone_input_checkpoint: b2baeac
+- milestone_input_checkpoint: 8ac2a235bde15e2698be1f9bffa55b13f38c0805
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
-- verified_at: 2026-05-27
+- verified_at: 2026-05-28
 - if_no_commit_reason:
 - alternative_traceability:
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 20
-- autonomous_worktracks_opened: 10
+- autonomy_budget_remaining: 19
+- autonomous_worktracks_opened: 11
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-27
 - autonomy_budget_notes: MS7 执行周期授权；低危险 Worktrack 可自行审批，危险操作、上下文噪声明显或需要用户业务判断时必须 handback。
@@ -109,11 +109,11 @@
 - returning_to_repo_scope_does_not_clear_handoff: yes
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
-- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入根据用户反馈追加验收前修复，当前 11/11 completed，等待用户最终验收 MS7
-- latest_acceptance: MS-20260526-002 accepted by fdch0 on 2026-05-27
+- Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已完成 11/11 worktracks，并由用户在 2026-05-28 最终验收。
+- latest_acceptance: MS-20260527-001 accepted by fdch0 on 2026-05-28 after limited manual flow testing
 - latest_repo_baseline: b93935da269ed14ce85c28c799d0f4dd7cd9361c (`merge: accept MS6 milestone`)
 - latest_completed_worktrack: WT-20260528-057 completed and merged at 3fd4581
-- next_worktrack_candidate: MS7 programmer final acceptance review; MS7 final acceptance remains programmer-only.
+- next_worktrack_candidate: MS8 activation and first MS8 worktrack scheduling; likely WT-20260528-060 docs 文档更新迭代与整理 if RepoScope decides documentation cleanup should lead.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
 - planned_next_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围

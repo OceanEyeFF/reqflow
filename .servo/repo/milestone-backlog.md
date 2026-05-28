@@ -6,8 +6,8 @@
 
 - total: 8
 - planned: 1
-- active: 1
-- completed: 6
+- active: 0
+- completed: 7
 - superseded: 0
 
 ## Milestones
@@ -112,7 +112,7 @@
 - milestone_id: MS-20260527-001
 - title: 管理员项目知识库管理与导入
 - milestone_kind: goal-driven
-- status: active
+- status: completed
 - priority: 7
 - depends_on_milestones: [MS-20260526-002]
 - worktrack_list: [WT-20260527-039, WT-20260527-045, WT-20260527-040, WT-20260527-041, WT-20260527-042, WT-20260527-043, WT-20260527-044, WT-20260528-048, WT-20260528-049, WT-20260528-050, WT-20260528-057]
@@ -125,7 +125,10 @@
 - pending_addenda: []
 - latest_addendum_completed: WT-20260528-050 at a53e00f
 - latest_acceptance_blocker_fix: WT-20260528-057 at 3fd4581
-- acceptance_handback_status: ready_for_programmer_acceptance_after_addenda
+- acceptance_handback_status: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-05-28
+- acceptance_note: accepted after limited manual flow testing; DS API and local OpenAI-compatible API manual validation records remain operator-run checks.
 
 ### MS-20260528-001
 
