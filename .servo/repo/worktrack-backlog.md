@@ -651,10 +651,10 @@
 - title: MS8 集成验收与迁移回归
 - milestone_id: MS-20260528-001
 - node_type: test
-- status: planned
+- status: completed
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260528-056/contract.md
-- branch: worktrack/wt-20260528-056-ms8-validation
+- branch: worktrack/wt-20260528-056-ms8-validation (merged)
 
 ### WT-20260528-058
 

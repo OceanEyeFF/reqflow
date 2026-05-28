@@ -166,8 +166,8 @@ reqflow/
 ### Preparation Work
 
 - current_preparation_milestone: MS-20260528-001
-- current_preparation_item: WT-20260528-059 completed and merged; MS8 final integration validation remains.
-- preparation_goal: initialize WT-20260528-056 for MS8 integration validation and regression without re-opening completed feature scope.
+- current_preparation_item: WT-20260528-056 completed and merged; MS8 awaits fdch0 final acceptance decision.
+- preparation_goal: hand back MS8 completion evidence without marking the milestone accepted automatically.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior are planned under MS-20260528-001; docs cleanup is deferred to MS-20260528-002.
 
@@ -176,11 +176,11 @@ reqflow/
 - milestone_id: MS-20260528-001
 - title: 知识库文件夹化管理与模块化 AI 草稿范围
 - status: active
-- progress: 7/8 completed
+- progress: 8/8 completed
 - depends_on_milestones: MS-20260527-001
 - scope_boundary: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI discussion page knowledge-base multi-select, AI retrieval by selected knowledge bases, AI answer language option, multi-draft/splitting support, and MS8 integration validation.
 - activation_status: activated on 2026-05-28; requirement confirmation answered by fdch0.
-- next_step_boundary: WT-20260528-059 completed and merged at 94b42dca9f806b04442dfd3998986d675b43bf4e; WorktrackScope.Init may proceed for WT-20260528-056 MS8 集成验收与迁移回归.
+- next_step_boundary: WT-20260528-056 completed and merged at 4e1cc71805ddd8b5a321735b5ed360c613d72fad; MS8 is ready for fdch0 final acceptance decision.
 
 ### Planned Milestone
 

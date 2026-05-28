@@ -24,7 +24,7 @@
 - active_milestone: MS-20260528-001
 - milestone_title: 知识库文件夹化管理与模块化 AI 草稿范围
 - milestone_status: active
-- milestone_pipeline_summary: total=9 planned=1 active=1 completed=8 superseded=0
+- milestone_pipeline_summary: total=9 planned=1 active=1 completed=9 superseded=0
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: WT-20260528-059 completed and merged. Next route may initialize WT-20260528-056 MS8 integration validation/regression.
+- RepoScope.Handback: all MS8 Worktracks are completed and merged. Await fdch0 final acceptance decision for MS-20260528-001.
 
 ## Linked Formal Documents
 
@@ -46,8 +46,8 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: false
-- reason: WT-20260528-059 completed under confirmed MS8 scope; next planned validation Worktrack may proceed within confirmed MS8 scope.
+- needs_programmer_approval: true
+- reason: MS8 milestone acceptance must be decided by fdch0 per explicit instruction; do not auto-accept the milestone.
 - approval_scope: MS-20260528-001 confirmed implementation scope; docs cleanup deferred to MS-20260528-002.
 - approval_persistence: current MS8 execution boundary
 
@@ -76,8 +76,8 @@
 
 ## Handback Guard
 
-- handoff_state: ms8_requirement_confirmed_ready_for_worktrack_init
-- last_stop_reason: N/A
+- handoff_state: ms8_all_worktracks_completed_awaiting_programmer_acceptance
+- last_stop_reason: programmer_milestone_acceptance_required
 - last_handback_signature:
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
@@ -87,9 +87,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 94b42dca9f806b04442dfd3998986d675b43bf4e
+- latest_observed_checkpoint: 4e1cc71805ddd8b5a321735b5ed360c613d72fad
 - last_doc_catch_up_checkpoint: b2baeac
-- milestone_input_checkpoint: 94b42dca9f806b04442dfd3998986d675b43bf4e
+- milestone_input_checkpoint: 4e1cc71805ddd8b5a321735b5ed360c613d72fad
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-28
@@ -98,8 +98,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 12
-- autonomous_worktracks_opened: 18
+- autonomy_budget_remaining: 11
+- autonomous_worktracks_opened: 19
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-27
 - autonomy_budget_notes: MS7 执行周期授权；低危险 Worktrack 可自行审批，危险操作、上下文噪声明显或需要用户业务判断时必须 handback。
@@ -111,9 +111,9 @@
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
 - Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已完成 11/11 worktracks，并由用户在 2026-05-28 最终验收。
 - latest_acceptance: MS-20260527-001 accepted by fdch0 on 2026-05-28 after limited manual flow testing
-- latest_repo_baseline: 94b42dca9f806b04442dfd3998986d675b43bf4e (`Merge WT-20260528-059 AI multi-draft splitting`)
-- latest_completed_worktrack: WT-20260528-059 completed and merged at 94b42dc
-- next_worktrack_candidate: WT-20260528-056 MS8 集成验收与迁移回归.
+- latest_repo_baseline: 4e1cc71805ddd8b5a321735b5ed360c613d72fad (`Merge WT-20260528-056 MS8 validation`)
+- latest_completed_worktrack: WT-20260528-056 completed and merged at 4e1cc71
+- next_worktrack_candidate: none; await MS8 final acceptance decision from fdch0.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
 - active_next_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围
