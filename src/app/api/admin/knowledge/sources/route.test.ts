@@ -124,7 +124,13 @@ describe("DELETE /api/admin/knowledge/sources", () => {
   it("requires authentication", async () => {
     mockNoSession(auth);
 
-    const response = await route.DELETE(jsonRequest("http://localhost/api/admin/knowledge/sources", { confirmation: "CLEAR_KNOWLEDGE" }, { method: "DELETE" }));
+    const response = await route.DELETE(
+      jsonRequest(
+        "http://localhost/api/admin/knowledge/sources",
+        { confirmation: "DELETE_SELECTED_SOURCES", sourceIds: ["source-1"] },
+        { method: "DELETE" }
+      )
+    );
     const result = await readJson<{ error: string }>(response);
 
     expect(result).toEqual({ status: 401, body: { error: "未登录" } });
@@ -133,37 +139,28 @@ describe("DELETE /api/admin/knowledge/sources", () => {
   it("requires admin role", async () => {
     mockAuthSession(auth, { id: "user-1", role: "user" });
 
-    const response = await route.DELETE(jsonRequest("http://localhost/api/admin/knowledge/sources", { confirmation: "CLEAR_KNOWLEDGE" }, { method: "DELETE" }));
+    const response = await route.DELETE(
+      jsonRequest(
+        "http://localhost/api/admin/knowledge/sources",
+        { confirmation: "DELETE_SELECTED_SOURCES", sourceIds: ["source-1"] },
+        { method: "DELETE" }
+      )
+    );
     const result = await readJson<{ error: string }>(response);
 
     expect(result).toEqual({ status: 403, body: { error: "需要管理员权限" } });
   });
 
-  it("requires an explicit clear confirmation phrase", async () => {
+  it("rejects broad clear requests without selected source ids", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     mockAuthSession(auth, { id: admin.id, role: "admin" });
 
-    const response = await route.DELETE(jsonRequest("http://localhost/api/admin/knowledge/sources", { confirmation: "wrong" }, { method: "DELETE" }));
+    const response = await route.DELETE(
+      jsonRequest("http://localhost/api/admin/knowledge/sources", { confirmation: "CLEAR_KNOWLEDGE" }, { method: "DELETE" })
+    );
     const result = await readJson<{ error: string }>(response);
 
-    expect(result).toEqual({ status: 400, body: { error: "确认短语不正确" } });
-  });
-
-  it("clears all sources and parsed snippets for admins", async () => {
-    const admin = await seedUser(prisma, { role: "admin" });
-    mockAuthSession(auth, { id: admin.id, role: "admin" });
-    await seedKnowledgeSource(admin.id, { title: "A", storageKey: "private/a.md" });
-    await seedKnowledgeSource(admin.id, { title: "B", storageKey: "private/b.md" });
-
-    const response = await route.DELETE(jsonRequest("http://localhost/api/admin/knowledge/sources", { confirmation: "CLEAR_KNOWLEDGE" }, { method: "DELETE" }));
-    const result = await readJson<{ deletedCount: number; storageCleanupErrors: string[] }>(response);
-
-    expect(result).toEqual({ status: 200, body: { deletedCount: 2, storageCleanupErrors: [], success: true } });
-    await expect(prisma.knowledgeSource.count()).resolves.toBe(0);
-    await expect(prisma.knowledgeSourceVersion.count()).resolves.toBe(0);
-    await expect(prisma.knowledgeSnippet.count()).resolves.toBe(0);
-    expect(mocks.deletePrivateKnowledgeFile).toHaveBeenCalledWith("private/a.md");
-    expect(mocks.deletePrivateKnowledgeFile).toHaveBeenCalledWith("private/b.md");
+    expect(result).toEqual({ status: 400, body: { error: "请选择要删除的知识来源" } });
   });
 
   it("deletes only selected sources for admins", async () => {

@@ -1,10 +1,8 @@
 import { adminAuthErrorResponse, requireAdmin } from "@/lib/admin-auth";
 import { listAdminKnowledgeSources } from "@/lib/knowledge/admin-view";
 import {
-  CLEAR_KNOWLEDGE_CONFIRMATION,
   DELETE_SELECTED_SOURCES_CONFIRMATION,
   KnowledgeCleanupValidationError,
-  clearKnowledgeSources,
   deleteSelectedKnowledgeSources,
   readConfirmation,
   readSourceIds,
@@ -28,9 +26,12 @@ export async function DELETE(request: Request) {
   try {
     await requireAdmin();
     const body = await parseJsonBody(request);
-    const sourceIds = Array.isArray(body.sourceIds) ? readSourceIds(body) : null;
-    readConfirmation(body, sourceIds ? DELETE_SELECTED_SOURCES_CONFIRMATION : CLEAR_KNOWLEDGE_CONFIRMATION);
-    const result = sourceIds ? await deleteSelectedKnowledgeSources(sourceIds) : await clearKnowledgeSources();
+    if (!Array.isArray(body.sourceIds)) {
+      throw new KnowledgeCleanupValidationError("请选择要删除的知识来源");
+    }
+    const sourceIds = readSourceIds(body);
+    readConfirmation(body, DELETE_SELECTED_SOURCES_CONFIRMATION);
+    const result = await deleteSelectedKnowledgeSources(sourceIds);
     return Response.json({
       success: true,
       deletedCount: result.deletedSourceCount,
