@@ -69,6 +69,7 @@
 ## System Invariants
 
 - 
+- Milestone DB Readiness Gate: before any milestone is handed to the programmer for final acceptance, run the active-checkout/active-`DATABASE_URL` Prisma and database readiness checks, or record why the check is not applicable.
 
 ## Notes
 

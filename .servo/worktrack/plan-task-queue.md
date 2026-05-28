@@ -50,6 +50,7 @@
 - constraints_for_this_round:
 - acceptance_criteria_for_this_round:
 - verification_requirements:
+- milestone_final_db_readiness_required:
 - runtime_dispatch_mode:
 - done_signal:
 - required_context:

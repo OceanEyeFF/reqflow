@@ -63,6 +63,32 @@
 - upstream_constraint_signals:
 - low_severity_absorption_applied:
 
+## Milestone Final Handback DB Readiness Lane
+
+> Mandatory before a milestone is handed to the programmer for final acceptance when this repo uses Prisma. Use the active checkout and active `DATABASE_URL`; do not substitute only a temporary test DB unless the active DB is explicitly not applicable.
+
+### Control Signal
+- applies_to_this_gate:
+- prisma_client_ready:
+- active_database_url_confirmed:
+- prisma_validate:
+- prisma_migrate_status:
+- active_db_schema_surfaces:
+- prisma_backed_api_readiness:
+- non_destructive_repair_used:
+- ready_for_programmer_handback:
+
+### Supporting Detail
+- `@prisma/client` install/generated evidence:
+- `DATABASE_URL` source and target:
+- `npx prisma validate` output summary:
+- `npx prisma migrate status --schema prisma/schema.prisma` output summary:
+- active database table/field checks:
+- API/readiness smoke checks:
+- migration-history drift or repair steps:
+- destructive_commands_avoided:
+- not_applicable_reason:
+
 ## Evidence Assessment
 
 ### Control Signal
