@@ -10,8 +10,10 @@ import {
   Loader2,
   Power,
   RefreshCw,
+  Save,
   Trash2,
   Upload,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -65,8 +67,15 @@ type KnowledgeBase = {
   id: string;
   name: string;
   slug: string;
+  description: string | null;
   enabled: boolean;
+  isDefault: boolean;
   sourceCount: number;
+};
+
+type KnowledgeBaseForm = {
+  name: string;
+  description: string;
 };
 
 export function AdminKnowledgeBase() {
@@ -75,6 +84,8 @@ export function AdminKnowledgeBase() {
   const [selectedKnowledgeBaseId, setSelectedKnowledgeBaseId] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [selectedSourceIds, setSelectedSourceIds] = useState<Set<string>>(new Set());
+  const [editingBaseId, setEditingBaseId] = useState("");
+  const [baseForm, setBaseForm] = useState<KnowledgeBaseForm>({ name: "", description: "" });
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -86,7 +97,13 @@ export function AdminKnowledgeBase() {
     () => sources.reduce((count, source) => count + source.snippets.filter((snippet) => snippet.enabled).length, 0),
     [sources]
   );
-  const allSourcesSelected = sources.length > 0 && selectedSourceIds.size === sources.length;
+  const uploadableKnowledgeBases = useMemo(() => knowledgeBases.filter((base) => base.enabled), [knowledgeBases]);
+  const selectedKnowledgeBase = useMemo(
+    () => knowledgeBases.find((base) => base.id === selectedKnowledgeBaseId),
+    [knowledgeBases, selectedKnowledgeBaseId]
+  );
+  const cleanupEligibleSources = useMemo(() => sources.filter((source) => source.knowledgeBase.enabled), [sources]);
+  const allSourcesSelected = cleanupEligibleSources.length > 0 && selectedSourceIds.size === cleanupEligibleSources.length;
 
   useEffect(() => {
     void loadSources();
@@ -119,7 +136,11 @@ export function AdminKnowledgeBase() {
       if (!response.ok) throw new Error(data.error || "加载知识库失败");
       const bases = (data.knowledgeBases ?? []) as KnowledgeBase[];
       setKnowledgeBases(bases);
-      setSelectedKnowledgeBaseId((current) => current || bases[0]?.id || "");
+      setSelectedKnowledgeBaseId((current) => {
+        const currentBase = bases.find((base) => base.id === current);
+        if (currentBase?.enabled) return current;
+        return bases.find((base) => base.enabled)?.id || "";
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "加载知识库失败");
     }
@@ -127,6 +148,10 @@ export function AdminKnowledgeBase() {
 
   async function uploadFile() {
     if (selectedFiles.length === 0) return;
+    if (!selectedKnowledgeBaseId || selectedKnowledgeBase?.enabled === false) {
+      setError("请选择可用知识库后再上传");
+      return;
+    }
     setUploading(true);
     setError("");
     setMessage("");
@@ -150,6 +175,47 @@ export function AdminKnowledgeBase() {
     } finally {
       setUploading(false);
     }
+  }
+
+  function startEditBase(base: KnowledgeBase) {
+    setEditingBaseId(base.id);
+    setBaseForm({ name: base.name, description: base.description ?? "" });
+  }
+
+  async function saveKnowledgeBase(base: KnowledgeBase) {
+    await runAction(`base:${base.id}:save`, async () => {
+      const response = await fetch(`/api/admin/knowledge/bases/${base.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: baseForm.name,
+          description: baseForm.description,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "更新知识库失败");
+      setEditingBaseId("");
+      setMessage("知识库信息已更新");
+      await loadKnowledgeBases();
+    });
+  }
+
+  async function toggleKnowledgeBase(base: KnowledgeBase) {
+    if (base.isDefault && base.enabled) {
+      setError("默认知识库不可禁用");
+      return;
+    }
+    await runAction(`base:${base.id}:toggle`, async () => {
+      const response = await fetch(`/api/admin/knowledge/bases/${base.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ enabled: !base.enabled }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "更新知识库状态失败");
+      setMessage(data.knowledgeBase.enabled ? "知识库已恢复" : "知识库已禁用");
+      await loadKnowledgeBases();
+    });
   }
 
   async function parseVersion(versionId: string) {
@@ -188,6 +254,10 @@ export function AdminKnowledgeBase() {
   }
 
   async function deleteSource(source: KnowledgeSource) {
+    if (!source.knowledgeBase.enabled) {
+      setError("禁用/归档知识库下的内容不可清理，请先恢复知识库");
+      return;
+    }
     if (!window.confirm(`删除知识来源「${source.title}」？此操作会移除原始文件和已解析片段。`)) return;
     await runAction(`delete:${source.id}`, async () => {
       const response = await fetch(`/api/admin/knowledge/sources/${source.id}`, {
@@ -203,6 +273,11 @@ export function AdminKnowledgeBase() {
 
   async function deleteSelectedSources() {
     if (selectedSourceIds.size === 0) return;
+    const selectedSources = sources.filter((source) => selectedSourceIds.has(source.id));
+    if (selectedSources.some((source) => !source.knowledgeBase.enabled)) {
+      setError("禁用/归档知识库下的内容不可清理，请先恢复知识库");
+      return;
+    }
     if (!window.confirm(`删除已选择的 ${selectedSourceIds.size} 个知识来源？此操作会移除对应原始文件和已解析片段。`)) return;
     await runAction("delete:selected", async () => {
       const response = await fetch("/api/admin/knowledge/sources", {
@@ -224,24 +299,25 @@ export function AdminKnowledgeBase() {
     });
   }
 
-  function toggleSourceSelection(sourceId: string) {
+  function toggleSourceSelection(source: KnowledgeSource) {
+    if (!source.knowledgeBase.enabled) return;
     setSelectedSourceIds((current) => {
       const next = new Set(current);
-      if (next.has(sourceId)) {
-        next.delete(sourceId);
+      if (next.has(source.id)) {
+        next.delete(source.id);
       } else {
-        next.add(sourceId);
+        next.add(source.id);
       }
       return next;
     });
   }
 
   function selectAllSources() {
-    setSelectedSourceIds(new Set(sources.map((source) => source.id)));
+    setSelectedSourceIds(new Set(cleanupEligibleSources.map((source) => source.id)));
   }
 
   function invertSourceSelection() {
-    setSelectedSourceIds((current) => new Set(sources.filter((source) => !current.has(source.id)).map((source) => source.id)));
+    setSelectedSourceIds((current) => new Set(cleanupEligibleSources.filter((source) => !current.has(source.id)).map((source) => source.id)));
   }
 
   async function runAction(id: string, action: () => Promise<void>) {
@@ -282,6 +358,97 @@ export function AdminKnowledgeBase() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2 text-lg">
+            <FileArchive className="h-5 w-5" />
+            知识库
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-3">
+          {knowledgeBases.length === 0 ? (
+            <p className="text-sm text-gray-500">暂无知识库</p>
+          ) : (
+            knowledgeBases.map((base) => {
+              const editing = editingBaseId === base.id;
+              return (
+                <div key={base.id} className="rounded-md border p-3">
+                  <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
+                    <div className="min-w-0 flex-1 space-y-2">
+                      {editing ? (
+                        <div className="grid gap-2 md:grid-cols-[minmax(0,220px)_minmax(0,1fr)]">
+                          <Input
+                            value={baseForm.name}
+                            onChange={(event) => setBaseForm((current) => ({ ...current, name: event.target.value }))}
+                            aria-label="知识库名称"
+                            maxLength={80}
+                          />
+                          <Input
+                            value={baseForm.description}
+                            onChange={(event) => setBaseForm((current) => ({ ...current, description: event.target.value }))}
+                            aria-label="知识库描述"
+                            maxLength={200}
+                            placeholder="描述"
+                          />
+                        </div>
+                      ) : (
+                        <>
+                          <div className="flex flex-wrap items-center gap-2">
+                            <h3 className="truncate text-sm font-semibold text-gray-900">{base.name}</h3>
+                            <Badge>{base.enabled ? "可用" : "已禁用/归档"}</Badge>
+                            {base.isDefault && <Badge>默认库</Badge>}
+                            <Badge>{base.sourceCount} sources</Badge>
+                          </div>
+                          <p className="text-sm text-gray-500">{base.description || "无描述"}</p>
+                        </>
+                      )}
+                      <p className="text-xs text-gray-500">内部标识：{base.slug}</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {editing ? (
+                        <>
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() => saveKnowledgeBase(base)}
+                            disabled={busyId === `base:${base.id}:save`}
+                          >
+                            {busyId === `base:${base.id}:save` ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                            保存
+                          </Button>
+                          <Button type="button" variant="outline" size="sm" onClick={() => setEditingBaseId("")}>
+                            <X className="h-4 w-4" />
+                            取消
+                          </Button>
+                        </>
+                      ) : (
+                        <>
+                          <Button type="button" variant="outline" size="sm" onClick={() => startEditBase(base)}>
+                            编辑
+                          </Button>
+                          <Button
+                            type="button"
+                            variant={base.enabled ? "secondary" : "outline"}
+                            size="sm"
+                            onClick={() => toggleKnowledgeBase(base)}
+                            disabled={(base.isDefault && base.enabled) || busyId === `base:${base.id}:toggle`}
+                            title={base.isDefault && base.enabled ? "默认知识库不可禁用" : base.enabled ? "禁用/归档知识库" : "恢复知识库"}
+                          >
+                            {busyId === `base:${base.id}:toggle` ? <Loader2 className="h-4 w-4 animate-spin" /> : <Power className="h-4 w-4" />}
+                            {base.enabled ? "禁用" : "恢复"}
+                          </Button>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
             <Upload className="h-5 w-5" />
             上传
           </CardTitle>
@@ -305,16 +472,16 @@ export function AdminKnowledgeBase() {
                 value={selectedKnowledgeBaseId}
                 onChange={(event) => setSelectedKnowledgeBaseId(event.target.value)}
                 className="h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
-                disabled={knowledgeBases.length === 0}
+                disabled={uploadableKnowledgeBases.length === 0}
               >
                 {knowledgeBases.map((base) => (
-                  <option key={base.id} value={base.id}>
-                    {base.name}
+                  <option key={base.id} value={base.id} disabled={!base.enabled}>
+                    {base.enabled ? base.name : `${base.name}（已禁用）`}
                   </option>
                 ))}
               </select>
             </div>
-            <Button type="button" onClick={uploadFile} disabled={selectedFiles.length === 0 || uploading}>
+            <Button type="button" onClick={uploadFile} disabled={selectedFiles.length === 0 || uploading || !selectedKnowledgeBase?.enabled}>
               {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
               {uploading ? "上传中" : "上传文件"}
             </Button>
@@ -419,10 +586,11 @@ function SourceCard({
   onToggleSnippet: (snippet: KnowledgeSnippet) => Promise<void>;
   onDeleteSource: (source: KnowledgeSource) => Promise<void>;
   selected: boolean;
-  onToggleSelected: (sourceId: string) => void;
+  onToggleSelected: (source: KnowledgeSource) => void;
 }) {
   const latestVersion = source.versions[0];
   const canEnable = source.status === "ready" || source.status === "enabled";
+  const cleanupAllowed = source.knowledgeBase.enabled;
   return (
     <Card>
       <CardHeader>
@@ -432,8 +600,9 @@ function SourceCard({
               <input
                 type="checkbox"
                 checked={selected}
-                onChange={() => onToggleSelected(source.id)}
+                onChange={() => onToggleSelected(source)}
                 aria-label={`选择 ${source.title}`}
+                disabled={!cleanupAllowed}
                 className="h-4 w-4"
               />
               {latestVersion?.importType === "zip" ? <FileArchive className="h-5 w-5" /> : <FileText className="h-5 w-5" />}
@@ -476,7 +645,8 @@ function SourceCard({
               variant="outline"
               size="sm"
               onClick={() => onDeleteSource(source)}
-              disabled={busyId === `delete:${source.id}`}
+              disabled={!cleanupAllowed || busyId === `delete:${source.id}`}
+              title={cleanupAllowed ? "删除知识来源" : "禁用/归档知识库下的内容不可清理"}
             >
               {busyId === `delete:${source.id}` ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
               删除

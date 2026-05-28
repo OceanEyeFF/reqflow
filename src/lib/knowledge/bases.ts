@@ -11,6 +11,12 @@ export type KnowledgeBaseInput = {
   description?: string | null;
 };
 
+export type KnowledgeBaseUpdateInput = {
+  name?: string;
+  description?: string | null;
+  enabled?: boolean;
+};
+
 export async function ensureDefaultKnowledgeBase(createdById?: string | null) {
   return prisma.knowledgeBase.upsert({
     where: { slug: DEFAULT_KNOWLEDGE_BASE_SLUG },
@@ -27,14 +33,15 @@ export async function ensureDefaultKnowledgeBase(createdById?: string | null) {
 
 export async function resolveKnowledgeBaseForUpload(input: FormData, createdById: string) {
   const rawId = input.get("knowledgeBaseId");
+  let knowledgeBase;
   if (rawId == null || rawId === "") {
-    return ensureDefaultKnowledgeBase(createdById);
-  }
-  if (typeof rawId !== "string") {
+    knowledgeBase = await ensureDefaultKnowledgeBase(createdById);
+  } else if (typeof rawId !== "string") {
     throw new KnowledgeBaseValidationError("knowledgeBaseId 必须是字符串");
+  } else {
+    knowledgeBase = await prisma.knowledgeBase.findUnique({ where: { id: rawId } });
   }
 
-  const knowledgeBase = await prisma.knowledgeBase.findUnique({ where: { id: rawId } });
   if (!knowledgeBase || !knowledgeBase.enabled) {
     throw new KnowledgeBaseValidationError("知识库不存在或已停用");
   }
@@ -55,6 +62,7 @@ export async function listAdminKnowledgeBases() {
     slug: base.slug,
     description: base.description,
     enabled: base.enabled,
+    isDefault: isDefaultKnowledgeBase(base),
     sourceCount: base._count.sources,
     createdAt: base.createdAt.toISOString(),
     updatedAt: base.updatedAt.toISOString(),
@@ -105,6 +113,60 @@ export async function createKnowledgeBase(input: KnowledgeBaseInput, createdById
   }
 }
 
+export async function updateKnowledgeBase(id: string, input: KnowledgeBaseUpdateInput) {
+  const current = await prisma.knowledgeBase.findUnique({ where: { id } });
+  if (!current) return null;
+
+  const data: {
+    name?: string;
+    description?: string | null;
+    enabled?: boolean;
+  } = {};
+  if (input.name !== undefined) {
+    data.name = normalizeName(input.name);
+  }
+  if (input.description !== undefined) {
+    data.description = normalizeDescription(input.description);
+  }
+  if (input.enabled !== undefined) {
+    if (typeof input.enabled !== "boolean") {
+      throw new KnowledgeBaseValidationError("enabled 必须是布尔值");
+    }
+    if (!input.enabled && isDefaultKnowledgeBase(current)) {
+      throw new KnowledgeBaseValidationError("默认知识库不可禁用");
+    }
+    data.enabled = input.enabled;
+  }
+  if (Object.keys(data).length === 0) {
+    throw new KnowledgeBaseValidationError("没有可更新的知识库字段");
+  }
+
+  return prisma.knowledgeBase.update({ where: { id }, data });
+}
+
+export function readKnowledgeBaseUpdateInput(body: Record<string, unknown>): KnowledgeBaseUpdateInput {
+  if ("slug" in body) {
+    throw new KnowledgeBaseValidationError("知识库内部标识不可修改");
+  }
+  const input: KnowledgeBaseUpdateInput = {};
+  if ("name" in body) {
+    if (typeof body.name !== "string") {
+      throw new KnowledgeBaseValidationError("知识库名称不能为空");
+    }
+    input.name = body.name;
+  }
+  if ("description" in body) {
+    input.description = typeof body.description === "string" ? body.description : null;
+  }
+  if ("enabled" in body) {
+    if (typeof body.enabled !== "boolean") {
+      throw new KnowledgeBaseValidationError("enabled 必须是布尔值");
+    }
+    input.enabled = body.enabled;
+  }
+  return input;
+}
+
 export function readKnowledgeBaseInput(body: Record<string, unknown>): KnowledgeBaseInput {
   if (typeof body.name !== "string") {
     throw new KnowledgeBaseValidationError("知识库名称不能为空");
@@ -114,6 +176,10 @@ export function readKnowledgeBaseInput(body: Record<string, unknown>): Knowledge
     slug: typeof body.slug === "string" ? body.slug : undefined,
     description: typeof body.description === "string" ? body.description : null,
   };
+}
+
+export function isDefaultKnowledgeBase(base: { id: string; slug: string }): boolean {
+  return base.id === DEFAULT_KNOWLEDGE_BASE_ID || base.slug === DEFAULT_KNOWLEDGE_BASE_SLUG;
 }
 
 function normalizeName(name: string): string {

@@ -109,6 +109,22 @@ describe("POST /api/admin/knowledge/uploads", () => {
     });
   });
 
+  it("rejects uploads to disabled knowledge bases before creating sources", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+    const knowledgeBase = await prisma.knowledgeBase.create({
+      data: { name: "Archived", slug: "archived", enabled: false, createdById: admin.id },
+    });
+
+    const response = await route.POST(
+      formRequest(new File(["# Guide"], "guide.md", { type: "text/markdown" }), knowledgeBase.id)
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 400, body: { error: "知识库不存在或已停用" } });
+    await expect(prisma.knowledgeSource.count()).resolves.toBe(0);
+  });
+
   it("stores multiple files in an explicit knowledge base", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     mockAuthSession(auth, { id: admin.id, role: "admin" });

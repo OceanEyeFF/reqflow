@@ -194,6 +194,25 @@ describe("DELETE /api/admin/knowledge/sources/[id]", () => {
     expect(mocks.deletePrivateKnowledgeFile).toHaveBeenCalledWith("private/source.md");
   });
 
+  it("rejects deleting sources in disabled knowledge bases", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+    const source = await seedKnowledgeSource(admin.id, "private/source.md", { baseEnabled: false });
+
+    const response = await route.DELETE(
+      jsonRequest(`http://localhost/api/admin/knowledge/sources/${source.id}`, { confirmation: "DELETE_SOURCE" }, { method: "DELETE" }),
+      routeParams({ id: source.id })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({
+      status: 400,
+      body: { error: "禁用/归档知识库下的内容不可清理，请先恢复知识库" },
+    });
+    await expect(prisma.knowledgeSource.count()).resolves.toBe(1);
+    expect(mocks.deletePrivateKnowledgeFile).not.toHaveBeenCalled();
+  });
+
   it("records private storage cleanup failures without restoring deleted database rows", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     mockAuthSession(auth, { id: admin.id, role: "admin" });
@@ -211,8 +230,11 @@ describe("DELETE /api/admin/knowledge/sources/[id]", () => {
   });
 });
 
-async function seedKnowledgeSource(userId: string, storageKey: string) {
+async function seedKnowledgeSource(userId: string, storageKey: string, overrides: { baseEnabled?: boolean } = {}) {
   const knowledgeBase = await ensureDefaultKnowledgeBase();
+  if (overrides.baseEnabled !== undefined) {
+    await prisma.knowledgeBase.update({ where: { id: knowledgeBase.id }, data: { enabled: overrides.baseEnabled } });
+  }
   const source = await prisma.knowledgeSource.create({
     data: {
       knowledgeBaseId: knowledgeBase.id,
