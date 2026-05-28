@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 60
-- planned: 9
+- planned: 8
 - active: 0
-- completed: 51
+- completed: 52
 - blocked: 0
 - deferred: 0
 
@@ -607,10 +607,10 @@
 - title: 多知识库模型与管理边界
 - milestone_id: MS-20260528-001
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260528-052/contract.md
-- branch: worktrack/wt-20260528-052-knowledge-folder-model
+- branch: worktrack/wt-20260528-052-knowledge-folder-model (merged)
 
 ### WT-20260528-053
 
