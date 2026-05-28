@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { adminAuthErrorResponse, requireAdmin } from "@/lib/admin-auth";
 import { prisma } from "@/lib/prisma";
+import { KnowledgeBaseValidationError, resolveKnowledgeBaseForUpload } from "@/lib/knowledge/bases";
 import { writePrivateKnowledgeFile } from "@/lib/knowledge/private-storage";
 import { KnowledgeUploadValidationError, validateKnowledgeUpload } from "@/lib/knowledge/upload-validation";
 
@@ -15,10 +16,12 @@ export async function POST(request: Request) {
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const validated = validateKnowledgeUpload(file, buffer);
+    const knowledgeBase = await resolveKnowledgeBaseForUpload(formData, session.user.id);
     const storageKey = await writePrivateKnowledgeFile(buffer, validated.extension);
     const contentHash = createHash("sha256").update(buffer).digest("hex");
     const source = await prisma.knowledgeSource.create({
       data: {
+        knowledgeBaseId: knowledgeBase.id,
         title: validated.safeFilename,
         status: "uploaded",
         enabled: false,
@@ -45,6 +48,11 @@ export async function POST(request: Request) {
       {
         source: {
           id: source.id,
+          knowledgeBase: {
+            id: knowledgeBase.id,
+            name: knowledgeBase.name,
+            slug: knowledgeBase.slug,
+          },
           title: source.title,
           status: source.status,
           enabled: source.enabled,
@@ -61,7 +69,7 @@ export async function POST(request: Request) {
   } catch (error) {
     const authResponse = adminAuthErrorResponse(error);
     if (authResponse) return authResponse;
-    if (error instanceof KnowledgeUploadValidationError) {
+    if (error instanceof KnowledgeUploadValidationError || error instanceof KnowledgeBaseValidationError) {
       return Response.json({ error: error.message }, { status: 400 });
     }
     console.error("Knowledge upload error:", error);

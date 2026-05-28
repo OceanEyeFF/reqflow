@@ -77,12 +77,15 @@ describe("GET /api/admin/knowledge/sources", () => {
     await seedKnowledgeSource(admin.id);
 
     const response = await route.GET();
-    const result = await readJson<{ sources: Array<{ title: string; versions: unknown[]; snippets: unknown[] }> }>(
+    const result = await readJson<{
+      sources: Array<{ title: string; knowledgeBase: { slug: string }; versions: unknown[]; snippets: unknown[] }>;
+    }>(
       response
     );
 
     expect(result.status).toBe(200);
     expect(result.body.sources[0]).toMatchObject({
+      knowledgeBase: { slug: "default" },
       title: "Admin guide",
       versions: [expect.objectContaining({ originalFilename: "guide.md", status: "ready" })],
       snippets: [expect.objectContaining({ sourcePath: "docs/guide.md", section: "Guide" })],
@@ -175,8 +178,14 @@ async function seedKnowledgeSource(
     storageKey?: string;
   } = {}
 ) {
+  const knowledgeBase = await prisma.knowledgeBase.upsert({
+    where: { slug: "default" },
+    update: {},
+    create: { id: "default", name: "默认知识库", slug: "default" },
+  });
   const source = await prisma.knowledgeSource.create({
     data: {
+      knowledgeBaseId: knowledgeBase.id,
       title: overrides.title ?? "Admin guide",
       status: "ready",
       enabled: true,

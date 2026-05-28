@@ -10,7 +10,11 @@ export async function selectKnowledgeSnippets(requirement: string): Promise<Know
   const snippets = await prisma.knowledgeSnippet.findMany({
     where: {
       enabled: true,
-      source: { enabled: true, status: { in: ["ready", "enabled"] } },
+      source: {
+        enabled: true,
+        status: { in: ["ready", "enabled"] },
+        knowledgeBase: { enabled: true },
+      },
       version: { status: "ready" },
     },
     include: { source: true, version: true },

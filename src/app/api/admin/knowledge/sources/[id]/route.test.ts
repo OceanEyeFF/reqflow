@@ -81,8 +81,15 @@ describe("PATCH /api/admin/knowledge/sources/[id]", () => {
   it("enables ready sources and marks enabled status", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     mockAuthSession(auth, { id: admin.id, role: "admin" });
+    const knowledgeBase = await ensureDefaultKnowledgeBase();
     const source = await prisma.knowledgeSource.create({
-      data: { title: "Guide", status: "ready", enabled: false, createdById: admin.id },
+      data: {
+        knowledgeBaseId: knowledgeBase.id,
+        title: "Guide",
+        status: "ready",
+        enabled: false,
+        createdById: admin.id,
+      },
     });
 
     const response = await route.PATCH(
@@ -97,8 +104,15 @@ describe("PATCH /api/admin/knowledge/sources/[id]", () => {
   it("rejects enabling unparsed sources", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     mockAuthSession(auth, { id: admin.id, role: "admin" });
+    const knowledgeBase = await ensureDefaultKnowledgeBase();
     const source = await prisma.knowledgeSource.create({
-      data: { title: "Guide", status: "uploaded", enabled: false, createdById: admin.id },
+      data: {
+        knowledgeBaseId: knowledgeBase.id,
+        title: "Guide",
+        status: "uploaded",
+        enabled: false,
+        createdById: admin.id,
+      },
     });
 
     const response = await route.PATCH(
@@ -198,8 +212,10 @@ describe("DELETE /api/admin/knowledge/sources/[id]", () => {
 });
 
 async function seedKnowledgeSource(userId: string, storageKey: string) {
+  const knowledgeBase = await ensureDefaultKnowledgeBase();
   const source = await prisma.knowledgeSource.create({
     data: {
+      knowledgeBaseId: knowledgeBase.id,
       title: "Guide",
       status: "ready",
       enabled: true,
@@ -230,4 +246,12 @@ async function seedKnowledgeSource(userId: string, storageKey: string) {
     },
   });
   return source;
+}
+
+async function ensureDefaultKnowledgeBase() {
+  return prisma.knowledgeBase.upsert({
+    where: { slug: "default" },
+    update: {},
+    create: { id: "default", name: "默认知识库", slug: "default" },
+  });
 }
