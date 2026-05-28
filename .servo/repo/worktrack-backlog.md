@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 60
-- planned: 4
+- planned: 3
 - active: 0
-- completed: 56
+- completed: 57
 - blocked: 0
 - deferred: 0
 
@@ -662,10 +662,10 @@
 - title: AI 草稿回答语言选项
 - milestone_id: MS-20260528-001
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 7
-- contract_path: TBD
-- branch: worktrack/wt-20260528-058-ai-draft-language-option
+- contract_path: .servo/worktrack/WT-20260528-058/contract.md
+- branch: worktrack/wt-20260528-058-ai-draft-language-option (merged)
 
 ### WT-20260528-059
 
