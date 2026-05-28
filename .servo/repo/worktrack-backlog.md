@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 60
-- planned: 1
+- planned: 0
 - active: 0
-- completed: 59
+- completed: 60
 - blocked: 0
 - deferred: 0
 
@@ -749,7 +749,10 @@
 - title: MS8 addendum 集成验收
 - milestone_id: MS-20260528-003
 - node_type: test
-- status: planned
+- status: completed
 - priority: 3
-- contract_path: TBD
-- branch: worktrack/wt-20260528-066-ms8-addendum-validation
+- contract_path: .servo/worktrack/WT-20260528-066/contract.md
+- gate_evidence: .servo/worktrack/WT-20260528-066/gate-evidence.md
+- branch: worktrack/wt-20260528-066-ms8-addendum-validation (merged)
+- merge_commit: dc0e98a2bb30f1a7f502ae854b33b5bb4152217b
+- validation: lint pass; test pass 28 files / 194 tests; build pass; DB readiness pass
