@@ -1,6 +1,9 @@
 import type {
   AiDraftResult,
+  AiClarificationDirection,
+  AiClarificationQuestion,
   AiRequirementDraft,
+  ClarificationDirectionId,
   DraftProvider,
   DraftProviderRequest,
 } from "./types";
@@ -18,6 +21,13 @@ type DeepseekResponse = {
     };
   }>;
 };
+
+const CLARIFICATION_DIRECTIONS: Array<{ id: ClarificationDirectionId; label: string }> = [
+  { id: "knowledge_basis", label: "知识库依据" },
+  { id: "application_scenario", label: "应用场景" },
+  { id: "requirement_details", label: "需求细节" },
+];
+const MAX_QUESTIONS_PER_DIRECTION = 5;
 
 export type DeepseekConfig = {
   apiKey?: string;
@@ -105,7 +115,17 @@ function buildMessages(request: DraftProviderRequest): DeepseekMessage[] {
         knowledge: request.knowledge,
         output:
           request.mode === "clarify"
-            ? { kind: "clarification", questions: [], canDraftNow: false }
+            ? {
+                kind: "clarification",
+                directions: CLARIFICATION_DIRECTIONS.map((direction) => ({
+                  id: direction.id,
+                  label: direction.label,
+                  questions: [],
+                })),
+                canDraftNow: false,
+                instruction:
+                  "Ask clarification questions only. Use exactly these three direction labels. Return at most five questions for each direction. Do not draft tickets in clarify mode.",
+              }
             : {
                 kind: "draft or drafts",
                 instruction:
@@ -139,28 +159,32 @@ function normalizeDeepseekResponse(response: DeepseekResponse, request: DraftPro
     kind?: string;
     drafts?: Array<Partial<AiRequirementDraft>>;
     questions?: Array<{ id?: string; question?: string; reason?: string }>;
+    directions?: Array<{
+      id?: string;
+      label?: string;
+      questions?: Array<{ id?: string; question?: string; reason?: string }>;
+    }>;
     canDraftNow?: boolean;
     result?: {
       drafts?: Array<Partial<AiRequirementDraft>>;
       questions?: Array<{ id?: string; question?: string; reason?: string }>;
+      directions?: Array<{
+        id?: string;
+        label?: string;
+        questions?: Array<{ id?: string; question?: string; reason?: string }>;
+      }>;
       canDraftNow?: boolean;
     };
   };
   const citations = toDraftCitations(request.knowledge);
 
   if (request.mode === "clarify" || parsed.kind === "clarification") {
-    const questions = parsed.result?.questions ?? parsed.questions ?? [];
+    const directions = normalizeClarificationDirections(parsed.result?.directions ?? parsed.directions, parsed.result?.questions ?? parsed.questions);
     return {
       kind: "clarification",
       result: {
-        questions: questions
-          .filter((question) => question.question)
-          .slice(0, 5)
-          .map((question, index) => ({
-            id: question.id || `q${index + 1}`,
-            question: question.question || "",
-            reason: question.reason || "Clarifies the requirement scope.",
-          })),
+        questions: directions.flatMap((direction) => direction.questions),
+        directions,
         canDraftNow: Boolean(parsed.result?.canDraftNow ?? parsed.canDraftNow),
       },
       citations,
@@ -200,6 +224,44 @@ function normalizeDraft(draft: Partial<AiRequirementDraft>, citations: AiRequire
     suggestedPriority: normalizePriority(draft.suggestedPriority),
     citations,
   };
+}
+
+function normalizeClarificationDirections(
+  rawDirections:
+    | Array<{
+        id?: string;
+        label?: string;
+        questions?: Array<{ id?: string; question?: string; reason?: string }>;
+      }>
+    | undefined,
+  rawQuestions: Array<{ id?: string; question?: string; reason?: string }> | undefined
+): AiClarificationDirection[] {
+  return CLARIFICATION_DIRECTIONS.map((direction, directionIndex) => {
+    const matchingDirection = rawDirections?.find(
+      (candidate) => candidate.id === direction.id || candidate.label === direction.label
+    );
+    const sourceQuestions = matchingDirection?.questions ?? (directionIndex === 2 ? rawQuestions : []);
+    const questions = normalizeClarificationQuestions(sourceQuestions, matchingDirection ? direction.id : "q");
+
+    return {
+      ...direction,
+      questions,
+    };
+  });
+}
+
+function normalizeClarificationQuestions(
+  questions: Array<{ id?: string; question?: string; reason?: string }> | undefined,
+  idPrefix: ClarificationDirectionId | "q"
+): AiClarificationQuestion[] {
+  return (questions ?? [])
+    .filter((question) => question.question)
+    .slice(0, MAX_QUESTIONS_PER_DIRECTION)
+    .map((question, index) => ({
+      id: question.id || (idPrefix === "q" ? `q${index + 1}` : `${idPrefix}-${index + 1}`),
+      question: question.question || "",
+      reason: question.reason || "Clarifies the requirement scope.",
+    }));
 }
 
 function normalizePriority(priority: unknown): AiRequirementDraft["suggestedPriority"] {

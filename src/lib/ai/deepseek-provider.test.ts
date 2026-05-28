@@ -308,9 +308,89 @@ describe("createDeepseekProvider", () => {
       kind: "clarification",
       result: {
         questions: [{ id: "q1", question: "目标用户是谁？", reason: "确认使用场景" }],
+        directions: [
+          { id: "knowledge_basis", label: "知识库依据", questions: [] },
+          { id: "application_scenario", label: "应用场景", questions: [] },
+          {
+            id: "requirement_details",
+            label: "需求细节",
+            questions: [{ id: "q1", question: "目标用户是谁？", reason: "确认使用场景" }],
+          },
+        ],
         canDraftNow: false,
       },
     });
+  });
+
+  it("normalizes fixed clarification directions and caps each direction", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        Response.json({
+          choices: [
+            {
+              message: {
+                content: JSON.stringify({
+                  kind: "clarification",
+                  directions: [
+                    {
+                      id: "knowledge_basis",
+                      label: "知识库依据",
+                      questions: Array.from({ length: 6 }, (_, index) => ({
+                        question: `依据问题 ${index + 1}`,
+                        reason: "确认知识来源",
+                      })),
+                    },
+                    {
+                      id: "application_scenario",
+                      label: "应用场景",
+                      questions: [{ question: "谁在什么场景使用？", reason: "确认场景" }],
+                    },
+                    {
+                      id: "requirement_details",
+                      label: "需求细节",
+                      questions: [{ question: "成功标准是什么？", reason: "确认细节" }],
+                    },
+                  ],
+                  canDraftNow: false,
+                }),
+              },
+            },
+          ],
+        })
+      )
+    );
+
+    const provider = createDeepseekProvider({
+      apiKey: "test-key",
+      baseUrl: "https://example.test",
+      model: "deepseek-v4-flash",
+      timeoutMs: 1000,
+    });
+
+    const result = await provider.generate({
+      mode: "clarify",
+      requirement: "需要审批流",
+      answers: [],
+      knowledgeBaseIds: [],
+      answerLanguage: "zh",
+      maxDrafts: 3,
+      knowledge: [],
+    });
+
+    const body = JSON.parse(vi.mocked(fetch).mock.calls[0][1]?.body as string) as {
+      messages: Array<{ content: string }>;
+    };
+    expect(body.messages[1].content).toContain("知识库依据");
+    expect(body.messages[1].content).toContain("应用场景");
+    expect(body.messages[1].content).toContain("需求细节");
+    expect(body.messages[1].content).toContain("at most five questions for each direction");
+    expect(result.kind).toBe("clarification");
+    if (result.kind === "clarification") {
+      expect(result.result.directions).toHaveLength(3);
+      expect(result.result.directions[0].questions).toHaveLength(5);
+      expect(result.result.questions).toHaveLength(7);
+    }
   });
 
   it("wraps provider failures", async () => {

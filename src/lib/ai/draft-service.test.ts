@@ -76,7 +76,15 @@ describe("generateRequirementDraft", () => {
     const provider: DraftProvider = {
       generate: vi.fn(async (request) => ({
         kind: "clarification",
-        result: { questions: [{ id: "q1", question: "谁审批？", reason: "确认流程" }], canDraftNow: false },
+        result: {
+          questions: [{ id: "q1", question: "谁审批？", reason: "确认流程" }],
+          directions: [
+            { id: "knowledge_basis", label: "知识库依据", questions: [] },
+            { id: "application_scenario", label: "应用场景", questions: [] },
+            { id: "requirement_details", label: "需求细节", questions: [{ id: "q1", question: "谁审批？", reason: "确认流程" }] },
+          ],
+          canDraftNow: false,
+        },
         citations: [],
         emptyKnowledge: request.knowledge.length === 0,
       })),
@@ -103,7 +111,15 @@ describe("generateRequirementDraft", () => {
     const provider: DraftProvider = {
       generate: vi.fn(async () => ({
         kind: "clarification",
-        result: { questions: [], canDraftNow: true },
+        result: {
+          questions: [],
+          directions: [
+            { id: "knowledge_basis", label: "知识库依据", questions: [] },
+            { id: "application_scenario", label: "应用场景", questions: [] },
+            { id: "requirement_details", label: "需求细节", questions: [] },
+          ],
+          canDraftNow: true,
+        },
         citations: [],
         emptyKnowledge: true,
       })),
