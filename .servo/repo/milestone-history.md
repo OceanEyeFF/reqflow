@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 7
-- completed: 7
+- total: 8
+- completed: 8
 - superseded: 0
 
 ## Completed Milestones
@@ -74,3 +74,14 @@
 - source_artifact: .servo/milestone/MS-20260527-001.md
 - completed_worktracks: WT-20260527-039, WT-20260527-045, WT-20260527-040, WT-20260527-041, WT-20260527-042, WT-20260527-043, WT-20260527-044, WT-20260528-048, WT-20260528-049, WT-20260528-050, WT-20260528-057
 - acceptance_note: accepted after limited manual flow testing; DS API and local OpenAI-compatible API manual validation records remain operator-run checks.
+
+### MS-20260528-001
+
+- milestone_id: MS-20260528-001
+- title: 知识库文件夹化管理与模块化 AI 草稿范围
+- status: completed
+- accepted_by: fdch0
+- accepted_at: 2026-05-28
+- source_artifact: .servo/milestone/MS-20260528-001.md
+- completed_worktracks: WT-20260528-051, WT-20260528-052, WT-20260528-053, WT-20260528-054, WT-20260528-055, WT-20260528-056, WT-20260528-058, WT-20260528-059, WT-20260528-062
+- acceptance_note: accepted by fdch0 after WT-20260528-062 completed active-checkout Prisma/database readiness validation.

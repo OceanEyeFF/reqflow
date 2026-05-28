@@ -684,10 +684,10 @@
 - title: Prisma 与数据库验收必检项
 - milestone_id: MS-20260528-001
 - node_type: test
-- status: planned
+- status: completed
 - priority: 9
 - contract_path: .servo/worktrack/WT-20260528-062/contract.md
-- branch: worktrack/wt-20260528-062-prisma-db-acceptance-check
+- branch: worktrack/wt-20260528-062-prisma-db-acceptance-check-run (merged)
 
 ### WT-20260528-063
 
@@ -695,10 +695,10 @@
 - title: Milestone 收尾 Prisma/数据库必检规则
 - milestone_id: none
 - node_type: governance
-- status: active
+- status: completed
 - priority: 10
 - contract_path: .servo/worktrack/WT-20260528-063/contract.md
-- branch: worktrack/wt-20260528-063-milestone-db-gate-policy
+- branch: worktrack/wt-20260528-063-milestone-db-gate-policy (merged)
 
 ## M9: docs 文档更新迭代与整理 (MS-20260528-002)
 

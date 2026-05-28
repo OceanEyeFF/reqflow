@@ -165,22 +165,23 @@ reqflow/
 
 ### Preparation Work
 
-- current_preparation_milestone: MS-20260528-001
-- current_preparation_item: WT-20260528-062 added after local Prisma/database readiness issue; MS8 final acceptance waits for this validation.
-- preparation_goal: verify Prisma client, migration history, and active database schema before handback for final MS8 acceptance.
+- current_preparation_milestone: none
+- current_preparation_item: MS8 accepted by fdch0; planned milestones remain MS-20260528-002 and MS-20260528-003.
+- preparation_goal: await next milestone activation decision.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior are planned under MS-20260528-001; docs cleanup is deferred to MS-20260528-002.
 
-### Planned Milestone
+### Accepted Milestone
 
 - milestone_id: MS-20260528-001
 - title: 知识库文件夹化管理与模块化 AI 草稿范围
-- status: active
-- progress: 8/9 completed
+- status: completed
+- progress: 9/9 completed
 - depends_on_milestones: MS-20260527-001
 - scope_boundary: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI discussion page knowledge-base multi-select, AI retrieval by selected knowledge bases, AI answer language option, multi-draft/splitting support, and MS8 integration validation.
 - activation_status: activated on 2026-05-28; requirement confirmation answered by fdch0.
-- next_step_boundary: WT-20260528-062 Prisma 与数据库验收必检项 added; WorktrackScope.Init may proceed for mandatory DB readiness validation.
+- acceptance_status: accepted by fdch0 on 2026-05-28 after WT-20260528-062 DB readiness gate.
+- next_step_boundary: choose next planned milestone; MS-20260528-002 docs refresh and MS-20260528-003 MS8 addendum are planned.
 
 ### Planned Milestone
 

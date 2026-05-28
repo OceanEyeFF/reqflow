@@ -21,10 +21,10 @@
 
 ## Active Milestone
 
-- active_milestone: MS-20260528-001
-- milestone_title: 知识库文件夹化管理与模块化 AI 草稿范围
-- milestone_status: active
-- milestone_pipeline_summary: total=9 planned=1 active=1 completed=9 superseded=0
+- active_milestone: none
+- milestone_title: none
+- milestone_status: none
+- milestone_pipeline_summary: total=10 planned=2 active=0 completed=8 superseded=0
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: WT-20260528-062 added as mandatory MS8 Prisma/database acceptance validation. Initialize WT-20260528-062 before final handback.
+- RepoScope.Observe: MS8 accepted by fdch0. Next route is choosing/activating a planned milestone.
 
 ## Linked Formal Documents
 
@@ -46,10 +46,10 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: false
-- reason: fdch0 requested adding a Worktrack to make Prisma/database checks mandatory before MS8 acceptance; low-risk control-plane update may proceed.
-- approval_scope: MS-20260528-001 confirmed implementation scope; docs cleanup deferred to MS-20260528-002.
-- approval_persistence: current MS8 execution boundary
+- needs_programmer_approval: true
+- reason: MS8 final acceptance has been written back; next planned milestone activation should be decided explicitly.
+- approval_scope: next milestone activation decision.
+- approval_persistence: next RepoScope decision
 
 ## Continuation Authority
 
@@ -76,8 +76,8 @@
 
 ## Handback Guard
 
-- handoff_state: ms8_db_acceptance_worktrack_added_ready_for_init
-- last_stop_reason: N/A
+- handoff_state: ms8_accepted_waiting_next_milestone_decision
+- last_stop_reason: next_milestone_activation_decision_required
 - last_handback_signature:
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
@@ -87,9 +87,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 4e1cc71805ddd8b5a321735b5ed360c613d72fad
+- latest_observed_checkpoint: 836d287a71bc210060f34be2878ab7b4d7f4b651
 - last_doc_catch_up_checkpoint: b2baeac
-- milestone_input_checkpoint: 4e1cc71805ddd8b5a321735b5ed360c613d72fad
+- milestone_input_checkpoint: 836d287a71bc210060f34be2878ab7b4d7f4b651
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-28
@@ -110,14 +110,14 @@
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
 - Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已完成 11/11 worktracks，并由用户在 2026-05-28 最终验收。
-- latest_acceptance: MS-20260527-001 accepted by fdch0 on 2026-05-28 after limited manual flow testing
-- latest_repo_baseline: 4e1cc71805ddd8b5a321735b5ed360c613d72fad (`Merge WT-20260528-056 MS8 validation`)
-- latest_completed_worktrack: WT-20260528-056 completed and merged at 4e1cc71
-- next_worktrack_candidate: WT-20260528-062 Prisma 与数据库验收必检项.
+- latest_acceptance: MS-20260528-001 accepted by fdch0 on 2026-05-28 after WT-20260528-062 DB readiness validation
+- latest_repo_baseline: 836d287a71bc210060f34be2878ab7b4d7f4b651 (`Merge WT-20260528-062 Prisma DB acceptance check`)
+- latest_completed_worktrack: WT-20260528-062 completed and merged at 836d287
+- next_worktrack_candidate: none; next milestone activation decision required.
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
-- active_next_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围
+- active_next_milestone: none
 - routed_new_requests: AI answer language selection and multiple/split requirement drafts are in MS8; docs path cleanup moved to MS-20260528-002.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
