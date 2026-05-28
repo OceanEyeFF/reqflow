@@ -21,10 +21,10 @@
 
 ## Active Milestone
 
-- active_milestone: none
-- milestone_title: none
-- milestone_status: none
-- milestone_pipeline_summary: total=10 planned=2 active=0 completed=8 superseded=0
+- active_milestone: MS-20260528-003
+- milestone_title: MS8 addendum
+- milestone_status: active
+- milestone_pipeline_summary: total=10 planned=1 active=1 completed=8 superseded=0
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Observe: MS8 accepted by fdch0. Next route is choosing/activating a planned milestone.
+- RepoScope.Observe: MS8 addendum activated by fdch0. Do not initialize worktracks until explicitly requested.
 
 ## Linked Formal Documents
 
@@ -47,9 +47,9 @@
 ## Approval Boundary
 
 - needs_programmer_approval: true
-- reason: MS8 final acceptance has been written back; next planned milestone activation should be decided explicitly.
-- approval_scope: next milestone activation decision.
-- approval_persistence: next RepoScope decision
+- reason: fdch0 requested activation only and explicitly said not to start work.
+- approval_scope: starting any MS8 addendum worktrack.
+- approval_persistence: until fdch0 requests worktrack execution
 
 ## Continuation Authority
 
@@ -76,8 +76,8 @@
 
 ## Handback Guard
 
-- handoff_state: ms8_accepted_waiting_next_milestone_decision
-- last_stop_reason: next_milestone_activation_decision_required
+- handoff_state: ms8_addendum_active_waiting_worktrack_start_approval
+- last_stop_reason: activation_only_no_worktrack_start
 - last_handback_signature:
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
@@ -117,7 +117,7 @@
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
-- active_next_milestone: none
+- active_next_milestone: MS-20260528-003 MS8 addendum
 - routed_new_requests: AI answer language selection and multiple/split requirement drafts are in MS8; docs path cleanup moved to MS-20260528-002.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.

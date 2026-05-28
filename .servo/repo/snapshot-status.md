@@ -166,8 +166,8 @@ reqflow/
 ### Preparation Work
 
 - current_preparation_milestone: none
-- current_preparation_item: MS8 accepted by fdch0; planned milestones remain MS-20260528-002 and MS-20260528-003.
-- preparation_goal: await next milestone activation decision.
+- current_preparation_item: MS8 addendum activated by fdch0; MS-20260528-002 remains planned.
+- preparation_goal: await explicit instruction before starting any MS8 addendum worktrack.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior are planned under MS-20260528-001; docs cleanup is deferred to MS-20260528-002.
 
@@ -181,9 +181,9 @@ reqflow/
 - scope_boundary: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI discussion page knowledge-base multi-select, AI retrieval by selected knowledge bases, AI answer language option, multi-draft/splitting support, and MS8 integration validation.
 - activation_status: activated on 2026-05-28; requirement confirmation answered by fdch0.
 - acceptance_status: accepted by fdch0 on 2026-05-28 after WT-20260528-062 DB readiness gate.
-- next_step_boundary: choose next planned milestone; MS-20260528-002 docs refresh and MS-20260528-003 MS8 addendum are planned.
+- next_step_boundary: MS8 addendum is active; do not start any addendum worktrack until explicitly requested. MS-20260528-002 docs refresh remains planned.
 
-### Planned Milestone
+### Active Milestone
 
 - milestone_id: MS-20260528-002
 - title: docs 文档更新迭代与整理
@@ -196,11 +196,11 @@ reqflow/
 
 - milestone_id: MS-20260528-003
 - title: MS8 addendum
-- status: planned
+- status: active
 - progress: 0/3 completed
 - depends_on_milestones: MS-20260528-001
 - scope_boundary: knowledge-base edit and disable/archive lifecycle; AI clarification directions from knowledge-base, application-scenario, and concrete-detail angles; final addendum validation with Milestone DB Readiness Gate.
-- activation_status: planned after MS8 final acceptance.
+- activation_status: activated on 2026-05-28 by fdch0; no worktrack initialized.
 
 ### M4 Governance Facts
 
