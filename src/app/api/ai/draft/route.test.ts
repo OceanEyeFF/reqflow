@@ -98,7 +98,15 @@ describe("POST /api/ai/draft", () => {
     mockAuthSession(auth, { id: "user-1" });
     providerGenerate.mockResolvedValue({
       kind: "clarification",
-      result: { questions: [{ id: "q1", question: "谁审批？", reason: "确认角色" }], canDraftNow: false },
+      result: {
+        questions: [{ id: "q1", question: "谁审批？", reason: "确认角色" }],
+        directions: [
+          { id: "knowledge_basis", label: "知识库依据", questions: [] },
+          { id: "application_scenario", label: "应用场景", questions: [] },
+          { id: "requirement_details", label: "需求细节", questions: [{ id: "q1", question: "谁审批？", reason: "确认角色" }] },
+        ],
+        canDraftNow: false,
+      },
       citations: [],
       emptyKnowledge: true,
     });
@@ -111,10 +119,14 @@ describe("POST /api/ai/draft", () => {
         answerLanguage: "zh",
       })
     );
-    const result = await readJson<{ kind: string; emptyKnowledge: boolean }>(response);
+    const result = await readJson<{ kind: string; result: { directions: unknown[] }; emptyKnowledge: boolean }>(response);
 
     expect(result.status).toBe(200);
-    expect(result.body).toMatchObject({ kind: "clarification", emptyKnowledge: true });
+    expect(result.body).toMatchObject({
+      kind: "clarification",
+      emptyKnowledge: true,
+      result: { directions: [{ label: "知识库依据" }, { label: "应用场景" }, { label: "需求细节" }] },
+    });
     expect(providerGenerate).toHaveBeenCalledWith(
       expect.objectContaining({
         mode: "clarify",

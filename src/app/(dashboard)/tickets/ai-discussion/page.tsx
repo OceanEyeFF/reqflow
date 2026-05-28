@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PRIORITY_LABELS } from "@/types";
 import { stageAiDraft, type AiRequirementDraft, type DraftCitation } from "@/lib/ai/draft-handoff";
-import type { DraftAnswerLanguage } from "@/lib/ai/types";
+import type { ClarificationDirectionId, DraftAnswerLanguage } from "@/lib/ai/types";
 
 type ClarificationQuestion = {
   id: string;
@@ -19,10 +19,16 @@ type ClarificationQuestion = {
   reason: string;
 };
 
+type ClarificationDirection = {
+  id: ClarificationDirectionId;
+  label: string;
+  questions: ClarificationQuestion[];
+};
+
 type AiDraftResponse =
   | {
       kind: "clarification";
-      result: { questions: ClarificationQuestion[]; canDraftNow: boolean };
+      result: { questions: ClarificationQuestion[]; directions?: ClarificationDirection[]; canDraftNow: boolean };
       citations: DraftCitation[];
       emptyKnowledge: boolean;
     }
@@ -39,7 +45,6 @@ type AiDraftResponse =
       emptyKnowledge: boolean;
     };
 
-type AnswerMap = Record<string, string>;
 type PageState = "empty" | "clarifying" | "draft_ready" | "accepted" | "failed";
 type KnowledgeBaseOption = {
   id: string;
@@ -52,12 +57,18 @@ const LANGUAGE_OPTIONS: Array<{ value: DraftAnswerLanguage; label: string }> = [
   { value: "zh", label: "中文" },
   { value: "en", label: "English" },
 ];
+const CLARIFICATION_DIRECTIONS: Array<{ id: ClarificationDirectionId; label: string }> = [
+  { id: "knowledge_basis", label: "知识库依据" },
+  { id: "application_scenario", label: "应用场景" },
+  { id: "requirement_details", label: "需求细节" },
+];
 
 export default function AiDiscussionPage() {
   const router = useRouter();
   const [requirement, setRequirement] = useState("");
   const [questions, setQuestions] = useState<ClarificationQuestion[]>([]);
-  const [answers, setAnswers] = useState<AnswerMap>({});
+  const [clarificationDirections, setClarificationDirections] = useState<ClarificationDirection[]>([]);
+  const [clarificationAnswer, setClarificationAnswer] = useState("");
   const [draftCandidates, setDraftCandidates] = useState<AiRequirementDraft[]>([]);
   const [citations, setCitations] = useState<DraftCitation[]>([]);
   const [emptyKnowledge, setEmptyKnowledge] = useState(false);
@@ -103,7 +114,7 @@ export default function AiDiscussionPage() {
           answerLanguage,
           answers: questions.map((question) => ({
             question: question.question,
-            answer: answers[question.id] || "",
+            answer: clarificationAnswer,
           })),
         }),
       });
@@ -125,7 +136,9 @@ export default function AiDiscussionPage() {
     setCitations(data.citations || []);
     setEmptyKnowledge(data.emptyKnowledge);
     if (data.kind === "clarification") {
-      setQuestions(data.result.questions);
+      const directions = normalizeClarificationDirections(data.result.directions, data.result.questions);
+      setClarificationDirections(directions);
+      setQuestions(directions.flatMap((direction) => direction.questions));
       setDraftCandidates([]);
       setStatus("clarifying");
       return;
@@ -141,7 +154,8 @@ export default function AiDiscussionPage() {
   function resetDiscussion() {
     setRequirement("");
     setQuestions([]);
-    setAnswers({});
+    setClarificationDirections([]);
+    setClarificationAnswer("");
     setDraftCandidates([]);
     setCitations([]);
     setEmptyKnowledge(false);
@@ -273,22 +287,33 @@ export default function AiDiscussionPage() {
                 <CardTitle className="text-lg">AI 追问</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
-                {questions.map((question) => (
-                  <div key={question.id} className="space-y-2 rounded-md border p-4">
-                    <div>
-                      <p className="font-medium">{question.question}</p>
-                      <p className="mt-1 text-sm text-gray-500">{question.reason}</p>
-                    </div>
-                    <Textarea
-                      rows={3}
-                      value={answers[question.id] || ""}
-                      onChange={(event) =>
-                        setAnswers((current) => ({ ...current, [question.id]: event.target.value }))
-                      }
-                      placeholder="补充你的回答，也可以留空后直接生成草稿"
-                    />
+                {clarificationDirections.map((direction) => (
+                  <div key={direction.id} className="space-y-3 rounded-md border p-4">
+                    <Badge variant="outline">{direction.label}</Badge>
+                    {direction.questions.length > 0 ? (
+                      <div className="space-y-3">
+                        {direction.questions.map((question) => (
+                          <div key={question.id}>
+                            <p className="font-medium">{question.question}</p>
+                            <p className="mt-1 text-sm text-gray-500">{question.reason}</p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-sm text-gray-500">这一方向暂无追问。</p>
+                    )}
                   </div>
                 ))}
+                <div className="space-y-2">
+                  <Label htmlFor="clarification-answer">统一回答区</Label>
+                  <Textarea
+                    id="clarification-answer"
+                    rows={5}
+                    value={clarificationAnswer}
+                    onChange={(event) => setClarificationAnswer(event.target.value)}
+                    placeholder="集中回答上方问题，也可以留空后直接生成草稿"
+                  />
+                </div>
                 <Button type="button" onClick={() => requestAi("draft")} disabled={!canSubmit}>
                   <Send className="h-4 w-4" />
                   {loading === "draft" ? "生成中..." : "根据回答生成草稿"}
@@ -349,6 +374,21 @@ export default function AiDiscussionPage() {
       </div>
     </div>
   );
+}
+
+function normalizeClarificationDirections(
+  directions: ClarificationDirection[] | undefined,
+  questions: ClarificationQuestion[]
+): ClarificationDirection[] {
+  return CLARIFICATION_DIRECTIONS.map((direction, index) => {
+    const matchingDirection = directions?.find((candidate) => candidate.id === direction.id || candidate.label === direction.label);
+    const directionQuestions = matchingDirection?.questions ?? (index === 2 ? questions : []);
+
+    return {
+      ...direction,
+      questions: directionQuestions.slice(0, 5),
+    };
+  });
 }
 
 function DraftPreview({

@@ -25,12 +25,23 @@ export type AiRequirementDraft = {
   citations: DraftCitation[];
 };
 
+export type ClarificationDirectionId = "knowledge_basis" | "application_scenario" | "requirement_details";
+
+export type AiClarificationQuestion = {
+  id: string;
+  question: string;
+  reason: string;
+};
+
+export type AiClarificationDirection = {
+  id: ClarificationDirectionId;
+  label: string;
+  questions: AiClarificationQuestion[];
+};
+
 export type AiClarificationResult = {
-  questions: Array<{
-    id: string;
-    question: string;
-    reason: string;
-  }>;
+  questions: AiClarificationQuestion[];
+  directions: AiClarificationDirection[];
   canDraftNow: boolean;
 };
 
