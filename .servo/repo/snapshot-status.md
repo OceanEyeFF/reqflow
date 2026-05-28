@@ -4,7 +4,7 @@
 
 - updated: 2026-05-28
 - baseline_branch: develop
-- baseline_commit: 38492c42f166f4d35c4345a0bb81e547319e5591
+- baseline_commit: 8972fc5b16ac60583103944776c20761cc4059d2
 
 ## Codebase State
 
@@ -167,7 +167,7 @@ reqflow/
 
 - current_preparation_milestone: none
 - current_preparation_item: MS8 addendum activated by fdch0; MS-20260528-002 remains planned.
-- preparation_goal: await explicit instruction before starting any MS8 addendum worktrack.
+- preparation_goal: ask focused MS8 addendum clarification questions and await explicit instruction before starting any MS8 addendum worktrack.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior are planned under MS-20260528-001; docs cleanup is deferred to MS-20260528-002.
 
@@ -183,7 +183,7 @@ reqflow/
 - acceptance_status: accepted by fdch0 on 2026-05-28 after WT-20260528-062 DB readiness gate.
 - next_step_boundary: MS8 addendum is active; do not start any addendum worktrack until explicitly requested. MS-20260528-002 docs refresh remains planned.
 
-### Active Milestone
+### Planned Milestone
 
 - milestone_id: MS-20260528-002
 - title: docs 文档更新迭代与整理
@@ -192,7 +192,7 @@ reqflow/
 - depends_on_milestones: MS-20260528-001
 - scope_boundary: docs path update, organization, deduplication, and Prisma/AI/knowledge-base operator-facing documentation after MS8.
 
-### Planned Milestone
+### Active Milestone
 
 - milestone_id: MS-20260528-003
 - title: MS8 addendum
@@ -201,6 +201,7 @@ reqflow/
 - depends_on_milestones: MS-20260528-001
 - scope_boundary: knowledge-base edit and disable/archive lifecycle; AI clarification directions from knowledge-base, application-scenario, and concrete-detail angles; final addendum validation with Milestone DB Readiness Gate.
 - activation_status: activated on 2026-05-28 by fdch0; no worktrack initialized.
+- clarification_status: pending fdch0 answers for knowledge-base lifecycle semantics and AI clarification direction behavior before WT-20260528-064 initialization.
 
 ### M4 Governance Facts
 
