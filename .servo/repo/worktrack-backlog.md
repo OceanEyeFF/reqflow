@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 60
-- planned: 8
+- planned: 7
 - active: 0
-- completed: 52
+- completed: 53
 - blocked: 0
 - deferred: 0
 
@@ -596,10 +596,10 @@
 - title: 多文件/zip 导入到知识库并保留路径层级
 - milestone_id: MS-20260528-001
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 1
 - contract_path: .servo/worktrack/WT-20260528-051/contract.md
-- branch: worktrack/wt-20260528-051-multi-file-folder-import
+- branch: worktrack/wt-20260528-051-multi-file-folder-import (merged)
 
 ### WT-20260528-052
 
