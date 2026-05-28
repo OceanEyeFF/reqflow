@@ -712,3 +712,38 @@
 - priority: 1
 - contract_path: TBD
 - branch: worktrack/wt-20260528-060-docs-refresh-organization
+
+## M10: MS8 addendum (MS-20260528-003)
+
+### WT-20260528-064
+
+- worktrack_id: WT-20260528-064
+- title: 知识库编辑与禁用归档
+- milestone_id: MS-20260528-003
+- node_type: feature
+- status: planned
+- priority: 1
+- contract_path: TBD
+- branch: worktrack/wt-20260528-064-knowledge-base-edit-archive
+
+### WT-20260528-065
+
+- worktrack_id: WT-20260528-065
+- title: AI 多方向追问策略
+- milestone_id: MS-20260528-003
+- node_type: feature
+- status: planned
+- priority: 2
+- contract_path: TBD
+- branch: worktrack/wt-20260528-065-ai-clarification-directions
+
+### WT-20260528-066
+
+- worktrack_id: WT-20260528-066
+- title: MS8 addendum 集成验收
+- milestone_id: MS-20260528-003
+- node_type: test
+- status: planned
+- priority: 3
+- contract_path: TBD
+- branch: worktrack/wt-20260528-066-ms8-addendum-validation

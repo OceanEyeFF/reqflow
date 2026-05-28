@@ -191,6 +191,16 @@ reqflow/
 - depends_on_milestones: MS-20260528-001
 - scope_boundary: docs path update, organization, deduplication, and Prisma/AI/knowledge-base operator-facing documentation after MS8.
 
+### Planned Milestone
+
+- milestone_id: MS-20260528-003
+- title: MS8 addendum
+- status: planned
+- progress: 0/3 completed
+- depends_on_milestones: MS-20260528-001
+- scope_boundary: knowledge-base edit and disable/archive lifecycle; AI clarification directions from knowledge-base, application-scenario, and concrete-detail angles; final addendum validation with Milestone DB Readiness Gate.
+- activation_status: planned after MS8 final acceptance.
+
 ### M4 Governance Facts
 
 - `docs/repo-hygiene-matrix.md` records dirty-state classification and ownership boundaries.
