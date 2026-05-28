@@ -166,8 +166,8 @@ reqflow/
 ### Preparation Work
 
 - current_preparation_milestone: MS-20260528-001
-- current_preparation_item: MS8 remains planned; MS7 dependency is satisfied and the next RepoScope decision may activate MS8 after programmer review boundary.
-- preparation_goal: decide whether to activate MS8 and initialize the first planned worktrack without re-opening MS7 scope.
+- current_preparation_item: MS8 is active for requirement confirmation; MS7 dependency is satisfied and no MS8 worktrack has started yet.
+- preparation_goal: answer MS8 requirement confirmation questions, then initialize the first planned worktrack without re-opening MS7 scope.
 - provider_decision: Deepseek
 - split_decision: folderized knowledge management, multi-file import, module scope switching, AI language/multi-draft behavior, and docs cleanup are planned under MS-20260528-001.
 
@@ -175,10 +175,12 @@ reqflow/
 
 - milestone_id: MS-20260528-001
 - title: 知识库文件夹化管理与模块化 AI 草稿范围
-- status: planned
+- status: active
 - progress: 0/9 completed
 - depends_on_milestones: MS-20260527-001
 - scope_boundary: multi-file/folder import, knowledge folder model, bulk delete cleanup, module/environment switching, AI knowledge scope selection, AI answer language option, multi-draft/splitting support, docs refresh, and MS8 integration validation.
+- activation_status: activated on 2026-05-28 for pre-work requirement confirmation.
+- next_step_boundary: no WorktrackScope.Init until programmer answers the MS8 confirmation questions.
 
 ### M4 Governance Facts
 

@@ -5,8 +5,8 @@
 ## Pipeline Summary
 
 - total: 8
-- planned: 1
-- active: 0
+- planned: 0
+- active: 1
 - completed: 7
 - superseded: 0
 
@@ -135,7 +135,7 @@
 - milestone_id: MS-20260528-001
 - title: 知识库文件夹化管理与模块化 AI 草稿范围
 - milestone_kind: goal-driven
-- status: planned
+- status: active
 - priority: 8
 - depends_on_milestones: [MS-20260527-001]
 - worktrack_list: [WT-20260528-051, WT-20260528-052, WT-20260528-053, WT-20260528-054, WT-20260528-055, WT-20260528-056, WT-20260528-058, WT-20260528-059, WT-20260528-060]
@@ -144,3 +144,6 @@
 - updated: 2026-05-28
 - updated_by: harness-kernel
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
+- activated_by: fdch0
+- activated_at: 2026-05-28
+- activation_note: activated for pre-work requirement confirmation; no MS8 worktrack is active yet.
