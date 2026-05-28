@@ -678,6 +678,17 @@
 - contract_path: .servo/worktrack/WT-20260528-059/contract.md
 - branch: worktrack/wt-20260528-059-ai-multi-draft-splitting (merged)
 
+### WT-20260528-062
+
+- worktrack_id: WT-20260528-062
+- title: Prisma 与数据库验收必检项
+- milestone_id: MS-20260528-001
+- node_type: test
+- status: planned
+- priority: 9
+- contract_path: .servo/worktrack/WT-20260528-062/contract.md
+- branch: worktrack/wt-20260528-062-prisma-db-acceptance-check
+
 ## M9: docs 文档更新迭代与整理 (MS-20260528-002)
 
 ### WT-20260528-060
