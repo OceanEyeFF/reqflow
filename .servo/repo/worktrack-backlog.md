@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 60
-- planned: 5
+- planned: 4
 - active: 0
-- completed: 55
+- completed: 56
 - blocked: 0
 - deferred: 0
 
@@ -640,10 +640,10 @@
 - title: AI 草稿按多知识库范围检索
 - milestone_id: MS-20260528-001
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 5
 - contract_path: .servo/worktrack/WT-20260528-055/contract.md
-- branch: worktrack/wt-20260528-055-ai-module-knowledge-scope
+- branch: worktrack/wt-20260528-055-ai-module-knowledge-scope (merged)
 
 ### WT-20260528-056
 
