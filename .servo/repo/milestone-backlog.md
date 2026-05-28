@@ -4,8 +4,8 @@
 
 ## Pipeline Summary
 
-- total: 8
-- planned: 0
+- total: 9
+- planned: 1
 - active: 1
 - completed: 7
 - superseded: 0
@@ -138,7 +138,7 @@
 - status: active
 - priority: 8
 - depends_on_milestones: [MS-20260527-001]
-- worktrack_list: [WT-20260528-051, WT-20260528-052, WT-20260528-053, WT-20260528-054, WT-20260528-055, WT-20260528-056, WT-20260528-058, WT-20260528-059, WT-20260528-060]
+- worktrack_list: [WT-20260528-051, WT-20260528-052, WT-20260528-053, WT-20260528-054, WT-20260528-055, WT-20260528-056, WT-20260528-058, WT-20260528-059]
 - created_by: fdch0
 - created_at: 2026-05-28
 - updated: 2026-05-28
@@ -147,3 +147,21 @@
 - activated_by: fdch0
 - activated_at: 2026-05-28
 - activation_note: activated for pre-work requirement confirmation; no MS8 worktrack is active yet.
+- requirement_confirmation: multiple knowledge bases, preserved zip path hierarchy, selected deletion, AI page knowledge-base selection, language modes, capped multi-draft, and single-draft ticket handoff confirmed by fdch0.
+
+### MS-20260528-002
+
+- milestone_id: MS-20260528-002
+- title: docs 文档更新迭代与整理
+- milestone_kind: goal-driven
+- status: planned
+- priority: 9
+- depends_on_milestones: [MS-20260528-001]
+- worktrack_list: [WT-20260528-060]
+- created_by: fdch0
+- created_at: 2026-05-28
+- updated: 2026-05-28
+- updated_by: harness-kernel
+- activation_rules: current_active_milestone == none and depends_on_milestones completed
+- origin: deferred from MS8 after programmer confirmation
+- purpose: 更新、整理和去重 docs 路径文档，包括 MS6/MS7/MS8、Prisma worktree 流程、AI Provider、知识库导入和验收相关文档。
