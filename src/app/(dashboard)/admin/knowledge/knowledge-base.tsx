@@ -86,6 +86,7 @@ export function AdminKnowledgeBase() {
   const [selectedSourceIds, setSelectedSourceIds] = useState<Set<string>>(new Set());
   const [editingBaseId, setEditingBaseId] = useState("");
   const [baseForm, setBaseForm] = useState<KnowledgeBaseForm>({ name: "", description: "" });
+  const [createBaseForm, setCreateBaseForm] = useState<KnowledgeBaseForm>({ name: "", description: "" });
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -129,7 +130,7 @@ export function AdminKnowledgeBase() {
     }
   }
 
-  async function loadKnowledgeBases() {
+  async function loadKnowledgeBases(preferredBaseId?: string) {
     try {
       const response = await fetch("/api/admin/knowledge/bases");
       const data = await response.json();
@@ -137,6 +138,8 @@ export function AdminKnowledgeBase() {
       const bases = (data.knowledgeBases ?? []) as KnowledgeBase[];
       setKnowledgeBases(bases);
       setSelectedKnowledgeBaseId((current) => {
+        const preferredBase = bases.find((base) => base.id === preferredBaseId);
+        if (preferredBase?.enabled) return preferredBase.id;
         const currentBase = bases.find((base) => base.id === current);
         if (currentBase?.enabled) return current;
         return bases.find((base) => base.enabled)?.id || "";
@@ -197,6 +200,24 @@ export function AdminKnowledgeBase() {
       setEditingBaseId("");
       setMessage("知识库信息已更新");
       await loadKnowledgeBases();
+    });
+  }
+
+  async function createBase() {
+    await runAction("base:create", async () => {
+      const response = await fetch("/api/admin/knowledge/bases", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: createBaseForm.name,
+          description: createBaseForm.description,
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "创建知识库失败");
+      setCreateBaseForm({ name: "", description: "" });
+      setMessage("知识库已创建");
+      await loadKnowledgeBases(data.knowledgeBase.id);
     });
   }
 
@@ -363,6 +384,38 @@ export function AdminKnowledgeBase() {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
+          <div className="rounded-md border bg-gray-50 p-3">
+            <div className="grid gap-3 lg:grid-cols-[minmax(0,220px)_minmax(0,1fr)_auto] lg:items-end">
+              <div className="space-y-2">
+                <Label htmlFor="new-base-name">名称</Label>
+                <Input
+                  id="new-base-name"
+                  value={createBaseForm.name}
+                  onChange={(event) => setCreateBaseForm((current) => ({ ...current, name: event.target.value }))}
+                  maxLength={80}
+                  placeholder="例如：支付模块知识库"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="new-base-description">描述</Label>
+                <Input
+                  id="new-base-description"
+                  value={createBaseForm.description}
+                  onChange={(event) => setCreateBaseForm((current) => ({ ...current, description: event.target.value }))}
+                  maxLength={200}
+                  placeholder="可选"
+                />
+              </div>
+              <Button
+                type="button"
+                onClick={createBase}
+                disabled={createBaseForm.name.trim().length === 0 || busyId === "base:create"}
+              >
+                {busyId === "base:create" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                新建知识库
+              </Button>
+            </div>
+          </div>
           {knowledgeBases.length === 0 ? (
             <p className="text-sm text-gray-500">暂无知识库</p>
           ) : (
