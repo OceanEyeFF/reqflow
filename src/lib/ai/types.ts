@@ -54,12 +54,14 @@ export type DraftRequest = {
   mode: DraftMode;
   requirement: string;
   answers?: Array<{ question: string; answer: string }>;
+  knowledgeBaseIds?: string[];
 };
 
 export type DraftProviderRequest = {
   mode: DraftMode;
   requirement: string;
   answers: Array<{ question: string; answer: string }>;
+  knowledgeBaseIds: string[];
   knowledge: KnowledgeCitation[];
 };
 

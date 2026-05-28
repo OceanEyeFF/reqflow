@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AlertCircle, Check, HelpCircle, RefreshCcw, Send, Sparkles, Trash2 } from "lucide-react";
@@ -34,6 +34,12 @@ type AiDraftResponse =
 
 type AnswerMap = Record<string, string>;
 type PageState = "empty" | "clarifying" | "draft_ready" | "accepted" | "failed";
+type KnowledgeBaseOption = {
+  id: string;
+  name: string;
+  slug: string;
+  sourceCount: number;
+};
 
 export default function AiDiscussionPage() {
   const router = useRouter();
@@ -45,7 +51,23 @@ export default function AiDiscussionPage() {
   const [emptyKnowledge, setEmptyKnowledge] = useState(false);
   const [status, setStatus] = useState<PageState>("empty");
   const [loading, setLoading] = useState<"clarify" | "draft" | null>(null);
+  const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBaseOption[]>([]);
+  const [selectedKnowledgeBaseIds, setSelectedKnowledgeBaseIds] = useState<Set<string>>(new Set());
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function loadKnowledgeBases() {
+      try {
+        const response = await fetch("/api/knowledge/bases");
+        const data = await response.json();
+        if (!response.ok) return;
+        setKnowledgeBases(data.knowledgeBases ?? []);
+      } catch {
+        setKnowledgeBases([]);
+      }
+    }
+    void loadKnowledgeBases();
+  }, []);
 
   async function requestAi(mode: "clarify" | "draft") {
     const trimmedRequirement = requirement.trim();
@@ -64,6 +86,7 @@ export default function AiDiscussionPage() {
         body: JSON.stringify({
           mode,
           requirement: trimmedRequirement,
+          knowledgeBaseIds: Array.from(selectedKnowledgeBaseIds),
           answers: questions.map((question) => ({
             question: question.question,
             answer: answers[question.id] || "",
@@ -118,6 +141,18 @@ export default function AiDiscussionPage() {
     router.push("/tickets/new?from=ai-draft");
   }
 
+  function toggleKnowledgeBase(id: string) {
+    setSelectedKnowledgeBaseIds((current) => {
+      const next = new Set(current);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  }
+
   const canSubmit = requirement.trim().length >= 8 && !loading;
 
   return (
@@ -152,6 +187,30 @@ export default function AiDiscussionPage() {
                   placeholder="例如：我们想让项目经理更容易追踪需求审批过程，但目前只有普通工单状态。"
                 />
               </div>
+              {knowledgeBases.length > 0 && (
+                <div className="space-y-2">
+                  <Label>知识库范围</Label>
+                  <div className="flex flex-wrap gap-2">
+                    {knowledgeBases.map((base) => {
+                      const selected = selectedKnowledgeBaseIds.has(base.id);
+                      return (
+                        <button
+                          key={base.id}
+                          type="button"
+                          onClick={() => toggleKnowledgeBase(base.id)}
+                          className={
+                            selected
+                              ? "rounded-md border border-gray-900 bg-gray-900 px-3 py-2 text-sm text-white"
+                              : "rounded-md border bg-white px-3 py-2 text-sm text-gray-700"
+                          }
+                        >
+                          {base.name}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
               <div className="flex flex-wrap gap-3">
                 <Button type="button" onClick={() => requestAi("clarify")} disabled={!canSubmit}>
                   <HelpCircle className="h-4 w-4" />
