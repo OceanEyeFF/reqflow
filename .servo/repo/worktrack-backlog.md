@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 60
-- planned: 3
+- planned: 2
 - active: 0
-- completed: 57
+- completed: 58
 - blocked: 0
 - deferred: 0
 
@@ -721,10 +721,13 @@
 - title: 知识库编辑与禁用归档
 - milestone_id: MS-20260528-003
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 1
-- contract_path: TBD
-- branch: worktrack/wt-20260528-064-knowledge-base-edit-archive
+- contract_path: .servo/worktrack/WT-20260528-064/contract.md
+- gate_evidence: .servo/worktrack/WT-20260528-064/gate-evidence.md
+- branch: worktrack/wt-20260528-064-knowledge-base-edit-archive (merged)
+- merge_commit: 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d
+- validation: lint pass; test pass 28 files / 193 tests; build pass
 
 ### WT-20260528-065
 
