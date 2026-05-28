@@ -2,9 +2,12 @@ import { adminAuthErrorResponse, requireAdmin } from "@/lib/admin-auth";
 import { listAdminKnowledgeSources } from "@/lib/knowledge/admin-view";
 import {
   CLEAR_KNOWLEDGE_CONFIRMATION,
+  DELETE_SELECTED_SOURCES_CONFIRMATION,
   KnowledgeCleanupValidationError,
   clearKnowledgeSources,
+  deleteSelectedKnowledgeSources,
   readConfirmation,
+  readSourceIds,
 } from "@/lib/knowledge/cleanup";
 import { KnowledgeAdminValidationError, parseJsonBody } from "@/lib/knowledge/admin-view";
 
@@ -25,8 +28,9 @@ export async function DELETE(request: Request) {
   try {
     await requireAdmin();
     const body = await parseJsonBody(request);
-    readConfirmation(body, CLEAR_KNOWLEDGE_CONFIRMATION);
-    const result = await clearKnowledgeSources();
+    const sourceIds = Array.isArray(body.sourceIds) ? readSourceIds(body) : null;
+    readConfirmation(body, sourceIds ? DELETE_SELECTED_SOURCES_CONFIRMATION : CLEAR_KNOWLEDGE_CONFIRMATION);
+    const result = sourceIds ? await deleteSelectedKnowledgeSources(sourceIds) : await clearKnowledgeSources();
     return Response.json({
       success: true,
       deletedCount: result.deletedSourceCount,

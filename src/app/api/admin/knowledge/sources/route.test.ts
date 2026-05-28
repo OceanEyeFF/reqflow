@@ -165,6 +165,79 @@ describe("DELETE /api/admin/knowledge/sources", () => {
     expect(mocks.deletePrivateKnowledgeFile).toHaveBeenCalledWith("private/a.md");
     expect(mocks.deletePrivateKnowledgeFile).toHaveBeenCalledWith("private/b.md");
   });
+
+  it("deletes only selected sources for admins", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+    const selectedA = await seedKnowledgeSource(admin.id, { title: "A", storageKey: "private/a.md" });
+    const selectedB = await seedKnowledgeSource(admin.id, { title: "B", storageKey: "private/b.md" });
+    const retained = await seedKnowledgeSource(admin.id, { title: "C", storageKey: "private/c.md" });
+
+    const response = await route.DELETE(
+      jsonRequest(
+        "http://localhost/api/admin/knowledge/sources",
+        { confirmation: "DELETE_SELECTED_SOURCES", sourceIds: [selectedA.id, selectedB.id] },
+        { method: "DELETE" }
+      )
+    );
+    const result = await readJson<{ deletedCount: number; storageCleanupErrors: string[] }>(response);
+
+    expect(result).toEqual({ status: 200, body: { deletedCount: 2, storageCleanupErrors: [], success: true } });
+    await expect(prisma.knowledgeSource.findMany({ select: { id: true } })).resolves.toEqual([{ id: retained.id }]);
+    expect(mocks.deletePrivateKnowledgeFile).toHaveBeenCalledWith("private/a.md");
+    expect(mocks.deletePrivateKnowledgeFile).toHaveBeenCalledWith("private/b.md");
+    expect(mocks.deletePrivateKnowledgeFile).not.toHaveBeenCalledWith("private/c.md");
+  });
+
+  it("requires selected delete confirmation and ids", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+
+    const wrongConfirmation = await route.DELETE(
+      jsonRequest(
+        "http://localhost/api/admin/knowledge/sources",
+        { confirmation: "CLEAR_KNOWLEDGE", sourceIds: ["source-1"] },
+        { method: "DELETE" }
+      )
+    );
+    expect(await readJson<{ error: string }>(wrongConfirmation)).toEqual({
+      status: 400,
+      body: { error: "确认短语不正确" },
+    });
+
+    const emptySelection = await route.DELETE(
+      jsonRequest(
+        "http://localhost/api/admin/knowledge/sources",
+        { confirmation: "DELETE_SELECTED_SOURCES", sourceIds: [] },
+        { method: "DELETE" }
+      )
+    );
+    expect(await readJson<{ error: string }>(emptySelection)).toEqual({
+      status: 400,
+      body: { error: "请选择要删除的知识来源" },
+    });
+  });
+
+  it("does not delete anything when a selected source is missing", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+    const retained = await seedKnowledgeSource(admin.id, { title: "A", storageKey: "private/a.md" });
+
+    const response = await route.DELETE(
+      jsonRequest(
+        "http://localhost/api/admin/knowledge/sources",
+        { confirmation: "DELETE_SELECTED_SOURCES", sourceIds: [retained.id, "missing-source"] },
+        { method: "DELETE" }
+      )
+    );
+
+    expect(await readJson<{ error: string }>(response)).toEqual({
+      status: 400,
+      body: { error: "部分知识来源不存在" },
+    });
+    await expect(prisma.knowledgeSource.count()).resolves.toBe(1);
+    expect(mocks.deletePrivateKnowledgeFile).not.toHaveBeenCalled();
+  });
 });
 
 async function seedKnowledgeSource(

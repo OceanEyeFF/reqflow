@@ -74,6 +74,7 @@ export function AdminKnowledgeBase() {
   const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBase[]>([]);
   const [selectedKnowledgeBaseId, setSelectedKnowledgeBaseId] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [selectedSourceIds, setSelectedSourceIds] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -85,6 +86,7 @@ export function AdminKnowledgeBase() {
     () => sources.reduce((count, source) => count + source.snippets.filter((snippet) => snippet.enabled).length, 0),
     [sources]
   );
+  const allSourcesSelected = sources.length > 0 && selectedSourceIds.size === sources.length;
 
   useEffect(() => {
     void loadSources();
@@ -99,6 +101,10 @@ export function AdminKnowledgeBase() {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "加载知识库失败");
       setSources(data.sources ?? []);
+      setSelectedSourceIds((current) => {
+        const liveIds = new Set<string>((data.sources ?? []).map((source: KnowledgeSource) => source.id));
+        return new Set(Array.from(current).filter((id) => liveIds.has(id)));
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "加载知识库失败");
     } finally {
@@ -195,23 +201,47 @@ export function AdminKnowledgeBase() {
     });
   }
 
-  async function clearSources() {
-    if (sources.length === 0) return;
-    if (!window.confirm("清空全部知识来源？此操作会移除所有原始文件和已解析片段。")) return;
-    await runAction("clear:sources", async () => {
+  async function deleteSelectedSources() {
+    if (selectedSourceIds.size === 0) return;
+    if (!window.confirm(`删除已选择的 ${selectedSourceIds.size} 个知识来源？此操作会移除对应原始文件和已解析片段。`)) return;
+    await runAction("delete:selected", async () => {
       const response = await fetch("/api/admin/knowledge/sources", {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ confirmation: "CLEAR_KNOWLEDGE" }),
+        body: JSON.stringify({
+          confirmation: "DELETE_SELECTED_SOURCES",
+          sourceIds: Array.from(selectedSourceIds),
+        }),
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error || "清空知识库失败");
+      if (!response.ok) throw new Error(data.error || "删除选中知识来源失败");
+      setSelectedSourceIds(new Set());
       setMessage(
         data.storageCleanupErrors?.length
-          ? `已清空 ${data.deletedCount} 个知识来源，部分原始文件需要手动清理`
-          : `已清空 ${data.deletedCount} 个知识来源`
+          ? `已删除 ${data.deletedCount} 个知识来源，部分原始文件需要手动清理`
+          : `已删除 ${data.deletedCount} 个知识来源`
       );
     });
+  }
+
+  function toggleSourceSelection(sourceId: string) {
+    setSelectedSourceIds((current) => {
+      const next = new Set(current);
+      if (next.has(sourceId)) {
+        next.delete(sourceId);
+      } else {
+        next.add(sourceId);
+      }
+      return next;
+    });
+  }
+
+  function selectAllSources() {
+    setSelectedSourceIds(new Set(sources.map((source) => source.id)));
+  }
+
+  function invertSourceSelection() {
+    setSelectedSourceIds((current) => new Set(sources.filter((source) => !current.has(source.id)).map((source) => source.id)));
   }
 
   async function runAction(id: string, action: () => Promise<void>) {
@@ -239,10 +269,6 @@ export function AdminKnowledgeBase() {
           <Button type="button" variant="outline" onClick={loadSources} disabled={loading}>
             <RefreshCw className={loading ? "h-4 w-4 animate-spin" : "h-4 w-4"} />
             刷新
-          </Button>
-          <Button type="button" variant="outline" onClick={clearSources} disabled={sources.length === 0 || busyId === "clear:sources"}>
-            {busyId === "clear:sources" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
-            全清
           </Button>
         </div>
       </div>
@@ -315,6 +341,27 @@ export function AdminKnowledgeBase() {
       )}
 
       <div className="space-y-4">
+        {sources.length > 0 && (
+          <div className="flex flex-wrap items-center gap-2 rounded-md border bg-white p-3">
+            <Button type="button" variant="outline" size="sm" onClick={allSourcesSelected ? () => setSelectedSourceIds(new Set()) : selectAllSources}>
+              {allSourcesSelected ? "取消全选" : "全选"}
+            </Button>
+            <Button type="button" variant="outline" size="sm" onClick={invertSourceSelection}>
+              反选
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={deleteSelectedSources}
+              disabled={selectedSourceIds.size === 0 || busyId === "delete:selected"}
+            >
+              {busyId === "delete:selected" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Trash2 className="h-4 w-4" />}
+              删除所选
+            </Button>
+            <span className="text-sm text-gray-500">已选择 {selectedSourceIds.size} / {sources.length}</span>
+          </div>
+        )}
         {loading ? (
           <Card>
             <CardContent className="flex items-center gap-2 p-6 text-sm text-gray-500">
@@ -336,6 +383,8 @@ export function AdminKnowledgeBase() {
               onToggleSource={toggleSource}
               onToggleSnippet={toggleSnippet}
               onDeleteSource={deleteSource}
+              selected={selectedSourceIds.has(source.id)}
+              onToggleSelected={toggleSourceSelection}
             />
           ))
         )}
@@ -360,6 +409,8 @@ function SourceCard({
   onToggleSource,
   onToggleSnippet,
   onDeleteSource,
+  selected,
+  onToggleSelected,
 }: {
   source: KnowledgeSource;
   busyId: string;
@@ -367,6 +418,8 @@ function SourceCard({
   onToggleSource: (source: KnowledgeSource) => Promise<void>;
   onToggleSnippet: (snippet: KnowledgeSnippet) => Promise<void>;
   onDeleteSource: (source: KnowledgeSource) => Promise<void>;
+  selected: boolean;
+  onToggleSelected: (sourceId: string) => void;
 }) {
   const latestVersion = source.versions[0];
   const canEnable = source.status === "ready" || source.status === "enabled";
@@ -376,6 +429,13 @@ function SourceCard({
         <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
           <div className="min-w-0 space-y-2">
             <CardTitle className="flex items-center gap-2 text-lg">
+              <input
+                type="checkbox"
+                checked={selected}
+                onChange={() => onToggleSelected(source.id)}
+                aria-label={`选择 ${source.title}`}
+                className="h-4 w-4"
+              />
               {latestVersion?.importType === "zip" ? <FileArchive className="h-5 w-5" /> : <FileText className="h-5 w-5" />}
               <span className="truncate">{source.title}</span>
             </CardTitle>
