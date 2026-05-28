@@ -70,13 +70,41 @@ describe("POST /api/admin/knowledge/uploads", () => {
     mockAuthSession(auth, { id: admin.id, role: "admin" });
 
     const response = await route.POST(formRequest(new File(["# Guide"], "guide.md", { type: "text/markdown" })));
-    const result = await readJson<{ source: { title: string; importType: string; contentHash: string } }>(response);
+    const result = await readJson<{
+      source: { title: string; importType: string; contentHash: string; knowledgeBase: { slug: string } };
+    }>(response);
 
     expect(result.status).toBe(201);
-    expect(result.body.source).toMatchObject({ title: "guide.md", importType: "document" });
+    expect(result.body.source).toMatchObject({
+      title: "guide.md",
+      importType: "document",
+      knowledgeBase: { slug: "default" },
+    });
     expect(result.body.source.contentHash).toHaveLength(64);
+    await expect(prisma.knowledgeBase.findUnique({ where: { slug: "default" } })).resolves.toMatchObject({
+      name: "默认知识库",
+    });
     expect(JSON.stringify(result.body)).not.toContain(".local-data");
     expect(JSON.stringify(result.body)).not.toContain("public/uploads");
+  });
+
+  it("stores uploads in an explicit knowledge base", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+    const knowledgeBase = await prisma.knowledgeBase.create({
+      data: { name: "Payments", slug: "payments", createdById: admin.id },
+    });
+
+    const response = await route.POST(
+      formRequest(new File(["# Guide"], "guide.md", { type: "text/markdown" }), knowledgeBase.id)
+    );
+    const result = await readJson<{ source: { id: string; knowledgeBase: { id: string; slug: string } } }>(response);
+
+    expect(result.status).toBe(201);
+    expect(result.body.source.knowledgeBase).toMatchObject({ id: knowledgeBase.id, slug: "payments" });
+    await expect(prisma.knowledgeSource.findUnique({ where: { id: result.body.source.id } })).resolves.toMatchObject({
+      knowledgeBaseId: knowledgeBase.id,
+    });
   });
 
   it("rejects unsupported files and unsafe zip entries", async () => {
@@ -91,9 +119,10 @@ describe("POST /api/admin/knowledge/uploads", () => {
   });
 });
 
-function formRequest(file: File): Request {
+function formRequest(file: File, knowledgeBaseId?: string): Request {
   const formData = new FormData();
   formData.set("file", file);
+  if (knowledgeBaseId) formData.set("knowledgeBaseId", knowledgeBaseId);
   return new Request("http://localhost/api/admin/knowledge/uploads", {
     method: "POST",
     body: formData,

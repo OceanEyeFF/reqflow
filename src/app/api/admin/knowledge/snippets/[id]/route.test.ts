@@ -88,8 +88,19 @@ describe("PATCH /api/admin/knowledge/snippets/[id]", () => {
 });
 
 async function seedSnippet(userId: string) {
+  const knowledgeBase = await prisma.knowledgeBase.upsert({
+    where: { slug: "default" },
+    update: {},
+    create: { id: "default", name: "默认知识库", slug: "default" },
+  });
   const source = await prisma.knowledgeSource.create({
-    data: { title: "Guide", status: "ready", enabled: true, createdById: userId },
+    data: {
+      knowledgeBaseId: knowledgeBase.id,
+      title: "Guide",
+      status: "ready",
+      enabled: true,
+      createdById: userId,
+    },
   });
   const version = await prisma.knowledgeSourceVersion.create({
     data: {

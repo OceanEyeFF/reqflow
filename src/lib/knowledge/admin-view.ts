@@ -6,6 +6,7 @@ export async function listAdminKnowledgeSources() {
   const sources = await prisma.knowledgeSource.findMany({
     orderBy: { createdAt: "desc" },
     include: {
+      knowledgeBase: true,
       _count: { select: { snippets: true, versions: true } },
       versions: {
         orderBy: { version: "desc" },
@@ -32,6 +33,12 @@ export async function listAdminKnowledgeSources() {
 
   return sources.map((source) => ({
     id: source.id,
+    knowledgeBase: {
+      id: source.knowledgeBase.id,
+      name: source.knowledgeBase.name,
+      slug: source.knowledgeBase.slug,
+      enabled: source.knowledgeBase.enabled,
+    },
     title: source.title,
     status: source.status,
     enabled: source.enabled,

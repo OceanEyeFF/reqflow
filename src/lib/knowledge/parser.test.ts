@@ -115,8 +115,14 @@ describe("parseKnowledgeSourceVersion", () => {
 });
 
 async function seedKnowledgeVersion(userId: string, importType: string, filename: string) {
+  const knowledgeBase = await prisma.knowledgeBase.upsert({
+    where: { slug: "default" },
+    update: {},
+    create: { id: "default", name: "默认知识库", slug: "default" },
+  });
   const source = await prisma.knowledgeSource.create({
     data: {
+      knowledgeBaseId: knowledgeBase.id,
       title: filename,
       createdById: userId,
       versions: {

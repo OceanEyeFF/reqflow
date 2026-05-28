@@ -93,6 +93,20 @@ describe("selectKnowledgeSnippets", () => {
     await expect(selectKnowledgeSnippets("审批 管理员")).resolves.toEqual([]);
   });
 
+  it("excludes snippets from disabled knowledge bases", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    await seedSnippet(admin.id, {
+      baseEnabled: false,
+      sourceEnabled: true,
+      sourceStatus: "ready",
+      versionStatus: "ready",
+      snippetEnabled: true,
+      content: "审批流程需要记录每个管理员确认步骤。",
+    });
+
+    await expect(selectKnowledgeSnippets("审批 管理员")).resolves.toEqual([]);
+  });
+
   it("excludes snippets after source deletion", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     const source = await seedSnippet(admin.id, {
@@ -129,14 +143,24 @@ async function seedSnippet(
   userId: string,
   input: {
     sourceEnabled: boolean;
+    baseEnabled?: boolean;
     sourceStatus: string;
     versionStatus: string;
     snippetEnabled: boolean;
     content: string;
   }
 ) {
+  const knowledgeBase = await prisma.knowledgeBase.create({
+    data: {
+      name: Math.random().toString(36),
+      slug: `base-${Math.random().toString(36).slice(2, 8)}`,
+      enabled: input.baseEnabled ?? true,
+      createdById: userId,
+    },
+  });
   const source = await prisma.knowledgeSource.create({
     data: {
+      knowledgeBaseId: knowledgeBase.id,
       title: "Admin guide",
       status: input.sourceStatus,
       enabled: input.sourceEnabled,

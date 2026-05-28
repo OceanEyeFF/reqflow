@@ -70,6 +70,7 @@ export async function clearDatabase(prisma: PrismaClient): Promise<void> {
   await prisma.knowledgeSnippet.deleteMany();
   await prisma.knowledgeSourceVersion.deleteMany();
   await prisma.knowledgeSource.deleteMany();
+  await prisma.knowledgeBase.deleteMany();
   await prisma.aiProviderConfig.deleteMany();
   await prisma.notification.deleteMany();
   await prisma.ticketAttachment.deleteMany();

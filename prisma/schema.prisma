@@ -33,6 +33,7 @@ model User {
   sessions         Session[]
   attachments      TicketAttachment[]
   aiProviderConfigs AiProviderConfig[]
+  knowledgeBases    KnowledgeBase[]
   knowledgeSources  KnowledgeSource[]
   knowledgeVersions KnowledgeSourceVersion[]
 }
@@ -188,18 +189,36 @@ model AiProviderConfig {
 }
 
 // ─── 知识库导入 ─────────────────────────────────────────
-model KnowledgeSource {
+model KnowledgeBase {
   id          String   @id @default(cuid())
-  title       String
-  status      String   @default("uploaded")
-  enabled     Boolean  @default(false)
+  name        String
+  slug        String   @unique
+  description String?
+  enabled     Boolean  @default(true)
   createdById String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  createdBy User?                    @relation(fields: [createdById], references: [id])
-  versions  KnowledgeSourceVersion[]
-  snippets  KnowledgeSnippet[]
+  createdBy User?             @relation(fields: [createdById], references: [id])
+  sources   KnowledgeSource[]
+}
+
+model KnowledgeSource {
+  id              String   @id @default(cuid())
+  knowledgeBaseId String   @default("default")
+  title           String
+  status          String   @default("uploaded")
+  enabled         Boolean  @default(false)
+  createdById     String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  knowledgeBase KnowledgeBase             @relation(fields: [knowledgeBaseId], references: [id], onDelete: Restrict)
+  createdBy     User?                     @relation(fields: [createdById], references: [id])
+  versions      KnowledgeSourceVersion[]
+  snippets      KnowledgeSnippet[]
+
+  @@index([knowledgeBaseId])
 }
 
 model KnowledgeSourceVersion {
