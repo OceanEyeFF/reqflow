@@ -44,6 +44,12 @@ type KnowledgeSnippet = {
 
 type KnowledgeSource = {
   id: string;
+  knowledgeBase: {
+    id: string;
+    name: string;
+    slug: string;
+    enabled: boolean;
+  };
   title: string;
   status: string;
   enabled: boolean;
@@ -55,9 +61,19 @@ type KnowledgeSource = {
   snippets: KnowledgeSnippet[];
 };
 
+type KnowledgeBase = {
+  id: string;
+  name: string;
+  slug: string;
+  enabled: boolean;
+  sourceCount: number;
+};
+
 export function AdminKnowledgeBase() {
   const [sources, setSources] = useState<KnowledgeSource[]>([]);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBase[]>([]);
+  const [selectedKnowledgeBaseId, setSelectedKnowledgeBaseId] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -72,6 +88,7 @@ export function AdminKnowledgeBase() {
 
   useEffect(() => {
     void loadSources();
+    void loadKnowledgeBases();
   }, []);
 
   async function loadSources() {
@@ -89,20 +106,39 @@ export function AdminKnowledgeBase() {
     }
   }
 
+  async function loadKnowledgeBases() {
+    try {
+      const response = await fetch("/api/admin/knowledge/bases");
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "加载知识库失败");
+      const bases = (data.knowledgeBases ?? []) as KnowledgeBase[];
+      setKnowledgeBases(bases);
+      setSelectedKnowledgeBaseId((current) => current || bases[0]?.id || "");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "加载知识库失败");
+    }
+  }
+
   async function uploadFile() {
-    if (!selectedFile) return;
+    if (selectedFiles.length === 0) return;
     setUploading(true);
     setError("");
     setMessage("");
     try {
       const formData = new FormData();
-      formData.set("file", selectedFile);
+      for (const file of selectedFiles) {
+        formData.append("file", file);
+      }
+      if (selectedKnowledgeBaseId) {
+        formData.set("knowledgeBaseId", selectedKnowledgeBaseId);
+      }
       const response = await fetch("/api/admin/knowledge/uploads", { method: "POST", body: formData });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "上传失败");
-      setSelectedFile(null);
-      setMessage(`已上传 ${data.source.title}`);
+      setSelectedFiles([]);
+      setMessage(data.sources?.length > 1 ? `已上传 ${data.sources.length} 个文件` : `已上传 ${data.source.title}`);
       await loadSources();
+      await loadKnowledgeBases();
     } catch (err) {
       setError(err instanceof Error ? err.message : "上传失败");
     } finally {
@@ -231,18 +267,35 @@ export function AdminKnowledgeBase() {
               <Input
                 id="knowledge-file"
                 type="file"
+                multiple
                 accept=".md,.markdown,.txt,.json,.zip,text/markdown,text/plain,application/json,application/zip"
-                onChange={(event) => setSelectedFile(event.target.files?.[0] ?? null)}
+                onChange={(event) => setSelectedFiles(Array.from(event.target.files ?? []))}
               />
             </div>
-            <Button type="button" onClick={uploadFile} disabled={!selectedFile || uploading}>
+            <div className="space-y-2">
+              <Label htmlFor="knowledge-base">知识库</Label>
+              <select
+                id="knowledge-base"
+                value={selectedKnowledgeBaseId}
+                onChange={(event) => setSelectedKnowledgeBaseId(event.target.value)}
+                className="h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
+                disabled={knowledgeBases.length === 0}
+              >
+                {knowledgeBases.map((base) => (
+                  <option key={base.id} value={base.id}>
+                    {base.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <Button type="button" onClick={uploadFile} disabled={selectedFiles.length === 0 || uploading}>
               {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
               {uploading ? "上传中" : "上传文件"}
             </Button>
           </div>
-          {selectedFile && (
+          {selectedFiles.length > 0 && (
             <p className="text-sm text-gray-500">
-              已选择 {selectedFile.name}，{formatBytes(selectedFile.size)}
+              已选择 {selectedFiles.length} 个文件，合计 {formatBytes(selectedFiles.reduce((total, file) => total + file.size, 0))}
             </p>
           )}
         </CardContent>
@@ -329,6 +382,7 @@ function SourceCard({
             <div className="flex flex-wrap gap-2 text-xs text-gray-500">
               <Badge>{source.status}</Badge>
               <Badge>{source.enabled ? "enabled" : "disabled"}</Badge>
+              <Badge>{source.knowledgeBase.name}</Badge>
               <Badge>{source.snippetCount} snippets</Badge>
               <span>{formatDate(source.createdAt)}</span>
             </div>
