@@ -16,7 +16,7 @@ vi.mock("@/auth", () => ({
 }));
 
 vi.mock("@/lib/knowledge/private-storage", () => ({
-  writePrivateKnowledgeFile: vi.fn(async (_buffer: Buffer, extension: string) => `test/upload${extension}`),
+  writePrivateKnowledgeFile: vi.fn(async (_buffer: Buffer, extension: string) => `test/upload-${Math.random().toString(36)}${extension}`),
 }));
 
 type Route = typeof import("./route");
@@ -72,6 +72,7 @@ describe("POST /api/admin/knowledge/uploads", () => {
     const response = await route.POST(formRequest(new File(["# Guide"], "guide.md", { type: "text/markdown" })));
     const result = await readJson<{
       source: { title: string; importType: string; contentHash: string; knowledgeBase: { slug: string } };
+      sources: Array<{ title: string }>;
     }>(response);
 
     expect(result.status).toBe(201);
@@ -81,6 +82,7 @@ describe("POST /api/admin/knowledge/uploads", () => {
       knowledgeBase: { slug: "default" },
     });
     expect(result.body.source.contentHash).toHaveLength(64);
+    expect(result.body.sources).toHaveLength(1);
     await expect(prisma.knowledgeBase.findUnique({ where: { slug: "default" } })).resolves.toMatchObject({
       name: "默认知识库",
     });
@@ -107,6 +109,60 @@ describe("POST /api/admin/knowledge/uploads", () => {
     });
   });
 
+  it("stores multiple files in an explicit knowledge base", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+    const knowledgeBase = await prisma.knowledgeBase.create({
+      data: { name: "Payments", slug: "payments", createdById: admin.id },
+    });
+
+    const response = await route.POST(
+      formRequest(
+        [
+          new File(["# Guide"], "guide.md", { type: "text/markdown" }),
+          new File(["{\"policy\":true}"], "policy.json", { type: "application/json" }),
+        ],
+        knowledgeBase.id
+      )
+    );
+    const result = await readJson<{
+      source: { title: string };
+      sources: Array<{ id: string; title: string; knowledgeBase: { id: string }; importType: string }>;
+    }>(response);
+
+    expect(result.status).toBe(201);
+    expect(result.body.source.title).toBe("guide.md");
+    expect(result.body.sources).toHaveLength(2);
+    expect(result.body.sources.map((source) => source.title)).toEqual(["guide.md", "policy.json"]);
+    expect(result.body.sources.every((source) => source.knowledgeBase.id === knowledgeBase.id)).toBe(true);
+    await expect(prisma.knowledgeSource.count({ where: { knowledgeBaseId: knowledgeBase.id } })).resolves.toBe(2);
+  });
+
+  it("accepts the files field for multiple file clients", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+
+    const response = await route.POST(
+      formRequest([new File(["# A"], "a.md"), new File(["# B"], "b.md")], undefined, "files")
+    );
+    const result = await readJson<{ sources: Array<{ title: string }> }>(response);
+
+    expect(result.status).toBe(201);
+    expect(result.body.sources.map((source) => source.title)).toEqual(["a.md", "b.md"]);
+  });
+
+  it("rejects a mixed batch before creating sources", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+
+    const response = await route.POST(formRequest([new File(["# A"], "a.md"), new File(["bad"], "run.exe")]));
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result.status).toBe(400);
+    expect(result.body.error).toBe("不支持的知识库文件类型");
+    await expect(prisma.knowledgeSource.count()).resolves.toBe(0);
+  });
+
   it("rejects unsupported files and unsafe zip entries", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     mockAuthSession(auth, { id: admin.id, role: "admin" });
@@ -119,9 +175,11 @@ describe("POST /api/admin/knowledge/uploads", () => {
   });
 });
 
-function formRequest(file: File, knowledgeBaseId?: string): Request {
+function formRequest(file: File | File[], knowledgeBaseId?: string, fieldName = "file"): Request {
   const formData = new FormData();
-  formData.set("file", file);
+  for (const item of Array.isArray(file) ? file : [file]) {
+    formData.append(fieldName, item);
+  }
   if (knowledgeBaseId) formData.set("knowledgeBaseId", knowledgeBaseId);
   return new Request("http://localhost/api/admin/knowledge/uploads", {
     method: "POST",

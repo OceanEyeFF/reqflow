@@ -9,60 +9,21 @@ export async function POST(request: Request) {
   try {
     const session = await requireAdmin();
     const formData = await request.formData();
-    const file = formData.get("file");
-    if (!(file instanceof File)) {
+    const files = [...formData.getAll("file"), ...formData.getAll("files")].filter((value): value is File => value instanceof File);
+    if (files.length === 0) {
       return Response.json({ error: "未提供文件" }, { status: 400 });
     }
-
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const validated = validateKnowledgeUpload(file, buffer);
     const knowledgeBase = await resolveKnowledgeBaseForUpload(formData, session.user.id);
-    const storageKey = await writePrivateKnowledgeFile(buffer, validated.extension);
-    const contentHash = createHash("sha256").update(buffer).digest("hex");
-    const source = await prisma.knowledgeSource.create({
-      data: {
-        knowledgeBaseId: knowledgeBase.id,
-        title: validated.safeFilename,
-        status: "uploaded",
-        enabled: false,
-        createdById: session.user.id,
-        versions: {
-          create: {
-            version: 1,
-            originalFilename: validated.safeFilename,
-            storageKey,
-            mimeType: file.type || "application/octet-stream",
-            fileSize: buffer.length,
-            contentHash,
-            importType: validated.kind,
-            status: "uploaded",
-            createdById: session.user.id,
-          },
-        },
-      },
-      include: { versions: { orderBy: { version: "desc" }, take: 1 } },
-    });
-    const version = source.versions[0];
+    const preparedFiles = await Promise.all(files.map(prepareUploadedFile));
+    const sources = [];
+    for (const prepared of preparedFiles) {
+      sources.push(await createUploadedSource(prepared, knowledgeBase, session.user.id));
+    }
 
     return Response.json(
       {
-        source: {
-          id: source.id,
-          knowledgeBase: {
-            id: knowledgeBase.id,
-            name: knowledgeBase.name,
-            slug: knowledgeBase.slug,
-          },
-          title: source.title,
-          status: source.status,
-          enabled: source.enabled,
-          version: version.version,
-          importType: version.importType,
-          fileSize: version.fileSize,
-          contentHash: version.contentHash,
-          zipEntryCount: validated.zipEntryCount ?? null,
-          createdAt: source.createdAt.toISOString(),
-        },
+        source: sources[0],
+        sources,
       },
       { status: 201 }
     );
@@ -75,4 +36,70 @@ export async function POST(request: Request) {
     console.error("Knowledge upload error:", error);
     return Response.json({ error: "服务器错误" }, { status: 500 });
   }
+}
+
+type UploadKnowledgeBase = Awaited<ReturnType<typeof resolveKnowledgeBaseForUpload>>;
+type PreparedUpload = {
+  file: File;
+  buffer: Buffer;
+  validated: ReturnType<typeof validateKnowledgeUpload>;
+  contentHash: string;
+};
+
+async function prepareUploadedFile(file: File): Promise<PreparedUpload> {
+  const buffer = Buffer.from(await file.arrayBuffer());
+  const validated = validateKnowledgeUpload(file, buffer);
+  return {
+    file,
+    buffer,
+    validated,
+    contentHash: createHash("sha256").update(buffer).digest("hex"),
+  };
+}
+
+async function createUploadedSource(prepared: PreparedUpload, knowledgeBase: UploadKnowledgeBase, userId: string) {
+  const { buffer, file, validated, contentHash } = prepared;
+  const storageKey = await writePrivateKnowledgeFile(buffer, validated.extension);
+  const source = await prisma.knowledgeSource.create({
+    data: {
+      knowledgeBaseId: knowledgeBase.id,
+      title: validated.safeFilename,
+      status: "uploaded",
+      enabled: false,
+      createdById: userId,
+      versions: {
+        create: {
+          version: 1,
+          originalFilename: validated.safeFilename,
+          storageKey,
+          mimeType: file.type || "application/octet-stream",
+          fileSize: buffer.length,
+          contentHash,
+          importType: validated.kind,
+          status: "uploaded",
+          createdById: userId,
+        },
+      },
+    },
+    include: { versions: { orderBy: { version: "desc" }, take: 1 } },
+  });
+  const version = source.versions[0];
+
+  return {
+    id: source.id,
+    knowledgeBase: {
+      id: knowledgeBase.id,
+      name: knowledgeBase.name,
+      slug: knowledgeBase.slug,
+    },
+    title: source.title,
+    status: source.status,
+    enabled: source.enabled,
+    version: version.version,
+    importType: version.importType,
+    fileSize: version.fileSize,
+    contentHash: version.contentHash,
+    zipEntryCount: validated.zipEntryCount ?? null,
+    createdAt: source.createdAt.toISOString(),
+  };
 }
