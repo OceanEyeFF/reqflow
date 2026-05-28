@@ -107,6 +107,45 @@ describe("selectKnowledgeSnippets", () => {
     await expect(selectKnowledgeSnippets("审批 管理员")).resolves.toEqual([]);
   });
 
+  it("limits snippets to selected knowledge bases", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const selected = await seedSnippet(admin.id, {
+      sourceEnabled: true,
+      sourceStatus: "ready",
+      versionStatus: "ready",
+      snippetEnabled: true,
+      content: "审批流程来自选中知识库。",
+    });
+    await seedSnippet(admin.id, {
+      sourceEnabled: true,
+      sourceStatus: "ready",
+      versionStatus: "ready",
+      snippetEnabled: true,
+      content: "审批流程来自未选知识库。",
+    });
+
+    const citations = await selectKnowledgeSnippets("审批 流程", {
+      knowledgeBaseIds: [selected.knowledgeBaseId],
+    });
+
+    expect(citations).toHaveLength(1);
+    expect(citations[0].snippet).toBe("审批流程来自选中知识库。");
+  });
+
+  it("does not return snippets from disabled selected knowledge bases", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const source = await seedSnippet(admin.id, {
+      baseEnabled: false,
+      sourceEnabled: true,
+      sourceStatus: "ready",
+      versionStatus: "ready",
+      snippetEnabled: true,
+      content: "审批流程来自停用知识库。",
+    });
+
+    await expect(selectKnowledgeSnippets("审批 流程", { knowledgeBaseIds: [source.knowledgeBaseId] })).resolves.toEqual([]);
+  });
+
   it("excludes snippets after source deletion", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     const source = await seedSnippet(admin.id, {

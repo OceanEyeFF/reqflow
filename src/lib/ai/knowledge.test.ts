@@ -1,8 +1,12 @@
 import { describe, expect, it, vi } from "vitest";
 import { assembleKnowledgeContext, knowledgeSources, toDraftCitations } from "./knowledge";
 
-vi.mock("@/lib/knowledge/retrieval", () => ({
+const mocks = vi.hoisted(() => ({
   selectKnowledgeSnippets: vi.fn(async () => []),
+}));
+
+vi.mock("@/lib/knowledge/retrieval", () => ({
+  selectKnowledgeSnippets: mocks.selectKnowledgeSnippets,
 }));
 
 describe("knowledgeSources", () => {
@@ -21,6 +25,12 @@ describe("knowledgeSources", () => {
 });
 
 describe("assembleKnowledgeContext", () => {
+  it("passes selected knowledge base ids to persisted retrieval", async () => {
+    await assembleKnowledgeContext("需要审批流程", { knowledgeBaseIds: ["base-a"] });
+
+    expect(mocks.selectKnowledgeSnippets).toHaveBeenCalledWith("需要审批流程", { knowledgeBaseIds: ["base-a"] });
+  });
+
   it("returns safe snippets without test passwords", async () => {
     const context = await assembleKnowledgeContext("需要一个新 ticket 创建需求，包含 priority 和 draft");
 
