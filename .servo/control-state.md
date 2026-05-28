@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Handback: all MS8 Worktracks are completed and merged. Await fdch0 final acceptance decision for MS-20260528-001.
+- RepoScope.Decide: WT-20260528-062 added as mandatory MS8 Prisma/database acceptance validation. Initialize WT-20260528-062 before final handback.
 
 ## Linked Formal Documents
 
@@ -46,8 +46,8 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: true
-- reason: MS8 milestone acceptance must be decided by fdch0 per explicit instruction; do not auto-accept the milestone.
+- needs_programmer_approval: false
+- reason: fdch0 requested adding a Worktrack to make Prisma/database checks mandatory before MS8 acceptance; low-risk control-plane update may proceed.
 - approval_scope: MS-20260528-001 confirmed implementation scope; docs cleanup deferred to MS-20260528-002.
 - approval_persistence: current MS8 execution boundary
 
@@ -76,8 +76,8 @@
 
 ## Handback Guard
 
-- handoff_state: ms8_all_worktracks_completed_awaiting_programmer_acceptance
-- last_stop_reason: programmer_milestone_acceptance_required
+- handoff_state: ms8_db_acceptance_worktrack_added_ready_for_init
+- last_stop_reason: N/A
 - last_handback_signature:
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
@@ -113,7 +113,7 @@
 - latest_acceptance: MS-20260527-001 accepted by fdch0 on 2026-05-28 after limited manual flow testing
 - latest_repo_baseline: 4e1cc71805ddd8b5a321735b5ed360c613d72fad (`Merge WT-20260528-056 MS8 validation`)
 - latest_completed_worktrack: WT-20260528-056 completed and merged at 4e1cc71
-- next_worktrack_candidate: none; await MS8 final acceptance decision from fdch0.
+- next_worktrack_candidate: WT-20260528-062 Prisma 与数据库验收必检项.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
 - active_next_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围
