@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: MS8 addendum requirements confirmed by fdch0; wait for explicit WT-20260528-064 initialization request.
+- RepoScope.Refresh complete for MS8 addendum execution authorization; proceed to WorktrackScope.Init for WT-20260528-064.
 
 ## Linked Formal Documents
 
@@ -46,10 +46,10 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: true
-- reason: fdch0 answered MS8 addendum clarification questions; no worktrack execution has been approved in this turn.
-- approval_scope: starting any MS8 addendum worktrack or expanding MS8 addendum beyond knowledge-base lifecycle management and AI multi-direction clarification.
-- approval_persistence: until fdch0 explicitly requests WT-20260528-064 initialization or other worktrack execution
+- needs_programmer_approval: false
+- reason: fdch0 explicitly approved MS8 addendum execution cycle on 2026-05-28 with 30 continuous Worktrack quota and low-risk Worktrack self-approval.
+- approval_scope: MS8 addendum planned worktracks and automatically added missing low-risk worktracks within knowledge-base lifecycle management, AI multi-direction clarification, and addendum validation. Milestone final acceptance remains fdch0-only.
+- approval_persistence: active for this MS8 addendum execution cycle until quota exhaustion, dangerous operation, context-noise handback, required business decision, or milestone final acceptance boundary.
 
 ## Continuation Authority
 
@@ -72,22 +72,22 @@
   - attempted_carrier:
   - carrier_decision:
   - fallback_reason:
-- persistent_authority_notes: 用户在 2026-05-27 明确授予 MS7 执行周期 30 个连续 Worktrack 额度，允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack；MS7 milestone final acceptance 已由用户在 2026-05-28 明确通过。MS8 已按用户请求激活，且需求确认已回答；首个 Worktrack 可在 MS8 范围内初始化。
+- persistent_authority_notes: 用户在 2026-05-28 明确授予 MS8 addendum 执行周期 30 个连续 Worktrack 额度，允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack；危险操作、上下文噪声明显或需要用户业务判断时必须 handback；MS8 addendum milestone final acceptance 必须由用户决定。
 
 ## Handback Guard
 
-- handoff_state: ms8_addendum_requirements_confirmed_waiting_worktrack_start
-- last_stop_reason: requirements_confirmed_no_worktrack_start_approval
-- last_handback_signature: MS-20260528-003::requirements-confirmed::2026-05-28
+- handoff_state: ms8_addendum_execution_authorized
+- last_stop_reason: N/A
+- last_handback_signature: MS-20260528-003::execution-authorized::2026-05-28
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
 - handback_lock_active: false
-- last_unlock_signal: N/A
+- last_unlock_signal: fdch0 approved MS8 addendum execution cycle and requested repo baseline refresh plus sequential worktrack execution.
 
 ## Baseline Traceability
 
-- last_verified_checkpoint: 8972fc5b16ac60583103944776c20761cc4059d2
-- latest_observed_checkpoint: 8972fc5b16ac60583103944776c20761cc4059d2
+- last_verified_checkpoint: e8a836d5d0352c678d52538120029f78ee033aad
+- latest_observed_checkpoint: e8a836d5d0352c678d52538120029f78ee033aad
 - last_doc_catch_up_checkpoint: b2baeac
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
@@ -98,11 +98,11 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 11
-- autonomous_worktracks_opened: 19
+- autonomy_budget_remaining: 30
+- autonomous_worktracks_opened: 0
 - autonomy_budget_granted_by: fdch0
-- autonomy_budget_granted_at: 2026-05-27
-- autonomy_budget_notes: MS7 执行周期授权；低危险 Worktrack 可自行审批，危险操作、上下文噪声明显或需要用户业务判断时必须 handback。
+- autonomy_budget_granted_at: 2026-05-28
+- autonomy_budget_notes: MS8 addendum 执行周期授权；允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack。危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。Milestone final acceptance 必须由 fdch0 决定。
 
 ## Notes
 
@@ -111,14 +111,14 @@
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
 - Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已完成 11/11 worktracks，并由用户在 2026-05-28 最终验收。
 - latest_acceptance: MS-20260528-001 accepted by fdch0 on 2026-05-28 after WT-20260528-062 DB readiness validation
-- latest_repo_baseline: 8972fc5b16ac60583103944776c20761cc4059d2 (`Merge MS8 addendum activation`)
+- latest_repo_baseline: e8a836d5d0352c678d52538120029f78ee033aad (`Merge MS8 addendum requirement confirmations`)
 - latest_completed_worktrack: WT-20260528-062 completed and merged before MS8 acceptance; MS8 addendum activation merged at 8972fc5.
-- next_worktrack_candidate: WT-20260528-064 after fdch0 explicitly requests worktrack initialization.
+- next_worktrack_candidate: WT-20260528-064 approved for initialization.
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
 - active_next_milestone: MS-20260528-003 MS8 addendum
-- active_milestone_clarification_status: confirmed by fdch0; waiting explicit WT-20260528-064 initialization request
+- active_milestone_clarification_status: confirmed by fdch0; MS8 addendum execution authorized.
 - routed_new_requests: AI answer language selection and multiple/split requirement drafts are in MS8; docs path cleanup moved to MS-20260528-002.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
