@@ -24,7 +24,7 @@
 - active_milestone: MS-20260528-003
 - milestone_title: MS8 addendum
 - milestone_status: active
-- milestone_pipeline_summary: total=10 planned=1 active=1 completed=8 superseded=0
+- milestone_pipeline_summary: total=10 planned=1 active=1 completed=8 superseded=0; MS8 addendum worktracks 3/3 completed, awaiting fdch0 final acceptance
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Refresh complete for WT-20260528-065; proceed to WorktrackScope.Init for WT-20260528-066.
+- RepoScope.Refresh complete for WT-20260528-066; MS8 addendum is ready for fdch0 final acceptance review.
 
 ## Linked Formal Documents
 
@@ -46,8 +46,8 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: false
-- reason: fdch0 explicitly approved MS8 addendum execution cycle on 2026-05-28 with 30 continuous Worktrack quota and low-risk Worktrack self-approval.
+- needs_programmer_approval: true
+- reason: MS8 addendum worktracks are complete; milestone final acceptance remains fdch0-only.
 - approval_scope: MS8 addendum planned worktracks and automatically added missing low-risk worktracks within knowledge-base lifecycle management, AI multi-direction clarification, and addendum validation. Milestone final acceptance remains fdch0-only.
 - approval_persistence: active for this MS8 addendum execution cycle until quota exhaustion, dangerous operation, context-noise handback, required business decision, or milestone final acceptance boundary.
 
@@ -87,7 +87,7 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint: e8a836d5d0352c678d52538120029f78ee033aad
-- latest_observed_checkpoint: 5198bc9f7a493a36bf9e0c5df8fe9872476715eb
+- latest_observed_checkpoint: dc0e98a2bb30f1a7f502ae854b33b5bb4152217b
 - last_doc_catch_up_checkpoint: b2baeac
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
@@ -98,8 +98,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 28
-- autonomous_worktracks_opened: 2
+- autonomy_budget_remaining: 27
+- autonomous_worktracks_opened: 3
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-28
 - autonomy_budget_notes: MS8 addendum 执行周期授权；允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack。危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。Milestone final acceptance 必须由 fdch0 决定。
@@ -113,9 +113,10 @@
 - latest_acceptance: MS-20260528-001 accepted by fdch0 on 2026-05-28 after WT-20260528-062 DB readiness validation
 - latest_repo_baseline: e8a836d5d0352c678d52538120029f78ee033aad (`Merge MS8 addendum requirement confirmations`)
 - latest_completed_worktrack: WT-20260528-062 completed and merged before MS8 acceptance; MS8 addendum activation merged at 8972fc5.
-- next_worktrack_candidate: WT-20260528-066 approved for initialization.
+- next_worktrack_candidate: none; MS8 addendum final acceptance handback required.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
+- latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
