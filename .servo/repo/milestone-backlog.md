@@ -156,6 +156,7 @@
 - priority: 10
 - depends_on_milestones: [MS-20260528-001]
 - worktrack_list: [WT-20260528-064, WT-20260528-065, WT-20260528-066]
+- worktrack_progress: WT-20260528-064=done, WT-20260528-065=planned, WT-20260528-066=planned
 - created_by: fdch0
 - created_at: 2026-05-28
 - updated: 2026-05-28

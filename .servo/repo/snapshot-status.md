@@ -4,7 +4,7 @@
 
 - updated: 2026-05-28
 - baseline_branch: develop
-- baseline_commit: e8a836d5d0352c678d52538120029f78ee033aad
+- baseline_commit: 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d
 
 ## Codebase State
 
@@ -48,9 +48,9 @@ reqflow/
 
 | 指标 | 状态 |
 |------|------|
-| `npm run build` | 通过 (2026-05-28, WT-20260528-057) |
-| `npm run lint` | 通过，ESLint 0 warning (2026-05-28, WT-20260528-057) |
-| `npm run test` | 通过，25 个测试文件，159 个测试 (2026-05-28, WT-20260528-057) |
+| `npm run build` | 通过 (2026-05-28, WT-20260528-064) |
+| `npm run lint` | 通过，ESLint 0 warning (2026-05-28, WT-20260528-064) |
+| `npm run test` | 通过，28 个测试文件，193 个测试 (2026-05-28, WT-20260528-064) |
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
 | GitHub Actions CI baseline | 已建立并刷新，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`；run `26502063963` success for MS6 validation handback `b5d50b8b8043dc8a35264cf96553955a4697ba8d` (2026-05-27, WT-20260526-036) |
 | Cloud readiness boundary | 已建立，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、uploads、SQLite production risk、deployment platform boundary (2026-05-27, WT-20260526-028) |
@@ -197,12 +197,13 @@ reqflow/
 - milestone_id: MS-20260528-003
 - title: MS8 addendum
 - status: active
-- progress: 0/3 completed
+- progress: 1/3 completed
 - depends_on_milestones: MS-20260528-001
 - scope_boundary: knowledge-base edit and disable/archive lifecycle; AI clarification directions from knowledge-base, application-scenario, and concrete-detail angles; final addendum validation with Milestone DB Readiness Gate.
-- activation_status: activated on 2026-05-28 by fdch0; no worktrack initialized.
+- activation_status: activated on 2026-05-28 by fdch0; WT-20260528-064 completed and merged.
 - clarification_status: confirmed by fdch0 on 2026-05-28; MS8 addendum execution cycle authorized with 30 continuous Worktrack quota.
 - confirmed_requirement_summary: disabled/archived knowledge bases are user-invisible and cannot receive new sources or cleanup until restored; default knowledge base cannot be deleted; internal slug/system identifier is unique and immutable; AI clarification uses fixed labels "知识库依据 / 应用场景 / 需求细节", max 5 questions per direction, unified answer area, and the existing max-3 draft single-selection handoff; final validation requires manual UI flow record.
+- latest_evidence: WT-20260528-064 merged at `7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d`; gate evidence records lifecycle API/UI implementation, disabled/archive upload and cleanup protections, immutable slug/default-base guards, and passing `npm run lint`, `npm run test` (28 files / 193 tests), and `npm run build`.
 
 ### M4 Governance Facts
 
