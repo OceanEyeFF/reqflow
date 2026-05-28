@@ -167,7 +167,7 @@ reqflow/
 
 - current_preparation_milestone: none
 - current_preparation_item: MS8 addendum activated by fdch0; MS-20260528-002 remains planned.
-- preparation_goal: ask focused MS8 addendum clarification questions and await explicit instruction before starting any MS8 addendum worktrack.
+- preparation_goal: MS8 addendum clarification is confirmed; await explicit instruction before starting WT-20260528-064 or any addendum worktrack.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior are planned under MS-20260528-001; docs cleanup is deferred to MS-20260528-002.
 
@@ -201,7 +201,8 @@ reqflow/
 - depends_on_milestones: MS-20260528-001
 - scope_boundary: knowledge-base edit and disable/archive lifecycle; AI clarification directions from knowledge-base, application-scenario, and concrete-detail angles; final addendum validation with Milestone DB Readiness Gate.
 - activation_status: activated on 2026-05-28 by fdch0; no worktrack initialized.
-- clarification_status: pending fdch0 answers for knowledge-base lifecycle semantics and AI clarification direction behavior before WT-20260528-064 initialization.
+- clarification_status: confirmed by fdch0 on 2026-05-28; WT-20260528-064 remains uninitialized until explicit start request.
+- confirmed_requirement_summary: disabled/archived knowledge bases are user-invisible and cannot receive new sources or cleanup until restored; default knowledge base cannot be deleted; internal slug/system identifier is unique and immutable; AI clarification uses fixed labels "知识库依据 / 应用场景 / 需求细节", max 5 questions per direction, unified answer area, and the existing max-3 draft single-selection handoff; final validation requires manual UI flow record.
 
 ### M4 Governance Facts
 
