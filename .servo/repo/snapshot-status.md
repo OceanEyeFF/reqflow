@@ -50,7 +50,7 @@ reqflow/
 |------|------|
 | `npm run build` | 通过 (2026-05-28, WT-20260528-066) |
 | `npm run lint` | 通过，ESLint 0 warning (2026-05-28, WT-20260528-066) |
-| `npm run test` | 通过，28 个测试文件，194 个测试 (2026-05-28, WT-20260528-065) |
+| `npm run test` | 通过，28 个测试文件，194 个测试 (2026-05-28, WT-20260528-066) |
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
 | GitHub Actions CI baseline | 已建立并刷新，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`；run `26502063963` success for MS6 validation handback `b5d50b8b8043dc8a35264cf96553955a4697ba8d` (2026-05-27, WT-20260526-036) |
 | Cloud readiness boundary | 已建立，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、uploads、SQLite production risk、deployment platform boundary (2026-05-27, WT-20260526-028) |
