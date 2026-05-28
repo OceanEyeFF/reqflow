@@ -120,10 +120,62 @@ describe("POST /api/ai/draft", () => {
         mode: "clarify",
         knowledgeBaseIds: ["base-a"],
         answerLanguage: "zh",
+        maxDrafts: 3,
         knowledge: expect.any(Array),
       })
     );
     expect(lastProviderConfig).toMatchObject({ model: "model-x" });
+  });
+
+  it("returns multi-draft results unchanged without creating a ticket", async () => {
+    mockAuthSession(auth, { id: "user-1" });
+    providerGenerate.mockResolvedValue({
+      kind: "drafts",
+      result: {
+        drafts: [
+          {
+            title: "审批状态",
+            background: "需要追踪状态",
+            userStory: "作为项目经理，我要看到审批状态",
+            acceptanceCriteria: ["展示审批状态"],
+            pendingQuestions: [],
+            suggestedPriority: "high",
+            citations: [],
+          },
+          {
+            title: "审批通知",
+            background: "需要通知审批人",
+            userStory: "作为审批人，我要收到待办提醒",
+            acceptanceCriteria: ["通知审批人"],
+            pendingQuestions: [],
+            suggestedPriority: "medium",
+            citations: [],
+          },
+        ],
+      },
+      citations: [],
+      emptyKnowledge: true,
+    });
+
+    const response = await route.POST(
+      jsonRequest("http://localhost/api/ai/draft", {
+        mode: "draft",
+        requirement: "需要一个审批流程，可以拆分状态追踪和审批通知",
+      })
+    );
+    const result = await readJson<{ kind: string; result: { drafts: unknown[] } }>(response);
+
+    expect(result.status).toBe(200);
+    expect(result.body).toMatchObject({
+      kind: "drafts",
+      result: { drafts: [{ title: "审批状态" }, { title: "审批通知" }] },
+    });
+    expect(providerGenerate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mode: "draft",
+        maxDrafts: 3,
+      })
+    );
   });
 
   it("returns provider configuration errors without leaking secrets", async () => {

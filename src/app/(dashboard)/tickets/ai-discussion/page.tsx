@@ -31,6 +31,12 @@ type AiDraftResponse =
       result: AiRequirementDraft;
       citations: DraftCitation[];
       emptyKnowledge: boolean;
+    }
+  | {
+      kind: "drafts";
+      result: { drafts: AiRequirementDraft[] };
+      citations: DraftCitation[];
+      emptyKnowledge: boolean;
     };
 
 type AnswerMap = Record<string, string>;
@@ -52,7 +58,7 @@ export default function AiDiscussionPage() {
   const [requirement, setRequirement] = useState("");
   const [questions, setQuestions] = useState<ClarificationQuestion[]>([]);
   const [answers, setAnswers] = useState<AnswerMap>({});
-  const [draft, setDraft] = useState<AiRequirementDraft | null>(null);
+  const [draftCandidates, setDraftCandidates] = useState<AiRequirementDraft[]>([]);
   const [citations, setCitations] = useState<DraftCitation[]>([]);
   const [emptyKnowledge, setEmptyKnowledge] = useState(false);
   const [status, setStatus] = useState<PageState>("empty");
@@ -120,13 +126,15 @@ export default function AiDiscussionPage() {
     setEmptyKnowledge(data.emptyKnowledge);
     if (data.kind === "clarification") {
       setQuestions(data.result.questions);
-      setDraft(null);
+      setDraftCandidates([]);
       setStatus("clarifying");
       return;
     }
 
-    setDraft(data.result);
-    setCitations(data.result.citations?.length ? data.result.citations : data.citations);
+    const candidates = data.kind === "drafts" ? data.result.drafts : [data.result];
+    setDraftCandidates(candidates);
+    const candidateCitations = candidates.flatMap((candidate) => candidate.citations || []);
+    setCitations(candidateCitations.length ? candidateCitations : data.citations);
     setStatus("draft_ready");
   }
 
@@ -134,16 +142,14 @@ export default function AiDiscussionPage() {
     setRequirement("");
     setQuestions([]);
     setAnswers({});
-    setDraft(null);
+    setDraftCandidates([]);
     setCitations([]);
     setEmptyKnowledge(false);
     setStatus("empty");
     setError("");
   }
 
-  function acceptDraft() {
-    if (!draft) return;
-
+  function acceptDraft(draft: AiRequirementDraft) {
     stageAiDraft(sessionStorage, draft);
     setStatus("accepted");
     router.push("/tickets/new?from=ai-draft");
@@ -292,11 +298,11 @@ export default function AiDiscussionPage() {
           )}
 
           <DraftPreview
-            draft={draft}
+            drafts={draftCandidates}
             status={status}
             onAccept={acceptDraft}
             onDiscard={() => {
-              setDraft(null);
+              setDraftCandidates([]);
               setStatus(questions.length > 0 ? "clarifying" : "empty");
             }}
           />
@@ -346,17 +352,17 @@ export default function AiDiscussionPage() {
 }
 
 function DraftPreview({
-  draft,
+  drafts,
   status,
   onAccept,
   onDiscard,
 }: {
-  draft: AiRequirementDraft | null;
+  drafts: AiRequirementDraft[];
   status: PageState;
-  onAccept: () => void;
+  onAccept: (draft: AiRequirementDraft) => void;
   onDiscard: () => void;
 }) {
-  if (!draft) {
+  if (drafts.length === 0) {
     return (
       <Card>
         <CardContent className="py-10 text-center text-sm text-gray-500">
@@ -371,7 +377,7 @@ function DraftPreview({
       <CardHeader>
         <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
           <CardTitle className="text-lg">草稿预览</CardTitle>
-          <Badge priority={draft.suggestedPriority}>{PRIORITY_LABELS[draft.suggestedPriority]}</Badge>
+          {drafts.length > 1 && <Badge variant="outline">{drafts.length} 套候选</Badge>}
         </div>
       </CardHeader>
       <CardContent className="space-y-5">
@@ -380,50 +386,58 @@ function DraftPreview({
             草稿已进入人工确认状态；本页面没有创建工单。
           </div>
         )}
-        <section>
-          <h3 className="text-sm font-semibold text-gray-500">标题</h3>
-          <p className="mt-1 font-medium">{draft.title}</p>
-        </section>
-        <section>
-          <h3 className="text-sm font-semibold text-gray-500">背景</h3>
-          <p className="mt-1 whitespace-pre-wrap text-sm text-gray-700">{draft.background || "未生成"}</p>
-        </section>
-        <section>
-          <h3 className="text-sm font-semibold text-gray-500">用户故事</h3>
-          <p className="mt-1 whitespace-pre-wrap text-sm text-gray-700">{draft.userStory || "未生成"}</p>
-        </section>
-        <section>
-          <h3 className="text-sm font-semibold text-gray-500">验收标准</h3>
-          {draft.acceptanceCriteria.length > 0 ? (
-            <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-gray-700">
-              {draft.acceptanceCriteria.map((criterion) => (
-                <li key={criterion}>{criterion}</li>
-              ))}
-            </ol>
-          ) : (
-            <p className="mt-1 text-sm text-gray-500">未生成</p>
-          )}
-        </section>
-        <section>
-          <h3 className="text-sm font-semibold text-gray-500">待确认问题</h3>
-          {draft.pendingQuestions.length > 0 ? (
-            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-700">
-              {draft.pendingQuestions.map((question) => (
-                <li key={question}>{question}</li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-1 text-sm text-gray-500">暂无</p>
-          )}
-        </section>
+        {drafts.map((draft, index) => (
+          <div key={`${draft.title}-${index}`} className="space-y-5 rounded-md border p-4">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+              <h3 className="font-medium">{drafts.length > 1 ? `候选 ${index + 1}` : "候选草稿"}</h3>
+              <Badge priority={draft.suggestedPriority}>{PRIORITY_LABELS[draft.suggestedPriority]}</Badge>
+            </div>
+            <section>
+              <h4 className="text-sm font-semibold text-gray-500">标题</h4>
+              <p className="mt-1 font-medium">{draft.title}</p>
+            </section>
+            <section>
+              <h4 className="text-sm font-semibold text-gray-500">背景</h4>
+              <p className="mt-1 whitespace-pre-wrap text-sm text-gray-700">{draft.background || "未生成"}</p>
+            </section>
+            <section>
+              <h4 className="text-sm font-semibold text-gray-500">用户故事</h4>
+              <p className="mt-1 whitespace-pre-wrap text-sm text-gray-700">{draft.userStory || "未生成"}</p>
+            </section>
+            <section>
+              <h4 className="text-sm font-semibold text-gray-500">验收标准</h4>
+              {draft.acceptanceCriteria.length > 0 ? (
+                <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm text-gray-700">
+                  {draft.acceptanceCriteria.map((criterion) => (
+                    <li key={criterion}>{criterion}</li>
+                  ))}
+                </ol>
+              ) : (
+                <p className="mt-1 text-sm text-gray-500">未生成</p>
+              )}
+            </section>
+            <section>
+              <h4 className="text-sm font-semibold text-gray-500">待确认问题</h4>
+              {draft.pendingQuestions.length > 0 ? (
+                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-700">
+                  {draft.pendingQuestions.map((question) => (
+                    <li key={question}>{question}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-1 text-sm text-gray-500">暂无</p>
+              )}
+            </section>
+            <Button type="button" onClick={() => onAccept(draft)}>
+              <Check className="h-4 w-4" />
+              接受此草稿
+            </Button>
+          </div>
+        ))}
         <div className="flex flex-wrap gap-3">
-          <Button type="button" onClick={onAccept}>
-            <Check className="h-4 w-4" />
-            接受草稿
-          </Button>
           <Button type="button" variant="outline" onClick={onDiscard}>
             <Trash2 className="h-4 w-4" />
-            丢弃草稿
+            丢弃全部候选
           </Button>
         </div>
       </CardContent>

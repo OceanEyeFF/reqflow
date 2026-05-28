@@ -37,7 +37,15 @@ describe("createDeepseekProvider", () => {
     });
 
     await expect(
-      provider.generate({ mode: "draft", requirement: "需要审批流", answers: [], knowledgeBaseIds: [], answerLanguage: "follow_input", knowledge: [] })
+      provider.generate({
+        mode: "draft",
+        requirement: "需要审批流",
+        answers: [],
+        knowledgeBaseIds: [],
+        answerLanguage: "follow_input",
+        maxDrafts: 3,
+        knowledge: [],
+      })
     ).rejects.toBeInstanceOf(AiProviderConfigError);
   });
 
@@ -77,6 +85,7 @@ describe("createDeepseekProvider", () => {
       answers: [],
       knowledgeBaseIds: [],
       answerLanguage: "zh",
+      maxDrafts: 3,
       knowledge: [
         {
           sourceId: "rf-ai-mvp-boundary",
@@ -99,10 +108,126 @@ describe("createDeepseekProvider", () => {
       messages: Array<{ content: string }>;
     };
     expect(body.messages[1].content).toContain("Respond in Chinese.");
+    expect(body.messages[1].content).toContain('"maxDrafts":3');
+    expect(body.messages[1].content).toContain("draft or drafts");
     expect(result).toMatchObject({
       kind: "draft",
       result: { title: "审批流", suggestedPriority: "high" },
       emptyKnowledge: false,
+    });
+  });
+
+  it("normalizes nested multi-draft responses and copies citations into each draft", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        Response.json({
+          choices: [
+            {
+              message: {
+                content: JSON.stringify({
+                  kind: "drafts",
+                  result: {
+                    drafts: [
+                      { title: "审批状态", suggestedPriority: "urgent", acceptanceCriteria: ["展示状态"] },
+                      { title: "审批通知", suggestedPriority: "invalid", acceptanceCriteria: ["通知审批人"] },
+                    ],
+                  },
+                }),
+              },
+            },
+          ],
+        })
+      )
+    );
+
+    const provider = createDeepseekProvider({
+      apiKey: "test-key",
+      baseUrl: "https://example.test",
+      model: "deepseek-v4-flash",
+      timeoutMs: 1000,
+    });
+    const result = await provider.generate({
+      mode: "draft",
+      requirement: "需要拆成审批状态和通知",
+      answers: [],
+      knowledgeBaseIds: [],
+      answerLanguage: "follow_input",
+      maxDrafts: 3,
+      knowledge: [
+        {
+          sourceId: "source-1",
+          sourceTitle: "流程说明",
+          path: "docs/process.md",
+          snippet: "审批流程需要可追踪。",
+          freshness: "test",
+        },
+      ],
+    });
+
+    expect(result).toMatchObject({
+      kind: "drafts",
+      result: {
+        drafts: [
+          { title: "审批状态", suggestedPriority: "urgent", citations: [{ sourceId: "source-1" }] },
+          { title: "审批通知", suggestedPriority: "medium", citations: [{ sourceId: "source-1" }] },
+        ],
+      },
+      emptyKnowledge: false,
+    });
+  });
+
+  it("normalizes multi-draft responses and caps them by maxDrafts", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        Response.json({
+          choices: [
+            {
+              message: {
+                content: JSON.stringify({
+                  kind: "drafts",
+                  drafts: [
+                    { title: "审批状态", suggestedPriority: "high", acceptanceCriteria: ["展示审批状态"] },
+                    { title: "审批通知", suggestedPriority: "medium", acceptanceCriteria: ["通知审批人"] },
+                    { title: "审批报表", suggestedPriority: "low", acceptanceCriteria: ["统计审批耗时"] },
+                  ],
+                }),
+              },
+            },
+          ],
+        })
+      )
+    );
+
+    const provider = createDeepseekProvider({
+      apiKey: "test-key",
+      baseUrl: "https://example.test",
+      model: "deepseek-v4-flash",
+      timeoutMs: 1000,
+    });
+    const result = await provider.generate({
+      mode: "draft",
+      requirement: "需要拆成审批状态、通知和报表",
+      answers: [],
+      knowledgeBaseIds: [],
+      answerLanguage: "follow_input",
+      maxDrafts: 2,
+      knowledge: [],
+    });
+
+    const body = JSON.parse(vi.mocked(fetch).mock.calls[0][1]?.body as string) as {
+      messages: Array<{ content: string }>;
+    };
+    expect(body.messages[1].content).toContain('"maxDrafts":2');
+    expect(result).toMatchObject({
+      kind: "drafts",
+      result: {
+        drafts: [
+          { title: "审批状态", suggestedPriority: "high", acceptanceCriteria: ["展示审批状态"] },
+          { title: "审批通知", suggestedPriority: "medium", acceptanceCriteria: ["通知审批人"] },
+        ],
+      },
     });
   });
 
@@ -128,6 +253,7 @@ describe("createDeepseekProvider", () => {
       answers: [],
       knowledgeBaseIds: [],
       answerLanguage: "follow_input",
+      maxDrafts: 3,
       knowledge: [],
     });
 
@@ -174,6 +300,7 @@ describe("createDeepseekProvider", () => {
       answers: [],
       knowledgeBaseIds: [],
       answerLanguage: "en",
+      maxDrafts: 3,
       knowledge: [],
     });
 
@@ -196,7 +323,15 @@ describe("createDeepseekProvider", () => {
     });
 
     await expect(
-      provider.generate({ mode: "draft", requirement: "需要审批流", answers: [], knowledgeBaseIds: [], answerLanguage: "follow_input", knowledge: [] })
+      provider.generate({
+        mode: "draft",
+        requirement: "需要审批流",
+        answers: [],
+        knowledgeBaseIds: [],
+        answerLanguage: "follow_input",
+        maxDrafts: 3,
+        knowledge: [],
+      })
     ).rejects.toBeInstanceOf(AiProviderError);
   });
 });

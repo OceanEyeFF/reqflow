@@ -3,6 +3,7 @@ import { assembleKnowledgeContext } from "./knowledge";
 import { redactAiText } from "./redaction";
 
 const MIN_REQUIREMENT_LENGTH = 8;
+export const DEFAULT_MAX_DRAFTS = 3;
 
 export class AiDraftValidationError extends Error {}
 
@@ -26,8 +27,15 @@ export async function generateRequirementDraft(
     answers: safeAnswers,
     knowledgeBaseIds: request.knowledgeBaseIds ?? [],
     answerLanguage: request.answerLanguage ?? "follow_input",
+    maxDrafts: parseMaxDrafts(),
     knowledge,
   });
+}
+
+export function parseMaxDrafts(env: NodeJS.ProcessEnv = process.env): number {
+  const parsed = Number(env.AI_MAX_DRAFTS ?? DEFAULT_MAX_DRAFTS);
+  if (!Number.isFinite(parsed)) return DEFAULT_MAX_DRAFTS;
+  return Math.min(Math.max(Math.floor(parsed), 1), DEFAULT_MAX_DRAFTS);
 }
 
 export function parseDraftRequest(input: unknown): DraftRequest {

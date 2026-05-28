@@ -46,6 +46,12 @@ export type AiDraftResult =
       result: AiRequirementDraft;
       citations: DraftCitation[];
       emptyKnowledge: boolean;
+    }
+  | {
+      kind: "drafts";
+      result: { drafts: AiRequirementDraft[] };
+      citations: DraftCitation[];
+      emptyKnowledge: boolean;
     };
 
 export type DraftMode = "clarify" | "draft";
@@ -65,6 +71,7 @@ export type DraftProviderRequest = {
   answers: Array<{ question: string; answer: string }>;
   knowledgeBaseIds: string[];
   answerLanguage: DraftAnswerLanguage;
+  maxDrafts: number;
   knowledge: KnowledgeCitation[];
 };
 

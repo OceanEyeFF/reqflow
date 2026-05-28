@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { generateRequirementDraft, parseDraftRequest } from "./draft-service";
+import { DEFAULT_MAX_DRAFTS, generateRequirementDraft, parseDraftRequest, parseMaxDrafts } from "./draft-service";
 import type { DraftProvider } from "./types";
 
 const mocks = vi.hoisted(() => ({
@@ -61,6 +61,16 @@ describe("parseDraftRequest", () => {
   });
 });
 
+describe("parseMaxDrafts", () => {
+  it("defaults and clamps the configurable draft count", () => {
+    expect(parseMaxDrafts({})).toBe(DEFAULT_MAX_DRAFTS);
+    expect(parseMaxDrafts({ AI_MAX_DRAFTS: "bad" })).toBe(DEFAULT_MAX_DRAFTS);
+    expect(parseMaxDrafts({ AI_MAX_DRAFTS: "0" })).toBe(1);
+    expect(parseMaxDrafts({ AI_MAX_DRAFTS: "2.8" })).toBe(2);
+    expect(parseMaxDrafts({ AI_MAX_DRAFTS: "9" })).toBe(DEFAULT_MAX_DRAFTS);
+  });
+});
+
 describe("generateRequirementDraft", () => {
   it("redacts sensitive input before provider calls and supports empty knowledge fallback", async () => {
     const provider: DraftProvider = {
@@ -82,6 +92,7 @@ describe("generateRequirementDraft", () => {
         requirement: expect.stringContaining("[redacted]"),
         knowledgeBaseIds: [],
         answerLanguage: "follow_input",
+        maxDrafts: DEFAULT_MAX_DRAFTS,
       })
     );
     expect(JSON.stringify(vi.mocked(provider.generate).mock.calls)).not.toContain("real-secret");
@@ -110,6 +121,7 @@ describe("generateRequirementDraft", () => {
       expect.objectContaining({
         knowledgeBaseIds: ["base-a", "base-b"],
         answerLanguage: "en",
+        maxDrafts: DEFAULT_MAX_DRAFTS,
       })
     );
   });
