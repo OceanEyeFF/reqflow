@@ -61,6 +61,28 @@ export async function listAdminKnowledgeBases() {
   }));
 }
 
+export async function listEnabledKnowledgeBases() {
+  const bases = await prisma.knowledgeBase.findMany({
+    where: { enabled: true },
+    orderBy: [{ name: "asc" }, { createdAt: "asc" }],
+    select: {
+      id: true,
+      name: true,
+      slug: true,
+      description: true,
+      _count: { select: { sources: true } },
+    },
+  });
+
+  return bases.map((base) => ({
+    id: base.id,
+    name: base.name,
+    slug: base.slug,
+    description: base.description,
+    sourceCount: base._count.sources,
+  }));
+}
+
 export async function createKnowledgeBase(input: KnowledgeBaseInput, createdById: string) {
   const name = normalizeName(input.name);
   const slug = normalizeSlug(input.slug ?? name);

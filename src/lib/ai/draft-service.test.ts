@@ -22,6 +22,18 @@ describe("parseDraftRequest", () => {
       mode: "draft",
       requirement: "需要一个能追踪审批状态的需求",
       answers: [{ question: "谁使用？", answer: "项目经理" }],
+      knowledgeBaseIds: [],
+    });
+  });
+
+  it("normalizes selected knowledge base ids", () => {
+    expect(
+      parseDraftRequest({
+        requirement: "需要一个能追踪审批状态的需求",
+        knowledgeBaseIds: [" kb-1 ", "", "kb-1", 3, "kb-2"],
+      })
+    ).toMatchObject({
+      knowledgeBaseIds: ["kb-1", "kb-2"],
     });
   });
 });
@@ -45,9 +57,32 @@ describe("generateRequirementDraft", () => {
     expect(provider.generate).toHaveBeenCalledWith(
       expect.objectContaining({
         requirement: expect.stringContaining("[redacted]"),
+        knowledgeBaseIds: [],
       })
     );
     expect(JSON.stringify(vi.mocked(provider.generate).mock.calls)).not.toContain("real-secret");
     expect(result.kind).toBe("clarification");
+  });
+
+  it("passes selected knowledge base ids to the provider request", async () => {
+    const provider: DraftProvider = {
+      generate: vi.fn(async () => ({
+        kind: "clarification",
+        result: { questions: [], canDraftNow: true },
+        citations: [],
+        emptyKnowledge: true,
+      })),
+    };
+
+    await generateRequirementDraft(
+      { requirement: "需要一个能追踪审批状态的需求", knowledgeBaseIds: ["base-a", "base-b"] },
+      provider
+    );
+
+    expect(provider.generate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        knowledgeBaseIds: ["base-a", "base-b"],
+      })
+    );
   });
 });

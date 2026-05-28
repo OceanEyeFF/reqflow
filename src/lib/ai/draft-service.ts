@@ -22,6 +22,7 @@ export async function generateRequirementDraft(
     mode: request.mode,
     requirement: safeRequirement,
     answers: safeAnswers,
+    knowledgeBaseIds: request.knowledgeBaseIds ?? [],
     knowledge,
   });
 }
@@ -46,6 +47,13 @@ export function parseDraftRequest(input: unknown): DraftRequest {
           answer: answer.answer.trim(),
         }))
     : [];
+  const knowledgeBaseIds = Array.isArray(body.knowledgeBaseIds)
+    ? Array.from(
+        new Set(
+          body.knowledgeBaseIds.filter((id): id is string => typeof id === "string" && id.trim().length > 0).map((id) => id.trim())
+        )
+      ).slice(0, 20)
+    : [];
 
-  return { mode, requirement, answers };
+  return { mode, requirement, answers, knowledgeBaseIds };
 }

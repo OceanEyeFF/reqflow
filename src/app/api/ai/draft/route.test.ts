@@ -107,6 +107,7 @@ describe("POST /api/ai/draft", () => {
       jsonRequest("http://localhost/api/ai/draft", {
         mode: "clarify",
         requirement: "需要一个审批流程，可以追踪每一步状态",
+        knowledgeBaseIds: ["base-a"],
       })
     );
     const result = await readJson<{ kind: string; emptyKnowledge: boolean }>(response);
@@ -116,6 +117,7 @@ describe("POST /api/ai/draft", () => {
     expect(providerGenerate).toHaveBeenCalledWith(
       expect.objectContaining({
         mode: "clarify",
+        knowledgeBaseIds: ["base-a"],
         knowledge: expect.any(Array),
       })
     );
