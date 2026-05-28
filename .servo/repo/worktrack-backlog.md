@@ -673,10 +673,10 @@
 - title: AI 多套/拆分需求草稿
 - milestone_id: MS-20260528-001
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 8
-- contract_path: TBD
-- branch: worktrack/wt-20260528-059-ai-multi-draft-splitting
+- contract_path: .servo/worktrack/WT-20260528-059/contract.md
+- branch: worktrack/wt-20260528-059-ai-multi-draft-splitting (merged)
 
 ## M9: docs 文档更新迭代与整理 (MS-20260528-002)
 
