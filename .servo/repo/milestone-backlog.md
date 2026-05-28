@@ -4,8 +4,8 @@
 
 ## Pipeline Summary
 
-- total: 9
-- planned: 1
+- total: 10
+- planned: 2
 - active: 1
 - completed: 7
 - superseded: 0
@@ -165,3 +165,20 @@
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
 - origin: deferred from MS8 after programmer confirmation
 - purpose: 更新、整理和去重 docs 路径文档，包括 MS6/MS7/MS8、Prisma worktree 流程、AI Provider、知识库导入和验收相关文档。
+
+### MS-20260528-003
+
+- milestone_id: MS-20260528-003
+- title: MS8 addendum
+- milestone_kind: addendum
+- status: planned
+- priority: 10
+- depends_on_milestones: [MS-20260528-001]
+- worktrack_list: [WT-20260528-064, WT-20260528-065, WT-20260528-066]
+- created_by: fdch0
+- created_at: 2026-05-28
+- updated: 2026-05-28
+- updated_by: harness-kernel
+- activation_rules: current_active_milestone == none and depends_on_milestones completed
+- purpose: 补齐 MS8 后续的知识库生命周期管理与 AI 多方向追问能力。
+- requirement_notes: 知识库采用禁用/归档 + 可编辑；AI 追问至少覆盖知识库角度、应用场景角度和具体需求细节角度。
