@@ -7,7 +7,6 @@ export class KnowledgeBaseValidationError extends Error {}
 
 export type KnowledgeBaseInput = {
   name: string;
-  slug?: string;
   description?: string | null;
 };
 
@@ -93,24 +92,26 @@ export async function listEnabledKnowledgeBases() {
 
 export async function createKnowledgeBase(input: KnowledgeBaseInput, createdById: string) {
   const name = normalizeName(input.name);
-  const slug = normalizeSlug(input.slug ?? name);
   const description = normalizeDescription(input.description);
 
-  try {
-    return await prisma.knowledgeBase.create({
-      data: {
-        name,
-        slug,
-        description,
-        createdById,
-      },
-    });
-  } catch (error) {
-    if (isUniqueConstraintError(error)) {
-      throw new KnowledgeBaseValidationError("知识库标识已存在");
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    try {
+      return await prisma.knowledgeBase.create({
+        data: {
+          name,
+          slug: generateKnowledgeBaseSlug(),
+          description,
+          createdById,
+        },
+      });
+    } catch (error) {
+      if (!isUniqueConstraintError(error)) {
+        throw error;
+      }
     }
-    throw error;
   }
+
+  throw new KnowledgeBaseValidationError("知识库标识生成失败，请重试");
 }
 
 export async function updateKnowledgeBase(id: string, input: KnowledgeBaseUpdateInput) {
@@ -168,12 +169,14 @@ export function readKnowledgeBaseUpdateInput(body: Record<string, unknown>): Kno
 }
 
 export function readKnowledgeBaseInput(body: Record<string, unknown>): KnowledgeBaseInput {
+  if ("slug" in body) {
+    throw new KnowledgeBaseValidationError("知识库内部标识由系统生成，不可手动设置");
+  }
   if (typeof body.name !== "string") {
     throw new KnowledgeBaseValidationError("知识库名称不能为空");
   }
   return {
     name: body.name,
-    slug: typeof body.slug === "string" ? body.slug : undefined,
     description: typeof body.description === "string" ? body.description : null,
   };
 }
@@ -190,17 +193,8 @@ function normalizeName(name: string): string {
   return normalized;
 }
 
-function normalizeSlug(slug: string): string {
-  const normalized = slug
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9_-]+/g, "-")
-    .replace(/^-+|-+$/g, "")
-    .slice(0, 60);
-  if (!/^[a-z0-9][a-z0-9_-]{1,59}$/.test(normalized)) {
-    throw new KnowledgeBaseValidationError("知识库标识只能包含小写字母、数字、横线和下划线");
-  }
-  return normalized;
+function generateKnowledgeBaseSlug(): string {
+  return `kb_${crypto.randomUUID().replace(/-/g, "").slice(0, 10)}`;
 }
 
 function normalizeDescription(description: string | null | undefined): string | null {

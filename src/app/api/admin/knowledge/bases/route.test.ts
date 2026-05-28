@@ -88,34 +88,50 @@ describe("POST /api/admin/knowledge/bases", () => {
     const response = await route.POST(
       jsonRequest("http://localhost/api/admin/knowledge/bases", {
         name: "Payments Docs",
-        slug: "payments-docs",
         description: "Payment product documents",
       })
     );
-    const result = await readJson<{ knowledgeBase: { name: string; slug: string; enabled: boolean } }>(response);
+    const result = await readJson<{ knowledgeBase: { name: string; slug: string; description: string; enabled: boolean } }>(response);
 
     expect(result).toEqual({
       status: 201,
       body: {
         knowledgeBase: expect.objectContaining({
           name: "Payments Docs",
-          slug: "payments-docs",
+          slug: expect.stringMatching(/^kb_[a-f0-9]{10}$/),
+          description: "Payment product documents",
           enabled: true,
         }),
       },
     });
   });
 
-  it("normalizes slugs and rejects duplicates", async () => {
+  it("rejects user-provided slugs because internal identifiers are system-generated", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+
+    const response = await route.POST(
+      jsonRequest("http://localhost/api/admin/knowledge/bases", {
+        name: "Payments Docs",
+        slug: "payments-docs",
+      })
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({ status: 400, body: { error: "知识库内部标识由系统生成，不可手动设置" } });
+  });
+
+  it("allows duplicate display names by generating unique internal slugs", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     mockAuthSession(auth, { id: admin.id, role: "admin" });
 
     const first = await route.POST(jsonRequest("http://localhost/api/admin/knowledge/bases", { name: "Payments Docs" }));
-    expect((await readJson<{ knowledgeBase: { slug: string } }>(first)).body.knowledgeBase.slug).toBe("payments-docs");
+    const second = await route.POST(jsonRequest("http://localhost/api/admin/knowledge/bases", { name: "Payments Docs" }));
+    const firstResult = await readJson<{ knowledgeBase: { slug: string } }>(first);
+    const secondResult = await readJson<{ knowledgeBase: { slug: string } }>(second);
 
-    const duplicate = await route.POST(jsonRequest("http://localhost/api/admin/knowledge/bases", { name: "Payments Docs" }));
-    const duplicateResult = await readJson<{ error: string }>(duplicate);
-
-    expect(duplicateResult).toEqual({ status: 400, body: { error: "知识库标识已存在" } });
+    expect(firstResult.status).toBe(201);
+    expect(secondResult.status).toBe(201);
+    expect(firstResult.body.knowledgeBase.slug).not.toBe(secondResult.body.knowledgeBase.slug);
   });
 });
