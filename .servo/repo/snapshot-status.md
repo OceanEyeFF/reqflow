@@ -4,7 +4,7 @@
 
 - updated: 2026-05-28
 - baseline_branch: develop
-- baseline_commit: 8972fc5b16ac60583103944776c20761cc4059d2
+- baseline_commit: e8a836d5d0352c678d52538120029f78ee033aad
 
 ## Codebase State
 
@@ -167,7 +167,7 @@ reqflow/
 
 - current_preparation_milestone: none
 - current_preparation_item: MS8 addendum activated by fdch0; MS-20260528-002 remains planned.
-- preparation_goal: MS8 addendum clarification is confirmed; await explicit instruction before starting WT-20260528-064 or any addendum worktrack.
+- preparation_goal: MS8 addendum clarification is confirmed and execution is authorized; proceed through approved worktrack list beginning with WT-20260528-064.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior are planned under MS-20260528-001; docs cleanup is deferred to MS-20260528-002.
 
@@ -201,7 +201,7 @@ reqflow/
 - depends_on_milestones: MS-20260528-001
 - scope_boundary: knowledge-base edit and disable/archive lifecycle; AI clarification directions from knowledge-base, application-scenario, and concrete-detail angles; final addendum validation with Milestone DB Readiness Gate.
 - activation_status: activated on 2026-05-28 by fdch0; no worktrack initialized.
-- clarification_status: confirmed by fdch0 on 2026-05-28; WT-20260528-064 remains uninitialized until explicit start request.
+- clarification_status: confirmed by fdch0 on 2026-05-28; MS8 addendum execution cycle authorized with 30 continuous Worktrack quota.
 - confirmed_requirement_summary: disabled/archived knowledge bases are user-invisible and cannot receive new sources or cleanup until restored; default knowledge base cannot be deleted; internal slug/system identifier is unique and immutable; AI clarification uses fixed labels "知识库依据 / 应用场景 / 需求细节", max 5 questions per direction, unified answer area, and the existing max-3 draft single-selection handoff; final validation requires manual UI flow record.
 
 ### M4 Governance Facts
