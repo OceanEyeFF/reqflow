@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 60
-- planned: 2
+- planned: 1
 - active: 0
-- completed: 58
+- completed: 59
 - blocked: 0
 - deferred: 0
 
@@ -735,10 +735,13 @@
 - title: AI 多方向追问策略
 - milestone_id: MS-20260528-003
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 2
-- contract_path: TBD
-- branch: worktrack/wt-20260528-065-ai-clarification-directions
+- contract_path: .servo/worktrack/WT-20260528-065/contract.md
+- gate_evidence: .servo/worktrack/WT-20260528-065/gate-evidence.md
+- branch: worktrack/wt-20260528-065-ai-clarification-directions (merged)
+- merge_commit: 5198bc9f7a493a36bf9e0c5df8fe9872476715eb
+- validation: lint pass; test pass 28 files / 194 tests; build pass
 
 ### WT-20260528-066
 
