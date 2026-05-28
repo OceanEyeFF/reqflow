@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Observe: MS8 addendum active; refine pending requirement questions with fdch0 before initializing the first addendum worktrack.
+- RepoScope.Decide: MS8 addendum requirements confirmed by fdch0; wait for explicit WT-20260528-064 initialization request.
 
 ## Linked Formal Documents
 
@@ -47,9 +47,9 @@
 ## Approval Boundary
 
 - needs_programmer_approval: true
-- reason: fdch0 requested control-plane fundamentals refresh and detailed clarification for the active MS8 addendum; no worktrack execution has been approved in this turn.
+- reason: fdch0 answered MS8 addendum clarification questions; no worktrack execution has been approved in this turn.
 - approval_scope: starting any MS8 addendum worktrack or expanding MS8 addendum beyond knowledge-base lifecycle management and AI multi-direction clarification.
-- approval_persistence: until fdch0 answers the pending clarification questions and explicitly requests worktrack execution
+- approval_persistence: until fdch0 explicitly requests WT-20260528-064 initialization or other worktrack execution
 
 ## Continuation Authority
 
@@ -76,9 +76,9 @@
 
 ## Handback Guard
 
-- handoff_state: ms8_addendum_active_waiting_requirement_clarification
-- last_stop_reason: requirement_clarification_before_worktrack_init
-- last_handback_signature: MS-20260528-003::pending-clarification::2026-05-28
+- handoff_state: ms8_addendum_requirements_confirmed_waiting_worktrack_start
+- last_stop_reason: requirements_confirmed_no_worktrack_start_approval
+- last_handback_signature: MS-20260528-003::requirements-confirmed::2026-05-28
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
 - handback_lock_active: false
@@ -89,7 +89,7 @@
 - last_verified_checkpoint: 8972fc5b16ac60583103944776c20761cc4059d2
 - latest_observed_checkpoint: 8972fc5b16ac60583103944776c20761cc4059d2
 - last_doc_catch_up_checkpoint: b2baeac
-- milestone_input_checkpoint: sha256:400ba316f93d7eb4d1f313e53164d30a4e6fa56f5374c797325e384bd4c32cf8
+- milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-28
@@ -113,12 +113,12 @@
 - latest_acceptance: MS-20260528-001 accepted by fdch0 on 2026-05-28 after WT-20260528-062 DB readiness validation
 - latest_repo_baseline: 8972fc5b16ac60583103944776c20761cc4059d2 (`Merge MS8 addendum activation`)
 - latest_completed_worktrack: WT-20260528-062 completed and merged before MS8 acceptance; MS8 addendum activation merged at 8972fc5.
-- next_worktrack_candidate: WT-20260528-064 after fdch0 answers MS8 addendum clarification questions and explicitly requests worktrack initialization.
+- next_worktrack_candidate: WT-20260528-064 after fdch0 explicitly requests worktrack initialization.
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
 - active_next_milestone: MS-20260528-003 MS8 addendum
-- active_milestone_clarification_status: pending fdch0 answers before WT-20260528-064 initialization
+- active_milestone_clarification_status: confirmed by fdch0; waiting explicit WT-20260528-064 initialization request
 - routed_new_requests: AI answer language selection and multiple/split requirement drafts are in MS8; docs path cleanup moved to MS-20260528-002.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
