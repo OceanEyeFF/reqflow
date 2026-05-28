@@ -4,10 +4,10 @@
 
 ## Summary
 
-- total: 60
+- total: 61
 - planned: 0
 - active: 0
-- completed: 60
+- completed: 61
 - blocked: 0
 - deferred: 0
 
@@ -756,3 +756,17 @@
 - branch: worktrack/wt-20260528-066-ms8-addendum-validation (merged)
 - merge_commit: dc0e98a2bb30f1a7f502ae854b33b5bb4152217b
 - validation: lint pass; test pass 28 files / 194 tests; build pass; DB readiness pass
+
+### WT-20260528-067
+
+- worktrack_id: WT-20260528-067
+- title: 管理员创建知识库入口补缺
+- milestone_id: MS-20260528-003
+- node_type: bugfix
+- status: completed
+- priority: 4
+- contract_path: .servo/worktrack/WT-20260528-067/contract.md
+- gate_evidence: .servo/worktrack/WT-20260528-067/gate-evidence.md
+- branch: worktrack/wt-20260528-067-create-knowledge-base (merged)
+- merge_commit: ceada20bbf09f689d6ed1e8ecd8dc3a0290a988c
+- validation: lint pass; focused tests pass 2 files / 12 tests; test pass 28 files / 195 tests; build pass
