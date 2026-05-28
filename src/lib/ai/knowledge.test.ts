@@ -31,6 +31,32 @@ describe("assembleKnowledgeContext", () => {
     expect(mocks.selectKnowledgeSnippets).toHaveBeenCalledWith("需要审批流程", { knowledgeBaseIds: ["base-a"] });
   });
 
+  it("does not append built-in snippets when a knowledge base scope is selected", async () => {
+    mocks.selectKnowledgeSnippets.mockResolvedValueOnce([
+      {
+        sourceId: "persisted-a",
+        sourceTitle: "Selected base guide",
+        path: "docs/a.md",
+        section: "Guide",
+        snippet: "selected knowledge only",
+        freshness: "test",
+      },
+    ]);
+
+    const context = await assembleKnowledgeContext("需要审批流程", { knowledgeBaseIds: ["base-a"] });
+
+    expect(context).toEqual([
+      {
+        sourceId: "persisted-a",
+        sourceTitle: "Selected base guide",
+        path: "docs/a.md",
+        section: "Guide",
+        snippet: "selected knowledge only",
+        freshness: "test",
+      },
+    ]);
+  });
+
   it("returns safe snippets without test passwords", async () => {
     const context = await assembleKnowledgeContext("需要一个新 ticket 创建需求，包含 priority 和 draft");
 
