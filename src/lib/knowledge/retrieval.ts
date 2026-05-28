@@ -3,9 +3,17 @@ import type { KnowledgeCitation } from "@/lib/ai/types";
 
 const MAX_PERSISTED_SNIPPETS = 3;
 
-export async function selectKnowledgeSnippets(requirement: string): Promise<KnowledgeCitation[]> {
+export type KnowledgeRetrievalOptions = {
+  knowledgeBaseIds?: string[];
+};
+
+export async function selectKnowledgeSnippets(
+  requirement: string,
+  options: KnowledgeRetrievalOptions = {}
+): Promise<KnowledgeCitation[]> {
   const terms = tokenize(requirement);
   if (terms.length === 0) return [];
+  const knowledgeBaseIds = normalizeKnowledgeBaseIds(options.knowledgeBaseIds);
 
   const snippets = await prisma.knowledgeSnippet.findMany({
     where: {
@@ -13,6 +21,7 @@ export async function selectKnowledgeSnippets(requirement: string): Promise<Know
       source: {
         enabled: true,
         status: { in: ["ready", "enabled"] },
+        knowledgeBaseId: knowledgeBaseIds.length > 0 ? { in: knowledgeBaseIds } : undefined,
         knowledgeBase: { enabled: true },
       },
       version: { status: "ready" },
@@ -35,6 +44,10 @@ export async function selectKnowledgeSnippets(requirement: string): Promise<Know
       snippet: snippet.content,
       freshness: `imported ${snippet.version.createdAt.toISOString()} v${snippet.version.version}`,
     }));
+}
+
+function normalizeKnowledgeBaseIds(ids: string[] | undefined): string[] {
+  return Array.from(new Set((ids ?? []).map((id) => id.trim()).filter(Boolean)));
 }
 
 export function tokenize(input: string): string[] {

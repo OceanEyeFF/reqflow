@@ -2,8 +2,12 @@ import { describe, expect, it, vi } from "vitest";
 import { generateRequirementDraft, parseDraftRequest } from "./draft-service";
 import type { DraftProvider } from "./types";
 
-vi.mock("@/lib/knowledge/retrieval", () => ({
+const mocks = vi.hoisted(() => ({
   selectKnowledgeSnippets: vi.fn(async () => []),
+}));
+
+vi.mock("@/lib/knowledge/retrieval", () => ({
+  selectKnowledgeSnippets: mocks.selectKnowledgeSnippets,
 }));
 
 describe("parseDraftRequest", () => {
@@ -79,6 +83,9 @@ describe("generateRequirementDraft", () => {
       provider
     );
 
+    expect(mocks.selectKnowledgeSnippets).toHaveBeenCalledWith("需要一个能追踪审批状态的需求", {
+      knowledgeBaseIds: ["base-a", "base-b"],
+    });
     expect(provider.generate).toHaveBeenCalledWith(
       expect.objectContaining({
         knowledgeBaseIds: ["base-a", "base-b"],

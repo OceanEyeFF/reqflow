@@ -89,8 +89,15 @@ export function knowledgeSources(): KnowledgeSource[] {
   return [...SOURCES];
 }
 
-export async function assembleKnowledgeContext(requirement: string): Promise<KnowledgeCitation[]> {
-  const persisted = await selectKnowledgeSnippets(requirement);
+export type AssembleKnowledgeOptions = {
+  knowledgeBaseIds?: string[];
+};
+
+export async function assembleKnowledgeContext(
+  requirement: string,
+  options: AssembleKnowledgeOptions = {}
+): Promise<KnowledgeCitation[]> {
+  const persisted = await selectKnowledgeSnippets(requirement, { knowledgeBaseIds: options.knowledgeBaseIds });
   const loweredRequirement = requirement.toLowerCase();
   const selected = SOURCES.filter(
     (source) => source.sourceId === "rf-ai-mvp-boundary" || source.sourceId === "rf-ai-discussion-flow"

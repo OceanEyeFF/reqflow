@@ -16,7 +16,9 @@ export async function generateRequirementDraft(
     question: redactAiText(answer.question),
     answer: redactAiText(answer.answer),
   }));
-  const knowledge = await assembleKnowledgeContext(safeRequirement);
+  const knowledge = await assembleKnowledgeContext(safeRequirement, {
+    knowledgeBaseIds: request.knowledgeBaseIds ?? [],
+  });
 
   return provider.generate({
     mode: request.mode,
