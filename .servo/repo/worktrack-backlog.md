@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 60
-- planned: 6
+- planned: 5
 - active: 0
-- completed: 54
+- completed: 55
 - blocked: 0
 - deferred: 0
 
@@ -629,10 +629,10 @@
 - title: AI 对话页面知识库多选入口
 - milestone_id: MS-20260528-001
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 4
 - contract_path: .servo/worktrack/WT-20260528-054/contract.md
-- branch: worktrack/wt-20260528-054-module-scope-switching
+- branch: worktrack/wt-20260528-054-module-scope-switching (merged)
 
 ### WT-20260528-055
 
