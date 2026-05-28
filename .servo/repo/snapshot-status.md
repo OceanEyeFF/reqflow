@@ -180,7 +180,7 @@ reqflow/
 - depends_on_milestones: MS-20260527-001
 - scope_boundary: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI discussion page knowledge-base multi-select, AI retrieval by selected knowledge bases, AI answer language option, multi-draft/splitting support, and MS8 integration validation.
 - activation_status: activated on 2026-05-28; requirement confirmation answered by fdch0.
-- next_step_boundary: WT-20260528-051 completed and merged at 02b7bf8c4c10ff81f0b3821608e47e39a5c44c94; WorktrackScope.Init may proceed for WT-20260528-053 知识内容多选/全选/反选删除.
+- next_step_boundary: WT-20260528-053 completed and merged at 00404f3981823e76a2c5635732ba44a3e65199a8; WorktrackScope.Init may proceed for WT-20260528-054 AI 对话页面知识库多选入口.
 
 ### Planned Milestone
 

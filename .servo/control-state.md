@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: WT-20260528-051 completed and merged. Next route may initialize the next MS8 Worktrack; recommended next worktrack is WT-20260528-053 selected knowledge content deletion.
+- RepoScope.Decide: WT-20260528-053 completed and merged. Next route may initialize the next MS8 Worktrack; recommended next worktrack is WT-20260528-054 AI discussion knowledge-base multi-select entry.
 
 ## Linked Formal Documents
 
@@ -47,7 +47,7 @@
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: WT-20260528-051 completed under confirmed MS8 scope; next planned Worktrack initialization may proceed within confirmed MS8 scope.
+- reason: WT-20260528-053 completed under confirmed MS8 scope; next planned Worktrack initialization may proceed within confirmed MS8 scope.
 - approval_scope: MS-20260528-001 confirmed implementation scope; docs cleanup deferred to MS-20260528-002.
 - approval_persistence: current MS8 execution boundary
 
@@ -87,9 +87,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 02b7bf8c4c10ff81f0b3821608e47e39a5c44c94
+- latest_observed_checkpoint: 00404f3981823e76a2c5635732ba44a3e65199a8
 - last_doc_catch_up_checkpoint: b2baeac
-- milestone_input_checkpoint: 02b7bf8c4c10ff81f0b3821608e47e39a5c44c94
+- milestone_input_checkpoint: 00404f3981823e76a2c5635732ba44a3e65199a8
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-28
@@ -98,8 +98,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 17
-- autonomous_worktracks_opened: 13
+- autonomy_budget_remaining: 16
+- autonomous_worktracks_opened: 14
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-27
 - autonomy_budget_notes: MS7 执行周期授权；低危险 Worktrack 可自行审批，危险操作、上下文噪声明显或需要用户业务判断时必须 handback。
@@ -111,9 +111,9 @@
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
 - Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已完成 11/11 worktracks，并由用户在 2026-05-28 最终验收。
 - latest_acceptance: MS-20260527-001 accepted by fdch0 on 2026-05-28 after limited manual flow testing
-- latest_repo_baseline: 02b7bf8c4c10ff81f0b3821608e47e39a5c44c94 (`merge WT-20260528-051 multi-file knowledge uploads`)
-- latest_completed_worktrack: WT-20260528-051 completed and merged at 02b7bf8
-- next_worktrack_candidate: WT-20260528-053 知识内容多选/全选/反选删除; follow with WT-20260528-054/055 AI knowledge-base selection, WT-20260528-058 language option, WT-20260528-059 multi-draft, WT-20260528-056 validation.
+- latest_repo_baseline: 00404f3981823e76a2c5635732ba44a3e65199a8 (`merge WT-20260528-053 selected knowledge deletion`)
+- latest_completed_worktrack: WT-20260528-053 completed and merged at 00404f3
+- next_worktrack_candidate: WT-20260528-054 AI 对话页面知识库多选入口; follow with WT-20260528-055 AI retrieval by selected knowledge bases, WT-20260528-058 language option, WT-20260528-059 multi-draft, WT-20260528-056 validation.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
 - active_next_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围

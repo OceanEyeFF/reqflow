@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 60
-- planned: 7
+- planned: 6
 - active: 0
-- completed: 53
+- completed: 54
 - blocked: 0
 - deferred: 0
 
@@ -618,10 +618,10 @@
 - title: 知识内容多选/全选/反选删除
 - milestone_id: MS-20260528-001
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 3
 - contract_path: .servo/worktrack/WT-20260528-053/contract.md
-- branch: worktrack/wt-20260528-053-bulk-delete-cleanup
+- branch: worktrack/wt-20260528-053-bulk-delete-cleanup (merged)
 
 ### WT-20260528-054
 
