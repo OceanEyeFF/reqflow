@@ -24,7 +24,7 @@
 - active_milestone: MS-20260528-001
 - milestone_title: 知识库文件夹化管理与模块化 AI 草稿范围
 - milestone_status: active
-- milestone_pipeline_summary: total=8 planned=0 active=1 completed=7 superseded=0
+- milestone_pipeline_summary: total=9 planned=1 active=1 completed=7 superseded=0
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Decide: MS8 activated for requirement confirmation and first worktrack scheduling preparation. Stop before WorktrackScope.Init until programmer answers MS8 confirmation questions.
+- RepoScope.Decide: MS8 requirement confirmation answered by fdch0. Next route may initialize the first MS8 Worktrack; recommended first worktrack is WT-20260528-052 multi-knowledge-base model and management boundary.
 
 ## Linked Formal Documents
 
@@ -47,9 +47,9 @@
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: programmer requested MS8 activation and preparation before work; implementation details still require confirmation before first MS8 Worktrack starts.
-- approval_scope: MS-20260528-001 activation and pre-work requirement confirmation only.
-- approval_persistence: current MS8 preparation boundary
+- reason: programmer answered MS8 confirmation questions; first Worktrack initialization may proceed within confirmed MS8 scope.
+- approval_scope: MS-20260528-001 confirmed implementation scope; docs cleanup deferred to MS-20260528-002.
+- approval_persistence: current MS8 execution boundary
 
 ## Continuation Authority
 
@@ -72,12 +72,12 @@
   - attempted_carrier:
   - carrier_decision:
   - fallback_reason:
-- persistent_authority_notes: 用户在 2026-05-27 明确授予 MS7 执行周期 30 个连续 Worktrack 额度，允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack；MS7 milestone final acceptance 已由用户在 2026-05-28 明确通过。MS8 已按用户请求激活，但首个 Worktrack 需等待需求确认回答。
+- persistent_authority_notes: 用户在 2026-05-27 明确授予 MS7 执行周期 30 个连续 Worktrack 额度，允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack；MS7 milestone final acceptance 已由用户在 2026-05-28 明确通过。MS8 已按用户请求激活，且需求确认已回答；首个 Worktrack 可在 MS8 范围内初始化。
 
 ## Handback Guard
 
-- handoff_state: waiting_for_ms8_requirement_confirmation
-- last_stop_reason: programmer requested multiple confirmation questions before starting MS8 work
+- handoff_state: ms8_requirement_confirmed_ready_for_worktrack_init
+- last_stop_reason: N/A
 - last_handback_signature:
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
@@ -87,9 +87,9 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint:
-- latest_observed_checkpoint: 48dbcff8f0e3d41c32ebf4e1ea40dc0c21645071
+- latest_observed_checkpoint: 38492c42f166f4d35c4345a0bb81e547319e5591
 - last_doc_catch_up_checkpoint: b2baeac
-- milestone_input_checkpoint: 48dbcff8f0e3d41c32ebf4e1ea40dc0c21645071
+- milestone_input_checkpoint: 38492c42f166f4d35c4345a0bb81e547319e5591
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
 - verified_at: 2026-05-28
@@ -111,13 +111,14 @@
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
 - Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已完成 11/11 worktracks，并由用户在 2026-05-28 最终验收。
 - latest_acceptance: MS-20260527-001 accepted by fdch0 on 2026-05-28 after limited manual flow testing
-- latest_repo_baseline: 48dbcff8f0e3d41c32ebf4e1ea40dc0c21645071 (`merge MS7 acceptance control state`)
+- latest_repo_baseline: 38492c42f166f4d35c4345a0bb81e547319e5591 (`merge MS8 activation preparation`)
 - latest_completed_worktrack: WT-20260528-057 completed and merged at 3fd4581
-- next_worktrack_candidate: pending programmer answers; likely WT-20260528-060 docs 文档更新迭代与整理 first, unless programmer confirms a feature worktrack should lead.
+- next_worktrack_candidate: WT-20260528-052 多知识库模型与管理边界; follow with WT-20260528-051 import/path preservation, WT-20260528-053 selected deletion, WT-20260528-054/055 AI knowledge-base selection, WT-20260528-058 language option, WT-20260528-059 multi-draft, WT-20260528-056 validation.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
 - active_next_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围
-- routed_new_requests: AI answer language selection, multiple/split requirement drafts, and docs path cleanup should be handled as later backlog/MS8+ work, not silently marked complete in MS7.
-- ms8_requirement_confirmation: waiting for programmer answers on folder model, delete semantics, module taxonomy, AI language/multi-draft behavior, docs cleanup boundary, API validation priority, and worktrack order.
+- routed_new_requests: AI answer language selection and multiple/split requirement drafts are in MS8; docs path cleanup moved to MS-20260528-002.
+- ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
+- planned_next_milestone: MS-20260528-002 docs 文档更新迭代与整理
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入

@@ -4,7 +4,7 @@
 
 - updated: 2026-05-28
 - baseline_branch: develop
-- baseline_commit: 8ac2a235bde15e2698be1f9bffa55b13f38c0805
+- baseline_commit: 38492c42f166f4d35c4345a0bb81e547319e5591
 
 ## Codebase State
 
@@ -161,26 +161,35 @@ reqflow/
 - accepted_by: fdch0
 - accepted_at: 2026-05-28
 - acceptance_note: accepted after limited manual flow testing; DS API and local OpenAI-compatible API manual validation records remain operator-run checks.
-- next_planned_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围
+- next_planned_milestone: MS-20260528-002 docs 文档更新迭代与整理
 
 ### Preparation Work
 
 - current_preparation_milestone: MS-20260528-001
-- current_preparation_item: MS8 is active for requirement confirmation; MS7 dependency is satisfied and no MS8 worktrack has started yet.
-- preparation_goal: answer MS8 requirement confirmation questions, then initialize the first planned worktrack without re-opening MS7 scope.
+- current_preparation_item: MS8 requirement confirmation answered; MS7 dependency is satisfied and no MS8 worktrack has started yet.
+- preparation_goal: initialize the first planned MS8 worktrack without re-opening MS7 scope.
 - provider_decision: Deepseek
-- split_decision: folderized knowledge management, multi-file import, module scope switching, AI language/multi-draft behavior, and docs cleanup are planned under MS-20260528-001.
+- split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior are planned under MS-20260528-001; docs cleanup is deferred to MS-20260528-002.
 
 ### Planned Milestone
 
 - milestone_id: MS-20260528-001
 - title: 知识库文件夹化管理与模块化 AI 草稿范围
 - status: active
-- progress: 0/9 completed
+- progress: 0/8 completed
 - depends_on_milestones: MS-20260527-001
-- scope_boundary: multi-file/folder import, knowledge folder model, bulk delete cleanup, module/environment switching, AI knowledge scope selection, AI answer language option, multi-draft/splitting support, docs refresh, and MS8 integration validation.
-- activation_status: activated on 2026-05-28 for pre-work requirement confirmation.
-- next_step_boundary: no WorktrackScope.Init until programmer answers the MS8 confirmation questions.
+- scope_boundary: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI discussion page knowledge-base multi-select, AI retrieval by selected knowledge bases, AI answer language option, multi-draft/splitting support, and MS8 integration validation.
+- activation_status: activated on 2026-05-28; requirement confirmation answered by fdch0.
+- next_step_boundary: WorktrackScope.Init may proceed for WT-20260528-052 多知识库模型与管理边界.
+
+### Planned Milestone
+
+- milestone_id: MS-20260528-002
+- title: docs 文档更新迭代与整理
+- status: planned
+- progress: 0/1 completed
+- depends_on_milestones: MS-20260528-001
+- scope_boundary: docs path update, organization, deduplication, and Prisma/AI/knowledge-base operator-facing documentation after MS8.
 
 ### M4 Governance Facts
 

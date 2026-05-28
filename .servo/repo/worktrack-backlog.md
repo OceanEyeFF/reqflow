@@ -593,7 +593,7 @@
 ### WT-20260528-051
 
 - worktrack_id: WT-20260528-051
-- title: 多文件上传与文件夹化导入
+- title: 多文件/zip 导入到知识库并保留路径层级
 - milestone_id: MS-20260528-001
 - node_type: feature
 - status: planned
@@ -604,7 +604,7 @@
 ### WT-20260528-052
 
 - worktrack_id: WT-20260528-052
-- title: 知识库分组与文件夹模型
+- title: 多知识库模型与管理边界
 - milestone_id: MS-20260528-001
 - node_type: feature
 - status: planned
@@ -615,7 +615,7 @@
 ### WT-20260528-053
 
 - worktrack_id: WT-20260528-053
-- title: 旧版本全清与批量删除
+- title: 知识内容多选/全选/反选删除
 - milestone_id: MS-20260528-001
 - node_type: feature
 - status: planned
@@ -626,7 +626,7 @@
 ### WT-20260528-054
 
 - worktrack_id: WT-20260528-054
-- title: 多开发环境与 ABC 模块切换
+- title: AI 对话页面知识库多选入口
 - milestone_id: MS-20260528-001
 - node_type: feature
 - status: planned
@@ -637,7 +637,7 @@
 ### WT-20260528-055
 
 - worktrack_id: WT-20260528-055
-- title: AI 草稿按模块选择知识库范围
+- title: AI 草稿按多知识库范围检索
 - milestone_id: MS-20260528-001
 - node_type: feature
 - status: planned
@@ -678,13 +678,15 @@
 - contract_path: TBD
 - branch: worktrack/wt-20260528-059-ai-multi-draft-splitting
 
+## M9: docs 文档更新迭代与整理 (MS-20260528-002)
+
 ### WT-20260528-060
 
 - worktrack_id: WT-20260528-060
 - title: docs 文档更新迭代与整理
-- milestone_id: MS-20260528-001
+- milestone_id: MS-20260528-002
 - node_type: docs
 - status: planned
-- priority: 9
+- priority: 1
 - contract_path: TBD
 - branch: worktrack/wt-20260528-060-docs-refresh-organization
