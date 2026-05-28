@@ -92,6 +92,20 @@
 
 -
 
+## Milestone Final Handback DB Readiness
+
+> Required for milestone-final validation/review worktracks before programmer acceptance handback when this repo uses Prisma. If the worktrack is not milestone-final or Prisma/database is not applicable, record the reason.
+
+- applies_to_this_worktrack:
+- check_prisma_client_installed_and_generated:
+- check_active_database_url:
+- run_prisma_validate:
+- run_prisma_migrate_status:
+- verify_active_db_schema_surfaces:
+- verify_prisma_backed_api_readiness:
+- non_destructive_repair_steps_if_any:
+- not_applicable_reason:
+
 ## Rollback Conditions
 
 ### Control Signal

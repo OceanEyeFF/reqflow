@@ -106,6 +106,7 @@ ReqFlow — 一个稳定、可维护的轻量级内部工单需求协作系统�
 5. **分支规范**: 功能分支命名 `feature/<name>`，修复分支 `fix/<name>`
 6. **AI 人工确认边界**: AI 输出只能作为草稿/建议，不能绕过用户确认直接创建或修改工单
 7. **Provider Secret 边界**: Deepseek 等外部 provider secret 只允许服务端读取，不得进入浏览器、提交文件、截图或工单内容
+8. **Milestone DB Readiness Gate**: 每个 Milestone 交付给程序员最终验收前，必须针对当前 checkout 和当前 `DATABASE_URL` 执行 Prisma/数据库 readiness 检查：确认 `@prisma/client` 已安装并生成、`npx prisma validate` 通过、`npx prisma migrate status --schema prisma/schema.prisma` 显示数据库最新、当前数据库包含该 Milestone 依赖的表/字段/API schema surface；若该 Milestone 明确不涉及 Prisma/数据库，也必须在 Gate Evidence 中写明不适用理由。
 
 ## Notes
 

@@ -114,6 +114,7 @@
 - latest_repo_baseline: 4e1cc71805ddd8b5a321735b5ed360c613d72fad (`Merge WT-20260528-056 MS8 validation`)
 - latest_completed_worktrack: WT-20260528-056 completed and merged at 4e1cc71
 - next_worktrack_candidate: WT-20260528-062 Prisma 与数据库验收必检项.
+- milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
 - active_next_milestone: MS-20260528-001 知识库文件夹化管理与模块化 AI 草稿范围

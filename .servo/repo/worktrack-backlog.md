@@ -689,6 +689,17 @@
 - contract_path: .servo/worktrack/WT-20260528-062/contract.md
 - branch: worktrack/wt-20260528-062-prisma-db-acceptance-check
 
+### WT-20260528-063
+
+- worktrack_id: WT-20260528-063
+- title: Milestone 收尾 Prisma/数据库必检规则
+- milestone_id: none
+- node_type: governance
+- status: active
+- priority: 10
+- contract_path: .servo/worktrack/WT-20260528-063/contract.md
+- branch: worktrack/wt-20260528-063-milestone-db-gate-policy
+
 ## M9: docs 文档更新迭代与整理 (MS-20260528-002)
 
 ### WT-20260528-060
