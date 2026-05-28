@@ -36,9 +36,13 @@ export function readSourceIds(body: Record<string, unknown>): string[] {
 export async function deleteKnowledgeSource(sourceId: string): Promise<KnowledgeCleanupResult | null> {
   const source = await prisma.knowledgeSource.findUnique({
     where: { id: sourceId },
-    include: { versions: { select: { storageKey: true } } },
+    include: {
+      knowledgeBase: { select: { enabled: true } },
+      versions: { select: { storageKey: true } },
+    },
   });
   if (!source) return null;
+  assertSourcesAreCleanupEligible([source]);
 
   const storageKeys = source.versions.map((version) => version.storageKey);
   await prisma.knowledgeSource.delete({ where: { id: sourceId } });
@@ -53,8 +57,12 @@ export async function deleteKnowledgeSource(sourceId: string): Promise<Knowledge
 
 export async function clearKnowledgeSources(): Promise<KnowledgeCleanupResult> {
   const sources = await prisma.knowledgeSource.findMany({
-    include: { versions: { select: { storageKey: true } } },
+    include: {
+      knowledgeBase: { select: { enabled: true } },
+      versions: { select: { storageKey: true } },
+    },
   });
+  assertSourcesAreCleanupEligible(sources);
   const storageKeys = sources.flatMap((source) => source.versions.map((version) => version.storageKey));
   await prisma.knowledgeSource.deleteMany();
   const storageCleanupErrors = await cleanupStorageKeys(storageKeys);
@@ -69,11 +77,15 @@ export async function clearKnowledgeSources(): Promise<KnowledgeCleanupResult> {
 export async function deleteSelectedKnowledgeSources(sourceIds: string[]): Promise<KnowledgeCleanupResult> {
   const sources = await prisma.knowledgeSource.findMany({
     where: { id: { in: sourceIds } },
-    include: { versions: { select: { storageKey: true } } },
+    include: {
+      knowledgeBase: { select: { enabled: true } },
+      versions: { select: { storageKey: true } },
+    },
   });
   if (sources.length !== sourceIds.length) {
     throw new KnowledgeCleanupValidationError("部分知识来源不存在");
   }
+  assertSourcesAreCleanupEligible(sources);
   const storageKeys = Array.from(new Set(sources.flatMap((source) => source.versions.map((version) => version.storageKey))));
   await prisma.knowledgeSource.deleteMany({ where: { id: { in: sources.map((source) => source.id) } } });
   const storageCleanupErrors = await cleanupStorageKeys(storageKeys);
@@ -83,6 +95,12 @@ export async function deleteSelectedKnowledgeSources(sourceIds: string[]): Promi
     deletedStorageKeys: storageKeys,
     storageCleanupErrors,
   };
+}
+
+function assertSourcesAreCleanupEligible(sources: Array<{ knowledgeBase: { enabled: boolean } }>): void {
+  if (sources.some((source) => !source.knowledgeBase.enabled)) {
+    throw new KnowledgeCleanupValidationError("禁用/归档知识库下的内容不可清理，请先恢复知识库");
+  }
 }
 
 async function cleanupStorageKeys(storageKeys: string[]): Promise<string[]> {

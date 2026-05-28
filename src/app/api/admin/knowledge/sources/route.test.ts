@@ -186,6 +186,34 @@ describe("DELETE /api/admin/knowledge/sources", () => {
     expect(mocks.deletePrivateKnowledgeFile).not.toHaveBeenCalledWith("private/c.md");
   });
 
+  it("rejects selected delete when any selected source belongs to a disabled knowledge base", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    mockAuthSession(auth, { id: admin.id, role: "admin" });
+    const enabledSource = await seedKnowledgeSource(admin.id, { title: "A", storageKey: "private/a.md" });
+    const disabledSource = await seedKnowledgeSource(admin.id, {
+      title: "B",
+      storageKey: "private/b.md",
+      knowledgeBaseSlug: "archived",
+      baseEnabled: false,
+    });
+
+    const response = await route.DELETE(
+      jsonRequest(
+        "http://localhost/api/admin/knowledge/sources",
+        { confirmation: "DELETE_SELECTED_SOURCES", sourceIds: [enabledSource.id, disabledSource.id] },
+        { method: "DELETE" }
+      )
+    );
+    const result = await readJson<{ error: string }>(response);
+
+    expect(result).toEqual({
+      status: 400,
+      body: { error: "禁用/归档知识库下的内容不可清理，请先恢复知识库" },
+    });
+    await expect(prisma.knowledgeSource.count()).resolves.toBe(2);
+    expect(mocks.deletePrivateKnowledgeFile).not.toHaveBeenCalled();
+  });
+
   it("requires selected delete confirmation and ids", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     mockAuthSession(auth, { id: admin.id, role: "admin" });
@@ -246,13 +274,23 @@ async function seedKnowledgeSource(
     sourcePath?: string;
     section?: string;
     storageKey?: string;
+    knowledgeBaseSlug?: string;
+    baseEnabled?: boolean;
   } = {}
 ) {
   const knowledgeBase = await prisma.knowledgeBase.upsert({
-    where: { slug: "default" },
+    where: { slug: overrides.knowledgeBaseSlug ?? "default" },
     update: {},
-    create: { id: "default", name: "默认知识库", slug: "default" },
+    create: {
+      id: overrides.knowledgeBaseSlug === undefined ? "default" : undefined,
+      name: overrides.knowledgeBaseSlug === undefined ? "默认知识库" : overrides.knowledgeBaseSlug,
+      slug: overrides.knowledgeBaseSlug ?? "default",
+      enabled: overrides.baseEnabled ?? true,
+    },
   });
+  if (overrides.baseEnabled !== undefined && knowledgeBase.enabled !== overrides.baseEnabled) {
+    await prisma.knowledgeBase.update({ where: { id: knowledgeBase.id }, data: { enabled: overrides.baseEnabled } });
+  }
   const source = await prisma.knowledgeSource.create({
     data: {
       knowledgeBaseId: knowledgeBase.id,
