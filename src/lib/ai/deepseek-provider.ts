@@ -101,19 +101,24 @@ function buildMessages(request: DraftProviderRequest): DeepseekMessage[] {
         answers: request.answers,
         answerLanguage: request.answerLanguage,
         languageInstruction: languageInstruction(request.answerLanguage),
+        maxDrafts: request.maxDrafts,
         knowledge: request.knowledge,
         output:
           request.mode === "clarify"
             ? { kind: "clarification", questions: [], canDraftNow: false }
             : {
-                kind: "draft",
-                title: "",
-                background: "",
-                userStory: "",
-                acceptanceCriteria: [],
-                pendingQuestions: [],
-                suggestedPriority: "medium",
-                citations: [],
+                kind: "draft or drafts",
+                instruction:
+                  "Return one draft for a single coherent requirement, or drafts[] with up to maxDrafts items when the request naturally splits into separate tickets.",
+                draftShape: {
+                  title: "",
+                  background: "",
+                  userStory: "",
+                  acceptanceCriteria: [],
+                  pendingQuestions: [],
+                  suggestedPriority: "medium",
+                  citations: [],
+                },
               },
       }),
     },
@@ -132,9 +137,11 @@ function normalizeDeepseekResponse(response: DeepseekResponse, request: DraftPro
 
   const parsed = JSON.parse(content) as Partial<AiRequirementDraft> & {
     kind?: string;
+    drafts?: Array<Partial<AiRequirementDraft>>;
     questions?: Array<{ id?: string; question?: string; reason?: string }>;
     canDraftNow?: boolean;
     result?: {
+      drafts?: Array<Partial<AiRequirementDraft>>;
       questions?: Array<{ id?: string; question?: string; reason?: string }>;
       canDraftNow?: boolean;
     };
@@ -161,19 +168,37 @@ function normalizeDeepseekResponse(response: DeepseekResponse, request: DraftPro
     };
   }
 
+  const parsedDrafts = parsed.result?.drafts ?? parsed.drafts;
+  if (Array.isArray(parsedDrafts) && parsedDrafts.length > 0) {
+    const drafts = parsedDrafts
+      .slice(0, request.maxDrafts)
+      .map((draft) => normalizeDraft(draft, citations));
+
+    return {
+      kind: "drafts",
+      result: { drafts },
+      citations,
+      emptyKnowledge: request.knowledge.length === 0,
+    };
+  }
+
   return {
     kind: "draft",
-    result: {
-      title: parsed.title || "Untitled requirement draft",
-      background: parsed.background || "",
-      userStory: parsed.userStory || "",
-      acceptanceCriteria: Array.isArray(parsed.acceptanceCriteria) ? parsed.acceptanceCriteria : [],
-      pendingQuestions: Array.isArray(parsed.pendingQuestions) ? parsed.pendingQuestions : [],
-      suggestedPriority: normalizePriority(parsed.suggestedPriority),
-      citations,
-    },
+    result: normalizeDraft(parsed, citations),
     citations,
     emptyKnowledge: request.knowledge.length === 0,
+  };
+}
+
+function normalizeDraft(draft: Partial<AiRequirementDraft>, citations: AiRequirementDraft["citations"]): AiRequirementDraft {
+  return {
+    title: draft.title || "Untitled requirement draft",
+    background: draft.background || "",
+    userStory: draft.userStory || "",
+    acceptanceCriteria: Array.isArray(draft.acceptanceCriteria) ? draft.acceptanceCriteria : [],
+    pendingQuestions: Array.isArray(draft.pendingQuestions) ? draft.pendingQuestions : [],
+    suggestedPriority: normalizePriority(draft.suggestedPriority),
+    citations,
   };
 }
 
