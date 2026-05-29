@@ -4,7 +4,7 @@
 
 - updated: 2026-05-29
 - baseline_branch: develop
-- baseline_commit: 06544725d0de8c5ff62cf771fd61fb0b8d039b2c
+- baseline_commit: 629f7c7232e425d08484877593222cbeaec2ec1f
 
 ## Codebase State
 
@@ -13,7 +13,7 @@
 ```
 reqflow/
 ├── prisma/
-│   ├── schema.prisma     # 7 models
+│   ├── schema.prisma     # 15 models
 │   └── seed.ts           # 3 users + 1 ticket
 ├── src/
 │   ├── app/
@@ -36,13 +36,16 @@ reqflow/
 | 模块 | API | 页面 | 状态 |
 |------|-----|------|------|
 | Auth | login, /api/auth/me | /login | ✅ |
-| Tickets | CRUD + list | /tickets, /tickets/new, /tickets/[id] | ✅ |
+| Tickets | CRUD + list + stats | /tickets, /tickets/new, /tickets/[id] | ✅ |
 | Comments | CRUD | (内嵌于 ticket detail) | ✅ |
 | Members | CRUD + PATCH role | (内嵌于 ticket detail) | ✅ |
 | Attachments | upload/list/delete | (内嵌于 ticket detail) | ✅ |
 | Notifications | list/read/read-all | /notifications, NotificationBell | ✅ |
 | Logs | read-only list | (内嵌于 ticket detail) | ✅ |
 | Users | list | (API only) | ✅ |
+| Admin AI Provider | config/test | /admin/ai-provider | ✅ |
+| Knowledge Base Admin | bases/sources/snippets/uploads/parse | /admin/knowledge | ✅ |
+| AI Draft Discussion | /api/ai/draft, /api/knowledge/bases | /tickets/ai-discussion | ✅ |
 
 ### 质量指标 (已验证)
 
@@ -76,7 +79,7 @@ reqflow/
 1. MS-20260524-001 项目整洁度与 AI 适配治理已完成并由用户验收。
 2. `git status` 仍可见未纳入版本库的 `.agents/`, `.claude/`, `.harness/`, `.mavis/`, `.worktrees/`, `.local-backup/`, `docs/phase6-8-plan.md`；这些不是低价值忽略噪声，需按治理文档逐项保留、迁移、延期或由用户决策。
 3. `.worktrees/develop-aw` 是注册 worktree，分支 divergent 且 dirty，已明确保留，不自动删除。
-4. `develop` 已推送到 GitHub `origin/develop`；GitHub Actions CI run `26494518202` 对代码基线 `bd2789d4e404996b603833757dfa71859d2b0210` 通过，handback docs run `26494818503` 对 `a2fddc64b39e0f4ecb09d0ffee8587c27ce153d0` 通过；Gitee 继续 deferred。
+4. 当前本地 `develop` 位于 `629f7c7232e425d08484877593222cbeaec2ec1f`，仍领先 `origin/develop`；历史 GitHub Actions CI run `26494518202` / `26494818503` / `26502063963` 通过，后续是否推送和刷新远端 CI 仍是 RepoScope 决策项。
 
 ### Accepted Milestone
 
@@ -151,11 +154,11 @@ reqflow/
 - milestone_id: MS-20260527-001
 - title: 管理员项目知识库管理与导入
 - status: completed
-- progress: 11/11 completed and accepted at baseline `8ac2a235bde15e2698be1f9bffa55b13f38c0805`
+- progress: 12/12 completed and accepted at baseline `8ac2a235bde15e2698be1f9bffa55b13f38c0805`
 - depends_on_milestones: MS-20260526-002
 - scope_boundary: admin-only AI Provider configuration, document/docs-zip upload, private storage, parsing/chunking, source/version records, lightweight retrieval, citation tracing, zip folder-like handling, source deletion/full clear controls, and provider manual validation template; no PostgreSQL/pgvector dependency.
-- completed_worktracks: WT-20260527-039, WT-20260527-045, WT-20260527-040, WT-20260527-041, WT-20260527-042, WT-20260527-043, WT-20260527-044, WT-20260528-048, WT-20260528-049, WT-20260528-050, WT-20260528-057
-- latest_evidence: WT-20260528-057 merged before acceptance; final validation before acceptance passed `npm run lint`, `npm run test` (25 files / 159 tests), and `npm run build`.
+- completed_worktracks: WT-20260527-039, WT-20260527-045, WT-20260527-040, WT-20260527-041, WT-20260527-042, WT-20260527-043, WT-20260527-044, WT-20260528-048, WT-20260528-049, WT-20260528-050, WT-20260528-057, WT-20260528-061
+- latest_evidence: WT-20260528-057 merged before acceptance; final validation before acceptance passed `npm run lint`, `npm run test` (25 files / 159 tests), and `npm run build`. WT-20260528-061 then documented Prisma worktree dependency setup and was merged at `8ac2a235bde15e2698be1f9bffa55b13f38c0805`.
 - milestone_gate_verdict: pass
 - final_acceptance: accepted
 - accepted_by: fdch0
@@ -211,6 +214,18 @@ reqflow/
 - scenario_feedback_fix: WT-20260529-069 merged at `551df3df51948f674c39f9b4de4c89b83df9bb3b`; AI clarification questions now render per-question answer fields and AI draft priority handoff normalizes invalid/display-label priorities before ticket creation.
 - scenario_feedback_fix: WT-20260529-077 merged at `06544725d0de8c5ff62cf771fd61fb0b8d039b2c`; AI clarification card remains visible after successful empty-question provider responses and renders fallback questions for each fixed direction.
 - final_acceptance: accepted by fdch0 on 2026-05-29; new Chinese knowledge retrieval work is registered separately as MS-20260529-001.
+
+### Planned Milestone
+
+- milestone_id: MS-20260529-001
+- title: 中文知识检索增强与结构化索引
+- status: planned
+- progress: 0/7 completed
+- depends_on_milestones: MS-20260528-001
+- recommended_after: MS-20260528-003 final acceptance handback
+- scope_boundary: Chinese normalization, n-gram/domain dictionary retrieval, structured snippet indexing, optional AI-assisted ingest/query enhancement, file-level context expansion, and AI draft retrieval integration; no default PostgreSQL/pgvector/vector-service migration.
+- planned_worktracks: WT-20260529-070, WT-20260529-071, WT-20260529-072, WT-20260529-073, WT-20260529-074, WT-20260529-075, WT-20260529-076
+- activation_status: planned, not active.
 
 ### M4 Governance Facts
 

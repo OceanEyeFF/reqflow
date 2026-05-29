@@ -4,10 +4,10 @@
 
 ## Summary
 
-- total: 62
-- planned: 0
+- total: 77
+- planned: 8
 - active: 0
-- completed: 62
+- completed: 69
 - blocked: 0
 - deferred: 0
 
@@ -577,6 +577,20 @@
 - contract_path: .servo/worktrack/WT-20260528-050/contract.md
 - branch: worktrack/wt-20260528-050-provider-manual-test-template (merged)
 
+### WT-20260528-061
+
+- worktrack_id: WT-20260528-061
+- title: Prisma worktree 依赖流程文档
+- milestone_id: MS-20260527-001
+- node_type: docs
+- status: completed
+- priority: 11
+- contract_path: .servo/worktrack/WT-20260528-061/contract.md
+- gate_evidence: .servo/worktrack/WT-20260528-061/gate-evidence.md
+- branch: worktrack/wt-20260528-061-prisma-worktree-docs (merged)
+- merge_commit: 8ac2a235bde15e2698be1f9bffa55b13f38c0805
+- validation: git diff --check pass; targeted doc search pass
+
 ### WT-20260528-057
 
 - worktrack_id: WT-20260528-057
@@ -784,3 +798,110 @@
 - branch: worktrack/wt-20260529-068-tolerate-docs-zip-extras (merged)
 - merge_commit: c877c51174377a258b16248deedbc373a3758e72
 - validation: lint pass; focused tests pass 2 files / 16 tests; test pass 28 files / 199 tests; build pass
+
+### WT-20260529-069
+
+- worktrack_id: WT-20260529-069
+- title: AI 追问逐题回答与草稿优先级修复
+- milestone_id: MS-20260528-003
+- node_type: bugfix
+- status: completed
+- priority: 6
+- contract_path: .servo/worktrack/WT-20260529-069/contract.md
+- gate_evidence: .servo/worktrack/WT-20260529-069/gate-evidence.md
+- branch: worktrack/wt-20260529-069-ai-clarification-priority-fix (merged)
+- merge_commit: 551df3df51948f674c39f9b4de4c89b83df9bb3b
+- validation: focused tests pass 7 tests; lint pass; test pass 28 files / 200 tests; build pass
+
+### WT-20260529-077
+
+- worktrack_id: WT-20260529-077
+- title: AI 追问可见性与空追问兜底修复
+- milestone_id: MS-20260528-003
+- node_type: bugfix
+- status: completed
+- priority: 7
+- contract_path: .servo/worktrack/WT-20260529-077/contract.md
+- gate_evidence: .servo/worktrack/WT-20260529-077/gate-evidence.md
+- branch: worktrack/wt-20260529-077-ai-clarification-visible (merged)
+- merge_commit: 06544725d0de8c5ff62cf771fd61fb0b8d039b2c
+- validation: focused tests pass 17 tests; lint pass; test pass 28 files / 201 tests; build pass; Playwright reproduction evidence recorded
+
+## M11: 中文知识检索增强与结构化索引 (MS-20260529-001)
+
+### WT-20260529-070
+
+- worktrack_id: WT-20260529-070
+- title: 中文检索诊断与评测语料
+- milestone_id: MS-20260529-001
+- node_type: test
+- status: planned
+- priority: 1
+- contract_path: TBD
+- branch: worktrack/wt-20260529-070-chinese-retrieval-diagnostics
+
+### WT-20260529-071
+
+- worktrack_id: WT-20260529-071
+- title: 中文召回基础增强
+- milestone_id: MS-20260529-001
+- node_type: feature
+- status: planned
+- priority: 2
+- contract_path: TBD
+- branch: worktrack/wt-20260529-071-chinese-recall-baseline
+
+### WT-20260529-072
+
+- worktrack_id: WT-20260529-072
+- title: 知识片段结构化索引
+- milestone_id: MS-20260529-001
+- node_type: feature
+- status: planned
+- priority: 3
+- contract_path: TBD
+- branch: worktrack/wt-20260529-072-structured-snippet-index
+
+### WT-20260529-073
+
+- worktrack_id: WT-20260529-073
+- title: AI 辅助关键词与规则摘要提取
+- milestone_id: MS-20260529-001
+- node_type: feature
+- status: planned
+- priority: 4
+- contract_path: TBD
+- branch: worktrack/wt-20260529-073-ai-ingest-keywords-rules
+
+### WT-20260529-074
+
+- worktrack_id: WT-20260529-074
+- title: 文件级上下文扩展与引用聚合
+- milestone_id: MS-20260529-001
+- node_type: feature
+- status: planned
+- priority: 5
+- contract_path: TBD
+- branch: worktrack/wt-20260529-074-file-context-citation-aggregation
+
+### WT-20260529-075
+
+- worktrack_id: WT-20260529-075
+- title: AI 草稿检索上下文整合
+- milestone_id: MS-20260529-001
+- node_type: feature
+- status: planned
+- priority: 6
+- contract_path: TBD
+- branch: worktrack/wt-20260529-075-ai-draft-retrieval-context
+
+### WT-20260529-076
+
+- worktrack_id: WT-20260529-076
+- title: 中文检索增强集成验收
+- milestone_id: MS-20260529-001
+- node_type: test
+- status: planned
+- priority: 7
+- contract_path: TBD
+- branch: worktrack/wt-20260529-076-chinese-retrieval-validation
