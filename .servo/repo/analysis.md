@@ -19,6 +19,8 @@ RepoScope is active, WorktrackScope is closed, and there is no active milestone 
 
 The pipeline now has 14 milestones: 9 completed, 2 superseded, 3 planned, 0 active. Only `MS-9` is ready for activation because `MS-10` depends on MS-9 and `MS-11` depends on MS-10.
 
+After follow-up design discussion, the planned hybrid search milestones now explicitly include query understanding, structured metadata indexing, RRF-style fusion, optional reranker seam, context window building, retrieval evaluation harness, and admin/debug evidence. These are additions to the same MS-9/MS-10/MS-11 pipeline, not a new milestone family.
+
 ## Goal Change Impact
 
 - change_width: major
@@ -34,8 +36,10 @@ The pipeline now has 14 milestones: 9 completed, 2 superseded, 3 planned, 0 acti
 1. **Search infrastructure upgrade vs current SQLite implementation**: The current app and tests are SQLite-oriented, while the new goal requires PostgreSQL, pgvector, and BM25/FTS feasibility. MS-9 must resolve the database and extension baseline before implementation.
 2. **BM25 quality vs deployability**: `pg_search` may provide stronger BM25 behavior, but deployability is not yet verified. The fallback is PostgreSQL native FTS plus Chinese tokenization/normalization if `pg_search` is not acceptable.
 3. **Semantic recall vs citation integrity**: pgvector can improve semantic recall, but citation must remain tied to real source/snippet/path hits and must not become provider-generated evidence.
-4. **Docs catch-up vs architecture churn**: Old docs cleanup is superseded because documenting now would chase a moving target. Docs belong in MS-11 after hybrid retrieval behavior is real.
-5. **Remote CI baseline vs local target change**: local `develop` is ahead of `origin/develop`; new PostgreSQL CI readiness must be designed before remote validation becomes meaningful.
+4. **Different scoring systems vs explainable ranking**: BM25/FTS scores and vector similarities are not directly comparable. Fusion should use rank-aware methods such as RRF and preserve score/debug evidence instead of hiding ranking behind a single opaque score.
+5. **Recall quality vs filtered vector performance**: pgvector search under knowledge-base/source/profile filters may need larger candidate pools, partial indexes, or partitioning; MS-9 must make this a known risk before MS-10 implements retrieval.
+6. **Docs catch-up vs architecture churn**: Old docs cleanup is superseded because documenting now would chase a moving target. Docs belong in MS-11 after hybrid retrieval behavior is real.
+7. **Remote CI baseline vs local target change**: local `develop` is ahead of `origin/develop`; new PostgreSQL CI readiness must be designed before remote validation becomes meaningful.
 
 ## Priority Assessment
 
@@ -44,7 +48,7 @@ The pipeline now has 14 milestones: 9 completed, 2 superseded, 3 planned, 0 acti
 | P0 | Activate MS-9 | It is the first non-superseded planned milestone and resolves the architecture/database baseline needed for all later work. |
 | P1 | WT-20260529-078 | Hybrid search ADR must decide PostgreSQL/pgvector/BM25/FTS/fallback boundaries before migration or feature work. |
 | P1 | WT-20260529-079 | PostgreSQL dev/test/CI baseline is a hard prerequisite for reliable migration and validation. |
-| P2 | WT-20260529-082 | Chinese retrieval quality gate should be established before implementation claims are accepted. |
+| P2 | WT-20260529-082 | Chinese retrieval quality gate and evaluation harness should be established before implementation claims are accepted. |
 | P3 | MS-11 docs catch-up | Docs should follow actual PostgreSQL/hybrid implementation, not precede it. |
 
 ## Route Projection
@@ -72,9 +76,9 @@ Active milestone:
 
 Planned milestones:
 
-1. MS-9: PostgreSQL 与 Hybrid Search 架构基线, 0/5 completed, next worktrack WT-20260529-078.
-2. MS-10: 知识库索引与 Hybrid Retrieval 实现, 0/6 completed, blocked until MS-9 completion.
-3. MS-11: AI 草稿 Hybrid Context 接入与文档追平, 0/5 completed, blocked until MS-10 completion.
+1. MS-9: PostgreSQL 与 Hybrid Search 架构基线, 0/5 completed, next worktrack WT-20260529-078; includes ADR, SearchIndexProfile, evaluation harness contract, extension readiness, debug evidence contract, and PostgreSQL baseline.
+2. MS-10: 知识库索引与 Hybrid Retrieval 实现, 0/6 completed, blocked until MS-9 completion; includes metadata index, query understanding, lexical/vector engines, RRF fusion, context builder, and retrieval regression harness.
+3. MS-11: AI 草稿 Hybrid Context 接入与文档追平, 0/5 completed, blocked until MS-10 completion; includes AI draft context integration, citation UI, admin/debug evidence display, e2e validation, readiness gate, and docs catch-up.
 
 Recommended next route:
 
@@ -88,7 +92,7 @@ Recommended next route:
 - goal_node_map_status: present; includes feature/refactor/bugfix/test/docs/governance/migration/architecture.
 - milestone_pipeline_stale: no after this update; old planned milestones are superseded and new planned milestones are registered.
 - worktrack_backlog_stale: no after this update; WT-078..WT-093 are registered.
-- code_validation_status: no application code changed in this goal rewrite.
+- code_validation_status: no application code changed in this planning update.
 - handback_required: no for analysis; activation of MS-9 is the next RepoScope action.
 
 ## Unknowns / Next Options
@@ -97,3 +101,5 @@ Recommended next route:
 - Whether PostgreSQL native FTS fallback needs Chinese parser/tokenizer support beyond normalization.
 - Embedding provider is a separate config from AI chat provider. The active SearchIndexProfile locks embedding model, dimensions, and semantic space; changing model or dimensions requires a new profile and re-embedding/reindex gate.
 - Whether existing SQLite dev data needs one-time migration tooling or can be regenerated from seed/import flows for this stage.
+- Whether optional reranking should remain local-only, provider-backed, or deferred entirely after MS-10 baseline quality data exists.
+- Whether admin/debug evidence should be implemented as an internal API only, an admin page, or both in MS-11.

@@ -133,5 +133,6 @@
 - planned_next_milestone: MS-9 PostgreSQL 与 Hybrid Search 架构基线
 - planned_followup_milestones: MS-10 知识库索引与 Hybrid Retrieval 实现; MS-11 AI 草稿 Hybrid Context 接入与文档追平
 - embedding_profile_decision: Embedding provider is separate from AI chat provider; active SearchIndexProfile locks model/dimensions/semantic space and any model/dimension change requires explicit reindex.
+- hybrid_search_planning_addendum: Follow-up design points folded into MS-9/MS-10/MS-11: query understanding, structured metadata indexing, RRF fusion, optional reranker seam, context window builder, retrieval evaluation harness, admin/debug evidence, pgvector filtered-search risk boundary.
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入

@@ -21,6 +21,8 @@
 - 允许引入 PostgreSQL 作为应用主数据库目标。
 - 允许引入 pgvector，并优先评估 BM25 方案 `pg_search`；若不可部署，必须给出 PostgreSQL native FTS + 中文分词/归一化 fallback。
 - Embedding provider 必须独立于现有 AI chat provider 配置；MS-9 必须定义 SearchIndexProfile 概念，锁定 embedding model、dimensions、semantic space、lexical engine 和 active/deprecated 状态。
+- Hybrid Search 架构必须定义 query understanding、lexical search、vector search、fusion ranking、context building 和 debug evidence 的模块边界，避免把所有逻辑塞进单个 retrieval 函数。
+- MS-9 需要定义 retrieval evaluation harness 的输入格式和 gate 指标，覆盖 expected source/snippet、must contain terms、forbidden sources、recall@k、noise@k 和 citation traceability。
 - 不引入外部托管搜索服务、第三方向量数据库或不可控常驻检索服务，除非 fdch0 单独确认。
 - 不静默删除 SQLite 数据或业务 schema；迁移必须包含 rollback/restore notes。
 - 不把全部知识内容直接发送给 AI provider 作为检索替代。
@@ -33,7 +35,16 @@
 | 2 | WT-20260529-079 | PostgreSQL dev/test/CI 数据库基线 | migration | planned |
 | 3 | WT-20260529-080 | Prisma PostgreSQL provider 迁移边界 | migration | planned |
 | 4 | WT-20260529-081 | pgvector 与 BM25/FTS extension readiness | architecture | planned |
-| 5 | WT-20260529-082 | 中文检索评测语料与质量 Gate | test | planned |
+| 5 | WT-20260529-082 | 中文检索评测语料、Evaluation Harness 与质量 Gate | test | planned |
+
+## Design Decisions To Carry Forward
+
+1. Hybrid ranking 默认采用 Reciprocal Rank Fusion 类方法融合 lexical 与 vector 排名，不直接比较 BM25 分数和向量相似度原始值。
+2. Reranker 作为后续可插拔 seam 预留，不作为 MS-9/MS-10 必须引入的第三方依赖。
+3. Query understanding 输出应至少区分 `rawQuery`、`normalizedQuery`、`lexicalQuery`、`embeddingQuery`、`mustTerms` 和 `domainEntities`。
+4. Search index metadata 应显式考虑 `domainEntities`、`processNames`、`materialTypes`、`approvalActions`、`applicabilityRules`、`sourcePath`、`section` 和 `documentTitle`。
+5. pgvector filtered search 必须把 `knowledgeBaseId`、`sourceId`、enabled/status、`profileId` 过滤对 recall/performance 的影响写入风险边界；必要时用 larger topK、partial indexes 或 partitioning 缓解。
+6. Admin/debug surface 在 MS-9 先定义数据契约，MS-10/MS-11 再实现；应能解释 lexical hits、vector hits、fused hits、filtered reasons、final context 和 score breakdown。
 
 ## Completion Signals
 
@@ -42,7 +53,8 @@
 3. Prisma schema/provider 迁移边界清楚，SQLite 到 PostgreSQL 的数据/seed/test 策略可复现。
 4. pgvector readiness 可验证；BM25 优先方案和 fallback 方案都有可执行判断。
 5. SearchIndexProfile 决策明确：首次 active profile 锁定 embedding model/dimensions/semantic space，换模型或维度必须新建 profile 并重建 embeddings。
-6. 固定中文业务检索评测语料存在，并定义 recall、precision/误召回和 citation traceability gate。
+6. 固定中文业务检索评测语料存在，并定义 recall、precision/误召回、forbidden source、noise@k 和 citation traceability gate。
+7. Query understanding、retriever provider abstractions、RRF fusion、context builder、reranker seam 和 debug evidence contract 在 ADR 中有明确边界。
 
 ## Acceptance Criteria
 
@@ -53,7 +65,8 @@
 5. SearchIndexProfile 的 model/dimensions 创建后不可变；不同 profile 的 vectors 不可混排。
 6. 不改变 AI 草稿人工确认边界。
 7. 不绕过知识库 enabled/archived/source/snippet 过滤。
-8. `git diff --check`、`npm run lint`、`npm run test`、`npm run build` 至少在最终 worktrack 通过。
+8. Evaluation harness 至少能表达 query、expectedSourceIds、expectedSnippetIds、mustContainTerms、forbiddenSourceIds、minRecallAt5、maxNoiseAt5。
+9. `git diff --check`、`npm run lint`、`npm run test`、`npm run build` 至少在最终 worktrack 通过。
 
 ## Completion Threshold
 
@@ -78,8 +91,8 @@
 ## Milestone Gate Design
 
 - black_box: 开发者能在 PostgreSQL dev/test 环境下启动应用验证知识库基础功能不回退。
-- white_box: Prisma provider、migration、extension readiness、评测语料和 CI 数据库准备均有证据。
-- anti_cheat: 不允许只写文档不验证数据库；不允许跳过 extension readiness；不允许把不可部署的 BM25 方案写成默认事实。
+- white_box: Prisma provider、migration、extension readiness、评测语料、evaluation harness contract、debug evidence contract 和 CI 数据库准备均有证据。
+- anti_cheat: 不允许只写文档不验证数据库；不允许跳过 extension readiness；不允许把不可部署的 BM25 方案写成默认事实；不允许将 vector-only 检索包装成 hybrid search。
 - embedding_profile_rule: 不允许通过直接编辑 provider config 静默改变 active embedding model/dimensions；必须新建 SearchIndexProfile 并执行 re-embedding/reindex gate。
 
 ## Developer Decision Boundary
