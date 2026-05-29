@@ -4,6 +4,7 @@ import {
   clearStagedAiDraft,
   confirmStagedAiDraft,
   formatDraftDescription,
+  normalizeDraftPriority,
   parseStagedAiDraft,
   readStagedAiDraft,
   stageAiDraft,
@@ -65,6 +66,25 @@ describe("AI draft handoff", () => {
       stagedAt: "2026-05-27T00:00:00.000Z",
     });
     expect(readStagedAiDraft(storage)).toEqual(stagedDraft);
+  });
+
+  it("normalizes staged draft priority before ticket form prefill", () => {
+    expect(normalizeDraftPriority("HIGH")).toBe("high");
+    expect(normalizeDraftPriority("紧急")).toBe("urgent");
+    expect(normalizeDraftPriority("普通优先级")).toBe("medium");
+    expect(normalizeDraftPriority("not-a-priority")).toBe("medium");
+
+    expect(
+      parseStagedAiDraft(
+        JSON.stringify({
+          title: "审批流",
+          description: "描述",
+          type: "需求",
+          priority: "高",
+          stagedAt: "2026-05-27T00:00:00.000Z",
+        })
+      )
+    ).toMatchObject({ priority: "high" });
   });
 
   it("clears invalid staged drafts before prefill", () => {
