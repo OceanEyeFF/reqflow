@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { readPrivateKnowledgeFile } from "./private-storage";
-import { validateZipEntries } from "./upload-validation";
+import { isImportableZipDocument, validateZipEntries } from "./upload-validation";
 import { readZipEntries } from "./zip-reader";
 
 const MAX_CHUNK_LENGTH = 900;
@@ -107,7 +107,7 @@ export function chunkDocument(document: ParsedDocument): Array<{
 function parseStoredZipDocuments(buffer: Buffer): ParsedDocument[] {
   validateZipEntries(buffer);
   return readZipEntries(buffer)
-    .filter((entry) => !entry.name.endsWith("/"))
+    .filter((entry) => isImportableZipDocument(entry.name))
     .map((entry) => ({ sourcePath: entry.name, text: decodeText(entry.content) }));
 }
 
