@@ -4,7 +4,7 @@
 
 - updated: 2026-05-29
 - baseline_branch: develop
-- baseline_commit: 551df3df51948f674c39f9b4de4c89b83df9bb3b
+- baseline_commit: 06544725d0de8c5ff62cf771fd61fb0b8d039b2c
 
 ## Codebase State
 
@@ -48,9 +48,9 @@ reqflow/
 
 | 指标 | 状态 |
 |------|------|
-| `npm run build` | 通过 (2026-05-29, WT-20260529-069) |
-| `npm run lint` | 通过，ESLint 0 warning (2026-05-29, WT-20260529-069) |
-| `npm run test` | 通过，28 个测试文件，200 个测试 (2026-05-29, WT-20260529-069) |
+| `npm run build` | 通过 (2026-05-29, WT-20260529-077) |
+| `npm run lint` | 通过，ESLint 0 warning (2026-05-29, WT-20260529-077) |
+| `npm run test` | 通过，28 个测试文件，201 个测试 (2026-05-29, WT-20260529-077) |
 | TypeScript strict | 开启 (`tsconfig.json` strict: true) |
 | GitHub Actions CI baseline | 已建立并刷新，覆盖 `npm ci`、`npm run lint`、`npm run test`、`npm run build`；run `26502063963` success for MS6 validation handback `b5d50b8b8043dc8a35264cf96553955a4697ba8d` (2026-05-27, WT-20260526-036) |
 | Cloud readiness boundary | 已建立，覆盖 `.env`、`AUTH_SECRET`、`DATABASE_URL`、uploads、SQLite production risk、deployment platform boundary (2026-05-27, WT-20260526-028) |
@@ -197,10 +197,10 @@ reqflow/
 - milestone_id: MS-20260528-003
 - title: MS8 addendum
 - status: active
-- progress: 6/6 completed; awaiting fdch0 final acceptance
+- progress: 7/7 completed; awaiting fdch0 final acceptance
 - depends_on_milestones: MS-20260528-001
 - scope_boundary: knowledge-base edit and disable/archive lifecycle; AI clarification directions from knowledge-base, application-scenario, and concrete-detail angles; final addendum validation with Milestone DB Readiness Gate.
-- activation_status: activated on 2026-05-28 by fdch0; WT-20260528-064, WT-20260528-065, WT-20260528-066, WT-20260528-067, WT-20260529-068, and WT-20260529-069 completed and merged.
+- activation_status: activated on 2026-05-28 by fdch0; WT-20260528-064, WT-20260528-065, WT-20260528-066, WT-20260528-067, WT-20260529-068, WT-20260529-069, and WT-20260529-077 completed and merged.
 - clarification_status: confirmed by fdch0 on 2026-05-28; MS8 addendum execution cycle authorized with 30 continuous Worktrack quota.
 - confirmed_requirement_summary: disabled/archived knowledge bases are user-invisible and cannot receive new sources or cleanup until restored; default knowledge base cannot be deleted; internal slug/system identifier is unique and immutable; AI clarification uses fixed labels "知识库依据 / 应用场景 / 需求细节", max 5 questions per direction, per-question answers after scenario feedback, and the existing max-3 draft single-selection handoff; final validation requires manual UI flow record.
 - latest_evidence: WT-20260528-064 merged at `7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d`; gate evidence records lifecycle API/UI implementation, disabled/archive upload and cleanup protections, immutable slug/default-base guards, and passing `npm run lint`, `npm run test` (28 files / 193 tests), and `npm run build`.
@@ -209,6 +209,7 @@ reqflow/
 - acceptance_feedback_fix: WT-20260528-067 merged at `ceada20bbf09f689d6ed1e8ecd8dc3a0290a988c`; `/admin/knowledge` now includes a create knowledge-base form and server-generated immutable short slugs.
 - scenario_feedback_addon: WT-20260529-068 merged at `c877c51174377a258b16248deedbc373a3758e72`; generated docs-codewiki zip archives with ordinary sidecars are accepted while dangerous entries remain blocked.
 - scenario_feedback_fix: WT-20260529-069 merged at `551df3df51948f674c39f9b4de4c89b83df9bb3b`; AI clarification questions now render per-question answer fields and AI draft priority handoff normalizes invalid/display-label priorities before ticket creation.
+- scenario_feedback_fix: WT-20260529-077 merged at `06544725d0de8c5ff62cf771fd61fb0b8d039b2c`; AI clarification card remains visible after successful empty-question provider responses and renders fallback questions for each fixed direction.
 
 ### M4 Governance Facts
 
