@@ -265,6 +265,48 @@ describe("createDeepseekProvider", () => {
     );
   });
 
+  it("adds visible fallback clarification questions when the provider returns empty directions", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        Response.json({
+          choices: [{ message: { content: JSON.stringify({ kind: "clarification", questions: [] }) } }],
+        })
+      )
+    );
+
+    const provider = createDeepseekProvider({
+      apiKey: "test-key",
+      baseUrl: "https://example.test",
+      model: "deepseek-v4-flash",
+      timeoutMs: 1000,
+    });
+
+    const result = await provider.generate({
+      mode: "clarify",
+      requirement: "需要审批流",
+      answers: [],
+      knowledgeBaseIds: [],
+      answerLanguage: "zh",
+      maxDrafts: 3,
+      knowledge: [],
+    });
+
+    expect(result).toMatchObject({
+      kind: "clarification",
+      result: {
+        directions: [
+          { id: "knowledge_basis", questions: [{ id: "knowledge_basis-fallback-1" }] },
+          { id: "application_scenario", questions: [{ id: "application_scenario-fallback-1" }] },
+          { id: "requirement_details", questions: [{ id: "requirement_details-fallback-1" }] },
+        ],
+      },
+    });
+    if (result.kind === "clarification") {
+      expect(result.result.questions).toHaveLength(3);
+    }
+  });
+
   it("normalizes nested clarification questions returned by OpenAI-compatible providers", async () => {
     vi.stubGlobal(
       "fetch",

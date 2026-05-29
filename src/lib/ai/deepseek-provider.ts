@@ -179,7 +179,9 @@ function normalizeDeepseekResponse(response: DeepseekResponse, request: DraftPro
   const citations = toDraftCitations(request.knowledge);
 
   if (request.mode === "clarify" || parsed.kind === "clarification") {
-    const directions = normalizeClarificationDirections(parsed.result?.directions ?? parsed.directions, parsed.result?.questions ?? parsed.questions);
+    const directions = ensureClarificationQuestions(
+      normalizeClarificationDirections(parsed.result?.directions ?? parsed.directions, parsed.result?.questions ?? parsed.questions)
+    );
     return {
       kind: "clarification",
       result: {
@@ -262,6 +264,38 @@ function normalizeClarificationQuestions(
       question: question.question || "",
       reason: question.reason || "Clarifies the requirement scope.",
     }));
+}
+
+function ensureClarificationQuestions(directions: AiClarificationDirection[]): AiClarificationDirection[] {
+  if (directions.some((direction) => direction.questions.length > 0)) return directions;
+
+  return directions.map((direction) => ({
+    ...direction,
+    questions: [createFallbackClarificationQuestion(direction.id)],
+  }));
+}
+
+function createFallbackClarificationQuestion(directionId: ClarificationDirectionId): AiClarificationQuestion {
+  switch (directionId) {
+    case "knowledge_basis":
+      return {
+        id: "knowledge_basis-fallback-1",
+        question: "这条需求需要优先依据哪一类知识库材料或业务规则？",
+        reason: "AI 未返回该方向的追问，先确认可引用的知识依据。",
+      };
+    case "application_scenario":
+      return {
+        id: "application_scenario-fallback-1",
+        question: "这个流程主要发生在哪个业务场景、由哪些角色操作？",
+        reason: "AI 未返回该方向的追问，先确认使用场景和参与角色。",
+      };
+    case "requirement_details":
+      return {
+        id: "requirement_details-fallback-1",
+        question: "哪些节点、状态或异常分支必须写入工单验收标准？",
+        reason: "AI 未返回该方向的追问，先确认可落地的需求细节。",
+      };
+  }
 }
 
 function normalizePriority(priority: unknown): AiRequirementDraft["suggestedPriority"] {
