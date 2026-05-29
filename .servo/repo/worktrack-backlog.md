@@ -4,10 +4,11 @@
 
 ## Summary
 
-- total: 77
-- planned: 8
+- total: 93
+- planned: 16
 - active: 0
 - completed: 69
+- superseded: 8
 - blocked: 0
 - deferred: 0
 
@@ -714,7 +715,7 @@
 - contract_path: .servo/worktrack/WT-20260528-063/contract.md
 - branch: worktrack/wt-20260528-063-milestone-db-gate-policy (merged)
 
-## M9: docs 文档更新迭代与整理 (MS-20260528-002)
+## Superseded Legacy: docs 文档更新迭代与整理 (MS-20260528-002)
 
 ### WT-20260528-060
 
@@ -722,10 +723,12 @@
 - title: docs 文档更新迭代与整理
 - milestone_id: MS-20260528-002
 - node_type: docs
-- status: planned
+- status: superseded
 - priority: 1
 - contract_path: TBD
 - branch: worktrack/wt-20260528-060-docs-refresh-organization
+- superseded_by: WT-20260529-093
+- superseded_reason: docs catch-up moved to MS-11 after PostgreSQL hybrid search implementation.
 
 ## M10: MS8 addendum (MS-20260528-003)
 
@@ -827,7 +830,7 @@
 - merge_commit: 06544725d0de8c5ff62cf771fd61fb0b8d039b2c
 - validation: focused tests pass 17 tests; lint pass; test pass 28 files / 201 tests; build pass; Playwright reproduction evidence recorded
 
-## M11: 中文知识检索增强与结构化索引 (MS-20260529-001)
+## Superseded Legacy: 中文知识检索增强与结构化索引 (MS-20260529-001)
 
 ### WT-20260529-070
 
@@ -835,10 +838,11 @@
 - title: 中文检索诊断与评测语料
 - milestone_id: MS-20260529-001
 - node_type: test
-- status: planned
+- status: superseded
 - priority: 1
 - contract_path: TBD
 - branch: worktrack/wt-20260529-070-chinese-retrieval-diagnostics
+- superseded_by: WT-20260529-082
 
 ### WT-20260529-071
 
@@ -846,10 +850,11 @@
 - title: 中文召回基础增强
 - milestone_id: MS-20260529-001
 - node_type: feature
-- status: planned
+- status: superseded
 - priority: 2
 - contract_path: TBD
 - branch: worktrack/wt-20260529-071-chinese-recall-baseline
+- superseded_by: WT-20260529-084
 
 ### WT-20260529-072
 
@@ -857,10 +862,11 @@
 - title: 知识片段结构化索引
 - milestone_id: MS-20260529-001
 - node_type: feature
-- status: planned
+- status: superseded
 - priority: 3
 - contract_path: TBD
 - branch: worktrack/wt-20260529-072-structured-snippet-index
+- superseded_by: WT-20260529-083
 
 ### WT-20260529-073
 
@@ -868,10 +874,11 @@
 - title: AI 辅助关键词与规则摘要提取
 - milestone_id: MS-20260529-001
 - node_type: feature
-- status: planned
+- status: superseded
 - priority: 4
 - contract_path: TBD
 - branch: worktrack/wt-20260529-073-ai-ingest-keywords-rules
+- superseded_by: WT-20260529-085
 
 ### WT-20260529-074
 
@@ -879,10 +886,11 @@
 - title: 文件级上下文扩展与引用聚合
 - milestone_id: MS-20260529-001
 - node_type: feature
-- status: planned
+- status: superseded
 - priority: 5
 - contract_path: TBD
 - branch: worktrack/wt-20260529-074-file-context-citation-aggregation
+- superseded_by: WT-20260529-087
 
 ### WT-20260529-075
 
@@ -890,10 +898,11 @@
 - title: AI 草稿检索上下文整合
 - milestone_id: MS-20260529-001
 - node_type: feature
-- status: planned
+- status: superseded
 - priority: 6
 - contract_path: TBD
 - branch: worktrack/wt-20260529-075-ai-draft-retrieval-context
+- superseded_by: WT-20260529-089
 
 ### WT-20260529-076
 
@@ -901,7 +910,190 @@
 - title: 中文检索增强集成验收
 - milestone_id: MS-20260529-001
 - node_type: test
-- status: planned
+- status: superseded
 - priority: 7
 - contract_path: TBD
 - branch: worktrack/wt-20260529-076-chinese-retrieval-validation
+- superseded_by: WT-20260529-091
+
+## MS-9: PostgreSQL 与 Hybrid Search 架构基线
+
+### WT-20260529-078
+
+- worktrack_id: WT-20260529-078
+- title: Hybrid Search 架构决策与风险边界
+- milestone_id: MS-9
+- node_type: architecture
+- status: planned
+- priority: 1
+- contract_path: TBD
+- branch: worktrack/wt-20260529-078-hybrid-search-architecture
+
+### WT-20260529-079
+
+- worktrack_id: WT-20260529-079
+- title: PostgreSQL dev/test/CI 数据库基线
+- milestone_id: MS-9
+- node_type: migration
+- status: planned
+- priority: 2
+- contract_path: TBD
+- branch: worktrack/wt-20260529-079-postgres-dev-test-ci-baseline
+
+### WT-20260529-080
+
+- worktrack_id: WT-20260529-080
+- title: Prisma PostgreSQL provider 迁移边界
+- milestone_id: MS-9
+- node_type: migration
+- status: planned
+- priority: 3
+- contract_path: TBD
+- branch: worktrack/wt-20260529-080-prisma-postgres-provider-boundary
+
+### WT-20260529-081
+
+- worktrack_id: WT-20260529-081
+- title: pgvector 与 BM25/FTS extension readiness
+- milestone_id: MS-9
+- node_type: architecture
+- status: planned
+- priority: 4
+- contract_path: TBD
+- branch: worktrack/wt-20260529-081-search-extension-readiness
+
+### WT-20260529-082
+
+- worktrack_id: WT-20260529-082
+- title: 中文检索评测语料与质量 Gate
+- milestone_id: MS-9
+- node_type: test
+- status: planned
+- priority: 5
+- contract_path: TBD
+- branch: worktrack/wt-20260529-082-chinese-retrieval-quality-gate
+
+## MS-10: 知识库索引与 Hybrid Retrieval 实现
+
+### WT-20260529-083
+
+- worktrack_id: WT-20260529-083
+- title: Knowledge search index schema 与 migration
+- milestone_id: MS-10
+- node_type: migration
+- status: planned
+- priority: 1
+- contract_path: TBD
+- branch: worktrack/wt-20260529-083-knowledge-search-index-schema
+
+### WT-20260529-084
+
+- worktrack_id: WT-20260529-084
+- title: Lexical BM25/FTS 检索实现
+- milestone_id: MS-10
+- node_type: feature
+- status: planned
+- priority: 2
+- contract_path: TBD
+- branch: worktrack/wt-20260529-084-lexical-bm25-fts-search
+
+### WT-20260529-085
+
+- worktrack_id: WT-20260529-085
+- title: Embedding 生成与 pgvector 索引
+- milestone_id: MS-10
+- node_type: feature
+- status: planned
+- priority: 3
+- contract_path: TBD
+- branch: worktrack/wt-20260529-085-embedding-pgvector-index
+
+### WT-20260529-086
+
+- worktrack_id: WT-20260529-086
+- title: Hybrid fusion 排序与 score evidence
+- milestone_id: MS-10
+- node_type: feature
+- status: planned
+- priority: 4
+- contract_path: TBD
+- branch: worktrack/wt-20260529-086-hybrid-fusion-score-evidence
+
+### WT-20260529-087
+
+- worktrack_id: WT-20260529-087
+- title: 权限过滤与上下文扩展
+- milestone_id: MS-10
+- node_type: feature
+- status: planned
+- priority: 5
+- contract_path: TBD
+- branch: worktrack/wt-20260529-087-retrieval-filter-context-expansion
+
+### WT-20260529-088
+
+- worktrack_id: WT-20260529-088
+- title: Hybrid Retrieval 回归测试
+- milestone_id: MS-10
+- node_type: test
+- status: planned
+- priority: 6
+- contract_path: TBD
+- branch: worktrack/wt-20260529-088-hybrid-retrieval-regression
+
+## MS-11: AI 草稿 Hybrid Context 接入与文档追平
+
+### WT-20260529-089
+
+- worktrack_id: WT-20260529-089
+- title: AI draft hybrid context 接入
+- milestone_id: MS-11
+- node_type: feature
+- status: planned
+- priority: 1
+- contract_path: TBD
+- branch: worktrack/wt-20260529-089-ai-draft-hybrid-context
+
+### WT-20260529-090
+
+- worktrack_id: WT-20260529-090
+- title: Citation UI 与检索证据展示追平
+- milestone_id: MS-11
+- node_type: feature
+- status: planned
+- priority: 2
+- contract_path: TBD
+- branch: worktrack/wt-20260529-090-citation-ui-search-evidence
+
+### WT-20260529-091
+
+- worktrack_id: WT-20260529-091
+- title: 中文业务端到端场景验收
+- milestone_id: MS-11
+- node_type: test
+- status: planned
+- priority: 3
+- contract_path: TBD
+- branch: worktrack/wt-20260529-091-chinese-business-e2e-validation
+
+### WT-20260529-092
+
+- worktrack_id: WT-20260529-092
+- title: PostgreSQL/extension Milestone readiness gate
+- milestone_id: MS-11
+- node_type: test
+- status: planned
+- priority: 4
+- contract_path: TBD
+- branch: worktrack/wt-20260529-092-postgres-extension-readiness-gate
+
+### WT-20260529-093
+
+- worktrack_id: WT-20260529-093
+- title: Docs/operator 文档追平
+- milestone_id: MS-11
+- node_type: docs
+- status: planned
+- priority: 5
+- contract_path: TBD
+- branch: worktrack/wt-20260529-093-docs-operator-catch-up

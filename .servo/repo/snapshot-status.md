@@ -164,15 +164,15 @@ reqflow/
 - accepted_by: fdch0
 - accepted_at: 2026-05-28
 - acceptance_note: accepted after limited manual flow testing; DS API and local OpenAI-compatible API manual validation records remain operator-run checks.
-- next_planned_milestone: MS-20260528-002 docs 文档更新迭代与整理
+- next_planned_milestone: MS-9 PostgreSQL 与 Hybrid Search 架构基线
 
 ### Preparation Work
 
 - current_preparation_milestone: none
-- current_preparation_item: MS8 addendum activated by fdch0; MS-20260528-002 remains planned.
-- preparation_goal: MS8 addendum clarification is confirmed and execution is authorized; proceed through approved worktrack list beginning with WT-20260528-064.
+- current_preparation_item: PostgreSQL hybrid search goal rewrite accepted by fdch0; MS-9/MS-10/MS-11 are now the planned pipeline.
+- preparation_goal: activate MS-9 and establish PostgreSQL + pgvector + BM25/FTS architecture, migration, extension readiness, and Chinese retrieval quality gates before implementation.
 - provider_decision: Deepseek
-- split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior are planned under MS-20260528-001; docs cleanup is deferred to MS-20260528-002.
+- split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior completed under MS-20260528-001/MS-20260528-003; docs cleanup is now folded into MS-11 after hybrid search implementation.
 
 ### Accepted Milestone
 
@@ -184,7 +184,7 @@ reqflow/
 - scope_boundary: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI discussion page knowledge-base multi-select, AI retrieval by selected knowledge bases, AI answer language option, multi-draft/splitting support, and MS8 integration validation.
 - activation_status: activated on 2026-05-28; requirement confirmation answered by fdch0.
 - acceptance_status: accepted by fdch0 on 2026-05-28 after WT-20260528-062 DB readiness gate.
-- next_step_boundary: MS8 addendum is active; do not start any addendum worktrack until explicitly requested. MS-20260528-002 docs refresh remains planned.
+- next_step_boundary: MS8 addendum is accepted; do not use superseded MS-20260528-002 or MS-20260529-001 as active planning sources. Start with MS-9 when ready.
 
 ### Planned Milestone
 
@@ -193,7 +193,8 @@ reqflow/
 - status: planned
 - progress: 0/1 completed
 - depends_on_milestones: MS-20260528-001
-- scope_boundary: docs path update, organization, deduplication, and Prisma/AI/knowledge-base operator-facing documentation after MS8.
+- scope_boundary: superseded by MS-11 after fdch0 changed the next goal to PostgreSQL hybrid search.
+- superseded_by: MS-11
 
 ### Accepted Milestone
 
@@ -223,9 +224,43 @@ reqflow/
 - progress: 0/7 completed
 - depends_on_milestones: MS-20260528-001
 - recommended_after: MS-20260528-003 final acceptance handback
-- scope_boundary: Chinese normalization, n-gram/domain dictionary retrieval, structured snippet indexing, optional AI-assisted ingest/query enhancement, file-level context expansion, and AI draft retrieval integration; no default PostgreSQL/pgvector/vector-service migration.
+- scope_boundary: superseded by MS-9/MS-10/MS-11 after fdch0 confirmed the target changed to PostgreSQL + BM25/FTS + pgvector hybrid search.
 - planned_worktracks: WT-20260529-070, WT-20260529-071, WT-20260529-072, WT-20260529-073, WT-20260529-074, WT-20260529-075, WT-20260529-076
+- activation_status: superseded, not active.
+- superseded_by: MS-9, MS-10, MS-11
+
+### Planned Milestone
+
+- milestone_id: MS-9
+- title: PostgreSQL 与 Hybrid Search 架构基线
+- status: planned
+- progress: 0/5 completed
+- depends_on_milestones: MS-20260528-003
+- scope_boundary: PostgreSQL dev/test/CI baseline, Prisma provider migration boundary, pgvector readiness, BM25/FTS/pg_search feasibility, fallback strategy, and Chinese retrieval quality gate.
+- planned_worktracks: WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082
 - activation_status: planned, not active.
+
+### Planned Milestone
+
+- milestone_id: MS-10
+- title: 知识库索引与 Hybrid Retrieval 实现
+- status: planned
+- progress: 0/6 completed
+- depends_on_milestones: MS-9
+- scope_boundary: knowledge search index schema, lexical BM25/FTS search, embedding + pgvector index, hybrid fusion, permission filtering, context expansion, and regression tests.
+- planned_worktracks: WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088
+- activation_status: planned, blocked until MS-9 completion.
+
+### Planned Milestone
+
+- milestone_id: MS-11
+- title: AI 草稿 Hybrid Context 接入与文档追平
+- status: planned
+- progress: 0/5 completed
+- depends_on_milestones: MS-10
+- scope_boundary: AI draft hybrid context integration, citation UI/evidence, Chinese business E2E validation, PostgreSQL/extension readiness, and docs/operator catch-up.
+- planned_worktracks: WT-20260529-089, WT-20260529-090, WT-20260529-091, WT-20260529-092, WT-20260529-093
+- activation_status: planned, blocked until MS-10 completion.
 
 ### M4 Governance Facts
 

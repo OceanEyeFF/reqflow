@@ -4,9 +4,9 @@
 
 ## Summary
 
-- total: 9
+- total: 11
 - completed: 9
-- superseded: 0
+- superseded: 2
 
 ## Completed Milestones
 
@@ -96,3 +96,25 @@
 - source_artifact: .servo/milestone/MS-20260528-003.md
 - completed_worktracks: WT-20260528-064, WT-20260528-065, WT-20260528-066, WT-20260528-067, WT-20260529-068, WT-20260529-069, WT-20260529-077
 - acceptance_note: accepted after final review; Chinese knowledge retrieval improvements were registered separately as MS-20260529-001.
+
+## Superseded Milestones
+
+### MS-20260528-002
+
+- milestone_id: MS-20260528-002
+- title: docs 文档更新迭代与整理
+- status: superseded
+- superseded_by: MS-11
+- superseded_at: 2026-05-29
+- source_artifact: .servo/milestone/MS-20260528-002.md
+- reason: docs catch-up moved after PostgreSQL hybrid search implementation.
+
+### MS-20260529-001
+
+- milestone_id: MS-20260529-001
+- title: 中文知识检索增强与结构化索引
+- status: superseded
+- superseded_by: MS-9, MS-10, MS-11
+- superseded_at: 2026-05-29
+- source_artifact: .servo/milestone/MS-20260529-001.md
+- reason: lightweight Chinese retrieval scope replaced by PostgreSQL + BM25/FTS + pgvector hybrid search.
