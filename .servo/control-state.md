@@ -21,10 +21,10 @@
 
 ## Active Milestone
 
-- active_milestone: MS-20260528-003
-- milestone_title: MS8 addendum
-- milestone_status: active
-- milestone_pipeline_summary: total=11 planned=2 active=1 completed=8 superseded=0; MS8 addendum worktracks 7/7 completed, awaiting fdch0 final acceptance; MS-20260529-001 registered as planned
+- active_milestone: none
+- milestone_title: none
+- milestone_status: none
+- milestone_pipeline_summary: total=11 planned=2 active=0 completed=9 superseded=0; MS8 addendum accepted by fdch0; MS-20260529-001 registered as planned
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Refresh complete for WT-20260529-077 AI clarification visibility fix; active milestone remains MS8 addendum pending fdch0 final acceptance.
+- RepoScope final acceptance writeback complete for MS8 addendum; no milestone is active. Planned milestones remain available for explicit activation.
 
 ## Linked Formal Documents
 
@@ -46,8 +46,8 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: true
-- reason: MS8 addendum worktracks are complete; milestone final acceptance remains fdch0-only.
+- needs_programmer_approval: false
+- reason: MS8 addendum final acceptance was confirmed by fdch0 on 2026-05-29.
 - approval_scope: MS8 addendum planned worktracks and automatically added missing low-risk worktracks within knowledge-base lifecycle management, AI multi-direction clarification, and addendum validation. Milestone final acceptance remains fdch0-only.
 - approval_persistence: active for this MS8 addendum execution cycle until quota exhaustion, dangerous operation, context-noise handback, required business decision, or milestone final acceptance boundary.
 
@@ -76,9 +76,9 @@
 
 ## Handback Guard
 
-- handoff_state: ms8_addendum_execution_authorized
-- last_stop_reason: N/A
-- last_handback_signature: MS-20260528-003::execution-authorized::2026-05-28
+- handoff_state: ms8_addendum_accepted
+- last_stop_reason: milestone_final_acceptance_complete
+- last_handback_signature: MS-20260528-003::accepted::2026-05-29
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
 - handback_lock_active: false
@@ -110,10 +110,10 @@
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
 - Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已完成 11/11 worktracks，并由用户在 2026-05-28 最终验收。
-- latest_acceptance: MS-20260528-001 accepted by fdch0 on 2026-05-28 after WT-20260528-062 DB readiness validation
+- latest_acceptance: MS-20260528-003 accepted by fdch0 on 2026-05-29 after WT-20260529-077 AI clarification visibility fix
 - latest_repo_baseline: 06544725d0de8c5ff62cf771fd61fb0b8d039b2c (`Merge WT-20260529-077 AI clarification visibility fix`)
 - latest_completed_worktrack: WT-20260528-062 completed and merged before MS8 acceptance; MS8 addendum activation merged at 8972fc5.
-- next_worktrack_candidate: none; MS8 addendum final acceptance handback required.
+- next_worktrack_candidate: none; no active milestone after MS8 addendum final acceptance.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
@@ -124,8 +124,8 @@
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
-- active_next_milestone: MS-20260528-003 MS8 addendum
-- active_milestone_clarification_status: confirmed by fdch0; MS8 addendum execution authorized.
+- active_next_milestone: none
+- active_milestone_clarification_status: MS8 addendum accepted by fdch0.
 - routed_new_requests: AI answer language selection and multiple/split requirement drafts are in MS8; docs path cleanup moved to MS-20260528-002.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
