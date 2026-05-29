@@ -928,6 +928,7 @@
 - priority: 1
 - contract_path: TBD
 - branch: worktrack/wt-20260529-078-hybrid-search-architecture
+- planning_notes: Must define query understanding, RRF fusion, provider abstractions, reranker seam, debug evidence contract, SearchIndexProfile invariants, and pgvector filtered-search risk boundary.
 
 ### WT-20260529-079
 
@@ -961,41 +962,45 @@
 - priority: 4
 - contract_path: TBD
 - branch: worktrack/wt-20260529-081-search-extension-readiness
+- planning_notes: Evaluate `pg_search` deployability; fallback to PostgreSQL native FTS plus Chinese tokenization/normalization; include filtered vector recall/performance risks, topK expansion, partial indexes, and partitioning options.
 
 ### WT-20260529-082
 
 - worktrack_id: WT-20260529-082
-- title: 中文检索评测语料与质量 Gate
+- title: 中文检索评测语料、Evaluation Harness 与质量 Gate
 - milestone_id: MS-9
 - node_type: test
 - status: planned
 - priority: 5
 - contract_path: TBD
 - branch: worktrack/wt-20260529-082-chinese-retrieval-quality-gate
+- planning_notes: Harness cases should include query, expectedSourceIds, expectedSnippetIds, mustContainTerms, forbiddenSourceIds, minRecallAt5, maxNoiseAt5, and citation traceability expectations.
 
 ## MS-10: 知识库索引与 Hybrid Retrieval 实现
 
 ### WT-20260529-083
 
 - worktrack_id: WT-20260529-083
-- title: Knowledge search index schema 与 migration
+- title: Knowledge search index schema、SearchIndexProfile 与 metadata migration
 - milestone_id: MS-10
 - node_type: migration
 - status: planned
 - priority: 1
 - contract_path: TBD
 - branch: worktrack/wt-20260529-083-knowledge-search-index-schema
+- planning_notes: Index schema should carry profileId/model/dimensions/contentHash/status plus structured metadata such as domainEntities, processNames, materialTypes, approvalActions, applicabilityRules, sourcePath, section, and documentTitle.
 
 ### WT-20260529-084
 
 - worktrack_id: WT-20260529-084
-- title: Lexical BM25/FTS 检索实现
+- title: Query understanding 与 Lexical BM25/FTS 检索实现
 - milestone_id: MS-10
 - node_type: feature
 - status: planned
 - priority: 2
 - contract_path: TBD
 - branch: worktrack/wt-20260529-084-lexical-bm25-fts-search
+- planning_notes: Query understanding should produce rawQuery, normalizedQuery, lexicalQuery, embeddingQuery, mustTerms, and domainEntities; lexical implementation must retain explainable hit evidence.
 
 ### WT-20260529-085
 
@@ -1007,39 +1012,43 @@
 - priority: 3
 - contract_path: TBD
 - branch: worktrack/wt-20260529-085-embedding-pgvector-index
+- planning_notes: EmbeddingProviderConfig is separate from AiProviderConfig; vectors are only comparable inside the same active SearchIndexProfile and dimensions mismatch must fail closed.
 
 ### WT-20260529-086
 
 - worktrack_id: WT-20260529-086
-- title: Hybrid fusion 排序与 score evidence
+- title: RRF Hybrid fusion、reranker seam 与 score evidence
 - milestone_id: MS-10
 - node_type: feature
 - status: planned
 - priority: 4
 - contract_path: TBD
 - branch: worktrack/wt-20260529-086-hybrid-fusion-score-evidence
+- planning_notes: Use RRF-style rank fusion for lexical/vector results; do not raw-score add BM25 and vector similarity; reserve optional reranker seam without requiring third-party reranking in MS-10.
 
 ### WT-20260529-087
 
 - worktrack_id: WT-20260529-087
-- title: 权限过滤与上下文扩展
+- title: 权限过滤、Context Window Builder 与 citation 聚合
 - milestone_id: MS-10
 - node_type: feature
 - status: planned
 - priority: 5
 - contract_path: TBD
 - branch: worktrack/wt-20260529-087-retrieval-filter-context-expansion
+- planning_notes: Context Window Builder should merge adjacent chunks, dedupe overlap, group by citation/source, cap context size, preserve provenance, and never bypass enabled/archived/source/snippet filters.
 
 ### WT-20260529-088
 
 - worktrack_id: WT-20260529-088
-- title: Hybrid Retrieval 回归测试
+- title: Hybrid Retrieval evaluation harness 与回归测试
 - milestone_id: MS-10
 - node_type: test
 - status: planned
 - priority: 6
 - contract_path: TBD
 - branch: worktrack/wt-20260529-088-hybrid-retrieval-regression
+- planning_notes: Regression must cover lexical-only, vector-only, fusion, forbidden sources, filter reasons, context caps, citation traceability, embedding provider failure, and profile status/dimension mismatch.
 
 ## MS-11: AI 草稿 Hybrid Context 接入与文档追平
 
@@ -1057,13 +1066,14 @@
 ### WT-20260529-090
 
 - worktrack_id: WT-20260529-090
-- title: Citation UI 与检索证据展示追平
+- title: Citation UI、检索证据与 Admin Debug 展示追平
 - milestone_id: MS-11
 - node_type: feature
 - status: planned
 - priority: 2
 - contract_path: TBD
 - branch: worktrack/wt-20260529-090-citation-ui-search-evidence
+- planning_notes: Debug view should expose lexical hits, vector hits, fused hits, filtered reasons, final context, score breakdown, and citation grouping without leaking secrets or unauthorized knowledge content.
 
 ### WT-20260529-091
 
@@ -1075,6 +1085,7 @@
 - priority: 3
 - contract_path: TBD
 - branch: worktrack/wt-20260529-091-chinese-business-e2e-validation
+- planning_notes: Manual and automated evidence should include Chinese query, selected knowledge bases, citations, debug evidence inspection, AI draft generation, and ticket form handoff.
 
 ### WT-20260529-092
 
