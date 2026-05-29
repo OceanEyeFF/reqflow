@@ -70,6 +70,24 @@ describe("parseKnowledgeSourceVersion", () => {
     expect(snippet.section).toBe("A");
   });
 
+  it("skips unsupported generated zip sidecars while parsing importable documents", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const version = await seedKnowledgeVersion(admin.id, "zip", "docs-codewiki.zip");
+    mocks.readPrivateKnowledgeFile.mockResolvedValue(
+      createStoredZip([
+        { name: "docs-codewiki/", content: "" },
+        { name: "docs-codewiki/overview.md", content: "# Overview\n\nUseful overview content for import." },
+        { name: "docs-codewiki/index.html", content: "<html>sidecar</html>" },
+      ])
+    );
+
+    await parseKnowledgeSourceVersion(version.id);
+    const snippets = await prisma.knowledgeSnippet.findMany({ where: { versionId: version.id } });
+
+    expect(snippets).toHaveLength(1);
+    expect(snippets[0]).toMatchObject({ sourcePath: "docs-codewiki/overview.md", section: "Overview" });
+  });
+
   it("parses normal deflated zip entries with inner paths", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     const version = await seedKnowledgeVersion(admin.id, "zip", "docs.zip");

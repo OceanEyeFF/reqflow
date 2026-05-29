@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { deflateRawSync } from "node:zlib";
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 import { KnowledgeUploadValidationError, validateKnowledgeUpload, validateZipEntries } from "./upload-validation";
 
 describe("validateKnowledgeUpload", () => {
@@ -36,6 +38,26 @@ describe("validateZipEntries", () => {
     expect(validateZipEntries(createCentralDirectoryZip([{ name: "docs/guide.md", content: "hello" }]))).toBe(1);
   });
 
+  it("ignores generated docs-codewiki sidecars while counting importable documents", () => {
+    expect(
+      validateZipEntries(
+        createStoredZip([
+          { name: "docs-codewiki/", content: "" },
+          { name: "docs-codewiki/overview.md", content: "# Overview" },
+          { name: "docs-codewiki/index.html", content: "<html></html>" },
+          { name: "docs-codewiki/metadata.json", content: "{}" },
+        ])
+      )
+    ).toBe(2);
+  });
+
+  it("accepts real docs-codewiki sample zips when present", () => {
+    const samplePath = path.join(process.cwd(), "..", "..", "docs-codewiki_business-product.zip");
+    if (!existsSync(samplePath)) return;
+
+    expect(validateZipEntries(readFileSync(samplePath))).toBeGreaterThan(0);
+  });
+
   it("rejects path traversal entries", () => {
     expect(() => validateZipEntries(createStoredZip([{ name: "../secret.md", content: "bad" }]))).toThrow(
       KnowledgeUploadValidationError
@@ -45,6 +67,12 @@ describe("validateZipEntries", () => {
   it("rejects nested archives", () => {
     expect(() => validateZipEntries(createStoredZip([{ name: "docs/archive.zip", content: "bad" }]))).toThrow(
       KnowledgeUploadValidationError
+    );
+  });
+
+  it("rejects zips that have no importable documents", () => {
+    expect(() => validateZipEntries(createStoredZip([{ name: "docs/index.html", content: "<html></html>" }]))).toThrow(
+      "zip 文件没有可导入的文档"
     );
   });
 });

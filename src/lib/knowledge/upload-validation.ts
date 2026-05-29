@@ -2,6 +2,23 @@ import path from "node:path";
 import { KnowledgeZipError, readZipEntries } from "./zip-reader";
 
 const ALLOWED_DOCUMENT_EXTENSIONS = new Set([".md", ".markdown", ".txt", ".json"]);
+const DANGEROUS_ZIP_EXTENSIONS = new Set([
+  ".zip",
+  ".7z",
+  ".rar",
+  ".tar",
+  ".gz",
+  ".tgz",
+  ".exe",
+  ".dll",
+  ".bat",
+  ".cmd",
+  ".ps1",
+  ".sh",
+  ".js",
+  ".mjs",
+  ".cjs",
+]);
 const ZIP_EXTENSION = ".zip";
 const MAX_FILE_SIZE = 10 * 1024 * 1024;
 const MAX_ZIP_ENTRIES = 200;
@@ -60,6 +77,9 @@ export function validateZipEntries(buffer: Buffer): number {
     const entryName = entry.name;
     validateZipEntryName(entryName);
     if (!entryName.endsWith("/")) {
+      if (!isImportableZipDocument(entryName)) {
+        continue;
+      }
       entryCount += 1;
       totalUncompressedSize += entry.uncompressedSize || entry.content.length;
       if (entryCount > MAX_ZIP_ENTRIES) {
@@ -90,9 +110,15 @@ function validateZipEntryName(entryName: string): void {
   }
   if (normalized.endsWith("/")) return;
   const extension = path.extname(normalized).toLowerCase();
-  if (extension === ZIP_EXTENSION || !ALLOWED_DOCUMENT_EXTENSIONS.has(extension)) {
-    throw new KnowledgeUploadValidationError("zip 文件包含不支持的条目类型");
+  if (DANGEROUS_ZIP_EXTENSIONS.has(extension)) {
+    throw new KnowledgeUploadValidationError("zip 文件包含不安全条目类型");
   }
+}
+
+export function isImportableZipDocument(entryName: string): boolean {
+  const normalized = entryName.replace(/\\/g, "/");
+  if (normalized.endsWith("/")) return false;
+  return ALLOWED_DOCUMENT_EXTENSIONS.has(path.extname(normalized).toLowerCase());
 }
 
 function looksBinary(buffer: Buffer): boolean {
