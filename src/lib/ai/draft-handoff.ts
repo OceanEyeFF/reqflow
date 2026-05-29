@@ -1,4 +1,5 @@
 export const AI_DRAFT_STORAGE_KEY = "reqflow.aiDraft";
+const VALID_PRIORITIES = ["low", "medium", "high", "urgent"] as const;
 
 export type DraftCitation = {
   sourceId: string;
@@ -15,6 +16,7 @@ export type AiRequirementDraft = {
   suggestedPriority: "low" | "medium" | "high" | "urgent";
   citations: DraftCitation[];
 };
+export type AiDraftPriority = AiRequirementDraft["suggestedPriority"];
 
 export type StagedAiDraft = {
   title: string;
@@ -54,7 +56,7 @@ export function stageAiDraft(
     title: draft.title,
     description: formatDraftDescription(draft),
     type: "需求",
-    priority: draft.suggestedPriority,
+    priority: normalizeDraftPriority(draft.suggestedPriority),
     stagedAt,
   };
 
@@ -107,7 +109,7 @@ export function parseStagedAiDraft(storedDraft: string | null): StagedAiDraft | 
       title: draft.title,
       description: draft.description,
       type: draft.type,
-      priority: draft.priority,
+      priority: normalizeDraftPriority(draft.priority),
       stagedAt: draft.stagedAt,
       confirmedAt: typeof draft.confirmedAt === "string" ? draft.confirmedAt : undefined,
     };
@@ -122,4 +124,32 @@ export function clearStagedAiDraft(storage: DraftStorage): void {
 
 function numberedList(items: string[]): string {
   return items.map((item, index) => `${index + 1}. ${item}`).join("\n");
+}
+
+export function normalizeDraftPriority(priority: unknown): AiDraftPriority {
+  if (typeof priority !== "string") return "medium";
+
+  const normalized = priority.trim().toLowerCase();
+  if ((VALID_PRIORITIES as readonly string[]).includes(normalized)) {
+    return normalized as AiDraftPriority;
+  }
+
+  switch (priority.trim()) {
+    case "低":
+    case "低优先级":
+      return "low";
+    case "中":
+    case "普通":
+    case "中优先级":
+    case "普通优先级":
+      return "medium";
+    case "高":
+    case "高优先级":
+      return "high";
+    case "紧急":
+    case "紧急优先级":
+      return "urgent";
+    default:
+      return "medium";
+  }
 }

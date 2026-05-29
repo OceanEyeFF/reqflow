@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { TICKET_TYPE, TICKET_PRIORITY } from "@/types";
+import { PRIORITY_LABELS, TICKET_TYPE, TICKET_PRIORITY } from "@/types";
 import {
   AI_DRAFT_STORAGE_KEY,
   clearStagedAiDraft,
@@ -199,8 +199,8 @@ function NewTicketForm({
                   value={form.priority}
                   onChange={(e) => setForm({ ...form, priority: e.target.value })}
                 >
-                  {Object.entries(TICKET_PRIORITY).map(([key, label]) => (
-                    <option key={key} value={key}>{label}</option>
+                  {Object.entries(TICKET_PRIORITY).map(([key, value]) => (
+                    <option key={key} value={value}>{PRIORITY_LABELS[value]}</option>
                   ))}
                 </select>
               </div>

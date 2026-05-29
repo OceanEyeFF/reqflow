@@ -24,6 +24,7 @@ type ClarificationDirection = {
   label: string;
   questions: ClarificationQuestion[];
 };
+type AnswerMap = Record<string, string>;
 
 type AiDraftResponse =
   | {
@@ -68,7 +69,7 @@ export default function AiDiscussionPage() {
   const [requirement, setRequirement] = useState("");
   const [questions, setQuestions] = useState<ClarificationQuestion[]>([]);
   const [clarificationDirections, setClarificationDirections] = useState<ClarificationDirection[]>([]);
-  const [clarificationAnswer, setClarificationAnswer] = useState("");
+  const [answers, setAnswers] = useState<AnswerMap>({});
   const [draftCandidates, setDraftCandidates] = useState<AiRequirementDraft[]>([]);
   const [citations, setCitations] = useState<DraftCitation[]>([]);
   const [emptyKnowledge, setEmptyKnowledge] = useState(false);
@@ -114,7 +115,7 @@ export default function AiDiscussionPage() {
           answerLanguage,
           answers: questions.map((question) => ({
             question: question.question,
-            answer: clarificationAnswer,
+            answer: answers[question.id] ?? "",
           })),
         }),
       });
@@ -139,6 +140,7 @@ export default function AiDiscussionPage() {
       const directions = normalizeClarificationDirections(data.result.directions, data.result.questions);
       setClarificationDirections(directions);
       setQuestions(directions.flatMap((direction) => direction.questions));
+      setAnswers((current) => preserveAnswers(current, directions));
       setDraftCandidates([]);
       setStatus("clarifying");
       return;
@@ -155,7 +157,7 @@ export default function AiDiscussionPage() {
     setRequirement("");
     setQuestions([]);
     setClarificationDirections([]);
-    setClarificationAnswer("");
+    setAnswers({});
     setDraftCandidates([]);
     setCitations([]);
     setEmptyKnowledge(false);
@@ -293,9 +295,20 @@ export default function AiDiscussionPage() {
                     {direction.questions.length > 0 ? (
                       <div className="space-y-3">
                         {direction.questions.map((question) => (
-                          <div key={question.id}>
-                            <p className="font-medium">{question.question}</p>
+                          <div key={question.id} className="space-y-2">
+                            <Label htmlFor={`answer-${question.id}`} className="font-medium">
+                              {question.question}
+                            </Label>
                             <p className="mt-1 text-sm text-gray-500">{question.reason}</p>
+                            <Textarea
+                              id={`answer-${question.id}`}
+                              rows={3}
+                              value={answers[question.id] ?? ""}
+                              onChange={(event) =>
+                                setAnswers((current) => ({ ...current, [question.id]: event.target.value }))
+                              }
+                              placeholder="回答这个问题，也可以留空"
+                            />
                           </div>
                         ))}
                       </div>
@@ -304,16 +317,6 @@ export default function AiDiscussionPage() {
                     )}
                   </div>
                 ))}
-                <div className="space-y-2">
-                  <Label htmlFor="clarification-answer">统一回答区</Label>
-                  <Textarea
-                    id="clarification-answer"
-                    rows={5}
-                    value={clarificationAnswer}
-                    onChange={(event) => setClarificationAnswer(event.target.value)}
-                    placeholder="集中回答上方问题，也可以留空后直接生成草稿"
-                  />
-                </div>
                 <Button type="button" onClick={() => requestAi("draft")} disabled={!canSubmit}>
                   <Send className="h-4 w-4" />
                   {loading === "draft" ? "生成中..." : "根据回答生成草稿"}
@@ -389,6 +392,14 @@ function normalizeClarificationDirections(
       questions: directionQuestions.slice(0, 5),
     };
   });
+}
+
+function preserveAnswers(current: AnswerMap, directions: ClarificationDirection[]): AnswerMap {
+  const next: AnswerMap = {};
+  for (const question of directions.flatMap((direction) => direction.questions)) {
+    next[question.id] = current[question.id] ?? "";
+  }
+  return next;
 }
 
 function DraftPreview({
