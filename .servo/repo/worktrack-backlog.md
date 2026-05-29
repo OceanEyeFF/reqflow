@@ -4,10 +4,10 @@
 
 ## Summary
 
-- total: 61
+- total: 62
 - planned: 0
 - active: 0
-- completed: 61
+- completed: 62
 - blocked: 0
 - deferred: 0
 
@@ -770,3 +770,17 @@
 - branch: worktrack/wt-20260528-067-create-knowledge-base (merged)
 - merge_commit: ceada20bbf09f689d6ed1e8ecd8dc3a0290a988c
 - validation: lint pass; focused tests pass 2 files / 12 tests; test pass 28 files / 195 tests; build pass
+
+### WT-20260529-068
+
+- worktrack_id: WT-20260529-068
+- title: docs-codewiki zip 混入文件兼容
+- milestone_id: MS-20260528-003
+- node_type: feature
+- status: completed
+- priority: 5
+- contract_path: .servo/worktrack/WT-20260529-068/contract.md
+- gate_evidence: .servo/worktrack/WT-20260529-068/gate-evidence.md
+- branch: worktrack/wt-20260529-068-tolerate-docs-zip-extras (merged)
+- merge_commit: c877c51174377a258b16248deedbc373a3758e72
+- validation: lint pass; focused tests pass 2 files / 16 tests; test pass 28 files / 199 tests; build pass

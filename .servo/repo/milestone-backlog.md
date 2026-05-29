@@ -155,8 +155,8 @@
 - status: active
 - priority: 10
 - depends_on_milestones: [MS-20260528-001]
-- worktrack_list: [WT-20260528-064, WT-20260528-065, WT-20260528-066, WT-20260528-067]
-- worktrack_progress: WT-20260528-064=done, WT-20260528-065=done, WT-20260528-066=done, WT-20260528-067=done
+- worktrack_list: [WT-20260528-064, WT-20260528-065, WT-20260528-066, WT-20260528-067, WT-20260529-068]
+- worktrack_progress: WT-20260528-064=done, WT-20260528-065=done, WT-20260528-066=done, WT-20260528-067=done, WT-20260529-068=done
 - acceptance_handback_status: ready_for_fdch0_review
 - validation_report: docs/ms8-addendum-final-validation.md
 - created_by: fdch0
