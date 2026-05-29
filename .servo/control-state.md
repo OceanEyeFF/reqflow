@@ -24,7 +24,7 @@
 - active_milestone: MS-20260528-003
 - milestone_title: MS8 addendum
 - milestone_status: active
-- milestone_pipeline_summary: total=10 planned=1 active=1 completed=8 superseded=0; MS8 addendum worktracks 6/6 completed, awaiting fdch0 final acceptance
+- milestone_pipeline_summary: total=11 planned=2 active=1 completed=8 superseded=0; MS8 addendum worktracks 6/6 completed, awaiting fdch0 final acceptance; MS-20260529-001 registered as planned
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- RepoScope.Refresh complete for WT-20260529-069 AI clarification priority fix; MS8 addendum is ready for fdch0 final acceptance review.
+- RepoScope.Init complete for MS-20260529-001 Chinese knowledge retrieval enhancement registration; active milestone remains MS8 addendum pending fdch0 final acceptance.
 
 ## Linked Formal Documents
 
@@ -129,5 +129,6 @@
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
 - planned_next_milestone: MS-20260528-002 docs 文档更新迭代与整理
+- planned_new_milestone: MS-20260529-001 中文知识检索增强与结构化索引; registered after fdch0 approved append-milestone request; planned, not active.
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`
 - 分治策略: GitHub CI/远端验证 → 上云边界 → AI MVP 技术决策 → Deepseek discussion MVP → 管理员知识库导入
