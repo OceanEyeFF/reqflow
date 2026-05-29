@@ -192,12 +192,12 @@ reqflow/
 - depends_on_milestones: MS-20260528-001
 - scope_boundary: docs path update, organization, deduplication, and Prisma/AI/knowledge-base operator-facing documentation after MS8.
 
-### Active Milestone
+### Accepted Milestone
 
 - milestone_id: MS-20260528-003
 - title: MS8 addendum
-- status: active
-- progress: 7/7 completed; awaiting fdch0 final acceptance
+- status: completed
+- progress: 7/7 completed and accepted by fdch0
 - depends_on_milestones: MS-20260528-001
 - scope_boundary: knowledge-base edit and disable/archive lifecycle; AI clarification directions from knowledge-base, application-scenario, and concrete-detail angles; final addendum validation with Milestone DB Readiness Gate.
 - activation_status: activated on 2026-05-28 by fdch0; WT-20260528-064, WT-20260528-065, WT-20260528-066, WT-20260528-067, WT-20260529-068, WT-20260529-069, and WT-20260529-077 completed and merged.
@@ -210,6 +210,7 @@ reqflow/
 - scenario_feedback_addon: WT-20260529-068 merged at `c877c51174377a258b16248deedbc373a3758e72`; generated docs-codewiki zip archives with ordinary sidecars are accepted while dangerous entries remain blocked.
 - scenario_feedback_fix: WT-20260529-069 merged at `551df3df51948f674c39f9b4de4c89b83df9bb3b`; AI clarification questions now render per-question answer fields and AI draft priority handoff normalizes invalid/display-label priorities before ticket creation.
 - scenario_feedback_fix: WT-20260529-077 merged at `06544725d0de8c5ff62cf771fd61fb0b8d039b2c`; AI clarification card remains visible after successful empty-question provider responses and renders fallback questions for each fixed direction.
+- final_acceptance: accepted by fdch0 on 2026-05-29; new Chinese knowledge retrieval work is registered separately as MS-20260529-001.
 
 ### M4 Governance Facts
 

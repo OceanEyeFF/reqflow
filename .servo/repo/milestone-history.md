@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 8
-- completed: 8
+- total: 9
+- completed: 9
 - superseded: 0
 
 ## Completed Milestones
@@ -85,3 +85,14 @@
 - source_artifact: .servo/milestone/MS-20260528-001.md
 - completed_worktracks: WT-20260528-051, WT-20260528-052, WT-20260528-053, WT-20260528-054, WT-20260528-055, WT-20260528-056, WT-20260528-058, WT-20260528-059, WT-20260528-062
 - acceptance_note: accepted by fdch0 after WT-20260528-062 completed active-checkout Prisma/database readiness validation.
+
+### MS-20260528-003
+
+- milestone_id: MS-20260528-003
+- title: MS8 addendum
+- status: completed
+- accepted_by: fdch0
+- accepted_at: 2026-05-29
+- source_artifact: .servo/milestone/MS-20260528-003.md
+- completed_worktracks: WT-20260528-064, WT-20260528-065, WT-20260528-066, WT-20260528-067, WT-20260529-068, WT-20260529-069, WT-20260529-077
+- acceptance_note: accepted after final review; Chinese knowledge retrieval improvements were registered separately as MS-20260529-001.
