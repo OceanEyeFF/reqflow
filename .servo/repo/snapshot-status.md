@@ -236,7 +236,7 @@ reqflow/
 - status: planned
 - progress: 0/5 completed
 - depends_on_milestones: MS-20260528-003
-- scope_boundary: PostgreSQL dev/test/CI baseline, Prisma provider migration boundary, pgvector readiness, BM25/FTS/pg_search feasibility, fallback strategy, and Chinese retrieval quality gate.
+- scope_boundary: PostgreSQL dev/test/CI baseline, Prisma provider migration boundary, pgvector readiness, BM25/FTS/pg_search feasibility, fallback strategy, independent EmbeddingProviderConfig, SearchIndexProfile model/dimensions lock, and Chinese retrieval quality gate.
 - planned_worktracks: WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082
 - activation_status: planned, not active.
 
@@ -247,7 +247,7 @@ reqflow/
 - status: planned
 - progress: 0/6 completed
 - depends_on_milestones: MS-9
-- scope_boundary: knowledge search index schema, lexical BM25/FTS search, embedding + pgvector index, hybrid fusion, permission filtering, context expansion, and regression tests.
+- scope_boundary: knowledge search index schema, lexical BM25/FTS search, SearchIndexProfile-bound embedding + pgvector index, hybrid fusion, permission filtering, context expansion, and regression tests.
 - planned_worktracks: WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088
 - activation_status: planned, blocked until MS-9 completion.
 
