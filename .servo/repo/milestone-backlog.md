@@ -155,8 +155,8 @@
 - status: active
 - priority: 10
 - depends_on_milestones: [MS-20260528-001]
-- worktrack_list: [WT-20260528-064, WT-20260528-065, WT-20260528-066, WT-20260528-067, WT-20260529-068, WT-20260529-069]
-- worktrack_progress: WT-20260528-064=done, WT-20260528-065=done, WT-20260528-066=done, WT-20260528-067=done, WT-20260529-068=done, WT-20260529-069=done
+- worktrack_list: [WT-20260528-064, WT-20260528-065, WT-20260528-066, WT-20260528-067, WT-20260529-068, WT-20260529-069, WT-20260529-077]
+- worktrack_progress: WT-20260528-064=done, WT-20260528-065=done, WT-20260528-066=done, WT-20260528-067=done, WT-20260529-068=done, WT-20260529-069=done, WT-20260529-077=done
 - acceptance_handback_status: ready_for_fdch0_review
 - validation_report: docs/ms8-addendum-final-validation.md
 - created_by: fdch0
@@ -168,7 +168,7 @@
 - activated_at: 2026-05-28
 - activation_note: activated only; no worktrack initialized by request.
 - purpose: 补齐 MS8 后续的知识库生命周期管理与 AI 多方向追问能力。
-- requirement_notes: 知识库采用禁用/归档 + 可编辑；AI 追问至少覆盖知识库角度、应用场景角度和具体需求细节角度；WT-069 根据场景反馈将追问回答改为逐题填写并修复 AI 草稿优先级交接。
+- requirement_notes: 知识库采用禁用/归档 + 可编辑；AI 追问至少覆盖知识库角度、应用场景角度和具体需求细节角度；WT-069 根据场景反馈将追问回答改为逐题填写并修复 AI 草稿优先级交接；WT-077 根据场景反馈修复空追问时追问区不可见。
 
 ### MS-20260529-001
 

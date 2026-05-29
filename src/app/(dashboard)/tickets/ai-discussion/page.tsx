@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { AlertCircle, Check, HelpCircle, RefreshCcw, Send, Sparkles, Trash2 } from "lucide-react";
+import { AlertCircle, Check, CheckSquare, HelpCircle, RefreshCcw, Send, Sparkles, Square, Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -183,7 +183,15 @@ export default function AiDiscussionPage() {
     });
   }
 
+  function toggleAllKnowledgeBases() {
+    setSelectedKnowledgeBaseIds((current) =>
+      current.size === knowledgeBases.length ? new Set() : new Set(knowledgeBases.map((base) => base.id))
+    );
+  }
+
   const canSubmit = requirement.trim().length >= 8 && !loading;
+  const selectedKnowledgeBaseCount = selectedKnowledgeBaseIds.size;
+  const allKnowledgeBasesSelected = knowledgeBases.length > 0 && selectedKnowledgeBaseCount === knowledgeBases.length;
 
   return (
     <div className="space-y-6">
@@ -219,7 +227,17 @@ export default function AiDiscussionPage() {
               </div>
               {knowledgeBases.length > 0 && (
                 <div className="space-y-2">
-                  <Label>知识库范围</Label>
+                  <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                    <Label>知识库范围</Label>
+                    <button
+                      type="button"
+                      onClick={toggleAllKnowledgeBases}
+                      className="inline-flex items-center gap-2 text-sm font-medium text-gray-700"
+                    >
+                      {allKnowledgeBasesSelected ? <CheckSquare className="h-4 w-4" /> : <Square className="h-4 w-4" />}
+                      {allKnowledgeBasesSelected ? "已选择全部知识库" : `已选择 ${selectedKnowledgeBaseCount}/${knowledgeBases.length}`}
+                    </button>
+                  </div>
                   <div className="flex flex-wrap gap-2">
                     {knowledgeBases.map((base) => {
                       const selected = selectedKnowledgeBaseIds.has(base.id);
@@ -283,12 +301,21 @@ export default function AiDiscussionPage() {
             </CardContent>
           </Card>
 
-          {questions.length > 0 && (
-            <Card>
+          {status === "clarifying" && (
+            <Card className="border-gray-900">
               <CardHeader>
-                <CardTitle className="text-lg">AI 追问</CardTitle>
+                <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <HelpCircle className="h-5 w-5" />
+                    AI 追问
+                  </CardTitle>
+                  <Badge variant="outline">{questions.length} 个问题</Badge>
+                </div>
               </CardHeader>
               <CardContent className="space-y-4">
+                <div className="rounded-md border bg-gray-50 p-3 text-sm text-gray-700">
+                  已生成追问。请按问题逐项回答；也可以留空后直接生成草稿。
+                </div>
                 {clarificationDirections.map((direction) => (
                   <div key={direction.id} className="space-y-3 rounded-md border p-4">
                     <Badge variant="outline">{direction.label}</Badge>
@@ -313,7 +340,9 @@ export default function AiDiscussionPage() {
                         ))}
                       </div>
                     ) : (
-                      <p className="text-sm text-gray-500">这一方向暂无追问。</p>
+                      <p className="rounded-md bg-amber-50 p-3 text-sm text-amber-700">
+                        这一方向本次没有返回追问；你可以直接继续生成草稿。
+                      </p>
                     )}
                   </div>
                 ))}
