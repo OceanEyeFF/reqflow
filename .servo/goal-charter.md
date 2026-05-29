@@ -35,6 +35,7 @@ ReqFlow — 一个稳定、可维护的轻量级内部工单需求协作系统�
 - 本阶段明确允许引入 PostgreSQL、pgvector、BM25/FTS 相关数据库扩展或受控检索依赖；任何外部托管搜索服务、向量数据库或不可控常驻服务仍需单独确认。
 - ESLint 0 warning 为质量基线
 - AI provider 使用 Deepseek，必须通过服务端 adapter 调用；Deepseek API key、base URL、模型、超时和限流不得进入客户端
+- Embedding provider 必须独立于 AI chat provider 配置；embedding model、dimensions 和 semantic space 由 SearchIndexProfile 锁定，换模型或维度必须新建 profile 并重建 embeddings。
 - AI discussion、管理员知识库、多知识库选择、AI 语言选项、多草稿拆分、知识库编辑/归档和多方向追问已完成并验收
 - 原 MS-20260528-002 docs 整理与 MS-20260529-001 轻量中文检索增强已被 MS-9/MS-10/MS-11 supersede；docs 追平并入 MS-11 收尾。
 - MS-9 planned: PostgreSQL 与 Hybrid Search 架构基线，确认 PostgreSQL、pgvector、BM25/FTS/pg_search 可部署性、迁移边界和评测语料。
@@ -130,6 +131,7 @@ ReqFlow — 一个稳定、可维护的轻量级内部工单需求协作系统�
 - [x] 管理员知识库、多知识库选择、知识库生命周期和 AI 多方向追问已完成验收
 - [ ] PostgreSQL dev/test baseline 可复现，Prisma provider 迁移、schema migration、seed/test DB 流程和 CI DB 准备全部通过
 - [ ] pgvector readiness 通过；BM25 优先评估 `pg_search`，不可用时提供 PostgreSQL native FTS + 中文分词/归一化 fallback
+- [ ] 独立 EmbeddingProviderConfig 和 SearchIndexProfile 决策落地；同一检索 profile 内向量可比较，不同 profile 不可混排。
 - [ ] 中文业务知识检索具备固定评测语料、召回/误召回 gate、lexical/vector/fusion score evidence 和 citation traceability
 - [ ] AI draft flow 使用 hybrid retrieval 上下文，仍保持知识库 enabled/archived 过滤、选择范围、provider context 上限和人工确认边界
 - [ ] README.md 与 docs/operator 文档在 MS-11 追平 PostgreSQL、hybrid search、AI Provider、知识库导入和验收流程
@@ -148,6 +150,7 @@ ReqFlow — 一个稳定、可维护的轻量级内部工单需求协作系统�
 8. **Milestone DB Readiness Gate**: 每个 Milestone 交付给程序员最终验收前，必须针对当前 checkout 和当前 `DATABASE_URL` 执行 Prisma/数据库 readiness 检查：确认 `@prisma/client` 已安装并生成、`npx prisma validate` 通过、`npx prisma migrate status --schema prisma/schema.prisma` 显示数据库最新、当前数据库包含该 Milestone 依赖的表/字段/API schema surface；若该 Milestone 明确不涉及 Prisma/数据库，也必须在 Gate Evidence 中写明不适用理由。
 9. **PostgreSQL Extension Readiness Gate**: 涉及 hybrid search 的 Milestone 必须验证 PostgreSQL 版本、extension availability、pgvector index readiness、BM25/FTS fallback 策略、migration rollback notes 和 CI/dev/test 数据库可复现性。
 10. **Hybrid Retrieval Anti-Cheat Boundary**: 不允许用“发送全部知识给 AI”绕过检索；不允许绕过知识库 enabled/archived/source/snippet 过滤；不允许无界 provider context；不允许伪造 citation。
+11. **Embedding Profile Immutability**: Embedding semantic space is profile-scoped. Changing embedding provider model or dimensions requires creating a new SearchIndexProfile and rebuilding embeddings; existing vectors must not be silently reused across profiles.
 
 ## Notes
 
@@ -157,3 +160,4 @@ ReqFlow — 一个稳定、可维护的轻量级内部工单需求协作系统�
 - 2026-05-27: 用户确认 MS6 使用 Deepseek，并将管理员知识库上传/zip 导入拆分为 MS7
 - 2026-05-29: MS8 addendum 已由 fdch0 最终验收；随后原 MS-20260528-002 与 MS-20260529-001 被目标变更 supersede
 - 2026-05-29: fdch0 确认检索目标完全改变，旧 planned milestone 被 supersede；后续采用 MS-9/MS-10/MS-11，目标为 PostgreSQL + BM25/FTS + pgvector hybrid search。
+- 2026-05-29: fdch0 确认 embedding provider 应单独配置；首次 active SearchIndexProfile 会锁定 embedding model/dimensions/semantic space，后续换模型必须显式 reindex。

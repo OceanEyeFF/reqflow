@@ -95,5 +95,5 @@ Recommended next route:
 
 - Whether `pg_search` is deployable in the intended local/CI/cloud environment.
 - Whether PostgreSQL native FTS fallback needs Chinese parser/tokenizer support beyond normalization.
-- Which embedding model/provider should generate vectors, and whether it reuses the existing AI provider config or a separate embedding config.
+- Embedding provider is a separate config from AI chat provider. The active SearchIndexProfile locks embedding model, dimensions, and semantic space; changing model or dimensions requires a new profile and re-embedding/reindex gate.
 - Whether existing SQLite dev data needs one-time migration tooling or can be regenerated from seed/import flows for this stage.
