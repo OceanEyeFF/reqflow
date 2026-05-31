@@ -1,5 +1,11 @@
 # AI Requirement Discussion Product Flow
 
+## Historical Scope Notice
+
+This document is the MS6 product-flow contract for the initial discussion-to-ticket-draft MVP. Its manual-confirmation invariant remains current, but its exclusions for administrator knowledge-base import, PostgreSQL, pgvector, embeddings, and hybrid retrieval are historical MS6 scope boundaries.
+
+Current operator behavior includes MS7 administrator knowledge-base management, MS9/MS10 PostgreSQL hybrid retrieval, and MS11 AI draft hybrid context/citation/debug evidence. Use `docs/operator-hybrid-search-ai-draft.md` for the current operator runbook.
+
 This document defines the MS6 product flow and information architecture for the Deepseek-backed AI requirement discussion MVP. It is a pre-implementation design contract for WT-20260526-032 through WT-20260526-036.
 
 ## Scope Boundary

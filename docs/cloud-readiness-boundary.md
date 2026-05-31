@@ -49,6 +49,20 @@ Before production launch, confirm PostgreSQL operations rather than treating the
 
 Do not treat a successful local PostgreSQL container or CI service as proof that production database risk is solved.
 
+## Search And Embedding Boundary
+
+MS-9 through MS-11 have now established local/dev/test readiness for PostgreSQL native FTS fallback, pgvector, hybrid retrieval, Context Window Builder citations, and AI draft debug evidence. That does not automatically make the same deployment shape production-ready.
+
+Before cloud deployment, confirm:
+
+- the selected PostgreSQL host supports required extensions and index shapes, especially pgvector;
+- `pg_search` / BM25 is not assumed unless the target environment passes an explicit readiness gate;
+- native PostgreSQL FTS fallback remains available and validated when `pg_search` is unavailable;
+- embedding provider configuration, model, dimensions, and `SearchIndexProfile` lifecycle are operationally locked;
+- local CPU embedding sidecar deployment, if used, has an explicit image, model revision, resource limit, health check, timeout, and reindex plan.
+
+The current local CPU embedding model verdict is documented in `docs/local-embedding-docker-feasibility.md`: feasible as a sidecar service, not recommended as model weights bundled into the main Next.js app image by default.
+
 ## Upload Storage Boundary
 
 Attachments are currently written under `public/uploads/` on the application filesystem.

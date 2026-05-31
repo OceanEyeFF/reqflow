@@ -1,5 +1,11 @@
 # AI MVP Technical Brief
 
+## Historical Scope Notice
+
+This document is the MS5/MS6 AI MVP decision brief. It remains a historical design record for the first Deepseek-backed discussion MVP and manual-confirmation boundary.
+
+Current operator truth has moved on: administrator knowledge-base import, PostgreSQL provider migration, pgvector readiness, hybrid retrieval, citation provenance, admin debug evidence, and AI draft hybrid context integration are now covered by MS7, MS9, MS10, and MS11. Use `docs/operator-hybrid-search-ai-draft.md` for the current AI draft and retrieval runbook.
+
 This document records the technical decision boundary for the first ReqFlow AI MVP. It is a pre-implementation brief and has been updated after the programmer selected Deepseek as the AI provider.
 
 Original MS5 provider research checked official OpenAI documentation on 2026-05-27:
