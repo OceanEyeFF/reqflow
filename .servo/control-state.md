@@ -16,7 +16,7 @@
 
 - active_worktrack: WT-20260529-087
 - worktrack_title: 权限过滤、Context Window Builder 与 citation 聚合
-- worktrack_status: initialized
+- worktrack_status: gate-passed
 - target_milestone_id: MS-10
 
 ## Active Milestone
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260529-087 initialized; dispatch context window builder implementation next.
+- WT-20260529-087 completed and ready for repo refresh; initialize WT-20260529-088 next.
 
 ## Linked Formal Documents
 
@@ -115,7 +115,8 @@
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
 - latest_completed_ms10_worktrack: WT-20260529-085 completed and validated at 02c7ea2bdfb48ed06be424a30c1785b897a0978b; gate evidence `.servo/worktrack/WT-20260529-085/gate-evidence.md`.
 - latest_completed_ms10_worktrack: WT-20260529-086 completed and validated at 7374e990a30fc3290e1ca47eb32e290bc5ff9e09; gate evidence `.servo/worktrack/WT-20260529-086/gate-evidence.md`.
-- next_worktrack_candidate: WT-20260529-087 initialized; dispatch implementation next.
+- latest_completed_ms10_worktrack: WT-20260529-087 completed and validated at a9ddffde65c12b20e778caaaf8f5531c13114912; gate evidence `.servo/worktrack/WT-20260529-087/gate-evidence.md`.
+- next_worktrack_candidate: WT-20260529-088 ready for initialization after WT-087 repo refresh.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.

@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 96
-- planned: 11
-- active: 1
-- completed: 74
+- planned: 10
+- active: 0
+- completed: 75
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1108,12 +1108,14 @@
 - title: 权限过滤、Context Window Builder 与 citation 聚合
 - milestone_id: MS-10
 - node_type: feature
-- status: active
+- status: completed
 - priority: 5
 - contract_path: .servo/worktrack/WT-20260529-087/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260529-087/plan-task-queue.md
 - gate_evidence: .servo/worktrack/WT-20260529-087/gate-evidence.md
 - branch: worktrack/wt-20260529-087-retrieval-filter-context-expansion
+- merge_commit: a9ddffde65c12b20e778caaaf8f5531c13114912
+- validation: focused context builder tests pass 1 file / 25 tests; postgres readiness pass; lint pass; test pass 30 files / 234 tests; build pass
 - planning_notes: Context Window Builder should merge adjacent chunks, dedupe overlap, group by citation/source, cap context size, preserve provenance, and never bypass enabled/archived/source/snippet filters.
 
 ### WT-20260529-088

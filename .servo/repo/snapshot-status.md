@@ -253,18 +253,19 @@ reqflow/
 - milestone_id: MS-10
 - title: 知识库索引与 Hybrid Retrieval 实现
 - status: active
-- progress: 4/6 completed
+- progress: 5/6 completed
 - depends_on_milestones: MS-9
 - scope_boundary: knowledge search index schema, lexical BM25/FTS search, SearchIndexProfile-bound embedding + pgvector index, hybrid fusion, permission filtering, context expansion, and regression tests.
-- completed_worktracks: WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086
-- planned_worktracks: WT-20260529-087, WT-20260529-088
+- completed_worktracks: WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087
+- planned_worktracks: WT-20260529-088
 - activation_status: activated by fdch0 on 2026-05-31 17:16:10 +08:00; MS-9 dependency is completed and accepted.
 - latest_evidence: WT-20260529-083 added SearchIndexProfile, EmbeddingProviderConfig, snippet metadata, and profile-scoped embedding schema; validation passed Prisma generate/validate, migration deploy/status, postgres readiness, focused tests, lint, full test, and build.
 - latest_evidence: WT-20260529-084 added deterministic query understanding and metadata-aware lexical retrieval fallback with debug evidence; validation passed focused retrieval tests, postgres readiness, lint, full test, and build.
 - latest_evidence: WT-20260529-085 added pgvector embedding storage/index migration, deterministic embedding provider, active-profile fail-closed embedding generation, profile-scoped vector candidate retrieval, and debug evidence; validation passed migration deploy/status, search extensions, postgres readiness, focused embedding/vector tests, lint, full test, and build.
 - latest_evidence: WT-20260529-086 added RRF hybrid retrieval, rank-based score evidence, vector failure degradation, empty-query guard, and no-op/injected reranker seam with candidate sanitization; validation passed focused hybrid tests, postgres readiness, search extensions, lint, full test, and build.
-- active_or_next_worktrack: WT-20260529-087
-- current_worktrack_status: active
+- latest_evidence: WT-20260529-087 added Context Window Builder with adjacent chunk expansion, strict filter recheck, context caps, selected-hit priority, and citation aggregation; validation passed focused context tests, postgres readiness, lint, full test, and build.
+- active_or_next_worktrack: WT-20260529-088
+- current_worktrack_status: planned
 
 ### Planned Milestone
 
