@@ -6,8 +6,8 @@
 
 - total: 96
 - planned: 9
-- active: 1
-- completed: 75
+- active: 0
+- completed: 76
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1124,12 +1124,14 @@
 - title: Hybrid Retrieval evaluation harness 与回归测试
 - milestone_id: MS-10
 - node_type: test
-- status: active
+- status: completed
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260529-088/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260529-088/plan-task-queue.md
 - gate_evidence: .servo/worktrack/WT-20260529-088/gate-evidence.md
 - branch: worktrack/wt-20260529-088-hybrid-retrieval-regression
+- merge_commit: pending closeout merge
+- validation: retrieval corpus gate pass; MS-10 result fixture gate pass 5 results with lexical-only/vector-only/hybrid-fusion/context-window coverage, provider failure, dimensions mismatch, snippet evidence alignment, and context cap checks; postgres readiness pass; lint pass; test pass 30 files / 234 tests; build pass
 - planning_notes: Regression must cover lexical-only, vector-only, fusion, forbidden sources, filter reasons, context caps, citation traceability, embedding provider failure, and profile status/dimension mismatch.
 
 ## MS-11: AI 草稿 Hybrid Context 接入与文档追平
