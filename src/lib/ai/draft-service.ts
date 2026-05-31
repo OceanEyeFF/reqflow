@@ -17,19 +17,24 @@ export async function generateRequirementDraft(
     question: redactAiText(answer.question),
     answer: redactAiText(answer.answer),
   }));
-  const knowledge = await assembleKnowledgeContext(safeRequirement, {
+  const knowledgeContext = await assembleKnowledgeContext(safeRequirement, {
     knowledgeBaseIds: request.knowledgeBaseIds ?? [],
   });
 
-  return provider.generate({
+  const result = await provider.generate({
     mode: request.mode,
     requirement: safeRequirement,
     answers: safeAnswers,
     knowledgeBaseIds: request.knowledgeBaseIds ?? [],
     answerLanguage: request.answerLanguage ?? "follow_input",
     maxDrafts: parseMaxDrafts(),
-    knowledge,
+    knowledge: knowledgeContext.knowledge,
   });
+
+  return {
+    ...result,
+    searchEvidence: knowledgeContext.searchEvidence,
+  };
 }
 
 export function parseMaxDrafts(env: NodeJS.ProcessEnv = process.env): number {

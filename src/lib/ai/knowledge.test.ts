@@ -6,7 +6,7 @@ const mocks = vi.hoisted(() => ({
     contextText: "",
     citations: [],
     citationGroups: [],
-    debugEvidence: {},
+    debugEvidence: createDebugEvidence(),
   })),
 }));
 
@@ -54,12 +54,12 @@ describe("assembleKnowledgeContext", () => {
         },
       ],
       citationGroups: [],
-      debugEvidence: {},
+      debugEvidence: createDebugEvidence({ knowledgeBaseIds: ["base-a"] }),
     });
 
     const context = await assembleKnowledgeContext("需要审批流程", { knowledgeBaseIds: ["base-a"] });
 
-    expect(context).toEqual([
+    expect(context.knowledge).toEqual([
       {
         sourceId: "persisted-a",
         sourceTitle: "Selected base guide",
@@ -69,26 +69,87 @@ describe("assembleKnowledgeContext", () => {
         freshness: "test",
       },
     ]);
+    expect(context.searchEvidence?.filters.knowledgeBaseIds).toEqual(["base-a"]);
   });
 
   it("returns safe snippets without test passwords", async () => {
     const context = await assembleKnowledgeContext("需要一个新 ticket 创建需求，包含 priority 和 draft");
 
-    expect(context.length).toBeGreaterThan(0);
-    expect(context.length).toBeLessThanOrEqual(5);
-    expect(context.map((citation) => citation.sourceId)).toContain("rf-ai-mvp-boundary");
-    expect(context.map((citation) => citation.sourceId)).toContain("rf-ai-discussion-flow");
-    expect(context.map((citation) => citation.sourceId)).toContain("rf-ticket-types");
+    expect(context.knowledge.length).toBeGreaterThan(0);
+    expect(context.knowledge.length).toBeLessThanOrEqual(5);
+    expect(context.knowledge.map((citation) => citation.sourceId)).toContain("rf-ai-mvp-boundary");
+    expect(context.knowledge.map((citation) => citation.sourceId)).toContain("rf-ai-discussion-flow");
+    expect(context.knowledge.map((citation) => citation.sourceId)).toContain("rf-ticket-types");
     expect(JSON.stringify(context)).not.toMatch(/admin123|manager123|user123/);
   });
 
   it("maps server citations to draft citations", async () => {
     const context = await assembleKnowledgeContext("api test auth validation");
 
-    expect(toDraftCitations(context)[0]).toEqual({
-      sourceId: context[0].sourceId,
-      sourceTitle: context[0].sourceTitle,
-      snippet: context[0].snippet,
+    expect(toDraftCitations(context.knowledge)[0]).toEqual({
+      sourceId: context.knowledge[0].sourceId,
+      sourceTitle: context.knowledge[0].sourceTitle,
+      path: context.knowledge[0].path,
+      section: context.knowledge[0].section,
+      snippet: context.knowledge[0].snippet,
+      freshness: context.knowledge[0].freshness,
     });
   });
 });
+
+function createDebugEvidence(options: { knowledgeBaseIds?: string[] } = {}) {
+  return {
+    query: {
+      rawQuery: "需要审批流程",
+      normalizedQuery: "需要审批流程",
+      lexicalQuery: "需要 审批 流程",
+      embeddingQuery: "需要审批流程",
+      mustTerms: ["审批", "流程"],
+      domainEntities: ["审批流程"],
+    },
+    mode: "hybrid-rrf" as const,
+    fusion: {
+      algorithm: "reciprocal-rank-fusion" as const,
+      k: 60,
+      rawScoreAddition: false,
+    },
+    vectorLane: { status: "failed" as const, reason: "active-profile-missing", evidence: {} },
+    reranker: {
+      name: "none",
+      ran: false,
+      acceptedCandidates: 0,
+      rejectedCandidates: 0,
+    },
+    lexicalEvidence: {
+      query: {
+        rawQuery: "需要审批流程",
+        normalizedQuery: "需要审批流程",
+        lexicalQuery: "需要 审批 流程",
+        embeddingQuery: "需要审批流程",
+        mustTerms: ["审批", "流程"],
+        domainEntities: ["审批流程"],
+      },
+      engine: "postgres-native-fts-fallback" as const,
+      filters: {
+        knowledgeBaseIds: options.knowledgeBaseIds ?? [],
+        sourceStatuses: ["ready", "enabled"],
+        enabledOnly: true as const,
+        versionStatuses: ["ready"],
+      },
+      candidatesScanned: 0,
+      candidatesReturned: 0,
+      cap: 3,
+      lexicalHits: [],
+    },
+    vectorHits: [],
+    fusedHits: [],
+    contextWindow: {
+      maxContextChars: 1600,
+      adjacentChunks: 1,
+      included: [],
+      dedupedSnippetIds: [],
+      cappedSnippetIds: [],
+      skippedSnippetIds: [],
+    },
+  };
+}

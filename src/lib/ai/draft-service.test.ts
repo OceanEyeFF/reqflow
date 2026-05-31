@@ -7,7 +7,7 @@ const mocks = vi.hoisted(() => ({
     contextText: "",
     citations: [],
     citationGroups: [],
-    debugEvidence: {},
+    debugEvidence: createDebugEvidence(),
   })),
 }));
 
@@ -110,6 +110,7 @@ describe("generateRequirementDraft", () => {
     );
     expect(JSON.stringify(vi.mocked(provider.generate).mock.calls)).not.toContain("real-secret");
     expect(result.kind).toBe("clarification");
+    expect(result.searchEvidence?.vectorLane).toEqual({ status: "failed", reason: "active-profile-missing" });
   });
 
   it("passes selected knowledge base ids to the provider request", async () => {
@@ -147,5 +148,63 @@ describe("generateRequirementDraft", () => {
         maxDrafts: DEFAULT_MAX_DRAFTS,
       })
     );
+    expect(vi.mocked(provider.generate).mock.calls[0][0]).not.toHaveProperty("searchEvidence");
   });
 });
+
+function createDebugEvidence() {
+  return {
+    query: {
+      rawQuery: "需要审批流程",
+      normalizedQuery: "需要审批流程",
+      lexicalQuery: "需要 审批 流程",
+      embeddingQuery: "需要审批流程",
+      mustTerms: ["审批", "流程"],
+      domainEntities: ["审批流程"],
+    },
+    mode: "hybrid-rrf" as const,
+    fusion: {
+      algorithm: "reciprocal-rank-fusion" as const,
+      k: 60,
+      rawScoreAddition: false,
+    },
+    vectorLane: { status: "failed" as const, reason: "active-profile-missing", evidence: { provider: "secret-provider" } },
+    reranker: {
+      name: "none",
+      ran: false,
+      acceptedCandidates: 0,
+      rejectedCandidates: 0,
+    },
+    lexicalEvidence: {
+      query: {
+        rawQuery: "需要审批流程",
+        normalizedQuery: "需要审批流程",
+        lexicalQuery: "需要 审批 流程",
+        embeddingQuery: "需要审批流程",
+        mustTerms: ["审批", "流程"],
+        domainEntities: ["审批流程"],
+      },
+      engine: "postgres-native-fts-fallback" as const,
+      filters: {
+        knowledgeBaseIds: [],
+        sourceStatuses: ["ready", "enabled"],
+        enabledOnly: true as const,
+        versionStatuses: ["ready"],
+      },
+      candidatesScanned: 0,
+      candidatesReturned: 0,
+      cap: 3,
+      lexicalHits: [],
+    },
+    vectorHits: [],
+    fusedHits: [],
+    contextWindow: {
+      maxContextChars: 1600,
+      adjacentChunks: 1,
+      included: [],
+      dedupedSnippetIds: [],
+      cappedSnippetIds: [],
+      skippedSnippetIds: [],
+    },
+  };
+}

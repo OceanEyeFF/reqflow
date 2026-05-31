@@ -12,7 +12,96 @@ export type KnowledgeCitation = {
 export type DraftCitation = {
   sourceId: string;
   sourceTitle: string;
+  path?: string;
+  section?: string;
   snippet: string;
+  freshness?: string;
+};
+
+export type AiCitationGroup = {
+  sourceId: string;
+  sourceTitle: string;
+  path: string;
+  section?: string;
+  snippetCount: number;
+  snippets: string[];
+};
+
+export type AiSearchEvidence = {
+  query: {
+    normalizedQuery: string;
+    lexicalQuery: string;
+    embeddingQuery: string;
+    mustTerms: string[];
+    domainEntities: string[];
+  };
+  filters: {
+    knowledgeBaseIds: string[];
+    sourceStatuses: string[];
+    enabledOnly: boolean;
+    versionStatuses: string[];
+  };
+  lexical: {
+    candidatesScanned: number;
+    candidatesReturned: number;
+    cap: number;
+    hits: Array<{
+      sourceId: string;
+      sourceTitle: string;
+      path: string;
+      section?: string;
+      rank: number;
+      score: number;
+      matchedTerms: string[];
+      mustTermsMatched: string[];
+      lexicalTextSource: "metadata" | "content";
+    }>;
+  };
+  vectorLane:
+    | { status: "ready"; candidatesReturned: number }
+    | { status: "failed"; reason: string };
+  vector: {
+    hits: Array<{
+      sourceId: string;
+      sourceTitle: string;
+      path: string;
+      section?: string;
+      rank: number;
+      score: number;
+    }>;
+  };
+  fusion: {
+    algorithm: "reciprocal-rank-fusion";
+    k: number;
+    hits: Array<{
+      sourceId: string;
+      sourceTitle: string;
+      path: string;
+      section?: string;
+      fusedRank: number;
+      fusedScore: number;
+      lexicalRank?: number;
+      vectorRank?: number;
+    }>;
+  };
+  contextWindow: {
+    maxContextChars: number;
+    adjacentChunks: number;
+    includedCount: number;
+    dedupedCount: number;
+    cappedCount: number;
+    skippedCount: number;
+    included: Array<{
+      sourceId: string;
+      sourceTitle: string;
+      path: string;
+      section?: string;
+      chunkIndex: number;
+      reason: "selected-hit" | "adjacent";
+      chars: number;
+    }>;
+  };
+  citationGroups: AiCitationGroup[];
 };
 
 export type AiRequirementDraft = {
@@ -51,18 +140,21 @@ export type AiDraftResult =
       result: AiClarificationResult;
       citations: DraftCitation[];
       emptyKnowledge: boolean;
+      searchEvidence?: AiSearchEvidence;
     }
   | {
       kind: "draft";
       result: AiRequirementDraft;
       citations: DraftCitation[];
       emptyKnowledge: boolean;
+      searchEvidence?: AiSearchEvidence;
     }
   | {
       kind: "drafts";
       result: { drafts: AiRequirementDraft[] };
       citations: DraftCitation[];
       emptyKnowledge: boolean;
+      searchEvidence?: AiSearchEvidence;
     };
 
 export type DraftMode = "clarify" | "draft";

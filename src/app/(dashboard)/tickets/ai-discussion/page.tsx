@@ -11,7 +11,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PRIORITY_LABELS } from "@/types";
 import { stageAiDraft, type AiRequirementDraft, type DraftCitation } from "@/lib/ai/draft-handoff";
-import type { ClarificationDirectionId, DraftAnswerLanguage } from "@/lib/ai/types";
+import type { AiSearchEvidence, ClarificationDirectionId, DraftAnswerLanguage } from "@/lib/ai/types";
 
 type ClarificationQuestion = {
   id: string;
@@ -32,18 +32,21 @@ type AiDraftResponse =
       result: { questions: ClarificationQuestion[]; directions?: ClarificationDirection[]; canDraftNow: boolean };
       citations: DraftCitation[];
       emptyKnowledge: boolean;
+      searchEvidence?: AiSearchEvidence;
     }
   | {
       kind: "draft";
       result: AiRequirementDraft;
       citations: DraftCitation[];
       emptyKnowledge: boolean;
+      searchEvidence?: AiSearchEvidence;
     }
   | {
       kind: "drafts";
       result: { drafts: AiRequirementDraft[] };
       citations: DraftCitation[];
       emptyKnowledge: boolean;
+      searchEvidence?: AiSearchEvidence;
     };
 
 type PageState = "empty" | "clarifying" | "draft_ready" | "accepted" | "failed";
@@ -72,6 +75,7 @@ export default function AiDiscussionPage() {
   const [answers, setAnswers] = useState<AnswerMap>({});
   const [draftCandidates, setDraftCandidates] = useState<AiRequirementDraft[]>([]);
   const [citations, setCitations] = useState<DraftCitation[]>([]);
+  const [searchEvidence, setSearchEvidence] = useState<AiSearchEvidence | null>(null);
   const [emptyKnowledge, setEmptyKnowledge] = useState(false);
   const [status, setStatus] = useState<PageState>("empty");
   const [loading, setLoading] = useState<"clarify" | "draft" | null>(null);
@@ -135,6 +139,7 @@ export default function AiDiscussionPage() {
 
   function applyAiResponse(data: AiDraftResponse) {
     setCitations(data.citations || []);
+    setSearchEvidence(data.searchEvidence ?? null);
     setEmptyKnowledge(data.emptyKnowledge);
     if (data.kind === "clarification") {
       const directions = normalizeClarificationDirections(data.result.directions, data.result.questions);
@@ -160,6 +165,7 @@ export default function AiDiscussionPage() {
     setAnswers({});
     setDraftCandidates([]);
     setCitations([]);
+    setSearchEvidence(null);
     setEmptyKnowledge(false);
     setStatus("empty");
     setError("");
@@ -396,12 +402,19 @@ export default function AiDiscussionPage() {
                       <p className="text-sm font-medium">{citation.sourceTitle}</p>
                       <Badge variant="outline">{citation.sourceId}</Badge>
                     </div>
+                    <div className="mb-2 space-y-1 text-xs text-gray-500">
+                      {citation.path && <p className="break-all">{citation.path}</p>}
+                      {citation.section && <p>章节：{citation.section}</p>}
+                      {citation.freshness && <p>{citation.freshness}</p>}
+                    </div>
                     <p className="text-sm text-gray-600">{citation.snippet}</p>
                   </div>
                 ))
               )}
             </CardContent>
           </Card>
+
+          <SearchEvidencePanel evidence={searchEvidence} />
         </aside>
       </div>
     </div>
@@ -522,5 +535,69 @@ function DraftPreview({
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function SearchEvidencePanel({ evidence }: { evidence: AiSearchEvidence | null }) {
+  if (!evidence) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">检索证据</CardTitle>
+        </CardHeader>
+        <CardContent className="text-sm text-gray-500">生成后会显示 lexical、vector、fusion 和上下文窗口证据。</CardContent>
+      </Card>
+    );
+  }
+
+  const vectorLabel =
+    evidence.vectorLane.status === "ready"
+      ? `ready / ${evidence.vectorLane.candidatesReturned}`
+      : `failed / ${evidence.vectorLane.reason}`;
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-lg">检索证据</CardTitle>
+      </CardHeader>
+      <CardContent className="space-y-4 text-sm">
+        <div className="grid grid-cols-2 gap-2">
+          <EvidenceMetric label="lexical" value={`${evidence.lexical.candidatesReturned}/${evidence.lexical.candidatesScanned}`} />
+          <EvidenceMetric label="vector" value={vectorLabel} />
+          <EvidenceMetric label="fusion" value={`${evidence.fusion.hits.length}`} />
+          <EvidenceMetric label="context" value={`${evidence.contextWindow.includedCount}`} />
+        </div>
+        <div className="space-y-1 text-xs text-gray-500">
+          <p>query：{evidence.query.lexicalQuery || evidence.query.normalizedQuery}</p>
+          <p>scope：{evidence.filters.knowledgeBaseIds.length ? evidence.filters.knowledgeBaseIds.join(", ") : "all enabled bases"}</p>
+          <p>
+            window：included {evidence.contextWindow.includedCount}, deduped {evidence.contextWindow.dedupedCount}, capped{" "}
+            {evidence.contextWindow.cappedCount}, skipped {evidence.contextWindow.skippedCount}
+          </p>
+        </div>
+        {evidence.citationGroups.length > 0 && (
+          <div className="space-y-2">
+            <p className="text-xs font-medium text-gray-500">Citation groups</p>
+            {evidence.citationGroups.slice(0, 3).map((group) => (
+              <div key={`${group.sourceId}-${group.path}-${group.section ?? ""}`} className="rounded-md border p-2 text-xs text-gray-600">
+                <p className="font-medium text-gray-800">{group.sourceTitle}</p>
+                <p className="break-all">{group.path}</p>
+                {group.section && <p>章节：{group.section}</p>}
+                <p>{group.snippetCount} snippets</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
+function EvidenceMetric({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-md border bg-gray-50 p-2">
+      <p className="text-xs text-gray-500">{label}</p>
+      <p className="mt-1 break-words text-sm font-medium text-gray-800">{value}</p>
+    </div>
   );
 }
