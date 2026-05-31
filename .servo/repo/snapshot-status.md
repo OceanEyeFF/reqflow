@@ -239,7 +239,7 @@ reqflow/
 - scope_boundary: PostgreSQL dev/test/CI baseline, Prisma provider migration boundary, pgvector readiness, BM25/FTS/pg_search feasibility, fallback strategy, independent EmbeddingProviderConfig, SearchIndexProfile model/dimensions lock, and Chinese retrieval quality gate.
 - completed_worktracks: WT-20260529-078
 - planned_worktracks: WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082
-- activation_status: active on 2026-05-31 by fdch0 approval; WT-20260529-078 completed at efb6966; waiting for fdch0 before continuing to WT-20260529-079.
+- activation_status: active on 2026-05-31 by fdch0 approval; WT-20260529-078 completed at 796a21c; waiting for fdch0 before continuing to WT-20260529-079.
 
 ### Planned Milestone
 

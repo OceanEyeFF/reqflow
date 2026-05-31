@@ -929,7 +929,7 @@
 - contract_path: .servo/worktrack/WT-20260529-078/contract.md
 - gate_evidence: .servo/worktrack/WT-20260529-078/gate-evidence.md
 - branch: worktrack/wt-20260529-078-hybrid-search-architecture (merged)
-- merge_commit: efb6966
+- merge_commit: 796a21c
 - validation: git diff --check pass; targeted architecture consistency search pass; docs/control-only scope verified
 - planning_notes: Must define query understanding, RRF fusion, provider abstractions, reranker seam, debug evidence contract, SearchIndexProfile invariants, and pgvector filtered-search risk boundary.
 
