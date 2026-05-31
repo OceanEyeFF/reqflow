@@ -1,0 +1,114 @@
+{
+  "results": [
+    {
+      "caseId": "cn-procurement-approval-flow",
+      "retrievalMode": "hybrid-fusion",
+      "returnedSourceIds": ["src-procurement-policy"],
+      "returnedSnippetIds": ["snip-procurement-materials", "snip-procurement-review"],
+      "matchedTerms": ["采购", "审批", "材料", "复核"],
+      "citationTraceabilityPassed": true,
+      "debugEvidence": {
+        "rawScoreAddition": false,
+        "filterReasons": ["selected knowledge base: kb-procurement"],
+        "vectorLane": { "status": "ready" },
+        "fusedHits": [
+          { "snippetId": "snip-procurement-materials", "fusedRank": 1, "rrf": { "lexicalContribution": 0.01639, "vectorContribution": 0.01613 } },
+          { "snippetId": "snip-procurement-review", "fusedRank": 2, "rrf": { "lexicalContribution": 0.01613, "vectorContribution": 0.01587 } }
+        ],
+        "contextWindow": {
+          "maxContextChars": 1600,
+          "contextChars": 420,
+          "includedSnippetIds": ["snip-procurement-materials", "snip-procurement-review"]
+        }
+      }
+    },
+    {
+      "caseId": "cn-contract-change-filtered-kb",
+      "retrievalMode": "hybrid-fusion",
+      "returnedSourceIds": ["src-contract-change-rules"],
+      "returnedSnippetIds": ["snip-contract-threshold", "snip-contract-approval-path"],
+      "matchedTerms": ["合同", "变更", "十万", "审批"],
+      "citationTraceabilityPassed": true,
+      "debugEvidence": {
+        "rawScoreAddition": false,
+        "filterReasons": ["selected knowledge base: kb-contract", "forbidden source excluded: src-procurement-policy"],
+        "vectorLane": { "status": "ready" },
+        "fusedHits": [
+          { "snippetId": "snip-contract-threshold", "fusedRank": 1, "rrf": { "lexicalContribution": 0.01639, "vectorContribution": 0.01613 } },
+          { "snippetId": "snip-contract-approval-path", "fusedRank": 2, "rrf": { "lexicalContribution": 0.01613, "vectorContribution": 0.01587 } }
+        ],
+        "contextWindow": {
+          "maxContextChars": 1600,
+          "contextChars": 500,
+          "includedSnippetIds": ["snip-contract-threshold", "snip-contract-approval-path"]
+        }
+      }
+    },
+    {
+      "caseId": "cn-employee-onboarding-semantic",
+      "retrievalMode": "vector-only",
+      "returnedSourceIds": ["src-onboarding-checklist", "src-it-access"],
+      "returnedSnippetIds": ["snip-onboarding-account", "snip-onboarding-device", "snip-it-permission-owner"],
+      "matchedTerms": ["入职", "账号", "设备", "权限"],
+      "citationTraceabilityPassed": true,
+      "debugEvidence": {
+        "rawScoreAddition": false,
+        "filterReasons": ["selected knowledge bases: kb-hr,kb-it"],
+        "vectorLane": { "status": "ready" },
+        "fusedHits": [
+          { "snippetId": "snip-onboarding-account", "fusedRank": 1, "rrf": { "lexicalContribution": 0.01639, "vectorContribution": 0.01613 } },
+          { "snippetId": "snip-onboarding-device", "fusedRank": 2, "rrf": { "lexicalContribution": 0.01613, "vectorContribution": 0.01587 } },
+          { "snippetId": "snip-it-permission-owner", "fusedRank": 3, "rrf": { "lexicalContribution": 0.01587, "vectorContribution": 0.01562 } }
+        ],
+        "contextWindow": {
+          "maxContextChars": 1600,
+          "contextChars": 900,
+          "includedSnippetIds": ["snip-onboarding-account", "snip-onboarding-device", "snip-it-permission-owner"]
+        }
+      }
+    },
+    {
+      "caseId": "cn-disabled-source-exclusion",
+      "retrievalMode": "lexical-only",
+      "returnedSourceIds": ["src-expense-current-policy"],
+      "returnedSnippetIds": ["snip-expense-current-limit"],
+      "matchedTerms": ["报销", "规则", "归档", "引用"],
+      "citationTraceabilityPassed": true,
+      "debugEvidence": {
+        "rawScoreAddition": false,
+        "filterReasons": ["disabled source excluded: src-expense-archived-policy", "forbidden source excluded: src-disabled-archive"],
+        "vectorLane": { "status": "failed", "reason": "embedding-provider-failure" },
+        "fusedHits": [
+          { "snippetId": "snip-expense-current-limit", "fusedRank": 1, "rrf": { "lexicalContribution": 0.01639, "vectorContribution": 0 } }
+        ],
+        "contextWindow": {
+          "maxContextChars": 1600,
+          "contextChars": 300,
+          "includedSnippetIds": ["snip-expense-current-limit"]
+        }
+      }
+    },
+    {
+      "caseId": "cn-production-incident-urgent",
+      "retrievalMode": "context-window",
+      "returnedSourceIds": ["src-incident-response"],
+      "returnedSnippetIds": ["snip-incident-payment-severity", "snip-incident-notification"],
+      "matchedTerms": ["线上故障", "付款", "升级", "通知"],
+      "citationTraceabilityPassed": true,
+      "debugEvidence": {
+        "rawScoreAddition": false,
+        "filterReasons": ["selected knowledge base: kb-operations", "context cap applied"],
+        "vectorLane": { "status": "failed", "reason": "dimensions-mismatch" },
+        "fusedHits": [
+          { "snippetId": "snip-incident-payment-severity", "fusedRank": 1, "rrf": { "lexicalContribution": 0.01639, "vectorContribution": 0 } },
+          { "snippetId": "snip-incident-notification", "fusedRank": 2, "rrf": { "lexicalContribution": 0.01613, "vectorContribution": 0 } }
+        ],
+        "contextWindow": {
+          "maxContextChars": 1600,
+          "contextChars": 780,
+          "includedSnippetIds": ["snip-incident-payment-severity", "snip-incident-notification"]
+        }
+      }
+    }
+  ]
+}

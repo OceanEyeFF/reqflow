@@ -55,7 +55,28 @@ Expected result shape:
       "returnedSourceIds": ["src-procurement-policy"],
       "returnedSnippetIds": ["snip-procurement-materials"],
       "matchedTerms": ["采购", "审批", "材料", "复核"],
-      "citationTraceabilityPassed": true
+      "citationTraceabilityPassed": true,
+      "retrievalMode": "hybrid-fusion",
+      "debugEvidence": {
+        "rawScoreAddition": false,
+        "filterReasons": ["selected knowledge base: kb-procurement"],
+        "vectorLane": { "status": "ready" },
+        "fusedHits": [
+          {
+            "snippetId": "snip-procurement-materials",
+            "fusedRank": 1,
+            "rrf": {
+              "lexicalContribution": 0.01639,
+              "vectorContribution": 0.01613
+            }
+          }
+        ],
+        "contextWindow": {
+          "maxContextChars": 1600,
+          "contextChars": 420,
+          "includedSnippetIds": ["snip-procurement-materials"]
+        }
+      }
     }
   ]
 }
@@ -71,6 +92,10 @@ Expected result shape:
 - All `mustContainTerms` must appear in `matchedTerms`.
 - Returned sources must not include any `forbiddenSourceIds`.
 - Citation traceability must pass when required.
+- `retrievalMode` must be one of `lexical-only`, `vector-only`, `hybrid-fusion`, or `context-window`.
+- The canonical result set must include coverage for all four retrieval modes.
+- Hybrid evidence must prove RRF-style fused hits, vector lane readiness/failure, no raw score addition, filter reasons, context cap compliance, and alignment between returned top-5 snippets, fused hit evidence, and context membership.
+- Provider failure and profile dimensions mismatch must both appear in canonical vector-lane failure evidence.
 - A passing AI draft is not a substitute for passing retrieval results.
 - Whole-knowledge-base prompt stuffing is not a valid retrieval result.
 
@@ -86,3 +111,9 @@ MS-10 should make lexical-only, vector-only, and fusion result generation emit t
 - citation mappings.
 
 WT-082 intentionally does not implement those retrieval paths.
+
+WT-088 adds the canonical MS-10 regression fixture:
+
+```text
+docs/retrieval-evaluation-ms10-results.json
+```

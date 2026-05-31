@@ -63,6 +63,8 @@ function validateResults(cases, results) {
   if (!Array.isArray(results.results)) {
     throw new Error("Results file must contain a results array.");
   }
+  const observedModes = new Set();
+  const observedVectorFailureReasons = new Set();
   const expectedCaseIds = new Set(cases.map((testCase) => testCase.id));
   const byId = new Map();
 
@@ -123,8 +125,101 @@ function validateResults(cases, results) {
     if (testCase.citationTraceability.required && result.citationTraceabilityPassed !== true) {
       throw new Error(`${testCase.id} failed citation traceability.`);
     }
+    validateHybridEvidence(testCase, result);
+    observedModes.add(result.retrievalMode);
+    if (result.debugEvidence.vectorLane.status !== "ready") {
+      observedVectorFailureReasons.add(result.debugEvidence.vectorLane.reason);
+    }
+  }
+  for (const mode of ["lexical-only", "vector-only", "hybrid-fusion", "context-window"]) {
+    if (!observedModes.has(mode)) {
+      throw new Error(`Results file must include ${mode} coverage.`);
+    }
+  }
+  if (![...observedVectorFailureReasons].some((reason) => reason.includes("provider"))) {
+    throw new Error("Results file must include embedding provider failure coverage.");
+  }
+  if (![...observedVectorFailureReasons].some((reason) => reason.includes("dimensions-mismatch"))) {
+    throw new Error("Results file must include vector profile dimensions-mismatch coverage.");
   }
   console.log(`Retrieval evaluation result gate passed: ${results.results.length} results validated.`);
+}
+
+function validateHybridEvidence(testCase, result) {
+  const requiredModes = ["lexical-only", "vector-only", "hybrid-fusion", "context-window"];
+  const returnedSnippetIds = new Set(result.returnedSnippetIds);
+  requireNonEmptyString(result.retrievalMode, `${testCase.id}.retrievalMode`);
+  if (!requiredModes.includes(result.retrievalMode)) {
+    throw new Error(`${testCase.id}.retrievalMode must be one of: ${requiredModes.join(", ")}`);
+  }
+  const evidence = result.debugEvidence;
+  if (!evidence || typeof evidence !== "object") {
+    throw new Error(`${testCase.id}.debugEvidence is required.`);
+  }
+  requireStringArray(evidence.filterReasons, `${testCase.id}.debugEvidence.filterReasons`, 1);
+  if (typeof evidence.rawScoreAddition !== "boolean" || evidence.rawScoreAddition !== false) {
+    throw new Error(`${testCase.id}.debugEvidence.rawScoreAddition must be false.`);
+  }
+  if (!Array.isArray(evidence.fusedHits) || evidence.fusedHits.length === 0 || evidence.fusedHits.length > 5) {
+    throw new Error(`${testCase.id}.debugEvidence.fusedHits must contain 1-5 hits.`);
+  }
+  const fusedSnippetIds = new Set();
+  for (const hit of evidence.fusedHits) {
+    requireNonEmptyString(hit.snippetId, `${testCase.id}.debugEvidence.fusedHits.snippetId`);
+    if (!returnedSnippetIds.has(hit.snippetId)) {
+      throw new Error(`${testCase.id}.debugEvidence.fusedHits contains snippet outside returnedSnippetIds: ${hit.snippetId}`);
+    }
+    fusedSnippetIds.add(hit.snippetId);
+    validateThreshold(hit.fusedRank, `${testCase.id}.debugEvidence.fusedHits.fusedRank`, 1, 5);
+    if (!hit.rrf || typeof hit.rrf.lexicalContribution !== "number" || typeof hit.rrf.vectorContribution !== "number") {
+      throw new Error(`${testCase.id}.debugEvidence.fusedHits must include RRF contribution evidence.`);
+    }
+  }
+  for (const snippetId of returnedSnippetIds) {
+    if (!fusedSnippetIds.has(snippetId)) {
+      throw new Error(`${testCase.id}.debugEvidence.fusedHits is missing returned snippet: ${snippetId}`);
+    }
+  }
+  if (!evidence.vectorLane || !["ready", "failed", "skipped"].includes(evidence.vectorLane.status)) {
+    throw new Error(`${testCase.id}.debugEvidence.vectorLane.status is invalid.`);
+  }
+  if (evidence.vectorLane.status !== "ready") {
+    requireNonEmptyString(evidence.vectorLane.reason, `${testCase.id}.debugEvidence.vectorLane.reason`);
+  }
+  if (!evidence.contextWindow || typeof evidence.contextWindow !== "object") {
+    throw new Error(`${testCase.id}.debugEvidence.contextWindow is required.`);
+  }
+  if (!Number.isInteger(evidence.contextWindow.maxContextChars) || evidence.contextWindow.maxContextChars < 1) {
+    throw new Error(`${testCase.id}.debugEvidence.contextWindow.maxContextChars must be positive.`);
+  }
+  if (
+    typeof evidence.contextWindow.contextChars !== "number" ||
+    evidence.contextWindow.contextChars < 0 ||
+    evidence.contextWindow.contextChars > evidence.contextWindow.maxContextChars
+  ) {
+    throw new Error(`${testCase.id}.debugEvidence.contextWindow.contextChars must be between 0 and maxContextChars.`);
+  }
+  requireStringArray(evidence.contextWindow.includedSnippetIds, `${testCase.id}.debugEvidence.contextWindow.includedSnippetIds`, 1);
+  const includedSnippetIds = new Set(evidence.contextWindow.includedSnippetIds);
+  for (const snippetId of returnedSnippetIds) {
+    if (!includedSnippetIds.has(snippetId)) {
+      throw new Error(`${testCase.id}.debugEvidence.contextWindow is missing returned snippet: ${snippetId}`);
+    }
+  }
+
+  for (const tag of testCase.tags) {
+    if (tag === "semantic" || tag === "fusion") {
+      if (evidence.vectorLane.status !== "ready") throw new Error(`${testCase.id} requires ready vector lane evidence.`);
+    }
+    if (tag === "forbidden-source" || tag === "lifecycle-filter" || tag === "selected-scope") {
+      if (!evidence.filterReasons.some((reason) => reason.includes("forbidden") || reason.includes("selected") || reason.includes("disabled"))) {
+        throw new Error(`${testCase.id} requires explicit filter reason evidence.`);
+      }
+    }
+    if (tag === "context-builder") {
+      if (result.retrievalMode !== "context-window") throw new Error(`${testCase.id} requires context-window retrievalMode.`);
+    }
+  }
 }
 
 function validateThreshold(value, label, min, max) {
