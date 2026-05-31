@@ -1,5 +1,9 @@
 import type { DraftCitation, KnowledgeCitation } from "./types";
-import { selectKnowledgeSnippets } from "@/lib/knowledge/retrieval";
+import { buildHybridContextWindow } from "@/lib/knowledge/retrieval";
+
+const MAX_AI_DRAFT_CONTEXT_CITATIONS = 5;
+const AI_DRAFT_CONTEXT_MAX_CHARS = 1600;
+const AI_DRAFT_CONTEXT_ADJACENT_CHUNKS = 1;
 
 type KnowledgeSource = {
   sourceId: string;
@@ -98,9 +102,15 @@ export async function assembleKnowledgeContext(
   options: AssembleKnowledgeOptions = {}
 ): Promise<KnowledgeCitation[]> {
   const knowledgeBaseIds = options.knowledgeBaseIds ?? [];
-  const persisted = await selectKnowledgeSnippets(requirement, { knowledgeBaseIds });
+  const persisted = (
+    await buildHybridContextWindow(requirement, {
+      knowledgeBaseIds,
+      maxContextChars: AI_DRAFT_CONTEXT_MAX_CHARS,
+      adjacentChunks: AI_DRAFT_CONTEXT_ADJACENT_CHUNKS,
+    })
+  ).citations;
   if (knowledgeBaseIds.length > 0) {
-    return persisted.slice(0, 5);
+    return persisted.slice(0, MAX_AI_DRAFT_CONTEXT_CITATIONS);
   }
 
   const loweredRequirement = requirement.toLowerCase();
@@ -117,7 +127,7 @@ export async function assembleKnowledgeContext(
     .sort((a, b) => b.score - a.score)
     .map(({ source }) => source);
 
-  return [...persisted, ...selected.map(citationFromSource), ...scored.map(citationFromSource)].slice(0, 5);
+  return [...persisted, ...selected.map(citationFromSource), ...scored.map(citationFromSource)].slice(0, MAX_AI_DRAFT_CONTEXT_CITATIONS);
 }
 
 export function toDraftCitations(citations: KnowledgeCitation[]): DraftCitation[] {

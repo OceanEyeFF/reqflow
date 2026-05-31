@@ -21,10 +21,10 @@
 
 ## Active Milestone
 
-- active_milestone: none
-- milestone_title: N/A
-- milestone_status: none
-- milestone_pipeline_summary: total=14 planned=1 active=0 completed=11 superseded=2; MS-10 accepted and MS-11 remains planned with six worktracks including WT-20260531-100
+- active_milestone: MS-11
+- milestone_title: AI 草稿 Hybrid Context 接入与文档追平
+- milestone_status: active
+- milestone_pipeline_summary: total=14 planned=0 active=1 completed=11 superseded=2; MS-11 active with 1/6 worktracks completed and WT-20260529-090 next
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- MS-10 accepted by fdch0. WT-20260531-100 local CPU embedding sidecar PoC was added to the MS-11 planned backlog; next action is RepoScope observe/what-next for MS-11 activation readiness.
+- WT-20260529-089 completed. Next action is RepoScope observe/what-next for MS-11 WT-20260529-090 citation UI/search evidence scope.
 
 ## Linked Formal Documents
 
@@ -47,9 +47,9 @@
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: MS-10 execution cycle completed and accepted by fdch0.
-- approval_scope: no active milestone; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
-- approval_persistence: no active execution-cycle approval after MS-10 final acceptance.
+- reason: fdch0 explicitly approved opening MS-11 and advancing WT-20260529-089; WT-089 is now completed.
+- approval_scope: MS-11 active milestone worktracks; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
+- approval_persistence: active for MS-11 execution cycle until interrupted or milestone final acceptance handback.
 
 ## Continuation Authority
 
@@ -98,11 +98,11 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 0
+- autonomy_budget_remaining: 29
 - autonomous_worktracks_opened: 3
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-31
-- autonomy_budget_notes: MS-10 执行周期授权已在最终验收后关闭；本周期自动追加并完成 WT-20260531-097、WT-20260531-099、WT-20260531-098，并追加 MS-11 计划项 WT-20260531-100。危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时仍必须 handback。
+- autonomy_budget_notes: MS-11 已由 fdch0 明确批准开启，并先推进 WT-20260529-089；危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。Milestone final acceptance 必须由 fdch0 决定。
 
 ## Notes
 
@@ -132,13 +132,13 @@
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
-- active_next_milestone: none; MS-11 AI 草稿 Hybrid Context 接入与文档追平 is planned and ready for activation after fdch0 decision.
-- active_milestone_clarification_status: confirmed; fdch0 activated MS-10 on 2026-05-31 and approved 30 continuous Worktrack actions.
+- active_next_milestone: MS-11 AI 草稿 Hybrid Context 接入与文档追平.
+- active_milestone_clarification_status: confirmed; fdch0 activated MS-11 on 2026-05-31 and approved advancing WT-20260529-089 first.
 - routed_new_requests: PostgreSQL hybrid search replaces previous docs cleanup and lightweight Chinese retrieval plans.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
 - superseded_milestones: MS-20260528-002 docs 文档更新迭代与整理; MS-20260529-001 中文知识检索增强与结构化索引.
-- current_active_milestone: none
+- current_active_milestone: MS-11
 - latest_completed_milestone: MS-10 知识库索引与 Hybrid Retrieval 实现 accepted by fdch0 on 2026-05-31.
 - planned_followup_milestones: MS-11 AI 草稿 Hybrid Context 接入与文档追平, including WT-20260531-100 local CPU embedding sidecar PoC
 - embedding_profile_decision: Embedding provider is separate from AI chat provider; active SearchIndexProfile locks model/dimensions/semantic space and any model/dimension change requires explicit reindex.

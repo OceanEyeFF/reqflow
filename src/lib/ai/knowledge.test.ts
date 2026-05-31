@@ -2,11 +2,16 @@ import { describe, expect, it, vi } from "vitest";
 import { assembleKnowledgeContext, knowledgeSources, toDraftCitations } from "./knowledge";
 
 const mocks = vi.hoisted(() => ({
-  selectKnowledgeSnippets: vi.fn(async () => []),
+  buildHybridContextWindow: vi.fn(async () => ({
+    contextText: "",
+    citations: [],
+    citationGroups: [],
+    debugEvidence: {},
+  })),
 }));
 
 vi.mock("@/lib/knowledge/retrieval", () => ({
-  selectKnowledgeSnippets: mocks.selectKnowledgeSnippets,
+  buildHybridContextWindow: mocks.buildHybridContextWindow,
 }));
 
 describe("knowledgeSources", () => {
@@ -25,23 +30,32 @@ describe("knowledgeSources", () => {
 });
 
 describe("assembleKnowledgeContext", () => {
-  it("passes selected knowledge base ids to persisted retrieval", async () => {
+  it("passes selected knowledge base ids and context caps to hybrid retrieval", async () => {
     await assembleKnowledgeContext("需要审批流程", { knowledgeBaseIds: ["base-a"] });
 
-    expect(mocks.selectKnowledgeSnippets).toHaveBeenCalledWith("需要审批流程", { knowledgeBaseIds: ["base-a"] });
+    expect(mocks.buildHybridContextWindow).toHaveBeenCalledWith("需要审批流程", {
+      knowledgeBaseIds: ["base-a"],
+      maxContextChars: 1600,
+      adjacentChunks: 1,
+    });
   });
 
   it("does not append built-in snippets when a knowledge base scope is selected", async () => {
-    mocks.selectKnowledgeSnippets.mockResolvedValueOnce([
-      {
-        sourceId: "persisted-a",
-        sourceTitle: "Selected base guide",
-        path: "docs/a.md",
-        section: "Guide",
-        snippet: "selected knowledge only",
-        freshness: "test",
-      },
-    ]);
+    mocks.buildHybridContextWindow.mockResolvedValueOnce({
+      contextText: "selected knowledge only",
+      citations: [
+        {
+          sourceId: "persisted-a",
+          sourceTitle: "Selected base guide",
+          path: "docs/a.md",
+          section: "Guide",
+          snippet: "selected knowledge only",
+          freshness: "test",
+        },
+      ],
+      citationGroups: [],
+      debugEvidence: {},
+    });
 
     const context = await assembleKnowledgeContext("需要审批流程", { knowledgeBaseIds: ["base-a"] });
 

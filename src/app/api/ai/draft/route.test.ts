@@ -27,7 +27,12 @@ vi.mock("@/lib/ai/provider-config", () => ({
 }));
 
 vi.mock("@/lib/knowledge/retrieval", () => ({
-  selectKnowledgeSnippets: vi.fn(async () => []),
+  buildHybridContextWindow: vi.fn(async () => ({
+    contextText: "",
+    citations: [],
+    citationGroups: [],
+    debugEvidence: {},
+  })),
 }));
 
 type Route = typeof import("./route");

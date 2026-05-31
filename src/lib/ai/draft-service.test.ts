@@ -3,11 +3,16 @@ import { DEFAULT_MAX_DRAFTS, generateRequirementDraft, parseDraftRequest, parseM
 import type { DraftProvider } from "./types";
 
 const mocks = vi.hoisted(() => ({
-  selectKnowledgeSnippets: vi.fn(async () => []),
+  buildHybridContextWindow: vi.fn(async () => ({
+    contextText: "",
+    citations: [],
+    citationGroups: [],
+    debugEvidence: {},
+  })),
 }));
 
 vi.mock("@/lib/knowledge/retrieval", () => ({
-  selectKnowledgeSnippets: mocks.selectKnowledgeSnippets,
+  buildHybridContextWindow: mocks.buildHybridContextWindow,
 }));
 
 describe("parseDraftRequest", () => {
@@ -130,8 +135,10 @@ describe("generateRequirementDraft", () => {
       provider
     );
 
-    expect(mocks.selectKnowledgeSnippets).toHaveBeenCalledWith("需要一个能追踪审批状态的需求", {
+    expect(mocks.buildHybridContextWindow).toHaveBeenCalledWith("需要一个能追踪审批状态的需求", {
       knowledgeBaseIds: ["base-a", "base-b"],
+      maxContextChars: 1600,
+      adjacentChunks: 1,
     });
     expect(provider.generate).toHaveBeenCalledWith(
       expect.objectContaining({

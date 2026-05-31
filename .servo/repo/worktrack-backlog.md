@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 100
-- planned: 10
+- planned: 9
 - active: 0
-- completed: 79
+- completed: 80
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1187,10 +1187,15 @@
 - title: AI draft hybrid context 接入
 - milestone_id: MS-11
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 1
-- contract_path: TBD
+- contract_path: .servo/worktrack/WT-20260529-089/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260529-089/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260529-089/gate-evidence.md
 - branch: worktrack/wt-20260529-089-ai-draft-hybrid-context
+- merge_commit: pending closeout merge
+- validation: focused AI draft tests pass 3 files / 19 tests; retrieval tests pass 1 file / 26 tests; lint pass; build pass; full test pass 30 files / 235 tests; PostgreSQL readiness pass with local reqflow_dev URL; diff check pass
+- planning_notes: Connect AI draft knowledge assembly to MS-10 hybrid retrieval and Context Window Builder with selected knowledge-base filtering and provider context caps; citation UI/debug surface remains WT-090.
 
 ### WT-20260529-090
 

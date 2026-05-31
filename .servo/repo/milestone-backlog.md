@@ -5,8 +5,8 @@
 ## Pipeline Summary
 
 - total: 14
-- planned: 1
-- active: 0
+- planned: 0
+- active: 1
 - completed: 11
 - superseded: 2
 
@@ -258,7 +258,7 @@
 - milestone_id: MS-11
 - title: AI 草稿 Hybrid Context 接入与文档追平
 - milestone_kind: goal-driven
-- status: planned
+- status: active
 - priority: 14
 - depends_on_milestones: [MS-10]
 - worktrack_list: [WT-20260529-089, WT-20260529-090, WT-20260529-091, WT-20260529-092, WT-20260529-093, WT-20260531-100]
@@ -267,4 +267,6 @@
 - updated: 2026-05-31
 - updated_by: harness-kernel
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
+- activated_by: fdch0
+- activated_at: 2026-05-31 22:19:42 +08:00
 - purpose: 接入 AI draft hybrid context，完成中文业务端到端验收、PostgreSQL/extension readiness 和 docs/operator 文档追平。
