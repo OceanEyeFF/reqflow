@@ -6,6 +6,8 @@ import { retrieveVectorCandidates, type EmbeddingProvider, type VectorRetrievalR
 const MAX_PERSISTED_SNIPPETS = 3;
 const MAX_CANDIDATES = 100;
 const RRF_K = 60;
+const DEFAULT_CONTEXT_MAX_CHARS = 1600;
+const DEFAULT_CONTEXT_ADJACENT_CHUNKS = 1;
 
 export type KnowledgeRetrievalOptions = {
   knowledgeBaseIds?: string[];
@@ -60,6 +62,11 @@ export type HybridRetrievalOptions = KnowledgeRetrievalOptions & {
   reranker?: HybridReranker;
 };
 
+export type ContextWindowOptions = HybridRetrievalOptions & {
+  maxContextChars?: number;
+  adjacentChunks?: number;
+};
+
 export type HybridReranker = {
   name: string;
   rerank(input: HybridFusedHitEvidence[]): Promise<HybridFusedHitEvidence[]>;
@@ -109,6 +116,42 @@ export type HybridRetrievalDebugEvidence = {
 export type HybridRetrievalResult = {
   citations: KnowledgeCitation[];
   debugEvidence: HybridRetrievalDebugEvidence;
+};
+
+export type ContextSnippetEvidence = {
+  snippetId: string;
+  sourceId: string;
+  sourceTitle: string;
+  path: string;
+  section?: string;
+  chunkIndex: number;
+  reason: "selected-hit" | "adjacent";
+  chars: number;
+};
+
+export type CitationGroup = {
+  sourceId: string;
+  sourceTitle: string;
+  path: string;
+  section?: string;
+  snippetIds: string[];
+  snippets: string[];
+};
+
+export type ContextWindowResult = {
+  contextText: string;
+  citations: KnowledgeCitation[];
+  citationGroups: CitationGroup[];
+  debugEvidence: HybridRetrievalDebugEvidence & {
+    contextWindow: {
+      maxContextChars: number;
+      adjacentChunks: number;
+      included: ContextSnippetEvidence[];
+      dedupedSnippetIds: string[];
+      cappedSnippetIds: string[];
+      skippedSnippetIds: string[];
+    };
+  };
 };
 
 type HybridVectorLaneResult =
@@ -241,6 +284,80 @@ export async function retrieveHybridKnowledgeSnippets(
       lexicalEvidence: lexical.debugEvidence,
       vectorHits: vector.vectorHits,
       fusedHits,
+    },
+  };
+}
+
+export async function buildHybridContextWindow(
+  requirement: string,
+  options: ContextWindowOptions = {}
+): Promise<ContextWindowResult> {
+  const hybrid = await retrieveHybridKnowledgeSnippets(requirement, options);
+  const maxContextChars = Math.max(1, options.maxContextChars ?? DEFAULT_CONTEXT_MAX_CHARS);
+  const adjacentChunks = Math.max(0, options.adjacentChunks ?? DEFAULT_CONTEXT_ADJACENT_CHUNKS);
+  const fusedSnippetIds = hybrid.debugEvidence.fusedHits.map((hit) => hit.snippetId);
+  const snippets = await loadContextSnippets(fusedSnippetIds, {
+    knowledgeBaseIds: options.knowledgeBaseIds,
+    adjacentChunks,
+  });
+  const selectedIds = new Set(fusedSnippetIds);
+  const selectedOrder = new Map(fusedSnippetIds.map((id, index) => [id, index]));
+  const included: ContextSnippetEvidence[] = [];
+  const dedupedSnippetIds: string[] = [];
+  const cappedSnippetIds: string[] = [];
+  const skippedSnippetIds: string[] = [];
+  const seen = new Set<string>();
+  let usedChars = 0;
+  const contextParts: string[] = [];
+
+  for (const snippet of orderContextSnippets(snippets, selectedIds, selectedOrder)) {
+    if (seen.has(snippet.id)) {
+      dedupedSnippetIds.push(snippet.id);
+      continue;
+    }
+    seen.add(snippet.id);
+    const reason = selectedIds.has(snippet.id) ? "selected-hit" : "adjacent";
+    const separatorChars = contextParts.length > 0 ? 2 : 0;
+    const nextChars = snippet.content.length + separatorChars;
+    if (usedChars + nextChars > maxContextChars) {
+      cappedSnippetIds.push(snippet.id);
+      continue;
+    }
+    usedChars += nextChars;
+    included.push({
+      snippetId: snippet.id,
+      sourceId: `kb-${snippet.sourceId}`,
+      sourceTitle: snippet.source.title,
+      path: snippet.sourcePath,
+      section: snippet.section ?? undefined,
+      chunkIndex: snippet.chunkIndex,
+      reason,
+      chars: nextChars,
+    });
+    contextParts.push(snippet.content);
+  }
+
+  const includedIds = new Set(included.map((item) => item.snippetId));
+  for (const snippet of orderContextSnippets(snippets, selectedIds, selectedOrder)) {
+    if (!includedIds.has(snippet.id) && !cappedSnippetIds.includes(snippet.id) && !dedupedSnippetIds.includes(snippet.id)) {
+      skippedSnippetIds.push(snippet.id);
+    }
+  }
+
+  return {
+    contextText: contextParts.join("\n\n"),
+    citations: citationsFromContextSnippets(snippets.filter((snippet) => includedIds.has(snippet.id))),
+    citationGroups: groupContextCitations(snippets.filter((snippet) => includedIds.has(snippet.id))),
+    debugEvidence: {
+      ...hybrid.debugEvidence,
+      contextWindow: {
+        maxContextChars,
+        adjacentChunks,
+        included,
+        dedupedSnippetIds,
+        cappedSnippetIds,
+        skippedSnippetIds,
+      },
     },
   };
 }
@@ -474,6 +591,133 @@ async function citationsForFusedHits(fusedHits: HybridFusedHitEvidence[]): Promi
       snippet: snippet.content,
       freshness: `imported ${snippet.version.createdAt.toISOString()} v${snippet.version.version}`,
     }));
+}
+
+type ContextSnippet = Prisma.KnowledgeSnippetGetPayload<{
+  include: { source: true; version: true };
+}>;
+
+async function loadContextSnippets(
+  selectedSnippetIds: string[],
+  options: { knowledgeBaseIds?: string[]; adjacentChunks: number }
+): Promise<ContextSnippet[]> {
+  if (selectedSnippetIds.length === 0) return [];
+  const knowledgeBaseIds = normalizeKnowledgeBaseIds(options.knowledgeBaseIds);
+  const selected = await prisma.knowledgeSnippet.findMany({
+    where: {
+      id: { in: selectedSnippetIds },
+      ...contextSnippetWhere(knowledgeBaseIds),
+    },
+    include: { source: true, version: true },
+  });
+  const adjacentFilters = selected.flatMap((snippet) => {
+    const start = Math.max(0, snippet.chunkIndex - options.adjacentChunks);
+    const end = snippet.chunkIndex + options.adjacentChunks;
+    return {
+      versionId: snippet.versionId,
+      sourceId: snippet.sourceId,
+      sourcePath: snippet.sourcePath,
+      chunkIndex: { gte: start, lte: end },
+    };
+  });
+  if (adjacentFilters.length === 0) return [];
+  const snippets = await prisma.knowledgeSnippet.findMany({
+    where: {
+      OR: adjacentFilters,
+      ...contextSnippetWhere(knowledgeBaseIds),
+    },
+    include: { source: true, version: true },
+  });
+  return snippets.sort((a, b) => {
+    const sourceCompare = a.sourceId.localeCompare(b.sourceId) || a.sourcePath.localeCompare(b.sourcePath);
+    return sourceCompare || a.chunkIndex - b.chunkIndex;
+  });
+}
+
+function orderContextSnippets(
+  snippets: ContextSnippet[],
+  selectedIds: Set<string>,
+  selectedOrder: Map<string, number>
+): ContextSnippet[] {
+  return [...snippets].sort((a, b) => {
+    const aSelected = selectedIds.has(a.id);
+    const bSelected = selectedIds.has(b.id);
+    const aOrder = contextGroupOrder(a, snippets, selectedIds, selectedOrder);
+    const bOrder = contextGroupOrder(b, snippets, selectedIds, selectedOrder);
+    if (aOrder !== bOrder) return aOrder - bOrder;
+    if (aSelected !== bSelected) return aSelected ? -1 : 1;
+    const sourceCompare = a.sourceId.localeCompare(b.sourceId) || a.sourcePath.localeCompare(b.sourcePath);
+    return sourceCompare || a.chunkIndex - b.chunkIndex;
+  });
+}
+
+function contextGroupOrder(
+  snippet: ContextSnippet,
+  snippets: ContextSnippet[],
+  selectedIds: Set<string>,
+  selectedOrder: Map<string, number>
+): number {
+  const directOrder = selectedOrder.get(snippet.id);
+  if (directOrder !== undefined) return directOrder;
+  const nearestSelectedId = findNearestSelectedId(snippet, snippets, selectedIds);
+  return nearestSelectedId ? selectedOrder.get(nearestSelectedId) ?? Number.MAX_SAFE_INTEGER : Number.MAX_SAFE_INTEGER;
+}
+
+function findNearestSelectedId(snippet: ContextSnippet, snippets: ContextSnippet[], selectedIds: Set<string>): string | undefined {
+  return snippets
+    .filter(
+      (candidate) =>
+        selectedIds.has(candidate.id) &&
+        candidate.sourceId === snippet.sourceId &&
+        candidate.versionId === snippet.versionId &&
+        candidate.sourcePath === snippet.sourcePath
+    )
+    .sort((a, b) => Math.abs(a.chunkIndex - snippet.chunkIndex) - Math.abs(b.chunkIndex - snippet.chunkIndex))[0]?.id;
+}
+
+function contextSnippetWhere(knowledgeBaseIds: string[]): Prisma.KnowledgeSnippetWhereInput {
+  return {
+    enabled: true,
+    source: {
+      enabled: true,
+      status: { in: ["ready", "enabled"] },
+      knowledgeBaseId: knowledgeBaseIds.length > 0 ? { in: knowledgeBaseIds } : undefined,
+      knowledgeBase: { enabled: true },
+    },
+    version: { status: "ready" },
+  };
+}
+
+function citationsFromContextSnippets(snippets: ContextSnippet[]): KnowledgeCitation[] {
+  return snippets.map((snippet) => ({
+    sourceId: `kb-${snippet.sourceId}`,
+    sourceTitle: snippet.source.title,
+    path: snippet.sourcePath,
+    section: snippet.section ?? undefined,
+    snippet: snippet.content,
+    freshness: `imported ${snippet.version.createdAt.toISOString()} v${snippet.version.version}`,
+  }));
+}
+
+function groupContextCitations(snippets: ContextSnippet[]): CitationGroup[] {
+  const groups = new Map<string, CitationGroup>();
+  for (const snippet of [...snippets].sort((a, b) => a.sourceId.localeCompare(b.sourceId) || a.sourcePath.localeCompare(b.sourcePath) || a.chunkIndex - b.chunkIndex)) {
+    const key = [snippet.sourceId, snippet.sourcePath, snippet.section ?? ""].join("::");
+    const group =
+      groups.get(key) ??
+      {
+        sourceId: `kb-${snippet.sourceId}`,
+        sourceTitle: snippet.source.title,
+        path: snippet.sourcePath,
+        section: snippet.section ?? undefined,
+        snippetIds: [],
+        snippets: [],
+      };
+    group.snippetIds.push(snippet.id);
+    group.snippets.push(snippet.content);
+    groups.set(key, group);
+  }
+  return Array.from(groups.values());
 }
 
 function extractDomainEntities(normalizedQuery: string, terms: string[]): string[] {

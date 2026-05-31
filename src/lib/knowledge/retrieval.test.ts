@@ -21,6 +21,7 @@ let clearKnowledgeSources: typeof import("./cleanup").clearKnowledgeSources;
 let selectKnowledgeSnippets: typeof import("./retrieval").selectKnowledgeSnippets;
 let retrieveKnowledgeSnippets: typeof import("./retrieval").retrieveKnowledgeSnippets;
 let retrieveHybridKnowledgeSnippets: typeof import("./retrieval").retrieveHybridKnowledgeSnippets;
+let buildHybridContextWindow: typeof import("./retrieval").buildHybridContextWindow;
 let understandKnowledgeQuery: typeof import("./retrieval").understandKnowledgeQuery;
 let tokenize: typeof import("./retrieval").tokenize;
 let generateKnowledgeSnippetEmbedding: typeof import("./embeddings").generateKnowledgeSnippetEmbedding;
@@ -38,6 +39,7 @@ beforeAll(async () => {
   selectKnowledgeSnippets = retrievalModule.selectKnowledgeSnippets;
   retrieveKnowledgeSnippets = retrievalModule.retrieveKnowledgeSnippets;
   retrieveHybridKnowledgeSnippets = retrievalModule.retrieveHybridKnowledgeSnippets;
+  buildHybridContextWindow = retrievalModule.buildHybridContextWindow;
   understandKnowledgeQuery = retrievalModule.understandKnowledgeQuery;
   tokenize = retrievalModule.tokenize;
   const embeddingsModule = await import("./embeddings");
@@ -503,6 +505,139 @@ describe("retrieveHybridKnowledgeSnippets", () => {
   });
 });
 
+describe("buildHybridContextWindow", () => {
+  it("expands adjacent chunks and groups citations with provenance", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const seeded = await seedSnippetWindow(admin.id, {
+      chunks: [
+        { content: "前置材料需要先上传。" },
+        { content: "管理员审批流程需要记录每个确认步骤。" },
+        { content: "后续确认需要保留操作日志。" },
+      ],
+    });
+
+    const result = await buildHybridContextWindow("管理员 审批 流程", {
+      adjacentChunks: 1,
+      maxContextChars: 200,
+      knowledgeBaseIds: [seeded.knowledgeBaseId],
+    });
+
+    expect(result.contextText).toContain("前置材料需要先上传。");
+    expect(result.contextText).toContain("管理员审批流程需要记录每个确认步骤。");
+    expect(result.contextText).toContain("后续确认需要保留操作日志。");
+    expect(result.citationGroups).toHaveLength(1);
+    expect(result.citationGroups[0]).toMatchObject({
+      sourceId: `kb-${seeded.sourceId}`,
+      path: "docs/window.md",
+      snippetIds: seeded.snippets.map((snippet) => snippet.id),
+    });
+    expect(result.debugEvidence.contextWindow.included.map((item) => item.reason)).toEqual([
+      "selected-hit",
+      "adjacent",
+      "adjacent",
+    ]);
+  });
+
+  it("does not introduce disabled adjacent snippets during expansion", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const seeded = await seedSnippetWindow(admin.id, {
+      chunks: [
+        { content: "禁用相邻片段不应该进入上下文。", enabled: false },
+        { content: "管理员审批流程需要记录每个确认步骤。" },
+        { content: "启用相邻片段可以进入上下文。" },
+      ],
+    });
+
+    const result = await buildHybridContextWindow("管理员 审批 流程", {
+      adjacentChunks: 1,
+      maxContextChars: 200,
+      knowledgeBaseIds: [seeded.knowledgeBaseId],
+    });
+
+    expect(result.contextText).not.toContain("禁用相邻片段");
+    expect(result.contextText).toContain("启用相邻片段");
+    expect(result.debugEvidence.contextWindow.included.map((item) => item.snippetId)).not.toContain(seeded.snippets[0].id);
+  });
+
+  it("caps context size and records capped snippets", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const seeded = await seedSnippetWindow(admin.id, {
+      chunks: [
+        { content: "管理员审批流程需要记录每个确认步骤。" },
+        { content: "这个相邻片段因为长度限制应该被截断在上下文之外。" },
+      ],
+    });
+
+    const result = await buildHybridContextWindow("管理员 审批 流程", {
+      adjacentChunks: 1,
+      maxContextChars: seeded.snippets[0].content.length,
+      knowledgeBaseIds: [seeded.knowledgeBaseId],
+    });
+
+    expect(result.contextText).toBe(seeded.snippets[0].content);
+    expect(result.debugEvidence.contextWindow.cappedSnippetIds).toContain(seeded.snippets[1].id);
+  });
+
+  it("preserves selected hits before adjacent chunks when the cap is tight", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const seeded = await seedSnippetWindow(admin.id, {
+      chunks: [
+        { content: "很长的前置相邻内容应该被限制排除在外。" },
+        { content: "管理员审批流程。" },
+      ],
+    });
+
+    const result = await buildHybridContextWindow("管理员 审批 流程", {
+      adjacentChunks: 1,
+      maxContextChars: seeded.snippets[1].content.length,
+      knowledgeBaseIds: [seeded.knowledgeBaseId],
+    });
+
+    expect(result.contextText).toBe(seeded.snippets[1].content);
+    expect(result.debugEvidence.contextWindow.included).toEqual([
+      expect.objectContaining({ snippetId: seeded.snippets[1].id, reason: "selected-hit" }),
+    ]);
+    expect(result.debugEvidence.contextWindow.cappedSnippetIds).toContain(seeded.snippets[0].id);
+  });
+
+  it("counts separators when enforcing the context cap", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const seeded = await seedSnippetWindow(admin.id, {
+      chunks: [
+        { content: "管理员审批流程。" },
+        { content: "短相邻。" },
+      ],
+    });
+
+    const result = await buildHybridContextWindow("管理员 审批 流程", {
+      adjacentChunks: 1,
+      maxContextChars: seeded.snippets[0].content.length + seeded.snippets[1].content.length,
+      knowledgeBaseIds: [seeded.knowledgeBaseId],
+    });
+
+    expect(result.contextText.length).toBeLessThanOrEqual(seeded.snippets[0].content.length + seeded.snippets[1].content.length);
+    expect(result.debugEvidence.contextWindow.cappedSnippetIds).toContain(seeded.snippets[1].id);
+  });
+
+  it("respects selected knowledge-base filters during context expansion", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const selected = await seedSnippetWindow(admin.id, {
+      chunks: [{ content: "管理员审批流程来自选中知识库。" }],
+    });
+    const unselected = await seedSnippetWindow(admin.id, {
+      chunks: [{ content: "管理员审批流程来自未选知识库。" }],
+    });
+
+    const result = await buildHybridContextWindow("管理员 审批 流程", {
+      knowledgeBaseIds: [selected.knowledgeBaseId],
+    });
+
+    expect(result.contextText).toContain("选中知识库");
+    expect(result.contextText).not.toContain("未选知识库");
+    expect(result.debugEvidence.contextWindow.included.map((item) => item.snippetId)).not.toContain(unselected.snippets[0].id);
+  });
+});
+
 async function seedSnippet(
   userId: string,
   input: {
@@ -585,6 +720,61 @@ async function seedSnippet(
   }
 
   return source;
+}
+
+async function seedSnippetWindow(
+  userId: string,
+  input: {
+    chunks: Array<{ content: string; enabled?: boolean }>;
+    baseEnabled?: boolean;
+    sourceEnabled?: boolean;
+    versionStatus?: string;
+  }
+) {
+  const knowledgeBase = await prisma.knowledgeBase.create({
+    data: {
+      name: Math.random().toString(36),
+      slug: `base-${Math.random().toString(36).slice(2, 8)}`,
+      enabled: input.baseEnabled ?? true,
+      createdById: userId,
+    },
+  });
+  const source = await prisma.knowledgeSource.create({
+    data: {
+      knowledgeBaseId: knowledgeBase.id,
+      title: "Window guide",
+      status: "ready",
+      enabled: input.sourceEnabled ?? true,
+      createdById: userId,
+    },
+  });
+  const version = await prisma.knowledgeSourceVersion.create({
+    data: {
+      sourceId: source.id,
+      originalFilename: "window.md",
+      storageKey: "test/window.md",
+      mimeType: "text/markdown",
+      fileSize: 100,
+      contentHash: Math.random().toString(36),
+      importType: "document",
+      status: input.versionStatus ?? "ready",
+      createdById: userId,
+      snippets: {
+        create: input.chunks.map((chunk, index) => ({
+          sourceId: source.id,
+          sourcePath: "docs/window.md",
+          content: chunk.content,
+          chunkIndex: index,
+          enabled: chunk.enabled ?? true,
+        })),
+      },
+    },
+  });
+  const snippets = await prisma.knowledgeSnippet.findMany({
+    where: { versionId: version.id },
+    orderBy: { chunkIndex: "asc" },
+  });
+  return { knowledgeBaseId: knowledgeBase.id, sourceId: source.id, snippets };
 }
 
 async function seedSearchProfile() {
