@@ -1,0 +1,17 @@
+services:
+  embedding:
+    image: ghcr.io/huggingface/text-embeddings-inference:cpu-1.9
+    command:
+      - "--model-id"
+      - "${LOCAL_EMBEDDING_MODEL:-intfloat/multilingual-e5-large}"
+      - "--revision"
+      - "${LOCAL_EMBEDDING_MODEL_REVISION:-main}"
+    ports:
+      - "${LOCAL_EMBEDDING_PORT:-8081}:80"
+    volumes:
+      - reqflow-embedding-model-cache:/data
+    environment:
+      HF_HUB_ENABLE_HF_TRANSFER: "1"
+
+volumes:
+  reqflow-embedding-model-cache:

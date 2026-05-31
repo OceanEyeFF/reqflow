@@ -4,6 +4,8 @@
 
 Packaging an open-source embedding model around 0.5B parameters for CPU inference is feasible for ReqFlow, but it should be deployed as a separate embedding sidecar service, not bundled into the main Next.js application image.
 
+WT-20260531-100 adds the first optional sidecar PoC. Current runbook: `docs/local-embedding-sidecar-poc.md`.
+
 Recommended path:
 
 - Run a local embedding HTTP service in Docker Compose.
@@ -152,12 +154,12 @@ If a model uses another dimension:
 
 Proceed with a follow-up implementation only after MS-10 acceptance:
 
-1. Add a local embedding provider adapter using a TEI-compatible HTTP API.
-2. Add `docker-compose.embedding.yml` as an optional local profile.
-3. Pick one initial model, preferably `intfloat/multilingual-e5-large` for conservative licensing or `Qwen/Qwen3-Embedding-0.6B` for stronger long-context retrieval.
-4. Pin model revision and image tag.
-5. Add admin-only indexing/reindex command or queue before bulk generation.
-6. Run CPU benchmark and retrieval evaluation before making it default.
+1. Add a local embedding provider adapter using a TEI-compatible HTTP API. Done in WT-20260531-100.
+2. Add `docker-compose.embedding.yml` as an optional local profile. Done in WT-20260531-100.
+3. Pick one initial model, preferably `intfloat/multilingual-e5-large` for conservative licensing or `Qwen/Qwen3-Embedding-0.6B` for stronger long-context retrieval. The PoC defaults to `intfloat/multilingual-e5-large`.
+4. Pin model revision and image tag. The compose file exposes `LOCAL_EMBEDDING_MODEL_REVISION`; production still requires an explicit immutable revision/digest decision.
+5. Add admin-only indexing/reindex command or queue before bulk generation. Still pending future work.
+6. Run CPU benchmark and retrieval evaluation before making it default. The PoC adds `npm run embedding:probe`; making this default remains out of scope.
 
 Decision: feasible with sidecar; do not bundle into the main app image by default.
 

@@ -148,11 +148,15 @@ export async function generateKnowledgeSnippetEmbedding(
 
   const embeddingInput = snippet.searchMetadata?.lexicalText ?? snippet.content;
   const contentHash = snippet.searchMetadata?.contentHash ?? hashText(snippet.content);
-  const embedding = await provider.embed({
+  const embeddingResult = await embedSafely(provider, {
     input: embeddingInput,
     model: profile.embeddingModel,
     dimensions: profile.embeddingDimensions,
   });
+  if (embeddingResult.status === "failed") {
+    return { ...embeddingResult, evidence: { ...embeddingResult.evidence, profileId: profile.id, snippetId } };
+  }
+  const embedding = embeddingResult.embedding;
 
   const embeddingGuard = validateEmbeddingResultForProfile(profile, embedding, snippetId);
   if (embeddingGuard) return embeddingGuard;
@@ -229,11 +233,13 @@ export async function retrieveVectorCandidates(
   const providerGuard = validateProviderForProfile(profile, provider);
   if (providerGuard) return { ...providerGuard, vectorHits: [] };
 
-  const queryEmbedding = await provider.embed({
+  const queryEmbeddingResult = await embedSafely(provider, {
     input: query,
     model: profile.embeddingModel,
     dimensions: profile.embeddingDimensions,
   });
+  if (queryEmbeddingResult.status === "failed") return { ...queryEmbeddingResult, vectorHits: [] };
+  const queryEmbedding = queryEmbeddingResult.embedding;
 
   const queryEmbeddingGuard = validateEmbeddingResultForProfile(profile, queryEmbedding);
   if (queryEmbeddingGuard) return { ...queryEmbeddingGuard, vectorHits: [] };
@@ -467,6 +473,35 @@ function validateEmbeddingResultForProfile(
     };
   }
   return undefined;
+}
+
+async function embedSafely(
+  provider: EmbeddingProvider,
+  request: EmbeddingProviderRequest
+): Promise<
+  | { status: "ready"; embedding: EmbeddingProviderResult }
+  | { status: "failed"; reason: "provider-unavailable"; evidence: EmbeddingFailureEvidence }
+> {
+  try {
+    return { status: "ready", embedding: await provider.embed(request) };
+  } catch (error) {
+    return {
+      status: "failed",
+      reason: "provider-unavailable",
+      evidence: {
+        provider: provider.name,
+        model: request.model,
+        expectedDimensions: request.dimensions,
+        actualDimensions: extractActualDimensions(error),
+      },
+    };
+  }
+}
+
+function extractActualDimensions(error: unknown): number | undefined {
+  if (typeof error !== "object" || error === null || !("actualDimensions" in error)) return undefined;
+  const actualDimensions = (error as { actualDimensions?: unknown }).actualDimensions;
+  return typeof actualDimensions === "number" ? actualDimensions : undefined;
 }
 
 type VectorCandidateRow = {
