@@ -1,0 +1,49 @@
+{
+  "results": [
+    {
+      "caseId": "cn-procurement-approval-flow",
+      "recallAt5": 1,
+      "noiseAt5": 0,
+      "returnedSourceIds": ["src-unrelated"],
+      "returnedSnippetIds": ["snip-unrelated"],
+      "matchedTerms": ["采购", "审批", "材料", "复核"],
+      "citationTraceabilityPassed": true
+    },
+    {
+      "caseId": "cn-contract-change-filtered-kb",
+      "recallAt5": 1,
+      "noiseAt5": 0,
+      "returnedSourceIds": ["src-unrelated"],
+      "returnedSnippetIds": ["snip-unrelated"],
+      "matchedTerms": ["合同", "变更", "十万", "审批"],
+      "citationTraceabilityPassed": true
+    },
+    {
+      "caseId": "cn-employee-onboarding-semantic",
+      "recallAt5": 1,
+      "noiseAt5": 0,
+      "returnedSourceIds": ["src-unrelated"],
+      "returnedSnippetIds": ["snip-unrelated"],
+      "matchedTerms": ["入职", "账号", "设备", "权限"],
+      "citationTraceabilityPassed": true
+    },
+    {
+      "caseId": "cn-disabled-source-exclusion",
+      "recallAt5": 1,
+      "noiseAt5": 0,
+      "returnedSourceIds": ["src-unrelated"],
+      "returnedSnippetIds": ["snip-unrelated"],
+      "matchedTerms": ["报销", "规则", "归档", "引用"],
+      "citationTraceabilityPassed": true
+    },
+    {
+      "caseId": "cn-production-incident-urgent",
+      "recallAt5": 1,
+      "noiseAt5": 0,
+      "returnedSourceIds": ["src-unrelated"],
+      "returnedSnippetIds": ["snip-unrelated"],
+      "matchedTerms": ["线上故障", "付款", "升级", "通知"],
+      "citationTraceabilityPassed": true
+    }
+  ]
+}

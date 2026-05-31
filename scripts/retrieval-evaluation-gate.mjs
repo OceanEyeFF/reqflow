@@ -67,12 +67,37 @@ function validateResults(cases, results) {
   for (const testCase of cases) {
     const result = byId.get(testCase.id);
     if (!result) throw new Error(`Missing result for case: ${testCase.id}`);
-    validateThreshold(result.recallAt5, `${testCase.id}.recallAt5`, testCase.minRecallAt5, 1);
-    validateThreshold(result.noiseAt5, `${testCase.id}.noiseAt5`, 0, testCase.maxNoiseAt5);
     requireStringArray(result.returnedSourceIds, `${testCase.id}.returnedSourceIds`, 1);
     requireStringArray(result.returnedSnippetIds, `${testCase.id}.returnedSnippetIds`, 1);
+    requireStringArray(result.matchedTerms, `${testCase.id}.matchedTerms`, testCase.mustContainTerms.length);
+
+    const topSourceIds = result.returnedSourceIds.slice(0, 5);
+    const topSnippetIds = result.returnedSnippetIds.slice(0, 5);
+    const sourceRecallAt5 = ratioPresent(testCase.expectedSourceIds, topSourceIds);
+    const snippetRecallAt5 = ratioPresent(testCase.expectedSnippetIds, topSnippetIds);
+    const recallAt5 = Math.min(sourceRecallAt5, snippetRecallAt5);
+    const noiseAt5 = calculateNoiseAt5(testCase.expectedSourceIds, topSourceIds);
+
+    validateThreshold(recallAt5, `${testCase.id}.derivedRecallAt5`, testCase.minRecallAt5, 1);
+    validateThreshold(noiseAt5, `${testCase.id}.derivedNoiseAt5`, 0, testCase.maxNoiseAt5);
+
+    for (const sourceId of testCase.expectedSourceIds) {
+      if (!topSourceIds.includes(sourceId)) {
+        throw new Error(`${testCase.id} did not return expected source in top 5: ${sourceId}`);
+      }
+    }
+    for (const snippetId of testCase.expectedSnippetIds) {
+      if (!topSnippetIds.includes(snippetId)) {
+        throw new Error(`${testCase.id} did not return expected snippet in top 5: ${snippetId}`);
+      }
+    }
+    for (const term of testCase.mustContainTerms) {
+      if (!result.matchedTerms.includes(term)) {
+        throw new Error(`${testCase.id} did not report required matched term: ${term}`);
+      }
+    }
     for (const forbidden of testCase.forbiddenSourceIds) {
-      if (result.returnedSourceIds.includes(forbidden)) {
+      if (topSourceIds.includes(forbidden)) {
         throw new Error(`${testCase.id} returned forbidden source: ${forbidden}`);
       }
     }
@@ -87,6 +112,18 @@ function validateThreshold(value, label, min, max) {
   if (typeof value !== "number" || Number.isNaN(value) || value < min || value > max) {
     throw new Error(`${label} must be a number between ${min} and ${max}.`);
   }
+}
+
+function ratioPresent(expectedIds, returnedIds) {
+  const returned = new Set(returnedIds);
+  return expectedIds.filter((id) => returned.has(id)).length / expectedIds.length;
+}
+
+function calculateNoiseAt5(expectedSourceIds, returnedSourceIds) {
+  if (returnedSourceIds.length === 0) return 0;
+  const expected = new Set(expectedSourceIds);
+  const noisyCount = returnedSourceIds.filter((id) => !expected.has(id)).length;
+  return noisyCount / returnedSourceIds.length;
 }
 
 function requireStringArray(value, label, minLength) {

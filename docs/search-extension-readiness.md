@@ -32,11 +32,11 @@ This image keeps the PostgreSQL 16 baseline while making the `vector` extension 
 npm run search:extensions
 ```
 
-The command uses `SEARCH_EXTENSION_DATABASE_URL`, `POSTGRES_DATABASE_URL`, or `DATABASE_URL` and creates an isolated schema for probes. It verifies:
+The command uses `SEARCH_EXTENSION_DATABASE_URL`, `POSTGRES_DATABASE_URL`, or `DATABASE_URL` as a maintenance connection, then creates a temporary probe database and drops it after the check. This matters because PostgreSQL extensions are database-scoped, not schema-scoped; the readiness command must not leave extension state behind in the caller's application database. It verifies:
 
 - PostgreSQL server version is readable.
 - `vector` is present in `pg_available_extensions`.
-- `CREATE EXTENSION IF NOT EXISTS vector` succeeds.
+- `CREATE EXTENSION IF NOT EXISTS vector` succeeds inside the temporary probe database.
 - A `vector(3)` probe table can insert vectors and order by L2 distance.
 - HNSW vector index DDL succeeds.
 - Native PostgreSQL FTS can search pre-tokenized Chinese business text using the `simple` configuration and `websearch_to_tsquery`.
@@ -44,6 +44,8 @@ The command uses `SEARCH_EXTENSION_DATABASE_URL`, `POSTGRES_DATABASE_URL`, or `D
 - `pg_search` availability is detected.
 
 If `pg_search` is unavailable, the command passes with an explicit fallback message. Set `SEARCH_REQUIRE_PG_SEARCH=true` only in an environment where BM25 extension availability is mandatory.
+
+Do not point this command at a production database or a database user that cannot create/drop temporary databases. It is a dev/test/CI readiness probe.
 
 ## pg_search Boundary
 

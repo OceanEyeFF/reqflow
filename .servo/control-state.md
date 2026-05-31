@@ -14,10 +14,10 @@
 
 ## Active Worktrack
 
-- active_worktrack: none
-- worktrack_title: none
-- worktrack_status: none
-- target_milestone_id: none
+- active_worktrack: WT-20260531-094
+- worktrack_title: MS-9 代码验收与集成风险审查
+- worktrack_status: active
+- target_milestone_id: MS-9
 
 ## Active Milestone
 
@@ -32,15 +32,15 @@
 
 ## Current Next Action
 
-- fdch0 added WT-20260531-094 and WT-20260531-095 as final MS-9 validation worktracks. Next Worktrack candidate is WT-20260531-094.
+- WT-20260531-094 active: MS-9 code acceptance review and integration risk audit.
 
 ## Linked Formal Documents
 
 - repo_snapshot: .servo/repo/snapshot-status.md
 - repo_analysis: .servo/repo/analysis.md
-- worktrack_contract: N/A
-- plan_task_queue: N/A
-- gate_evidence: N/A
+- worktrack_contract: .servo/worktrack/WT-20260531-094/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260531-094/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260531-094/gate-evidence.md
 - milestone_backlog: .servo/repo/milestone-backlog.md
 - worktrack_backlog: .servo/repo/worktrack-backlog.md
 

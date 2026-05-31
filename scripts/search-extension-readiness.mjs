@@ -13,25 +13,25 @@ if (!databaseUrl.startsWith("postgresql://") && !databaseUrl.startsWith("postgre
   process.exit(1);
 }
 
-const schemaName = `ext_${process.pid}_${Date.now()}_${randomUUID().replace(/-/g, "").slice(0, 8)}`;
-const schemaUrl = withSchema(databaseUrl, schemaName);
 const maintenanceUrl = withSchema(databaseUrl, null);
+const probeDatabaseName = `reqflow_ext_${process.pid}_${Date.now()}_${randomUUID().replace(/-/g, "").slice(0, 8)}`.toLowerCase();
+const probeUrl = withDatabase(maintenanceUrl, probeDatabaseName);
 const maintenance = new PrismaClient({ datasources: { db: { url: maintenanceUrl } } });
-const prisma = new PrismaClient({ datasources: { db: { url: schemaUrl } } });
+let prisma;
 
 try {
+  await maintenance.$executeRawUnsafe(`CREATE DATABASE "${probeDatabaseName}"`);
+  prisma = new PrismaClient({ datasources: { db: { url: probeUrl } } });
   await runReadiness();
 } finally {
-  await prisma.$disconnect();
-  await maintenance.$executeRawUnsafe(`DROP SCHEMA IF EXISTS "${schemaName}" CASCADE`);
+  await prisma?.$disconnect();
+  await maintenance.$executeRawUnsafe(`DROP DATABASE IF EXISTS "${probeDatabaseName}" WITH (FORCE)`);
   await maintenance.$disconnect();
 }
 
 async function runReadiness() {
   const versionRows = await maintenance.$queryRawUnsafe("SHOW server_version");
   console.log(`PostgreSQL server_version: ${versionRows[0]?.server_version ?? "unknown"}`);
-
-  await maintenance.$executeRawUnsafe(`CREATE SCHEMA IF NOT EXISTS "${schemaName}"`);
 
   const availableExtensions = await maintenance.$queryRawUnsafe(
     "SELECT name, default_version, installed_version FROM pg_available_extensions WHERE name IN ('vector', 'pg_search') ORDER BY name"
@@ -48,7 +48,6 @@ async function ensureVectorAvailable(availableExtensions) {
   if (!availableExtensions.some((extension) => extension.name === "vector")) {
     throw new Error("pgvector extension is not available in this PostgreSQL image.");
   }
-  await maintenance.$executeRawUnsafe("CREATE EXTENSION IF NOT EXISTS vector");
 }
 
 async function verifyPgvector() {
@@ -114,5 +113,12 @@ function withSchema(rawUrl, schemaName) {
   } else {
     url.searchParams.delete("schema");
   }
+  return url.toString();
+}
+
+function withDatabase(rawUrl, databaseName) {
+  const url = new URL(rawUrl);
+  url.pathname = `/${databaseName}`;
+  url.searchParams.delete("schema");
   return url.toString();
 }

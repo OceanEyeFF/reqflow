@@ -21,7 +21,7 @@ export type JsonResponse<T> = {
   body: T;
 };
 
-const defaultTestDatabaseUrl = "postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_test";
+const defaultTestDatabaseUrl = "postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_dev";
 
 export function createTestDatabaseUrl(label: string): string {
   const baseUrl = process.env.TEST_DATABASE_URL || process.env.POSTGRES_DATABASE_URL || defaultTestDatabaseUrl;

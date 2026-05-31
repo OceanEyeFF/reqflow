@@ -997,9 +997,10 @@
 - title: MS-9 代码验收与集成风险审查
 - milestone_id: MS-9
 - node_type: review
-- status: planned
+- status: active
 - priority: 6
-- contract_path: TBD
+- contract_path: .servo/worktrack/WT-20260531-094/contract.md
+- gate_evidence: .servo/worktrack/WT-20260531-094/gate-evidence.md
 - branch: worktrack/wt-20260531-094-ms9-code-acceptance-review
 - planning_notes: Review MS-9 code, scripts, CI, Prisma/PostgreSQL migration boundary, docs, and tests for acceptance blockers before fdch0 final milestone decision. Must include at least git diff scope review, Prisma/PostgreSQL readiness review, CI workflow review, retrieval evaluation harness review, and risk findings with severity.
 

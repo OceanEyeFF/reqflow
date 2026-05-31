@@ -52,10 +52,9 @@ Expected result shape:
   "results": [
     {
       "caseId": "cn-procurement-approval-flow",
-      "recallAt5": 0.8,
-      "noiseAt5": 0.2,
       "returnedSourceIds": ["src-procurement-policy"],
       "returnedSnippetIds": ["snip-procurement-materials"],
+      "matchedTerms": ["采购", "审批", "材料", "复核"],
       "citationTraceabilityPassed": true
     }
   ]
@@ -64,8 +63,10 @@ Expected result shape:
 
 ## Quality Rules
 
-- `recallAt5` must meet or exceed each case's `minRecallAt5`.
-- `noiseAt5` must not exceed each case's `maxNoiseAt5`.
+- The gate derives recall@5 from `expectedSourceIds` and `expectedSnippetIds` against returned top-5 IDs. Self-reported recall is ignored.
+- The gate derives noise@5 from non-expected top-5 source IDs. Self-reported noise is ignored.
+- All expected sources and snippets must appear in the top 5.
+- All `mustContainTerms` must appear in `matchedTerms`.
 - Returned sources must not include any `forbiddenSourceIds`.
 - Citation traceability must pass when required.
 - A passing AI draft is not a substitute for passing retrieval results.

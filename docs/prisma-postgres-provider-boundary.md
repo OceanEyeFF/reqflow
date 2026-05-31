@@ -32,7 +32,7 @@ Use a PostgreSQL URL:
 ```bash
 DATABASE_URL="postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_dev?schema=public"
 POSTGRES_DATABASE_URL="$DATABASE_URL"
-TEST_DATABASE_URL="postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_test"
+TEST_DATABASE_URL="postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_dev"
 ```
 
 Prepare the database and seed demo data:
@@ -51,11 +51,11 @@ API route tests no longer create SQLite files under `prisma/test-dbs/`. `createT
 For local tests:
 
 ```bash
-TEST_DATABASE_URL="postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_test"
+TEST_DATABASE_URL="postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_dev"
 npm run test
 ```
 
-Each test helper run creates its schema before `prisma db push` and drops that schema during cleanup. The helper rejects non-PostgreSQL URLs so provider regressions fail closed.
+Each test helper run creates its schema before `prisma db push` and drops that schema during cleanup. The base database must already exist; the compose service creates `reqflow_dev`, so it is the default local test base. The helper rejects non-PostgreSQL URLs so provider regressions fail closed.
 
 ## CI Boundary
 
