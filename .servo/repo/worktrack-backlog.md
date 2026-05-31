@@ -987,7 +987,7 @@
 - contract_path: .servo/worktrack/WT-20260529-082/contract.md
 - gate_evidence: .servo/worktrack/WT-20260529-082/gate-evidence.md
 - branch: worktrack/wt-20260529-082-chinese-retrieval-quality-gate (merged)
-- merge_commit: COMMIT_PENDING
+- merge_commit: 6f2cabef39f0f6c1ad95d58327f4c8f1c9cae420
 - validation: retrieval evaluation corpus gate pass; lint pass; test pass 28 files / 201 tests; build pass
 - planning_notes: Harness cases should include query, expectedSourceIds, expectedSnippetIds, mustContainTerms, forbiddenSourceIds, minRecallAt5, maxNoiseAt5, and citation traceability expectations.
 
