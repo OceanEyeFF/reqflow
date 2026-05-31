@@ -972,7 +972,7 @@
 - contract_path: .servo/worktrack/WT-20260529-081/contract.md
 - gate_evidence: .servo/worktrack/WT-20260529-081/gate-evidence.md
 - branch: worktrack/wt-20260529-081-search-extension-readiness (merged)
-- merge_commit: COMMIT_PENDING
+- merge_commit: 35ae590d648f2e9b491684b925221850f7a3f551
 - validation: pgvector readiness pass; native PostgreSQL FTS fallback pass; pg_search unavailable fallback recorded; postgres readiness pass; lint pass; test pass 28 files / 201 tests; build pass
 - planning_notes: Evaluate `pg_search` deployability; fallback to PostgreSQL native FTS plus Chinese tokenization/normalization; include filtered vector recall/performance risks, topK expansion, partial indexes, and partitioning options.
 
