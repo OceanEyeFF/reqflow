@@ -118,6 +118,57 @@ describe("POST /api/admin/knowledge/search", () => {
     expect(result.body.searchEvidence.vectorLane).toEqual({ status: "failed", reason: "active-profile-missing" });
     expect(JSON.stringify(result.body)).not.toMatch(/secret|apiKey|storageKey|private\/admin\.md/);
   });
+
+  it("returns Chinese E2E debug evidence aligned with selected knowledge scope and citation provenance", async () => {
+    mockAuthSession(auth, { id: "admin-1", role: "admin" });
+
+    const response = await route.POST(
+      jsonRequest("http://localhost/api/admin/knowledge/search", {
+        query: "项目经理查看审批流程状态",
+        knowledgeBaseIds: ["kb-approval"],
+      })
+    );
+    const result = await readJson<{
+      citations: Array<{ sourceTitle: string; path?: string; section?: string; snippet: string }>;
+      citationGroups: Array<{ path: string; section?: string; snippetCount: number }>;
+      searchEvidence: {
+        query: { mustTerms: string[] };
+        filters: { knowledgeBaseIds: string[] };
+        lexical: { candidatesReturned: number; hits: Array<{ path: string; section?: string; matchedTerms: string[] }> };
+        fusion: { hits: Array<{ fusedRank: number; lexicalRank?: number }> };
+        contextWindow: { includedCount: number; included: Array<{ reason: string; path: string }> };
+      };
+    }>(response);
+
+    expect(result.status).toBe(200);
+    expect(result.body.citations[0]).toMatchObject({
+      sourceTitle: "Admin guide",
+      path: "docs/admin.md",
+      section: "审批",
+      snippet: "审批流程需要记录每个管理员确认步骤。",
+    });
+    expect(result.body.citationGroups[0]).toMatchObject({
+      path: "docs/admin.md",
+      section: "审批",
+      snippetCount: 1,
+    });
+    expect(result.body.searchEvidence).toMatchObject({
+      filters: { knowledgeBaseIds: ["base-a"] },
+      lexical: {
+        candidatesReturned: 1,
+        hits: [
+          {
+            path: "docs/admin.md",
+            section: "审批",
+            matchedTerms: ["审批", "流程"],
+          },
+        ],
+      },
+      fusion: { hits: [{ fusedRank: 1, lexicalRank: 1 }] },
+      contextWindow: { includedCount: 1, included: [{ reason: "selected-hit", path: "docs/admin.md" }] },
+    });
+    expect(JSON.stringify(result.body)).not.toMatch(/secret|apiKey|storageKey|private\/admin\.md/);
+  });
 });
 
 function createDebugEvidence() {
