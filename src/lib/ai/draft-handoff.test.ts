@@ -54,6 +54,44 @@ describe("AI draft handoff", () => {
     );
   });
 
+  it("formats Chinese E2E draft citations while preserving manual ticket handoff only", () => {
+    const chineseDraft: AiRequirementDraft = {
+      title: "审批状态追踪",
+      background: "项目经理需要在需求工单里查看审批进度。",
+      userStory: "作为项目经理，我要看到当前审批人和审批历史。",
+      acceptanceCriteria: ["展示当前审批人", "展示审批历史"],
+      pendingQuestions: ["是否需要审批超时提醒？"],
+      suggestedPriority: "high",
+      citations: [
+        {
+          sourceId: "kb-source-1",
+          sourceTitle: "审批流程指南",
+          path: "docs/business/approval.md",
+          section: "审批状态追踪",
+          snippet: "审批流程需要记录每个管理员确认步骤。",
+          freshness: "imported 2026-05-31T00:00:00.000Z v1",
+        },
+      ],
+    };
+    const storage = createMemoryStorage();
+
+    const staged = stageAiDraft(storage, chineseDraft, "2026-05-31T15:30:00.000Z");
+
+    expect(staged).toMatchObject({
+      title: "审批状态追踪",
+      type: "需求",
+      priority: "high",
+      stagedAt: "2026-05-31T15:30:00.000Z",
+    });
+    expect(staged).not.toHaveProperty("confirmedAt");
+    expect(staged.description).toContain("引用片段\n- 审批流程指南: 审批流程需要记录每个管理员确认步骤。");
+    expect(JSON.parse(storage.getItem(AI_DRAFT_STORAGE_KEY) ?? "{}")).toMatchObject({
+      title: "审批状态追踪",
+      type: "需求",
+      priority: "high",
+    });
+  });
+
   it("stages accepted drafts in caller-provided browser storage", () => {
     const storage = createMemoryStorage();
 

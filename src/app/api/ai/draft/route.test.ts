@@ -27,11 +27,29 @@ vi.mock("@/lib/ai/provider-config", () => ({
 }));
 
 vi.mock("@/lib/knowledge/retrieval", () => ({
-  buildHybridContextWindow: vi.fn(async () => ({
-    contextText: "",
-    citations: [],
-    citationGroups: [],
-    debugEvidence: createDebugEvidence(),
+  buildHybridContextWindow: vi.fn(async (_query: string, options: { knowledgeBaseIds?: string[] } = {}) => ({
+    contextText: "审批流程需要记录每个管理员确认步骤。",
+    citations: [
+      {
+        sourceId: "kb-source-1",
+        sourceTitle: "审批流程指南",
+        path: "docs/business/approval.md",
+        section: "审批状态追踪",
+        snippet: "审批流程需要记录每个管理员确认步骤，并在工单中展示当前审批人。",
+        freshness: "imported 2026-05-31T00:00:00.000Z v1",
+      },
+    ],
+    citationGroups: [
+      {
+        sourceId: "kb-source-1",
+        sourceTitle: "审批流程指南",
+        path: "docs/business/approval.md",
+        section: "审批状态追踪",
+        snippetIds: ["snippet-approval-1"],
+        snippets: ["审批流程需要记录每个管理员确认步骤，并在工单中展示当前审批人。"],
+      },
+    ],
+    debugEvidence: createDebugEvidence(options.knowledgeBaseIds ?? []),
   })),
 }));
 
@@ -198,6 +216,86 @@ describe("POST /api/ai/draft", () => {
     );
   });
 
+  it("returns Chinese business draft with selected knowledge scope, citations, and safe search evidence", async () => {
+    mockAuthSession(auth, { id: "user-1" });
+    providerGenerate.mockImplementationOnce(async (request) => ({
+      kind: "draft",
+      result: {
+        title: "审批状态追踪",
+        background: "项目经理需要在需求工单里查看审批进度。",
+        userStory: "作为项目经理，我要看到当前审批人和审批历史，以便推进需求。",
+        acceptanceCriteria: ["展示当前审批人", "展示审批历史", "支持按知识库范围生成草稿"],
+        pendingQuestions: ["是否需要审批超时提醒？"],
+        suggestedPriority: "high",
+        citations: request.knowledge.map((citation) => ({
+          sourceId: citation.sourceId,
+          sourceTitle: citation.sourceTitle,
+          path: citation.path,
+          section: citation.section,
+          snippet: citation.snippet,
+          freshness: citation.freshness,
+        })),
+      },
+      citations: request.knowledge.map((citation) => ({
+        sourceId: citation.sourceId,
+        sourceTitle: citation.sourceTitle,
+        path: citation.path,
+        section: citation.section,
+        snippet: citation.snippet,
+        freshness: citation.freshness,
+      })),
+      emptyKnowledge: request.knowledge.length === 0,
+    }));
+
+    const response = await route.POST(
+      jsonRequest("http://localhost/api/ai/draft", {
+        mode: "draft",
+        requirement: "项目经理需要用中文查看审批流程状态，并把结果带入需求工单。",
+        knowledgeBaseIds: ["kb-approval"],
+        answerLanguage: "zh",
+        answers: [{ question: "谁使用？", answer: "项目经理" }],
+      })
+    );
+    const result = await readJson<{
+      kind: string;
+      result: { citations: Array<{ path?: string; section?: string; freshness?: string }> };
+      searchEvidence: { filters: { knowledgeBaseIds: string[] }; contextWindow: { includedCount: number } };
+    }>(response);
+
+    expect(result.status).toBe(200);
+    expect(result.body).toMatchObject({
+      kind: "draft",
+      result: {
+        citations: [
+          {
+            path: "docs/business/approval.md",
+            section: "审批状态追踪",
+            freshness: "imported 2026-05-31T00:00:00.000Z v1",
+          },
+        ],
+      },
+      searchEvidence: {
+        filters: { knowledgeBaseIds: ["kb-approval"] },
+        contextWindow: { includedCount: 1 },
+      },
+    });
+    expect(providerGenerate).toHaveBeenCalledWith(
+      expect.objectContaining({
+        mode: "draft",
+        answerLanguage: "zh",
+        knowledgeBaseIds: ["kb-approval"],
+        knowledge: [
+          expect.objectContaining({
+            sourceTitle: "审批流程指南",
+            path: "docs/business/approval.md",
+            section: "审批状态追踪",
+          }),
+        ],
+      })
+    );
+    expect(JSON.stringify(result.body)).not.toMatch(/secret|apiKey|storageKey|DEEPSEEK_API_KEY/);
+  });
+
   it("returns provider configuration errors without leaking secrets", async () => {
     mockAuthSession(auth, { id: "user-1" });
     providerGenerate.mockRejectedValue(new AiProviderConfigError("DEEPSEEK_API_KEY=secret"));
@@ -224,7 +322,7 @@ describe("POST /api/ai/draft", () => {
   });
 });
 
-function createDebugEvidence() {
+function createDebugEvidence(knowledgeBaseIds: string[] = []) {
   return {
     query: {
       rawQuery: "需要审批流程",
@@ -258,22 +356,61 @@ function createDebugEvidence() {
       },
       engine: "postgres-native-fts-fallback" as const,
       filters: {
-        knowledgeBaseIds: [],
+        knowledgeBaseIds,
         sourceStatuses: ["ready", "enabled"],
         enabledOnly: true as const,
         versionStatuses: ["ready"],
       },
-      candidatesScanned: 0,
-      candidatesReturned: 0,
+      candidatesScanned: 1,
+      candidatesReturned: 1,
       cap: 3,
-      lexicalHits: [],
+      lexicalHits: [
+        {
+          snippetId: "snippet-approval-1",
+          sourceId: "kb-source-1",
+          sourceTitle: "审批流程指南",
+          path: "docs/business/approval.md",
+          section: "审批状态追踪",
+          rank: 1,
+          engine: "postgres-native-fts-fallback" as const,
+          score: 12,
+          matchedTerms: ["审批", "流程"],
+          mustTerms: ["审批", "流程"],
+          mustTermsMatched: ["审批", "流程"],
+          lexicalTextSource: "metadata" as const,
+        },
+      ],
     },
     vectorHits: [],
-    fusedHits: [],
+    fusedHits: [
+      {
+        snippetId: "snippet-approval-1",
+        sourceId: "kb-source-1",
+        sourceTitle: "审批流程指南",
+        path: "docs/business/approval.md",
+        section: "审批状态追踪",
+        fusedRank: 1,
+        fusedScore: 0.0164,
+        lexicalRank: 1,
+        lexicalScore: 12,
+        rrf: { k: 60, lexicalContribution: 0.0164, vectorContribution: 0 },
+      },
+    ],
     contextWindow: {
       maxContextChars: 1600,
       adjacentChunks: 1,
-      included: [],
+      included: [
+        {
+          snippetId: "snippet-approval-1",
+          sourceId: "kb-source-1",
+          sourceTitle: "审批流程指南",
+          path: "docs/business/approval.md",
+          section: "审批状态追踪",
+          chunkIndex: 0,
+          reason: "selected-hit" as const,
+          chars: 31,
+        },
+      ],
       dedupedSnippetIds: [],
       cappedSnippetIds: [],
       skippedSnippetIds: [],
