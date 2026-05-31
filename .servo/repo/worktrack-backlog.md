@@ -5,8 +5,8 @@
 ## Summary
 
 - total: 96
-- planned: 14
-- active: 0
+- planned: 13
+- active: 1
 - completed: 73
 - superseded: 8
 - blocked: 0
@@ -1092,9 +1092,11 @@
 - title: RRF Hybrid fusion、reranker seam 与 score evidence
 - milestone_id: MS-10
 - node_type: feature
-- status: planned
+- status: active
 - priority: 4
-- contract_path: TBD
+- contract_path: .servo/worktrack/WT-20260529-086/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260529-086/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260529-086/gate-evidence.md
 - branch: worktrack/wt-20260529-086-hybrid-fusion-score-evidence
 - planning_notes: Use RRF-style rank fusion for lexical/vector results; do not raw-score add BM25 and vector similarity; reserve optional reranker seam without requiring third-party reranking in MS-10.
 

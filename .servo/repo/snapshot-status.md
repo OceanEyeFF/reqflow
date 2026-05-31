@@ -263,7 +263,7 @@ reqflow/
 - latest_evidence: WT-20260529-084 added deterministic query understanding and metadata-aware lexical retrieval fallback with debug evidence; validation passed focused retrieval tests, postgres readiness, lint, full test, and build.
 - latest_evidence: WT-20260529-085 added pgvector embedding storage/index migration, deterministic embedding provider, active-profile fail-closed embedding generation, profile-scoped vector candidate retrieval, and debug evidence; validation passed migration deploy/status, search extensions, postgres readiness, focused embedding/vector tests, lint, full test, and build.
 - active_or_next_worktrack: WT-20260529-086
-- current_worktrack_status: planned
+- current_worktrack_status: active
 
 ### Planned Milestone
 
