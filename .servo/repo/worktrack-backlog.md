@@ -944,7 +944,7 @@
 - contract_path: .servo/worktrack/WT-20260529-079/contract.md
 - gate_evidence: .servo/worktrack/WT-20260529-079/gate-evidence.md
 - branch: worktrack/wt-20260529-079-postgres-dev-test-ci-baseline (merged)
-- merge_commit: COMMIT_PENDING
+- merge_commit: cc4305b747490520cf87cfc47afea5f68dd683b9
 - validation: node script syntax pass; postgres readiness boundary pass; lint pass; test pass 28 files / 201 tests; build pass
 
 ### WT-20260529-080
