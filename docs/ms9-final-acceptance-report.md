@@ -40,6 +40,7 @@ Excluded scope:
 | WT-20260529-082 | pass | `.servo/worktrack/WT-20260529-082/gate-evidence.md` |
 | WT-20260531-094 | pass | `.servo/worktrack/WT-20260531-094/gate-evidence.md` |
 | WT-20260531-095 | pass | `.servo/worktrack/WT-20260531-095/gate-evidence.md` |
+| WT-20260531-096 | pass | `.servo/worktrack/WT-20260531-096/gate-evidence.md` |
 
 ## Composite Acceptance Lanes
 
@@ -136,4 +137,4 @@ Both additional validation worktracks are now complete.
 
 ## Acceptance Decision Boundary
 
-MS-9 is ready for fdch0 final acceptance review at 7/7 completed worktracks. This report does not mark the milestone accepted and does not activate MS-10. Final acceptance must be explicitly decided by fdch0.
+MS-9 is ready for fdch0 final acceptance review at 8/8 completed worktracks. This report does not mark the milestone accepted and does not activate MS-10. Final acceptance must be explicitly decided by fdch0.

@@ -63,16 +63,35 @@ function validateResults(cases, results) {
   if (!Array.isArray(results.results)) {
     throw new Error("Results file must contain a results array.");
   }
-  const byId = new Map(results.results.map((result) => [result.caseId, result]));
+  const expectedCaseIds = new Set(cases.map((testCase) => testCase.id));
+  const byId = new Map();
+
+  for (const result of results.results) {
+    requireNonEmptyString(result.caseId, "result.caseId");
+    if (!expectedCaseIds.has(result.caseId)) {
+      throw new Error(`Unknown result case id: ${result.caseId}`);
+    }
+    if (byId.has(result.caseId)) {
+      throw new Error(`Duplicate result case id: ${result.caseId}`);
+    }
+    byId.set(result.caseId, result);
+  }
+
   for (const testCase of cases) {
     const result = byId.get(testCase.id);
     if (!result) throw new Error(`Missing result for case: ${testCase.id}`);
     requireStringArray(result.returnedSourceIds, `${testCase.id}.returnedSourceIds`, 1);
     requireStringArray(result.returnedSnippetIds, `${testCase.id}.returnedSnippetIds`, 1);
     requireStringArray(result.matchedTerms, `${testCase.id}.matchedTerms`, testCase.mustContainTerms.length);
+    if (result.returnedSourceIds.length > 5) {
+      throw new Error(`${testCase.id}.returnedSourceIds must contain at most 5 entries.`);
+    }
+    if (result.returnedSnippetIds.length > 5) {
+      throw new Error(`${testCase.id}.returnedSnippetIds must contain at most 5 entries.`);
+    }
 
-    const topSourceIds = result.returnedSourceIds.slice(0, 5);
-    const topSnippetIds = result.returnedSnippetIds.slice(0, 5);
+    const topSourceIds = result.returnedSourceIds;
+    const topSnippetIds = result.returnedSnippetIds;
     const sourceRecallAt5 = ratioPresent(testCase.expectedSourceIds, topSourceIds);
     const snippetRecallAt5 = ratioPresent(testCase.expectedSnippetIds, topSnippetIds);
     const recallAt5 = Math.min(sourceRecallAt5, snippetRecallAt5);

@@ -234,10 +234,10 @@ reqflow/
 - milestone_id: MS-9
 - title: PostgreSQL 与 Hybrid Search 架构基线
 - status: active
-- progress: 7/7 completed
+- progress: 8/8 completed
 - depends_on_milestones: MS-20260528-003
 - scope_boundary: PostgreSQL dev/test/CI baseline, Prisma provider migration boundary, pgvector readiness, BM25/FTS/pg_search feasibility, fallback strategy, independent EmbeddingProviderConfig, SearchIndexProfile model/dimensions lock, and Chinese retrieval quality gate.
-- completed_worktracks: WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082, WT-20260531-094, WT-20260531-095
+- completed_worktracks: WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082, WT-20260531-094, WT-20260531-095, WT-20260531-096
 - planned_worktracks: none
 - activation_status: active on 2026-05-31 by fdch0 approval; all MS-9 worktracks completed and awaiting fdch0 final milestone acceptance decision.
 - final_acceptance_report: docs/ms9-final-acceptance-report.md

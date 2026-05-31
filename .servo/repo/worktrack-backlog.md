@@ -4,10 +4,10 @@
 
 ## Summary
 
-- total: 95
+- total: 96
 - planned: 16
 - active: 0
-- completed: 71
+- completed: 72
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1020,6 +1020,21 @@
 - merge_commit: f90ad159c3a8a2b4f18b346dc433d7cd3582dca1
 - validation: fdch0 accepted local WT-094 validation as sufficient for MS-9 acceptance gate; remote CI freshness is non-blocking follow-up
 - planning_notes: Use the thinking style from https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/grill-me/SKILL.md: gather repo evidence first, ask fdch0 one pointed question at a time, include a recommended answer, and focus on decisions that cannot be answered from the repo. Output must record questions, fdch0 answers, recommended answers, and any resulting acceptance blockers or follow-up worktracks.
+
+### WT-20260531-096
+
+- worktrack_id: WT-20260531-096
+- title: MS-9 最终 CodeReview Worktrack
+- milestone_id: MS-9
+- node_type: review
+- status: completed
+- priority: 8
+- contract_path: .servo/worktrack/WT-20260531-096/contract.md
+- gate_evidence: .servo/worktrack/WT-20260531-096/gate-evidence.md
+- branch: worktrack/wt-20260531-096-ms9-final-code-review (merged)
+- merge_commit: WT096_COMMIT_PENDING
+- validation: final CodeReview findings fixed; pg_search probe isolation fixed; retrieval duplicate/unknown/overbroad negative gates pass; search extensions pass; postgres readiness pass; lint pass; test pass 28 files / 201 tests; build pass
+- planning_notes: Final MS-9 CodeReview after WT-094 fixes and WT-095 decision. Re-check retrieval evaluation anti-cheat, search extension isolation, PostgreSQL test baseline, CI, Prisma migration/provider boundary, and runtime AI/knowledge scope drift. Must record findings by severity and final gate verdict before MS-9 final acceptance handback.
 
 ## MS-10: 知识库索引与 Hybrid Retrieval 实现
 

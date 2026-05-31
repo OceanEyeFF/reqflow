@@ -1,0 +1,11 @@
+{
+  "results": [
+    {
+      "caseId": "unknown-case",
+      "returnedSourceIds": ["src-procurement-policy"],
+      "returnedSnippetIds": ["snip-procurement-materials"],
+      "matchedTerms": ["采购", "审批", "材料", "复核"],
+      "citationTraceabilityPassed": true
+    }
+  ]
+}

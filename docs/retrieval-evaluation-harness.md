@@ -65,6 +65,8 @@ Expected result shape:
 
 - The gate derives recall@5 from `expectedSourceIds` and `expectedSnippetIds` against returned top-5 IDs. Self-reported recall is ignored.
 - The gate derives noise@5 from non-expected top-5 source IDs. Self-reported noise is ignored.
+- Result files must contain exactly one result per known corpus case. Unknown or duplicate case IDs fail the gate.
+- Returned source/snippet arrays are capped at 5 entries. A result cannot append extra sources after rank 5 to hide forbidden or unrelated context.
 - All expected sources and snippets must appear in the top 5.
 - All `mustContainTerms` must appear in `matchedTerms`.
 - Returned sources must not include any `forbiddenSourceIds`.

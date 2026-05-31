@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- MS-9 worktrack list is complete at 7/7. Hand back to fdch0 for final milestone acceptance decision.
+- MS-9 worktrack list is complete at 8/8. Hand back to fdch0 for final milestone acceptance decision.
 
 ## Linked Formal Documents
 
@@ -47,7 +47,7 @@
 ## Approval Boundary
 
 - needs_programmer_approval: true
-- reason: MS-9 worktrack list is complete at 7/7 and milestone final acceptance remains fdch0-only.
+- reason: MS-9 worktrack list is complete at 8/8 and milestone final acceptance remains fdch0-only.
 - approval_scope: MS-9 active milestone worktracks; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
 - approval_persistence: active for MS-9 execution cycle until interrupted or milestone final acceptance handback.
 
@@ -78,7 +78,7 @@
 
 - handoff_state: waiting_for_fdch0_ms9_final_acceptance
 - last_stop_reason: milestone_final_acceptance_required
-- last_handback_signature: milestone-final-acceptance::MS-9::2026-05-31::7-of-7
+- last_handback_signature: milestone-final-acceptance::MS-9::2026-05-31::8-of-8
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
 - handback_lock_active: false

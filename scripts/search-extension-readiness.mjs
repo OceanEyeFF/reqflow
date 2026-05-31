@@ -102,7 +102,7 @@ async function verifyPgSearchBoundary(availableExtensions) {
     return;
   }
 
-  await maintenance.$executeRawUnsafe("CREATE EXTENSION IF NOT EXISTS pg_search");
+  await prisma.$executeRawUnsafe("CREATE EXTENSION IF NOT EXISTS pg_search");
   console.log(`pg_search readiness: available (${pgSearch.default_version})`);
 }
 

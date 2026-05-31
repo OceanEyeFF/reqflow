@@ -1,0 +1,25 @@
+{
+  "results": [
+    {
+      "caseId": "cn-procurement-approval-flow",
+      "returnedSourceIds": [
+        "src-procurement-policy",
+        "src-extra-1",
+        "src-extra-2",
+        "src-extra-3",
+        "src-extra-4",
+        "src-disabled-archive"
+      ],
+      "returnedSnippetIds": [
+        "snip-procurement-materials",
+        "snip-procurement-review",
+        "snip-extra-1",
+        "snip-extra-2",
+        "snip-extra-3",
+        "snip-extra-4"
+      ],
+      "matchedTerms": ["采购", "审批", "材料", "复核"],
+      "citationTraceabilityPassed": true
+    }
+  ]
+}

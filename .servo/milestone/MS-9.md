@@ -38,6 +38,7 @@
 | 5 | WT-20260529-082 | 中文检索评测语料、Evaluation Harness 与质量 Gate | test | completed |
 | 6 | WT-20260531-094 | MS-9 代码验收与集成风险审查 | review | completed |
 | 7 | WT-20260531-095 | MS-9 grill-me 反向拷打验收 | review | completed |
+| 8 | WT-20260531-096 | MS-9 最终 CodeReview Worktrack | review | completed |
 
 ## Design Decisions To Carry Forward
 
@@ -81,8 +82,8 @@
 
 ## Progress Counter
 
-- total_worktracks: 7
-- completed: 7
+- total_worktracks: 8
+- completed: 8
 - blocked: 0
 - deferred: 0
 
@@ -95,6 +96,7 @@
 - .servo/worktrack/WT-20260529-082/gate-evidence.md
 - .servo/worktrack/WT-20260531-094/gate-evidence.md
 - .servo/worktrack/WT-20260531-095/gate-evidence.md
+- .servo/worktrack/WT-20260531-096/gate-evidence.md
 - docs/ms9-final-acceptance-report.md
 
 ## Final Acceptance Handback
@@ -103,7 +105,7 @@
 - final_acceptance_status: awaiting fdch0 final milestone acceptance decision
 - acceptance_report: docs/ms9-final-acceptance-report.md
 - handback_at: 2026-05-31
-- added_worktracks: WT-20260531-094, WT-20260531-095
+- added_worktracks: WT-20260531-094, WT-20260531-095, WT-20260531-096
 - grill_me_decision: fdch0 accepted local WT-094 validation as sufficient; remote GitHub Actions freshness is not an MS-9 acceptance blocker.
 
 ## Milestone Gate Design

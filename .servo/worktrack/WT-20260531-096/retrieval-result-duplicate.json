@@ -1,0 +1,18 @@
+{
+  "results": [
+    {
+      "caseId": "cn-procurement-approval-flow",
+      "returnedSourceIds": ["src-procurement-policy"],
+      "returnedSnippetIds": ["snip-procurement-materials", "snip-procurement-review"],
+      "matchedTerms": ["采购", "审批", "材料", "复核"],
+      "citationTraceabilityPassed": true
+    },
+    {
+      "caseId": "cn-procurement-approval-flow",
+      "returnedSourceIds": ["src-procurement-policy"],
+      "returnedSnippetIds": ["snip-procurement-materials", "snip-procurement-review"],
+      "matchedTerms": ["采购", "审批", "材料", "复核"],
+      "citationTraceabilityPassed": true
+    }
+  ]
+}
