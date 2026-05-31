@@ -1130,7 +1130,7 @@
 - plan_task_queue: .servo/worktrack/WT-20260529-088/plan-task-queue.md
 - gate_evidence: .servo/worktrack/WT-20260529-088/gate-evidence.md
 - branch: worktrack/wt-20260529-088-hybrid-retrieval-regression
-- merge_commit: pending closeout merge
+- merge_commit: 88e71bf717977d1227de43fc3119dc8c52675077
 - validation: retrieval corpus gate pass; MS-10 result fixture gate pass 5 results with lexical-only/vector-only/hybrid-fusion/context-window coverage, provider failure, dimensions mismatch, snippet evidence alignment, and context cap checks; postgres readiness pass; lint pass; test pass 30 files / 234 tests; build pass
 - planning_notes: Regression must cover lexical-only, vector-only, fusion, forbidden sources, filter reasons, context caps, citation traceability, embedding provider failure, and profile status/dimension mismatch.
 
