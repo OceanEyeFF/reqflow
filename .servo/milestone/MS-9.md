@@ -5,7 +5,7 @@
 - milestone_id: MS-9
 - title: PostgreSQL 与 Hybrid Search 架构基线
 - milestone_kind: goal-driven
-- status: active
+- status: completed
 - priority: 9
 - created_by: fdch0
 - created_at: 2026-05-29
@@ -102,9 +102,12 @@
 ## Final Acceptance Handback
 
 - milestone_gate_verdict: pass
-- final_acceptance_status: awaiting fdch0 final milestone acceptance decision
+- final_acceptance_status: accepted
 - acceptance_report: docs/ms9-final-acceptance-report.md
 - handback_at: 2026-05-31
+- accepted_by: fdch0
+- accepted_at: 2026-05-31 17:00:10 +08:00
+- acceptance_note: accepted after WT-096 final CodeReview; local MS-9 validation is sufficient and remote GitHub Actions freshness remains a non-blocking follow-up.
 - added_worktracks: WT-20260531-094, WT-20260531-095, WT-20260531-096
 - grill_me_decision: fdch0 accepted local WT-094 validation as sufficient; remote GitHub Actions freshness is not an MS-9 acceptance blocker.
 

@@ -215,7 +215,7 @@
 - milestone_id: MS-9
 - title: PostgreSQL 与 Hybrid Search 架构基线
 - milestone_kind: goal-driven
-- status: active
+- status: completed
 - priority: 12
 - depends_on_milestones: [MS-20260528-003]
 - worktrack_list: [WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082, WT-20260531-094, WT-20260531-095, WT-20260531-096]
@@ -224,6 +224,10 @@
 - updated: 2026-05-31
 - updated_by: harness-kernel
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
+- acceptance_handback_status: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-05-31 17:00:10 +08:00
+- acceptance_note: accepted after WT-096 final CodeReview; local validation is sufficient for MS-9 and remote GitHub Actions freshness remains a non-blocking follow-up.
 - supersedes: [MS-20260528-002, MS-20260529-001]
 - purpose: 建立 PostgreSQL + pgvector + BM25/FTS hybrid search 架构基线、迁移边界、extension readiness 和中文检索评测语料。
 

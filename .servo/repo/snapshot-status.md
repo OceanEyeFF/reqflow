@@ -169,7 +169,7 @@ reqflow/
 ### Preparation Work
 
 - current_preparation_milestone: MS-9
-- current_preparation_item: WT-20260529-082 completed; MS-9 awaits fdch0 final acceptance decision.
+- current_preparation_item: MS-9 accepted by fdch0 on 2026-05-31; MS-10 awaits explicit activation.
 - preparation_goal: establish PostgreSQL + pgvector + BM25/FTS architecture, migration, extension readiness, and Chinese retrieval quality gates before implementation.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior completed under MS-20260528-001/MS-20260528-003; docs cleanup is now folded into MS-11 after hybrid search implementation.
@@ -229,20 +229,23 @@ reqflow/
 - activation_status: superseded, not active.
 - superseded_by: MS-9, MS-10, MS-11
 
-### Active Milestone
+### Accepted Milestone
 
 - milestone_id: MS-9
 - title: PostgreSQL 与 Hybrid Search 架构基线
-- status: active
+- status: completed
 - progress: 8/8 completed
 - depends_on_milestones: MS-20260528-003
 - scope_boundary: PostgreSQL dev/test/CI baseline, Prisma provider migration boundary, pgvector readiness, BM25/FTS/pg_search feasibility, fallback strategy, independent EmbeddingProviderConfig, SearchIndexProfile model/dimensions lock, and Chinese retrieval quality gate.
 - completed_worktracks: WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082, WT-20260531-094, WT-20260531-095, WT-20260531-096
 - planned_worktracks: none
-- activation_status: active on 2026-05-31 by fdch0 approval; all MS-9 worktracks completed and awaiting fdch0 final milestone acceptance decision.
+- activation_status: activated on 2026-05-31 by fdch0 approval; all MS-9 worktracks completed and accepted.
 - final_acceptance_report: docs/ms9-final-acceptance-report.md
 - milestone_gate_verdict: pass
-- final_acceptance: awaiting fdch0 final milestone acceptance decision
+- final_acceptance: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-05-31 17:00:10 +08:00
+- acceptance_note: accepted after WT-096 final CodeReview; local validation is sufficient for MS-9 and remote GitHub Actions freshness remains a non-blocking follow-up.
 - grill_me_decision: fdch0 accepted local WT-094 validation as sufficient; remote CI freshness is non-blocking follow-up.
 
 ### Planned Milestone

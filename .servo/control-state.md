@@ -21,10 +21,10 @@
 
 ## Active Milestone
 
-- active_milestone: MS-9
-- milestone_title: PostgreSQL 与 Hybrid Search 架构基线
-- milestone_status: active
-- milestone_pipeline_summary: total=14 planned=2 active=1 completed=9 superseded=2; MS-20260528-002 and MS-20260529-001 superseded by MS-9/MS-10/MS-11
+- active_milestone: none
+- milestone_title: none
+- milestone_status: none
+- milestone_pipeline_summary: total=14 planned=2 active=0 completed=10 superseded=2; MS-20260528-002 and MS-20260529-001 superseded by MS-9/MS-10/MS-11
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- MS-9 worktrack list is complete at 8/8. Hand back to fdch0 for final milestone acceptance decision.
+- MS-9 accepted by fdch0 on 2026-05-31. Await explicit fdch0 activation before starting MS-10.
 
 ## Linked Formal Documents
 
@@ -47,9 +47,9 @@
 ## Approval Boundary
 
 - needs_programmer_approval: true
-- reason: MS-9 worktrack list is complete at 8/8 and milestone final acceptance remains fdch0-only.
-- approval_scope: MS-9 active milestone worktracks; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
-- approval_persistence: active for MS-9 execution cycle until interrupted or milestone final acceptance handback.
+- reason: MS-9 is accepted and MS-10 activation is a new milestone decision.
+- approval_scope: MS-10 activation; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
+- approval_persistence: until fdch0 explicitly activates the next milestone or issues a new goal.
 
 ## Continuation Authority
 
@@ -76,9 +76,9 @@
 
 ## Handback Guard
 
-- handoff_state: waiting_for_fdch0_ms9_final_acceptance
-- last_stop_reason: milestone_final_acceptance_required
-- last_handback_signature: milestone-final-acceptance::MS-9::2026-05-31::8-of-8
+- handoff_state: waiting_for_fdch0_next_milestone_activation
+- last_stop_reason: ms9_accepted_next_milestone_activation_required
+- last_handback_signature: milestone-accepted::MS-9::2026-05-31::8-of-8
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
 - handback_lock_active: false
@@ -110,10 +110,10 @@
 - Phase 1-8 已完成，Phase 9 代码质量治理阶段开始
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
 - Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已完成 12/12 worktracks，并由用户在 2026-05-28 最终验收。
-- latest_acceptance: MS-20260528-003 accepted by fdch0 on 2026-05-29 after WT-20260529-077 AI clarification visibility fix
+- latest_acceptance: MS-9 accepted by fdch0 on 2026-05-31 after WT-096 final CodeReview
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
-- next_worktrack_candidate: none until fdch0 decides MS-9 final acceptance.
+- next_worktrack_candidate: none until fdch0 explicitly activates MS-10.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
@@ -124,8 +124,8 @@
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
-- active_next_milestone: MS-9 PostgreSQL 与 Hybrid Search 架构基线
-- active_milestone_clarification_status: confirmed; fdch0 approved preparing MS-9 work on 2026-05-31.
+- active_next_milestone: none; MS-10 awaits explicit fdch0 activation.
+- active_milestone_clarification_status: MS-9 accepted by fdch0 on 2026-05-31; no active milestone is currently running.
 - routed_new_requests: PostgreSQL hybrid search replaces previous docs cleanup and lightweight Chinese retrieval plans.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.

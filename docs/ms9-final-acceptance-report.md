@@ -4,10 +4,12 @@
 
 - milestone_id: MS-9
 - title: PostgreSQL 与 Hybrid Search 架构基线
-- status: ready-for-fdch0-acceptance
+- status: accepted
 - prepared_at: 2026-05-31
 - prepared_by: harness-kernel
 - final_acceptance_owner: fdch0
+- accepted_by: fdch0
+- accepted_at: 2026-05-31 17:00:10 +08:00
 
 ## Scope Summary
 
@@ -137,4 +139,4 @@ Both additional validation worktracks are now complete.
 
 ## Acceptance Decision Boundary
 
-MS-9 is ready for fdch0 final acceptance review at 8/8 completed worktracks. This report does not mark the milestone accepted and does not activate MS-10. Final acceptance must be explicitly decided by fdch0.
+MS-9 was accepted by fdch0 on 2026-05-31 after 8/8 completed worktracks and WT-096 final CodeReview. This acceptance does not activate MS-10; MS-10 remains a separate planned milestone.
