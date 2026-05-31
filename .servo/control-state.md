@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- MS-10 accepted by fdch0. Next action is RepoScope observe/what-next for MS-11 activation readiness.
+- MS-10 accepted by fdch0. WT-20260531-100 local CPU embedding sidecar PoC was added to the MS-11 planned backlog; next action is RepoScope observe/what-next for MS-11 activation readiness.
 
 ## Linked Formal Documents
 
@@ -140,7 +140,7 @@
 - superseded_milestones: MS-20260528-002 docs 文档更新迭代与整理; MS-20260529-001 中文知识检索增强与结构化索引.
 - current_active_milestone: none
 - latest_completed_milestone: MS-10 知识库索引与 Hybrid Retrieval 实现 accepted by fdch0 on 2026-05-31.
-- planned_followup_milestones: MS-10 知识库索引与 Hybrid Retrieval 实现; MS-11 AI 草稿 Hybrid Context 接入与文档追平
+- planned_followup_milestones: MS-11 AI 草稿 Hybrid Context 接入与文档追平, including WT-20260531-100 local CPU embedding sidecar PoC
 - embedding_profile_decision: Embedding provider is separate from AI chat provider; active SearchIndexProfile locks model/dimensions/semantic space and any model/dimension change requires explicit reindex.
 - hybrid_search_planning_addendum: Follow-up design points folded into MS-9/MS-10/MS-11: query understanding, structured metadata indexing, RRF fusion, optional reranker seam, context window builder, retrieval evaluation harness, admin/debug evidence, pgvector filtered-search risk boundary.
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`

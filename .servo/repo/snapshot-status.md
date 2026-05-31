@@ -281,11 +281,11 @@ reqflow/
 - milestone_id: MS-11
 - title: AI 草稿 Hybrid Context 接入与文档追平
 - status: planned
-- progress: 0/5 completed
+- progress: 0/6 completed
 - depends_on_milestones: MS-10
-- scope_boundary: AI draft hybrid context integration, citation UI/evidence, Chinese business E2E validation, PostgreSQL/extension readiness, and docs/operator catch-up.
-- planned_worktracks: WT-20260529-089, WT-20260529-090, WT-20260529-091, WT-20260529-092, WT-20260529-093
-- activation_status: planned, blocked until MS-10 completion.
+- scope_boundary: AI draft hybrid context integration, optional local CPU embedding sidecar PoC, citation UI/evidence, Chinese business E2E validation, PostgreSQL/extension readiness, and docs/operator catch-up.
+- planned_worktracks: WT-20260529-089, WT-20260529-090, WT-20260529-091, WT-20260529-092, WT-20260529-093, WT-20260531-100
+- activation_status: planned; MS-10 dependency is completed and accepted, ready for fdch0 activation.
 
 ### M4 Governance Facts
 

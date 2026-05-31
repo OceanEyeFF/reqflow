@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 99
-- planned: 9
+- total: 100
+- planned: 10
 - active: 0
 - completed: 79
 - superseded: 8
@@ -1237,3 +1237,15 @@
 - priority: 5
 - contract_path: TBD
 - branch: worktrack/wt-20260529-093-docs-operator-catch-up
+
+### WT-20260531-100
+
+- worktrack_id: WT-20260531-100
+- title: 本地 CPU Embedding sidecar PoC
+- milestone_id: MS-11
+- node_type: feature
+- status: planned
+- priority: 6
+- contract_path: TBD
+- branch: worktrack/wt-20260531-100-local-embedding-sidecar-poc
+- planning_notes: Implement an optional local embedding HTTP sidecar PoC based on `docs/local-embedding-docker-feasibility.md`; do not bundle model weights into the main Next.js app image. Use a fixed model revision, CPU runtime, `EmbeddingProviderConfig.baseUrl`, `SearchIndexProfile` provider/model/dimensions lock, benchmark p50/p95 latency and memory, and validate retrieval quality with the MS-10 evaluation gate before making it a default path.
