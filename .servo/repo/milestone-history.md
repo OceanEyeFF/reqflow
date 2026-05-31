@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 11
-- completed: 9
+- total: 12
+- completed: 10
 - superseded: 2
 
 ## Completed Milestones
@@ -96,6 +96,17 @@
 - source_artifact: .servo/milestone/MS-20260528-003.md
 - completed_worktracks: WT-20260528-064, WT-20260528-065, WT-20260528-066, WT-20260528-067, WT-20260529-068, WT-20260529-069, WT-20260529-077
 - acceptance_note: accepted after final review; Chinese knowledge retrieval improvements were registered separately as MS-20260529-001.
+
+### MS-9
+
+- milestone_id: MS-9
+- title: PostgreSQL 与 Hybrid Search 架构基线
+- status: completed
+- accepted_by: fdch0
+- accepted_at: 2026-05-31 17:00:10 +08:00
+- source_artifact: .servo/milestone/MS-9.md
+- completed_worktracks: WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082, WT-20260531-094, WT-20260531-095, WT-20260531-096
+- acceptance_note: accepted after WT-096 final CodeReview; local validation is sufficient for MS-9 and remote GitHub Actions freshness remains a non-blocking follow-up.
 
 ## Superseded Milestones
 

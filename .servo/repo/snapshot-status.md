@@ -168,9 +168,9 @@ reqflow/
 
 ### Preparation Work
 
-- current_preparation_milestone: MS-9
-- current_preparation_item: MS-9 accepted by fdch0 on 2026-05-31; MS-10 awaits explicit activation.
-- preparation_goal: establish PostgreSQL + pgvector + BM25/FTS architecture, migration, extension readiness, and Chinese retrieval quality gates before implementation.
+- current_preparation_milestone: MS-10
+- current_preparation_item: WT-20260529-083 ready for worktrack initialization.
+- preparation_goal: implement knowledge search index schema, lexical/vector retrieval, fusion, filtering, context expansion, and regression tests on the MS-9 PostgreSQL hybrid search baseline.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior completed under MS-20260528-001/MS-20260528-003; docs cleanup is now folded into MS-11 after hybrid search implementation.
 
@@ -248,16 +248,17 @@ reqflow/
 - acceptance_note: accepted after WT-096 final CodeReview; local validation is sufficient for MS-9 and remote GitHub Actions freshness remains a non-blocking follow-up.
 - grill_me_decision: fdch0 accepted local WT-094 validation as sufficient; remote CI freshness is non-blocking follow-up.
 
-### Planned Milestone
+### Active Milestone
 
 - milestone_id: MS-10
 - title: 知识库索引与 Hybrid Retrieval 实现
-- status: planned
+- status: active
 - progress: 0/6 completed
 - depends_on_milestones: MS-9
 - scope_boundary: knowledge search index schema, lexical BM25/FTS search, SearchIndexProfile-bound embedding + pgvector index, hybrid fusion, permission filtering, context expansion, and regression tests.
 - planned_worktracks: WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088
-- activation_status: planned, blocked until MS-9 completion.
+- activation_status: activated by fdch0 on 2026-05-31 17:16:10 +08:00; MS-9 dependency is completed and accepted.
+- active_or_next_worktrack: WT-20260529-083
 
 ### Planned Milestone
 

@@ -5,9 +5,9 @@
 ## Pipeline Summary
 
 - total: 14
-- planned: 2
+- planned: 1
 - active: 1
-- completed: 9
+- completed: 10
 - superseded: 2
 
 ## Milestones
@@ -236,15 +236,17 @@
 - milestone_id: MS-10
 - title: 知识库索引与 Hybrid Retrieval 实现
 - milestone_kind: goal-driven
-- status: planned
+- status: active
 - priority: 13
 - depends_on_milestones: [MS-9]
 - worktrack_list: [WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088]
 - created_by: fdch0
 - created_at: 2026-05-29
-- updated: 2026-05-29
+- updated: 2026-05-31
 - updated_by: harness-kernel
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
+- activated_by: fdch0
+- activated_at: 2026-05-31 17:16:10 +08:00
 - purpose: 实现 lexical BM25/FTS、embedding + pgvector、fusion、权限过滤、上下文扩展和可解释 citation。
 
 ### MS-11

@@ -21,10 +21,10 @@
 
 ## Active Milestone
 
-- active_milestone: none
-- milestone_title: none
-- milestone_status: none
-- milestone_pipeline_summary: total=14 planned=2 active=0 completed=10 superseded=2; MS-20260528-002 and MS-20260529-001 superseded by MS-9/MS-10/MS-11
+- active_milestone: MS-10
+- milestone_title: 知识库索引与 Hybrid Retrieval 实现
+- milestone_status: active
+- milestone_pipeline_summary: total=14 planned=1 active=1 completed=10 superseded=2; MS-20260528-002 and MS-20260529-001 superseded by MS-9/MS-10/MS-11
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- MS-9 accepted by fdch0 on 2026-05-31. Await explicit fdch0 activation before starting MS-10.
+- MS-10 activated by fdch0 on 2026-05-31. Initialize WT-20260529-083 next.
 
 ## Linked Formal Documents
 
@@ -46,10 +46,10 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: true
-- reason: MS-9 is accepted and MS-10 activation is a new milestone decision.
-- approval_scope: MS-10 activation; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
-- approval_persistence: until fdch0 explicitly activates the next milestone or issues a new goal.
+- needs_programmer_approval: false
+- reason: fdch0 explicitly activated MS-10 and granted 30 continuous Worktrack actions for this execution cycle.
+- approval_scope: MS-10 active milestone worktracks; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
+- approval_persistence: active for MS-10 execution cycle until interrupted or milestone final acceptance handback.
 
 ## Continuation Authority
 
@@ -76,13 +76,13 @@
 
 ## Handback Guard
 
-- handoff_state: waiting_for_fdch0_next_milestone_activation
-- last_stop_reason: ms9_accepted_next_milestone_activation_required
-- last_handback_signature: milestone-accepted::MS-9::2026-05-31::8-of-8
+- handoff_state: unlocked_ms10_execution
+- last_stop_reason: none
+- last_handback_signature: ms10-activated::2026-05-31::6-worktracks
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
 - handback_lock_active: false
-- last_unlock_signal: fdch0 approved MS8 addendum execution cycle and requested repo baseline refresh plus sequential worktrack execution.
+- last_unlock_signal: fdch0 explicitly activated MS-10 and approved 30 continuous Worktrack actions on 2026-05-31.
 
 ## Baseline Traceability
 
@@ -98,11 +98,11 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 23
-- autonomous_worktracks_opened: 7
+- autonomy_budget_remaining: 30
+- autonomous_worktracks_opened: 0
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-31
-- autonomy_budget_notes: MS-9 执行周期授权；允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack。危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。用户随后要求完成第一个 Worktrack 后停止，等待下一轮完整权限；Milestone final acceptance 必须由 fdch0 决定。
+- autonomy_budget_notes: MS-10 执行周期授权；允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack。危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。Milestone final acceptance 必须由 fdch0 决定。
 
 ## Notes
 
@@ -113,7 +113,7 @@
 - latest_acceptance: MS-9 accepted by fdch0 on 2026-05-31 after WT-096 final CodeReview
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
-- next_worktrack_candidate: none until fdch0 explicitly activates MS-10.
+- next_worktrack_candidate: WT-20260529-083.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
@@ -124,13 +124,13 @@
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
-- active_next_milestone: none; MS-10 awaits explicit fdch0 activation.
-- active_milestone_clarification_status: MS-9 accepted by fdch0 on 2026-05-31; no active milestone is currently running.
+- active_next_milestone: MS-10 知识库索引与 Hybrid Retrieval 实现.
+- active_milestone_clarification_status: confirmed; fdch0 activated MS-10 on 2026-05-31 and approved 30 continuous Worktrack actions.
 - routed_new_requests: PostgreSQL hybrid search replaces previous docs cleanup and lightweight Chinese retrieval plans.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
 - superseded_milestones: MS-20260528-002 docs 文档更新迭代与整理; MS-20260529-001 中文知识检索增强与结构化索引.
-- planned_next_milestone: MS-10 知识库索引与 Hybrid Retrieval 实现 after MS-9 completion
+- current_active_milestone: MS-10 知识库索引与 Hybrid Retrieval 实现
 - planned_followup_milestones: MS-10 知识库索引与 Hybrid Retrieval 实现; MS-11 AI 草稿 Hybrid Context 接入与文档追平
 - embedding_profile_decision: Embedding provider is separate from AI chat provider; active SearchIndexProfile locks model/dimensions/semantic space and any model/dimension change requires explicit reindex.
 - hybrid_search_planning_addendum: Follow-up design points folded into MS-9/MS-10/MS-11: query understanding, structured metadata indexing, RRF fusion, optional reranker seam, context window builder, retrieval evaluation harness, admin/debug evidence, pgvector filtered-search risk boundary.
