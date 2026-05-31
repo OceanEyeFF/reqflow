@@ -1,5 +1,11 @@
 # AI Knowledge Citation Strategy
 
+## Historical Scope Notice
+
+This document is the MS6 minimal static-corpus citation strategy. It should not be read as the current full knowledge retrieval implementation.
+
+Current citation truth is now produced by PostgreSQL-backed hybrid retrieval, Context Window Builder output, and citation groups with source/path/section/snippet provenance. Use `docs/operator-hybrid-search-ai-draft.md`, `docs/hybrid-search-architecture.md`, and the MS-10/MS-11 validation records for current behavior.
+
 This document defines the MS6 minimal built-in knowledge corpus and citation strategy for the Deepseek-backed AI requirement discussion MVP.
 
 It is a design contract for WT-20260526-033 through WT-20260526-036. It does not implement retrieval, indexing, provider calls, UI, uploads, or schema changes.

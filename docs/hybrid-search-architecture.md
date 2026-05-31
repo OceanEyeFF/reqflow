@@ -9,11 +9,17 @@
 
 ## Decision Summary
 
-ReqFlow will move knowledge retrieval from the current SQLite substring-scoring implementation toward a PostgreSQL-backed hybrid retrieval architecture. The target architecture uses PostgreSQL as the application database, combines lexical retrieval and vector retrieval, fuses ranked results with Reciprocal Rank Fusion style ranking, and feeds AI draft generation only through a bounded Context Window Builder.
+At MS-9 planning time, ReqFlow decided to move knowledge retrieval from the then-current SQLite substring-scoring implementation toward a PostgreSQL-backed hybrid retrieval architecture. The target architecture uses PostgreSQL as the application database, combines lexical retrieval and vector retrieval, fuses ranked results with Reciprocal Rank Fusion style ranking, and feeds AI draft generation only through a bounded Context Window Builder.
 
 The default lexical target is `pg_search`/BM25 when the later extension-readiness worktrack proves it deployable in the chosen PostgreSQL environment. If that readiness gate fails, MS-10 must use PostgreSQL native full-text search with explicit Chinese tokenization and normalization fallback. Vector retrieval uses `pgvector` only inside an active SearchIndexProfile whose embedding model, dimensions, and semantic space are immutable after creation.
 
 This worktrack records architecture and risk boundaries only. It does not enable PostgreSQL, change Prisma schema, install extensions, generate embeddings, or alter runtime AI draft behavior.
+
+## Implementation Status Notice
+
+This document is the MS-9 architecture decision record. The first runtime implementation has since landed in MS-10, and the AI draft integration/debug evidence has partially landed in MS-11.
+
+Current operator behavior is summarized in `docs/operator-hybrid-search-ai-draft.md`. In particular, native PostgreSQL FTS fallback, pgvector-backed embeddings, RRF-style fusion, Context Window Builder citation groups, and AI draft context integration are no longer future-only design items. `pg_search` / BM25 remains optional and unavailable in the current local image unless a target environment passes readiness.
 
 ## Current Repo Facts
 

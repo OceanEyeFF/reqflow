@@ -9,6 +9,9 @@
 - **附件上传** — 支持拖拽上传与图片预览，方便需求信息补充
 - **通知系统** — 站内通知与铃铛实时提醒，不再遗漏关键更新
 - **操作日志** — 完整审计追踪，每一次变更都有据可查
+- **管理员知识库** — 管理多知识库、上传文档或 zip、解析片段、启停来源与片段
+- **AI 需求草稿** — 基于选定知识库的 hybrid retrieval 上下文生成结构化草稿，保留人工确认边界
+- **检索证据调试** — 管理员可检查 lexical/vector/fusion/context-window/citation evidence
 
 ## 技术栈
 
@@ -23,6 +26,8 @@
 | 认证     | NextAuth v5   |
 | 组件库   | Radix UI      |
 | 图标     | Lucide React  |
+| 检索     | PostgreSQL native FTS fallback + pgvector + RRF-style fusion |
+| AI       | Server-side provider adapter; current provider decision is Deepseek |
 
 ## 快速启动
 
@@ -80,6 +85,9 @@ reqflow/
 | `npm run lint`       | 代码检查         |
 | `npm run test`       | 运行 Vitest 单元/集成测试 |
 | `npm run db:seed`    | 填充测试数据     |
+| `npm run postgres:readiness` | 检查 Prisma PostgreSQL schema/migration readiness |
+| `npm run search:extensions` | 检查 pgvector、native FTS fallback 和 pg_search 边界 |
+| `npm run retrieval:evaluate` | 运行中文 hybrid retrieval 质量 gate |
 | `npx prisma studio`  | 数据库管理界面   |
 
 ## 注意事项
@@ -89,7 +97,9 @@ reqflow/
 - 上传文件存储在 `public/uploads/` 目录
 - API route 集成测试使用隔离 PostgreSQL schema，并由测试 helper 清理
 - 上云前环境变量、PostgreSQL、上传存储和部署平台边界见 `docs/cloud-readiness-boundary.md`
-- AI MVP 技术决策边界见 `docs/ai-mvp-technical-brief.md`；当前 MS6 使用 Deepseek 并聚焦 AI 需求生成 discussion MVP，管理员知识库上传/zip 导入拆分到 MS7
+- AI/operator 当前事实见 `docs/operator-hybrid-search-ai-draft.md`；MS6 早期边界文档仍保留为历史设计记录
+- Hybrid search 当前使用 PostgreSQL native FTS fallback、pgvector 和 RRF-style fusion；`pg_search` 仍是可选目标，只有目标环境 readiness 通过后才可宣称 BM25 路径
+- AI 草稿只能通过 Context Window Builder 使用经过过滤和裁剪的知识上下文；引用来自真实检索命中，最终创建工单仍需用户在现有表单中确认
 - 代码改动必须在 Git worktree 中完成，详见 `AGENTS.md`
 - AI 协作入口以 `AGENTS.md` 为准，辅助说明见 `docs/ai-collaboration-entrypoints.md`
 - Repo hygiene、本地 DB 治理、worktree 中 Prisma 依赖初始化说明见 `docs/repo-hygiene-matrix.md`、`docs/worktree-branch-audit.md` 和 `docs/prisma-dev-db-governance.md`
