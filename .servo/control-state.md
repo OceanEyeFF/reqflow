@@ -10,13 +10,13 @@
 ## Current Control Level
 
 - repo_scope: inactive
-- worktrack_scope: initializing
+- worktrack_scope: judging
 
 ## Active Worktrack
 
 - active_worktrack: WT-20260529-084
 - worktrack_title: Query understanding 与 Lexical BM25/FTS 检索实现
-- worktrack_status: initialized
+- worktrack_status: gate-passed
 - target_milestone_id: MS-10
 
 ## Active Milestone
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260529-084 initialized. Dispatch query understanding and lexical retrieval implementation next.
+- WT-20260529-084 gate passed. Close and merge next.
 
 ## Linked Formal Documents
 
@@ -40,7 +40,7 @@
 - repo_analysis: .servo/repo/analysis.md
 - worktrack_contract: .servo/worktrack/WT-20260529-084/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260529-084/plan-task-queue.md
-- gate_evidence: N/A
+- gate_evidence: .servo/worktrack/WT-20260529-084/gate-evidence.md
 - milestone_backlog: .servo/repo/milestone-backlog.md
 - worktrack_backlog: .servo/repo/worktrack-backlog.md
 

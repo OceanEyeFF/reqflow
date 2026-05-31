@@ -1060,11 +1060,13 @@
 - title: Query understanding 与 Lexical BM25/FTS 检索实现
 - milestone_id: MS-10
 - node_type: feature
-- status: active
+- status: completed
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260529-084/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260529-084/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260529-084/gate-evidence.md
 - branch: worktrack/wt-20260529-084-lexical-bm25-fts-search
+- validation: query understanding and lexical fallback tests pass; postgres readiness pass; lint pass; test pass 29 files / 207 tests; build pass
 - planning_notes: Query understanding should produce rawQuery, normalizedQuery, lexicalQuery, embeddingQuery, mustTerms, and domainEntities; lexical implementation must retain explainable hit evidence.
 
 ### WT-20260529-085

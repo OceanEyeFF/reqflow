@@ -253,14 +253,15 @@ reqflow/
 - milestone_id: MS-10
 - title: 知识库索引与 Hybrid Retrieval 实现
 - status: active
-- progress: 1/6 completed
+- progress: 2/6 completed
 - depends_on_milestones: MS-9
 - scope_boundary: knowledge search index schema, lexical BM25/FTS search, SearchIndexProfile-bound embedding + pgvector index, hybrid fusion, permission filtering, context expansion, and regression tests.
-- completed_worktracks: WT-20260529-083
-- planned_worktracks: WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088
+- completed_worktracks: WT-20260529-083, WT-20260529-084
+- planned_worktracks: WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088
 - activation_status: activated by fdch0 on 2026-05-31 17:16:10 +08:00; MS-9 dependency is completed and accepted.
 - latest_evidence: WT-20260529-083 added SearchIndexProfile, EmbeddingProviderConfig, snippet metadata, and profile-scoped embedding schema; validation passed Prisma generate/validate, migration deploy/status, postgres readiness, focused tests, lint, full test, and build.
-- active_or_next_worktrack: WT-20260529-084 active on `worktrack/wt-20260529-084-lexical-bm25-fts-search`
+- latest_evidence: WT-20260529-084 added deterministic query understanding and metadata-aware lexical retrieval fallback with debug evidence; validation passed focused retrieval tests, postgres readiness, lint, full test, and build.
+- active_or_next_worktrack: WT-20260529-085
 
 ### Planned Milestone
 
