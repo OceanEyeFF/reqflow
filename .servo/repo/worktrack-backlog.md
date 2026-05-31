@@ -924,10 +924,13 @@
 - title: Hybrid Search 架构决策与风险边界
 - milestone_id: MS-9
 - node_type: architecture
-- status: planned
+- status: completed
 - priority: 1
-- contract_path: TBD
-- branch: worktrack/wt-20260529-078-hybrid-search-architecture
+- contract_path: .servo/worktrack/WT-20260529-078/contract.md
+- gate_evidence: .servo/worktrack/WT-20260529-078/gate-evidence.md
+- branch: worktrack/wt-20260529-078-hybrid-search-architecture (merged)
+- merge_commit: efb6966
+- validation: git diff --check pass; targeted architecture consistency search pass; docs/control-only scope verified
 - planning_notes: Must define query understanding, RRF fusion, provider abstractions, reranker seam, debug evidence contract, SearchIndexProfile invariants, and pgvector filtered-search risk boundary.
 
 ### WT-20260529-079
