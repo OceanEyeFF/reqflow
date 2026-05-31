@@ -5,8 +5,8 @@
 ## Summary
 
 - total: 96
-- planned: 10
-- active: 0
+- planned: 9
+- active: 1
 - completed: 75
 - superseded: 8
 - blocked: 0
@@ -1124,9 +1124,11 @@
 - title: Hybrid Retrieval evaluation harness 与回归测试
 - milestone_id: MS-10
 - node_type: test
-- status: planned
+- status: active
 - priority: 6
-- contract_path: TBD
+- contract_path: .servo/worktrack/WT-20260529-088/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260529-088/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260529-088/gate-evidence.md
 - branch: worktrack/wt-20260529-088-hybrid-retrieval-regression
 - planning_notes: Regression must cover lexical-only, vector-only, fusion, forbidden sources, filter reasons, context caps, citation traceability, embedding provider failure, and profile status/dimension mismatch.
 

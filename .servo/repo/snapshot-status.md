@@ -265,7 +265,7 @@ reqflow/
 - latest_evidence: WT-20260529-086 added RRF hybrid retrieval, rank-based score evidence, vector failure degradation, empty-query guard, and no-op/injected reranker seam with candidate sanitization; validation passed focused hybrid tests, postgres readiness, search extensions, lint, full test, and build.
 - latest_evidence: WT-20260529-087 added Context Window Builder with adjacent chunk expansion, strict filter recheck, context caps, selected-hit priority, and citation aggregation; validation passed focused context tests, postgres readiness, lint, full test, and build.
 - active_or_next_worktrack: WT-20260529-088
-- current_worktrack_status: planned
+- current_worktrack_status: active
 
 ### Planned Milestone
 
