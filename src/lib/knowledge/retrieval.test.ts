@@ -166,6 +166,38 @@ describe("selectKnowledgeSnippets", () => {
     expect(result.debugEvidence.lexicalHits.every((hit) => hit.engine === "postgres-native-fts-fallback")).toBe(true);
   });
 
+  it("uses database-side lexical recall beyond the previous newest candidate window", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const relevant = await seedSnippet(admin.id, {
+      sourceEnabled: true,
+      sourceStatus: "ready",
+      versionStatus: "ready",
+      snippetEnabled: true,
+      content: "老文档说明特殊采购审批路径。",
+    });
+    for (let index = 0; index < 105; index += 1) {
+      await seedSnippet(admin.id, {
+        sourceEnabled: true,
+        sourceStatus: "ready",
+        versionStatus: "ready",
+        snippetEnabled: true,
+        content: `近期噪声片段 ${index}`,
+      });
+    }
+
+    const result = await retrieveKnowledgeSnippets("特殊采购审批", {
+      knowledgeBaseIds: [relevant.knowledgeBaseId],
+    });
+
+    expect(result.citations).toHaveLength(1);
+    expect(result.citations[0].snippet).toBe("老文档说明特殊采购审批路径。");
+    expect(result.debugEvidence.candidatesScanned).toBe(1);
+    expect(result.debugEvidence.lexicalHits[0]).toMatchObject({
+      engine: "postgres-native-fts-fallback",
+      matchedTerms: expect.arrayContaining(["特殊", "采购", "审批"]),
+    });
+  });
+
   it("excludes disabled sources and snippets", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     await seedSnippet(admin.id, {

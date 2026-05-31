@@ -36,6 +36,10 @@ Add a repair Worktrack before MS-10 final acceptance:
 - add regression coverage proving older relevant snippets are still retrieved beyond the previous newest-100 window;
 - update evidence/docs to stop overstating FTS behavior before the repair lands.
 
+## Remediation
+
+WT-20260531-099 was opened to repair this blocker. It replaces the newest-100 application-side lexical prefilter with database-side PostgreSQL FTS fallback recall and adds a regression for older relevant snippets beyond the previous newest-candidate window.
+
 ## Residual Risk
 
 The embedding/vector/context builder surfaces have useful tests for profile mismatch, provider failure, filter enforcement, RRF no raw-score addition, and context caps. The main blocker is lexical lane truthfulness and recall under larger corpora.

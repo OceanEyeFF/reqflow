@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import type { KnowledgeCitation } from "@/lib/ai/types";
-import type { Prisma } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import { retrieveVectorCandidates, type EmbeddingProvider, type VectorRetrievalResult } from "./embeddings";
 
 const MAX_PERSISTED_SNIPPETS = 3;
@@ -187,33 +187,18 @@ export async function retrieveKnowledgeSnippets(
   }
   const knowledgeBaseIds = normalizeKnowledgeBaseIds(options.knowledgeBaseIds);
 
-  const snippets = await prisma.knowledgeSnippet.findMany({
-    where: {
-      enabled: true,
-      source: {
-        enabled: true,
-        status: { in: ["ready", "enabled"] },
-        knowledgeBaseId: knowledgeBaseIds.length > 0 ? { in: knowledgeBaseIds } : undefined,
-        knowledgeBase: { enabled: true },
-      },
-      version: { status: "ready" },
-    },
-    include: { source: true, version: true, searchMetadata: true },
-    take: MAX_CANDIDATES,
-    orderBy: { createdAt: "desc" },
-  });
-
-  const ranked = snippets
-    .map((snippet) => scoreLexicalHit(snippet, query))
+  const candidates = await findLexicalCandidates(query, knowledgeBaseIds);
+  const ranked = candidates
+    .map((candidate) => scoreLexicalHit(candidate, query))
     .filter(({ score }) => score > 0)
-    .sort((a, b) => b.score - a.score || a.snippet.chunkIndex - b.snippet.chunkIndex);
+    .sort((a, b) => b.candidate.ftsRank - a.candidate.ftsRank || b.score - a.score || a.candidate.chunkIndex - b.candidate.chunkIndex);
   const selected = ranked.slice(0, MAX_PERSISTED_SNIPPETS);
-  const lexicalHits = selected.map(({ snippet, score, matchedTerms, lexicalTextSource }, index) => ({
-    snippetId: snippet.id,
-    sourceId: `kb-${snippet.sourceId}`,
-    sourceTitle: snippet.source.title,
-    path: snippet.sourcePath,
-    section: snippet.section ?? undefined,
+  const lexicalHits = selected.map(({ candidate, score, matchedTerms, lexicalTextSource }, index) => ({
+    snippetId: candidate.snippetId,
+    sourceId: `kb-${candidate.sourceId}`,
+    sourceTitle: candidate.sourceTitle,
+    path: candidate.sourcePath,
+    section: candidate.section ?? undefined,
     rank: index + 1,
     engine: "postgres-native-fts-fallback" as const,
     score,
@@ -224,15 +209,15 @@ export async function retrieveKnowledgeSnippets(
   }));
 
   return {
-    citations: selected.map(({ snippet }) => ({
-      sourceId: `kb-${snippet.sourceId}`,
-      sourceTitle: snippet.source.title,
-      path: snippet.sourcePath,
-      section: snippet.section ?? undefined,
-      snippet: snippet.content,
-      freshness: `imported ${snippet.version.createdAt.toISOString()} v${snippet.version.version}`,
+    citations: selected.map(({ candidate }) => ({
+      sourceId: `kb-${candidate.sourceId}`,
+      sourceTitle: candidate.sourceTitle,
+      path: candidate.sourcePath,
+      section: candidate.section ?? undefined,
+      snippet: candidate.content,
+      freshness: `imported ${candidate.versionCreatedAt.toISOString()} v${candidate.versionVersion}`,
     })),
-    debugEvidence: createDebugEvidence(query, knowledgeBaseIds, lexicalHits, snippets.length),
+    debugEvidence: createDebugEvidence(query, knowledgeBaseIds, lexicalHits, candidates.length),
   };
 }
 
@@ -434,33 +419,130 @@ export function tokenize(input: string): string[] {
   ).slice(0, 20);
 }
 
-type LexicalSnippet = Prisma.KnowledgeSnippetGetPayload<{
-  include: { source: true; version: true; searchMetadata: true };
-}>;
+type LexicalCandidateRow = {
+  snippetId: string;
+  sourceId: string;
+  sourceTitle: string;
+  sourcePath: string;
+  section: string | null;
+  content: string;
+  chunkIndex: number;
+  versionCreatedAt: Date;
+  versionVersion: number;
+  lexicalText: string | null;
+  documentTitle: string | null;
+  domainEntities: string[] | null;
+  processNames: string[] | null;
+  materialTypes: string[] | null;
+  approvalActions: string[] | null;
+  applicabilityRules: string[] | null;
+  ftsRank: number;
+};
 
-function scoreLexicalHit(snippet: LexicalSnippet, query: QueryUnderstanding) {
-  const metadata = snippet.searchMetadata;
-  const lexicalText = metadata
+async function findLexicalCandidates(query: QueryUnderstanding, knowledgeBaseIds: string[]): Promise<LexicalCandidateRow[]> {
+  const ftsQuery = query.mustTerms.join(" OR ");
+  const likeConditions = query.mustTerms.map((term) => Prisma.sql`lower("searchText") LIKE ${`%${term.toLowerCase()}%`}`);
+  const knowledgeBaseFilter =
+    knowledgeBaseIds.length > 0 ? Prisma.sql`AND source."knowledgeBaseId" IN (${Prisma.join(knowledgeBaseIds)})` : Prisma.empty;
+
+  return prisma.$queryRaw<LexicalCandidateRow[]>`
+    WITH candidates AS (
+      SELECT
+        s."id" AS "snippetId",
+        s."sourceId",
+        source."title" AS "sourceTitle",
+        s."sourcePath",
+        s."section",
+        s."content",
+        s."chunkIndex",
+        version."createdAt" AS "versionCreatedAt",
+        version."version" AS "versionVersion",
+        metadata."lexicalText",
+        metadata."documentTitle",
+        metadata."domainEntities",
+        metadata."processNames",
+        metadata."materialTypes",
+        metadata."approvalActions",
+        metadata."applicabilityRules",
+        concat_ws(
+          ' ',
+          metadata."lexicalText",
+          metadata."documentTitle",
+          array_to_string(metadata."domainEntities", ' '),
+          array_to_string(metadata."processNames", ' '),
+          array_to_string(metadata."materialTypes", ' '),
+          array_to_string(metadata."approvalActions", ' '),
+          array_to_string(metadata."applicabilityRules", ' '),
+          s."content"
+        ) AS "searchText"
+      FROM "KnowledgeSnippet" s
+      JOIN "KnowledgeSource" source ON source."id" = s."sourceId"
+      JOIN "KnowledgeSourceVersion" version ON version."id" = s."versionId"
+      JOIN "KnowledgeBase" kb ON kb."id" = source."knowledgeBaseId"
+      LEFT JOIN "KnowledgeSnippetSearchMetadata" metadata ON metadata."snippetId" = s."id"
+      WHERE s."enabled" = true
+        AND source."enabled" = true
+        AND source."status" IN ('ready', 'enabled')
+        AND version."status" = 'ready'
+        AND kb."enabled" = true
+        ${knowledgeBaseFilter}
+    ),
+    ranked AS (
+      SELECT
+        *,
+        to_tsvector('simple', "searchText") AS "searchVector",
+        websearch_to_tsquery('simple', ${ftsQuery}) AS "queryVector"
+      FROM candidates
+    )
+    SELECT
+      "snippetId",
+      "sourceId",
+      "sourceTitle",
+      "sourcePath",
+      "section",
+      "content",
+      "chunkIndex",
+      "versionCreatedAt",
+      "versionVersion",
+      "lexicalText",
+      "documentTitle",
+      "domainEntities",
+      "processNames",
+      "materialTypes",
+      "approvalActions",
+      "applicabilityRules",
+      ts_rank_cd("searchVector", "queryVector")::double precision AS "ftsRank"
+    FROM ranked
+    WHERE "searchVector" @@ "queryVector"
+      OR (${Prisma.join(likeConditions, " OR ")})
+    ORDER BY "ftsRank" DESC, "chunkIndex" ASC, "snippetId" ASC
+    LIMIT ${MAX_CANDIDATES}
+  `;
+}
+
+function scoreLexicalHit(candidate: LexicalCandidateRow, query: QueryUnderstanding) {
+  const hasMetadata = Boolean(candidate.lexicalText);
+  const lexicalText = hasMetadata
     ? [
-        metadata.lexicalText,
-        metadata.documentTitle,
-        metadata.domainEntities.join(" "),
-        metadata.processNames.join(" "),
-        metadata.materialTypes.join(" "),
-        metadata.approvalActions.join(" "),
-        metadata.applicabilityRules.join(" "),
+        candidate.lexicalText,
+        candidate.documentTitle,
+        candidate.domainEntities?.join(" "),
+        candidate.processNames?.join(" "),
+        candidate.materialTypes?.join(" "),
+        candidate.approvalActions?.join(" "),
+        candidate.applicabilityRules?.join(" "),
       ].filter(Boolean).join(" ")
-    : snippet.content;
+    : candidate.content;
   const haystack = normalizeSearchText(lexicalText);
   const matchedTerms = query.mustTerms.filter((term) => haystack.includes(term));
   const entityMatches = query.domainEntities.filter((entity) => haystack.includes(entity));
-  const score = matchedTerms.length * 10 + entityMatches.length * 3;
+  const score = candidate.ftsRank * 100 + matchedTerms.length * 10 + entityMatches.length * 3;
 
   return {
-    snippet,
+    candidate,
     score,
     matchedTerms,
-    lexicalTextSource: metadata ? ("metadata" as const) : ("content" as const),
+    lexicalTextSource: hasMetadata ? ("metadata" as const) : ("content" as const),
   };
 }
 
