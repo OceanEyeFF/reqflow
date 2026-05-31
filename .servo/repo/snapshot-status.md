@@ -262,6 +262,7 @@ reqflow/
 - latest_evidence: WT-20260529-083 added SearchIndexProfile, EmbeddingProviderConfig, snippet metadata, and profile-scoped embedding schema; validation passed Prisma generate/validate, migration deploy/status, postgres readiness, focused tests, lint, full test, and build.
 - latest_evidence: WT-20260529-084 added deterministic query understanding and metadata-aware lexical retrieval fallback with debug evidence; validation passed focused retrieval tests, postgres readiness, lint, full test, and build.
 - active_or_next_worktrack: WT-20260529-085
+- current_worktrack_status: active
 
 ### Planned Milestone
 

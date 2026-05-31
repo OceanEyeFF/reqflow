@@ -5,8 +5,8 @@
 ## Summary
 
 - total: 96
-- planned: 16
-- active: 0
+- planned: 15
+- active: 1
 - completed: 72
 - superseded: 8
 - blocked: 0
@@ -1076,9 +1076,11 @@
 - title: Embedding 生成与 pgvector 索引
 - milestone_id: MS-10
 - node_type: feature
-- status: planned
+- status: active
 - priority: 3
-- contract_path: TBD
+- contract_path: .servo/worktrack/WT-20260529-085/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260529-085/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260529-085/gate-evidence.md
 - branch: worktrack/wt-20260529-085-embedding-pgvector-index
 - planning_notes: EmbeddingProviderConfig is separate from AiProviderConfig; vectors are only comparable inside the same active SearchIndexProfile and dimensions mismatch must fail closed.
 
