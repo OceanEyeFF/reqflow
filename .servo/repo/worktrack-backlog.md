@@ -1060,9 +1060,10 @@
 - title: Query understanding 与 Lexical BM25/FTS 检索实现
 - milestone_id: MS-10
 - node_type: feature
-- status: planned
+- status: active
 - priority: 2
-- contract_path: TBD
+- contract_path: .servo/worktrack/WT-20260529-084/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260529-084/plan-task-queue.md
 - branch: worktrack/wt-20260529-084-lexical-bm25-fts-search
 - planning_notes: Query understanding should produce rawQuery, normalizedQuery, lexicalQuery, embeddingQuery, mustTerms, and domainEntities; lexical implementation must retain explainable hit evidence.
 

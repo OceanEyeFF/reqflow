@@ -260,7 +260,7 @@ reqflow/
 - planned_worktracks: WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088
 - activation_status: activated by fdch0 on 2026-05-31 17:16:10 +08:00; MS-9 dependency is completed and accepted.
 - latest_evidence: WT-20260529-083 added SearchIndexProfile, EmbeddingProviderConfig, snippet metadata, and profile-scoped embedding schema; validation passed Prisma generate/validate, migration deploy/status, postgres readiness, focused tests, lint, full test, and build.
-- active_or_next_worktrack: WT-20260529-084
+- active_or_next_worktrack: WT-20260529-084 active on `worktrack/wt-20260529-084-lexical-bm25-fts-search`
 
 ### Planned Milestone
 
