@@ -1044,11 +1044,13 @@
 - title: Knowledge search index schema、SearchIndexProfile 与 metadata migration
 - milestone_id: MS-10
 - node_type: migration
-- status: active
+- status: completed
 - priority: 1
 - contract_path: .servo/worktrack/WT-20260529-083/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260529-083/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260529-083/gate-evidence.md
 - branch: worktrack/wt-20260529-083-knowledge-search-index-schema
+- validation: Prisma generate/validate pass; migration deploy/status pass; postgres readiness pass; focused schema tests pass 1 file / 2 tests; lint pass; test pass 29 files / 203 tests; build pass
 - planning_notes: Index schema should carry profileId/model/dimensions/contentHash/status plus structured metadata such as domainEntities, processNames, materialTypes, approvalActions, applicabilityRules, sourcePath, section, and documentTitle.
 
 ### WT-20260529-084

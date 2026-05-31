@@ -33,6 +33,7 @@ model User {
   sessions         Session[]
   attachments      TicketAttachment[]
   aiProviderConfigs AiProviderConfig[]
+  embeddingProviderConfigs EmbeddingProviderConfig[]
   knowledgeBases    KnowledgeBase[]
   knowledgeSources  KnowledgeSource[]
   knowledgeVersions KnowledgeSourceVersion[]
@@ -256,6 +257,94 @@ model KnowledgeSnippet {
 
   source  KnowledgeSource        @relation(fields: [sourceId], references: [id], onDelete: Cascade)
   version KnowledgeSourceVersion @relation(fields: [versionId], references: [id], onDelete: Cascade)
+  searchMetadata KnowledgeSnippetSearchMetadata?
+  embeddings      KnowledgeEmbedding[]
 
   @@unique([versionId, sourcePath, chunkIndex])
+}
+
+model EmbeddingProviderConfig {
+  id          String   @id @default(cuid())
+  name        String   @default("default")
+  provider    String
+  baseUrl     String?
+  model       String
+  dimensions  Int
+  apiKey      String?
+  noKeyMode   Boolean  @default(false)
+  enabled     Boolean  @default(true)
+  updatedById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  updatedBy User?                @relation(fields: [updatedById], references: [id])
+  profiles  SearchIndexProfile[]
+
+  @@unique([name])
+}
+
+model SearchIndexProfile {
+  id                        String   @id @default(cuid())
+  name                      String   @default("default")
+  embeddingProviderConfigId String?
+  embeddingProvider         String
+  embeddingModel            String
+  embeddingDimensions       Int
+  semanticSpace             String
+  lexicalEngine             String
+  status                    String   @default("building")
+  isActive                  Boolean  @default(false)
+  createdAt                 DateTime @default(now())
+  updatedAt                 DateTime @updatedAt
+
+  embeddingProviderConfig EmbeddingProviderConfig? @relation(fields: [embeddingProviderConfigId], references: [id], onDelete: SetNull)
+  embeddings              KnowledgeEmbedding[]
+
+  @@unique([name])
+  @@index([status, isActive])
+  @@index([embeddingProvider, embeddingModel, embeddingDimensions])
+}
+
+model KnowledgeSnippetSearchMetadata {
+  id                 String   @id @default(cuid())
+  snippetId          String   @unique
+  sourcePath         String
+  section            String?
+  documentTitle      String?
+  lexicalText        String
+  contentHash        String
+  domainEntities     String[]
+  processNames       String[]
+  materialTypes      String[]
+  approvalActions    String[]
+  applicabilityRules String[]
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  snippet KnowledgeSnippet @relation(fields: [snippetId], references: [id], onDelete: Cascade)
+
+  @@index([sourcePath])
+  @@index([contentHash])
+}
+
+model KnowledgeEmbedding {
+  id           String   @id @default(cuid())
+  snippetId    String
+  profileId    String
+  model        String
+  dimensions   Int
+  contentHash  String
+  status       String   @default("pending")
+  vectorRef    String?
+  errorCode    String?
+  generatedAt  DateTime?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  snippet KnowledgeSnippet    @relation(fields: [snippetId], references: [id], onDelete: Cascade)
+  profile SearchIndexProfile @relation(fields: [profileId], references: [id], onDelete: Restrict)
+
+  @@unique([snippetId, profileId])
+  @@index([profileId, status])
+  @@index([contentHash])
 }

@@ -94,6 +94,10 @@ function runPrismaDbExecute(databaseUrl: string, sql: string): void {
 }
 
 export async function clearDatabase(prisma: PrismaClient): Promise<void> {
+  await prisma.knowledgeEmbedding.deleteMany();
+  await prisma.knowledgeSnippetSearchMetadata.deleteMany();
+  await prisma.searchIndexProfile.deleteMany();
+  await prisma.embeddingProviderConfig.deleteMany();
   await prisma.knowledgeSnippet.deleteMany();
   await prisma.knowledgeSourceVersion.deleteMany();
   await prisma.knowledgeSource.deleteMany();
