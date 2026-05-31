@@ -6,8 +6,8 @@ This document records ReqFlow's pre-cloud deployment boundary. It is a decision 
 
 - GitHub is the primary remote for CI/CD work.
 - GitHub Actions CI exists and validates `npm ci`, `npm run lint`, `npm run test`, and `npm run build`.
-- The application is still optimized for local/internal use with Prisma 5 and SQLite.
-- MS5 does not migrate PostgreSQL, add pgvector, implement AI features, choose a paid hosting service, or create production secrets.
+- The application is still optimized for local/internal use with Prisma 5 and PostgreSQL.
+- MS5 did not migrate PostgreSQL, add pgvector, implement AI features, choose a paid hosting service, or create production secrets. PostgreSQL provider migration was later moved into MS-9.
 
 ## Environment Variables
 
@@ -18,7 +18,7 @@ Required variables:
 | Variable | Purpose | Boundary |
 |----------|---------|----------|
 | `AUTH_SECRET` | NextAuth signing/encryption secret | Must be a strong generated secret per environment. Do not reuse the CI placeholder or development examples. |
-| `DATABASE_URL` | Prisma database connection string | Local/dev may use SQLite. Production needs an explicit database decision before launch. |
+| `DATABASE_URL` | Prisma database connection string | Must be a PostgreSQL URL for the current Prisma provider. Production still needs backup, pooling, and deployment decisions before launch. |
 
 Optional future variables should be documented before use. Public browser-exposed variables must use the `NEXT_PUBLIC_` prefix and must not contain secrets.
 
@@ -33,21 +33,21 @@ Optional future variables should be documented before use. Public browser-expose
 
 ## Database Boundary
 
-ReqFlow currently uses Prisma with SQLite:
+ReqFlow currently uses Prisma with PostgreSQL:
 
-- Local development database: `DATABASE_URL="file:./dev.db"` resolves to `prisma/dev.db`.
-- CI build database: `DATABASE_URL="file:./ci.db"` resolves to `prisma/ci.db`.
-- Test databases are isolated under `prisma/test-dbs/`.
+- Local development database: `DATABASE_URL="postgresql://.../reqflow_dev?schema=public"`.
+- CI build database: PostgreSQL 16 service with `DATABASE_URL="postgresql://.../reqflow_ci?schema=public"`.
+- Test databases are isolated by per-test PostgreSQL schemas created from `TEST_DATABASE_URL`.
 
-SQLite is acceptable for local development, demos, and a very small single-instance evaluation. It is not the long-term production concurrency baseline. Before production launch, decide one of these paths:
+Before production launch, confirm PostgreSQL operations rather than treating the local container or CI service as a production plan:
 
 | Path | Allowed Now | Notes |
 |------|-------------|-------|
-| Keep SQLite for a temporary single-instance evaluation | Yes, with explicit risk acceptance | Requires persistent disk, backup plan, and low write concurrency expectations. |
-| Migrate to PostgreSQL | Deferred | Requires a future worktrack for schema, migration, connection pooling, backups, and deployment config. |
-| Add pgvector or vector search | Out of MS5 | This belongs to a later AI architecture decision, not the current cloud boundary. |
+| Use PostgreSQL for app data | Yes | Requires production hosting, backup, restore, pooling, and migration runbook decisions. |
+| Revert to SQLite for a temporary single-instance evaluation | No by default | Would require explicit risk acceptance and a rollback worktrack. |
+| Add pgvector or vector search | Out of this cloud boundary | Extension readiness belongs to MS-9 WT-081 and later implementation worktracks. |
 
-Do not treat a successful SQLite deployment as proof that production database risk is solved.
+Do not treat a successful local PostgreSQL container or CI service as proof that production database risk is solved.
 
 ## Upload Storage Boundary
 
@@ -87,7 +87,7 @@ Minimum pre-deploy signal:
 
 ## Explicit Non-Goals
 
-- No PostgreSQL migration in MS5.
+- No PostgreSQL migration in MS5; later MS-9 work moved the Prisma provider boundary to PostgreSQL.
 - No pgvector introduction in MS5.
 - No AI feature implementation in MS5.
 - No production secret creation or disclosure.

@@ -17,7 +17,7 @@ This worktrack records architecture and risk boundaries only. It does not enable
 
 ## Current Repo Facts
 
-- The current Prisma datasource is SQLite in `prisma/schema.prisma`.
+- The current Prisma datasource is PostgreSQL in `prisma/schema.prisma` after WT-20260529-080.
 - Current knowledge tables are `KnowledgeBase`, `KnowledgeSource`, `KnowledgeSourceVersion`, and `KnowledgeSnippet`.
 - Current persistent retrieval lives in `src/lib/knowledge/retrieval.ts`. It fetches up to 100 enabled, ready snippets, scores them by substring term presence, and returns at most 3 persisted snippets.
 - Current AI knowledge assembly lives in `src/lib/ai/knowledge.ts`. With selected knowledge bases it returns persisted snippets only; without selected bases it mixes persisted snippets with source-controlled fallback snippets and caps the total at 5.
@@ -25,7 +25,7 @@ This worktrack records architecture and risk boundaries only. It does not enable
 - Current citation truth comes from locally selected knowledge context. The provider prompt asks the model to use supplied source IDs, but `src/lib/ai/deepseek-provider.ts` normalizes citations from `request.knowledge` rather than trusting model-supplied arbitrary citations.
 - `KnowledgeBase` has no separate archive column today; the current disable/archive semantics are represented by `enabled=false`, with the default knowledge base protected by `src/lib/knowledge/bases.ts`.
 - Current AI draft request flow is `src/app/api/ai/draft/route.ts` -> `src/lib/ai/draft-service.ts` -> provider adapter. AI output remains advisory and does not create tickets directly.
-- Current CI uses SQLite with `DATABASE_URL=file:./ci.db` in `.github/workflows/ci.yml`.
+- Current CI uses a PostgreSQL service for lint/test/build and PostgreSQL readiness in `.github/workflows/ci.yml`.
 
 These facts make MS-9 an architecture and readiness phase. Runtime implementation belongs to MS-10 and AI draft integration belongs to MS-11.
 

@@ -8,16 +8,16 @@ import {
   mockAuthSession,
   mockNoSession,
   readJson,
-  removeTestDatabase,
   routeParams,
 } from "./api-test-helpers";
 
 describe("api-test-helpers", () => {
-  it("creates isolated Prisma sqlite URLs under prisma/test-dbs", () => {
+  it("creates isolated Prisma PostgreSQL schema URLs", () => {
     const url = createTestDatabaseUrl("tickets route");
+    const parsed = new URL(url);
 
-    expect(url).toMatch(/\/prisma\/test-dbs\/tickets-route-\d+-\d+\.db$/);
-    removeTestDatabase(url);
+    expect(parsed.protocol).toBe("postgresql:");
+    expect(parsed.searchParams.get("schema")).toMatch(/^test_tickets_route_\d+_\d+_[a-z0-9]+$/);
   });
 
   it("creates mock NextAuth-compatible sessions", () => {

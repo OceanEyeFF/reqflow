@@ -14,9 +14,25 @@ jobs:
     name: lint, test, build
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: reqflow_ci
+          POSTGRES_USER: reqflow
+          POSTGRES_PASSWORD: reqflow
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U reqflow -d reqflow_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
     env:
       AUTH_SECRET: ci-auth-secret-for-build-and-tests
-      DATABASE_URL: file:./ci.db
+      DATABASE_URL: postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_ci?schema=public
+      TEST_DATABASE_URL: postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_ci
       NEXT_TELEMETRY_DISABLED: "1"
 
     steps:
@@ -41,6 +57,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Wait for PostgreSQL
+        run: npm run postgres:wait
+
       - name: Generate Prisma client
         run: npx prisma generate
 
@@ -51,7 +70,7 @@ jobs:
         run: npm run test
 
       - name: Prepare build database
-        run: npx prisma db push --skip-generate
+        run: npx prisma migrate deploy --schema prisma/schema.prisma
 
       - name: Build
         run: npm run build
@@ -79,6 +98,7 @@ jobs:
       POSTGRES_HOST: 127.0.0.1
       POSTGRES_PORT: "5432"
       POSTGRES_DATABASE_URL: postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_ci?schema=public
+      DATABASE_URL: postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_ci?schema=public
       AUTH_SECRET: ci-auth-secret-for-build-and-tests
       NEXT_TELEMETRY_DISABLED: "1"
 
@@ -98,6 +118,9 @@ jobs:
 
       - name: Wait for PostgreSQL
         run: npm run postgres:wait
+
+      - name: Deploy PostgreSQL migrations
+        run: npx prisma migrate deploy --schema prisma/schema.prisma
 
       - name: Run PostgreSQL readiness boundary
         run: npm run postgres:readiness

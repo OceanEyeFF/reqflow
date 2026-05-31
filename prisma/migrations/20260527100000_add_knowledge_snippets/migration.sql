@@ -8,7 +8,7 @@ CREATE TABLE "KnowledgeSnippet" (
     "content" TEXT NOT NULL,
     "chunkIndex" INTEGER NOT NULL,
     "enabled" BOOLEAN NOT NULL DEFAULT true,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "KnowledgeSnippet_sourceId_fkey" FOREIGN KEY ("sourceId") REFERENCES "KnowledgeSource" ("id") ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT "KnowledgeSnippet_versionId_fkey" FOREIGN KEY ("versionId") REFERENCES "KnowledgeSourceVersion" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );

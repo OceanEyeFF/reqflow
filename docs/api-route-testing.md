@@ -4,7 +4,7 @@ M3 uses Vitest-based route handler integration tests. The shared helpers live in
 
 ## Boundaries
 
-- Test databases must use `createTestDatabaseUrl()` and live under `prisma/test-dbs/`.
+- Test databases must use `createTestDatabaseUrl()`, which creates an isolated PostgreSQL schema from `TEST_DATABASE_URL`.
 - Test databases are ignored by Git and must be removed with `removeTestDatabase()` after use.
 - Tests must not depend on `prisma/dev.db` state.
 - Route handler auth should be controlled by mocking `@/auth` and configuring the mocked `auth()` with `mockAuthSession()`, `mockNoSession()`, or `mockAuthFailure()`.
@@ -35,7 +35,7 @@ Each route test slice should include at least one successful path, one unauthent
 
 | Area | Test Files | Coverage Notes |
 |------|------------|----------------|
-| Shared fixtures | `src/test/api-test-helpers.test.ts` | SQLite URL generation, auth mocks, request helpers, JSON response reading |
+| Shared fixtures | `src/test/api-test-helpers.test.ts` | PostgreSQL schema URL generation, auth mocks, request helpers, JSON response reading |
 | Tickets | `src/app/api/tickets/route.test.ts`, `src/app/api/tickets/[id]/route.test.ts` | list/create/stats, detail/update/delete, auth failure, validation, 404, admin authorization |
 | Comments | `src/app/api/tickets/[id]/comments/route.test.ts` | auth failure, ordered list, empty content, create, participant notifications |
 | Members | `src/app/api/tickets/[id]/members/route.test.ts` | list, missing input, permission denial, add, missing delete, role update, log and notification side effects |

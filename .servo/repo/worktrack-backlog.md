@@ -953,10 +953,13 @@
 - title: Prisma PostgreSQL provider 迁移边界
 - milestone_id: MS-9
 - node_type: migration
-- status: planned
+- status: completed
 - priority: 3
-- contract_path: TBD
-- branch: worktrack/wt-20260529-080-prisma-postgres-provider-boundary
+- contract_path: .servo/worktrack/WT-20260529-080/contract.md
+- gate_evidence: .servo/worktrack/WT-20260529-080/gate-evidence.md
+- branch: worktrack/wt-20260529-080-prisma-postgres-provider-boundary (merged)
+- merge_commit: COMMIT_PENDING
+- validation: PostgreSQL migrate deploy/status pass; postgres readiness pass; seed pass; lint pass; test pass 28 files / 201 tests; build pass
 
 ### WT-20260529-081
 

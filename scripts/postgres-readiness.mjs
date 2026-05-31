@@ -21,14 +21,8 @@ const env = { ...process.env, DATABASE_URL: databaseUrl };
 const prismaCli = "node_modules/prisma/build/index.js";
 
 if (provider !== "postgresql") {
-  console.log(`Current Prisma provider is "${provider}".`);
-  console.log("PostgreSQL service URL is configured, but Prisma PostgreSQL validate/migrate gates are deferred to WT-080.");
-  console.log("Running Prisma validate with the current provider and SQLite-compatible CI URL instead.");
-  run("prisma validate (current provider)", ["validate", "--schema", schemaPath], {
-    ...process.env,
-    DATABASE_URL: process.env.SQLITE_DATABASE_URL || "file:./ci.db",
-  });
-  process.exit(0);
+  console.error(`PostgreSQL readiness requires Prisma provider "postgresql"; found "${provider ?? "unknown"}".`);
+  process.exit(1);
 }
 
 run("prisma validate", ["validate", "--schema", schemaPath], env);

@@ -2,14 +2,14 @@
 
 ## Decision
 
-SQLite database files are local runtime artifacts, not repository truth.
+PostgreSQL schema and migration files are repository truth. Old SQLite database files are local runtime artifacts, not repository truth.
 
 The repository should version:
 
 - `prisma/schema.prisma`
 - `prisma/migrations/**`
 - `prisma/seed.ts`
-- tests and helpers that create isolated test databases
+- tests and helpers that create isolated PostgreSQL test schemas
 
 The repository should not version:
 
@@ -21,10 +21,10 @@ The repository should not version:
 
 ## Rationale
 
-1. SQLite files change during local app use, tests, migrations, and manual debugging.
+1. Old SQLite files changed during local app use, tests, migrations, and manual debugging.
 2. Committing mutable binary DB state makes unrelated local actions appear as source changes.
 3. `prisma/schema.prisma`, migrations, and seed scripts are reproducible and reviewable.
-4. Test databases are already isolated under `prisma/test-dbs/` and ignored.
+4. Test databases are isolated with PostgreSQL schemas and cleaned by test helpers.
 
 ## Local Setup
 
@@ -40,11 +40,11 @@ npm run dev
 The local `.env` may keep:
 
 ```bash
-DATABASE_URL="file:./dev.db"
+DATABASE_URL="postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_dev?schema=public"
 AUTH_SECRET="..."
 ```
 
-With Prisma, `file:./dev.db` is resolved relative to `prisma/schema.prisma`, so the normal local database path is `prisma/dev.db`.
+Use `docker-compose.postgres.yml` for the local PostgreSQL service when a separate database is not already available.
 
 ## Worktree Dependency Setup
 

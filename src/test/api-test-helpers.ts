@@ -1,6 +1,4 @@
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, rmSync } from "node:fs";
-import path from "node:path";
 import { NextRequest } from "next/server";
 import type { PrismaClient, Ticket, User } from "@prisma/client";
 import type { Session } from "next-auth";
@@ -23,18 +21,20 @@ export type JsonResponse<T> = {
   body: T;
 };
 
-const testDbDir = path.join(process.cwd(), "prisma", "test-dbs");
+const defaultTestDatabaseUrl = "postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_test";
 
 export function createTestDatabaseUrl(label: string): string {
-  mkdirSync(testDbDir, { recursive: true });
-  const safeLabel = label.replace(/[^a-zA-Z0-9_-]/g, "-").slice(0, 48);
-  const dbPath = path
-    .join(testDbDir, `${safeLabel}-${process.pid}-${Date.now()}.db`)
-    .replace(/\\/g, "/");
-  return `file:${dbPath}`;
+  const baseUrl = process.env.TEST_DATABASE_URL || process.env.POSTGRES_DATABASE_URL || defaultTestDatabaseUrl;
+  const url = new URL(baseUrl);
+  const safeLabel = label.replace(/[^a-zA-Z0-9_]/g, "_").slice(0, 24).toLowerCase();
+  const suffix = Math.random().toString(36).slice(2, 8);
+  url.searchParams.set("schema", `test_${safeLabel}_${process.pid}_${Date.now()}_${suffix}`);
+  return url.toString();
 }
 
 export function pushTestDatabaseSchema(databaseUrl: string): void {
+  const schemaName = getPostgresSchemaName(databaseUrl);
+  runPrismaDbExecute(databaseUrl, `CREATE SCHEMA IF NOT EXISTS "${schemaName}";`);
   execFileSync(
     process.execPath,
     [
@@ -54,16 +54,43 @@ export function pushTestDatabaseSchema(databaseUrl: string): void {
 }
 
 export function removeTestDatabase(databaseUrl: string): void {
-  const prefix = "file:";
-  if (!databaseUrl.startsWith(prefix)) return;
+  const schemaName = getPostgresSchemaName(databaseUrl);
+  runPrismaDbExecute(databaseUrl, `DROP SCHEMA IF EXISTS "${schemaName}" CASCADE;`);
+}
 
-  const dbPath = databaseUrl.slice(prefix.length);
-  for (const suffix of ["", "-journal", "-wal", "-shm"]) {
-    const filePath = `${dbPath}${suffix}`;
-    if (existsSync(filePath)) {
-      rmSync(filePath, { force: true });
-    }
+function getPostgresSchemaName(databaseUrl: string): string {
+  const url = new URL(databaseUrl);
+  if (url.protocol !== "postgresql:" && url.protocol !== "postgres:") {
+    throw new Error(`Test database URL must use PostgreSQL, received: ${url.protocol}`);
   }
+
+  const schemaName = url.searchParams.get("schema");
+  if (!schemaName || !/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(schemaName)) {
+    throw new Error("Test database URL must include a safe PostgreSQL schema name.");
+  }
+  return schemaName;
+}
+
+function runPrismaDbExecute(databaseUrl: string, sql: string): void {
+  const maintenanceUrl = new URL(databaseUrl);
+  maintenanceUrl.searchParams.delete("schema");
+  execFileSync(
+    process.execPath,
+    [
+      "node_modules/prisma/build/index.js",
+      "db",
+      "execute",
+      "--schema",
+      "prisma/schema.prisma",
+      "--stdin",
+    ],
+    {
+      cwd: process.cwd(),
+      env: { ...process.env, DATABASE_URL: maintenanceUrl.toString() },
+      input: sql,
+      stdio: "pipe",
+    }
+  );
 }
 
 export async function clearDatabase(prisma: PrismaClient): Promise<void> {

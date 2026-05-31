@@ -19,7 +19,7 @@
 | 语言     | TypeScript 5  |
 | 样式     | TailwindCSS 4 |
 | ORM      | Prisma 5      |
-| 数据库   | SQLite        |
+| 数据库   | PostgreSQL    |
 | 认证     | NextAuth v5   |
 | 组件库   | Radix UI      |
 | 图标     | Lucide React  |
@@ -31,7 +31,9 @@
 npm install
 
 # 初始化数据库
-npx prisma migrate dev
+docker compose -f docker-compose.postgres.yml up -d postgres
+npm run postgres:wait
+npx prisma migrate deploy --schema prisma/schema.prisma
 
 # 填充测试数据
 npm run db:seed
@@ -83,10 +85,10 @@ reqflow/
 ## 注意事项
 
 - 需要 Node.js 18+ 环境
-- 本地 SQLite 数据库是运行时产物，不纳入 Git；使用 Prisma migration 和 seed 重建开发数据
+- PostgreSQL 是当前 Prisma datasource provider；本地开发可使用 `docker-compose.postgres.yml`
 - 上传文件存储在 `public/uploads/` 目录
-- API route 集成测试使用隔离 SQLite 数据库，测试数据文件位于 `prisma/test-dbs/` 并由测试清理
-- 上云前环境变量、SQLite 风险、上传存储和部署平台边界见 `docs/cloud-readiness-boundary.md`
+- API route 集成测试使用隔离 PostgreSQL schema，并由测试 helper 清理
+- 上云前环境变量、PostgreSQL、上传存储和部署平台边界见 `docs/cloud-readiness-boundary.md`
 - AI MVP 技术决策边界见 `docs/ai-mvp-technical-brief.md`；当前 MS6 使用 Deepseek 并聚焦 AI 需求生成 discussion MVP，管理员知识库上传/zip 导入拆分到 MS7
 - 代码改动必须在 Git worktree 中完成，详见 `AGENTS.md`
 - AI 协作入口以 `AGENTS.md` 为准，辅助说明见 `docs/ai-collaboration-entrypoints.md`
