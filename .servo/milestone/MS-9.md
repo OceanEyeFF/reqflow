@@ -37,7 +37,7 @@
 | 4 | WT-20260529-081 | pgvector 与 BM25/FTS extension readiness | architecture | completed |
 | 5 | WT-20260529-082 | 中文检索评测语料、Evaluation Harness 与质量 Gate | test | completed |
 | 6 | WT-20260531-094 | MS-9 代码验收与集成风险审查 | review | completed |
-| 7 | WT-20260531-095 | MS-9 grill-me 反向拷打验收 | review | planned |
+| 7 | WT-20260531-095 | MS-9 grill-me 反向拷打验收 | review | completed |
 
 ## Design Decisions To Carry Forward
 
@@ -82,7 +82,7 @@
 ## Progress Counter
 
 - total_worktracks: 7
-- completed: 6
+- completed: 7
 - blocked: 0
 - deferred: 0
 
@@ -94,15 +94,17 @@
 - .servo/worktrack/WT-20260529-081/gate-evidence.md
 - .servo/worktrack/WT-20260529-082/gate-evidence.md
 - .servo/worktrack/WT-20260531-094/gate-evidence.md
+- .servo/worktrack/WT-20260531-095/gate-evidence.md
 - docs/ms9-final-acceptance-report.md
 
 ## Final Acceptance Handback
 
-- milestone_gate_verdict: pending additional validation
-- final_acceptance_status: reopened by fdch0 additional validation request
+- milestone_gate_verdict: pass
+- final_acceptance_status: awaiting fdch0 final milestone acceptance decision
 - acceptance_report: docs/ms9-final-acceptance-report.md
 - handback_at: 2026-05-31
 - added_worktracks: WT-20260531-094, WT-20260531-095
+- grill_me_decision: fdch0 accepted local WT-094 validation as sufficient; remote GitHub Actions freshness is not an MS-9 acceptance blocker.
 
 ## Milestone Gate Design
 
