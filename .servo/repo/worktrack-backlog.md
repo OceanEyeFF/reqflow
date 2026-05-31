@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 100
-- planned: 7
+- planned: 6
 - active: 0
-- completed: 82
+- completed: 83
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1235,10 +1235,14 @@
 - title: PostgreSQL/extension Milestone readiness gate
 - milestone_id: MS-11
 - node_type: test
-- status: planned
+- status: completed
 - priority: 4
-- contract_path: TBD
+- contract_path: .servo/worktrack/WT-20260529-092/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260529-092/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260529-092/gate-evidence.md
 - branch: worktrack/wt-20260529-092-postgres-extension-readiness-gate
+- merge_commit: ea55f10de52ab307ceb36f4b5e4b688cb5873fe8
+- validation: PostgreSQL readiness pass; search extensions pass with pgvector 0.8.2 and native PostgreSQL FTS fallback, pg_search unavailable boundary recorded; retrieval evaluation corpus gate pass; focused retrieval/AI/debug tests pass 4 files / 53 tests; lint pass; build pass; full test pass 31 files / 242 tests; diff check pass
 
 ### WT-20260529-093
 

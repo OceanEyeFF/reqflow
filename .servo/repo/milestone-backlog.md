@@ -269,5 +269,5 @@
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
 - activated_by: fdch0
 - activated_at: 2026-05-31 22:19:42 +08:00
-- worktrack_progress: WT-20260529-089=done, WT-20260529-090=done, WT-20260529-091=done, WT-20260529-092=planned, WT-20260529-093=planned, WT-20260531-100=planned
+- worktrack_progress: WT-20260529-089=done, WT-20260529-090=done, WT-20260529-091=done, WT-20260529-092=done, WT-20260529-093=planned, WT-20260531-100=planned
 - purpose: 接入 AI draft hybrid context，完成中文业务端到端验收、PostgreSQL/extension readiness 和 docs/operator 文档追平。

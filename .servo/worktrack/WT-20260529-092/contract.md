@@ -6,7 +6,7 @@
 - title: PostgreSQL/extension Milestone readiness gate
 - milestone_id: MS-11
 - node_type: test
-- status: gate-passed
+- status: completed
 - branch: worktrack/wt-20260529-092-postgres-extension-readiness-gate
 - created_by: harness-kernel
 - created_at: 2026-05-31 23:35:00 +08:00

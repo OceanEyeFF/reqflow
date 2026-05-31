@@ -12,4 +12,4 @@
 2. [x] Inspect readiness scripts and prior evidence.
 3. [x] Run PostgreSQL/search/retrieval validation gates.
 4. [x] Record readiness report and gate evidence.
-5. [ ] Close worktrack and refresh control artifacts.
+5. [x] Close worktrack and refresh control artifacts.

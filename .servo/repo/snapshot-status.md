@@ -169,7 +169,7 @@ reqflow/
 ### Preparation Work
 
 - current_preparation_milestone: MS-11
-- current_preparation_item: WT-20260529-092 ready for worktrack initialization after WT-20260529-091 closeout.
+- current_preparation_item: WT-20260529-093 ready for worktrack initialization after WT-20260529-092 closeout.
 - preparation_goal: connect MS-10 hybrid retrieval to AI draft context, citation/debug surfaces, Chinese E2E validation, PostgreSQL readiness, docs/operator catch-up, and the optional local CPU embedding sidecar PoC.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior completed under MS-20260528-001/MS-20260528-003; docs cleanup is now folded into MS-11 after hybrid search implementation.
@@ -281,14 +281,15 @@ reqflow/
 - milestone_id: MS-11
 - title: AI 草稿 Hybrid Context 接入与文档追平
 - status: active
-- progress: 3/6 completed
+- progress: 4/6 completed
 - depends_on_milestones: MS-10
 - scope_boundary: AI draft hybrid context integration, optional local CPU embedding sidecar PoC, citation UI/evidence, Chinese business E2E validation, PostgreSQL/extension readiness, and docs/operator catch-up.
-- completed_worktracks: WT-20260529-089, WT-20260529-090, WT-20260529-091
-- planned_worktracks: WT-20260529-092, WT-20260529-093, WT-20260531-100
+- completed_worktracks: WT-20260529-089, WT-20260529-090, WT-20260529-091, WT-20260529-092
+- planned_worktracks: WT-20260529-093, WT-20260531-100
 - latest_evidence: WT-20260529-090 merged at `59e37669bdb51146563c749fbbdf1f1cbbf995e6`; gate evidence records safe AI search evidence, citation provenance UI, admin-only debug search route/UI, provider boundary preservation, and passing focused tests, retrieval tests, lint, build, full test, PostgreSQL readiness, and diff check.
 - latest_evidence: WT-20260529-091 merged at `27d57651aa1325fb394a548134dc7f944ec6f945`; gate evidence records Chinese business E2E route/handoff coverage, manual operator checklist, retrieval evaluation, and passing lint, build, full test, PostgreSQL readiness, and diff check.
-- activation_status: active; WT-20260529-091 completed and WT-20260529-092 is next.
+- latest_evidence: WT-20260529-092 merged at `ea55f10de52ab307ceb36f4b5e4b688cb5873fe8`; gate evidence records PostgreSQL readiness, pgvector/native FTS readiness, pg_search fallback boundary, retrieval evaluation, focused tests, full tests, lint, build, and diff check.
+- activation_status: active; WT-20260529-092 completed and WT-20260529-093 is next.
 
 ### M4 Governance Facts
 
