@@ -1,9 +1,11 @@
 import { prisma } from "@/lib/prisma";
 import type { KnowledgeCitation } from "@/lib/ai/types";
 import type { Prisma } from "@prisma/client";
+import { retrieveVectorCandidates, type EmbeddingProvider, type VectorRetrievalResult } from "./embeddings";
 
 const MAX_PERSISTED_SNIPPETS = 3;
 const MAX_CANDIDATES = 100;
+const RRF_K = 60;
 
 export type KnowledgeRetrievalOptions = {
   knowledgeBaseIds?: string[];
@@ -52,6 +54,75 @@ export type KnowledgeRetrievalResult = {
   citations: KnowledgeCitation[];
   debugEvidence: KnowledgeRetrievalDebugEvidence;
 };
+
+export type HybridRetrievalOptions = KnowledgeRetrievalOptions & {
+  vectorProvider?: EmbeddingProvider;
+  reranker?: HybridReranker;
+};
+
+export type HybridReranker = {
+  name: string;
+  rerank(input: HybridFusedHitEvidence[]): Promise<HybridFusedHitEvidence[]>;
+};
+
+export type HybridFusedHitEvidence = {
+  snippetId: string;
+  sourceId: string;
+  sourceTitle: string;
+  path: string;
+  section?: string;
+  fusedRank: number;
+  fusedScore: number;
+  lexicalRank?: number;
+  lexicalScore?: number;
+  vectorRank?: number;
+  vectorScore?: number;
+  rrf: {
+    k: number;
+    lexicalContribution: number;
+    vectorContribution: number;
+  };
+};
+
+export type HybridRetrievalDebugEvidence = {
+  query: QueryUnderstanding;
+  mode: "hybrid-rrf";
+  fusion: {
+    algorithm: "reciprocal-rank-fusion";
+    k: number;
+    rawScoreAddition: false;
+  };
+  vectorLane:
+    | { status: "ready"; candidatesReturned: number }
+    | { status: "failed"; reason: string; evidence: Record<string, unknown> };
+  reranker: {
+    name: string;
+    ran: boolean;
+    acceptedCandidates: number;
+    rejectedCandidates: number;
+  };
+  lexicalEvidence: KnowledgeRetrievalDebugEvidence;
+  vectorHits: VectorRetrievalResult["vectorHits"];
+  fusedHits: HybridFusedHitEvidence[];
+};
+
+export type HybridRetrievalResult = {
+  citations: KnowledgeCitation[];
+  debugEvidence: HybridRetrievalDebugEvidence;
+};
+
+type HybridVectorLaneResult =
+  | {
+      status: "ready";
+      candidatesReturned: number;
+      vectorHits: VectorRetrievalResult["vectorHits"];
+    }
+  | {
+      status: "failed";
+      reason: string;
+      evidence: Record<string, unknown>;
+      vectorHits: [];
+    };
 
 export async function selectKnowledgeSnippets(
   requirement: string,
@@ -119,6 +190,100 @@ export async function retrieveKnowledgeSnippets(
       freshness: `imported ${snippet.version.createdAt.toISOString()} v${snippet.version.version}`,
     })),
     debugEvidence: createDebugEvidence(query, knowledgeBaseIds, lexicalHits, snippets.length),
+  };
+}
+
+export async function retrieveHybridKnowledgeSnippets(
+  requirement: string,
+  options: HybridRetrievalOptions = {}
+): Promise<HybridRetrievalResult> {
+  const lexical = await retrieveKnowledgeSnippets(requirement, options);
+  const query = lexical.debugEvidence.query;
+  const vector =
+    query.mustTerms.length === 0
+      ? createSkippedVectorResult("empty-query")
+      : await retrieveVectorCandidatesSafely(query.embeddingQuery, {
+          knowledgeBaseIds: options.knowledgeBaseIds,
+          provider: options.vectorProvider,
+          limit: MAX_PERSISTED_SNIPPETS,
+        });
+
+  const fusedBeforeRerank = fuseWithRrf(lexical.debugEvidence.lexicalHits, vector.vectorHits);
+  const reranker = options.reranker;
+  const reranked = reranker ? await reranker.rerank(fusedBeforeRerank) : fusedBeforeRerank;
+  const sanitized = sanitizeRerankerOutput(reranked, fusedBeforeRerank);
+  const fusedHits = sanitized.accepted.map((hit, index) => ({
+    ...hit,
+    fusedRank: index + 1,
+  }));
+  const citations = await citationsForFusedHits(fusedHits);
+
+  return {
+    citations,
+    debugEvidence: {
+      query,
+      mode: "hybrid-rrf",
+      fusion: {
+        algorithm: "reciprocal-rank-fusion",
+        k: RRF_K,
+        rawScoreAddition: false,
+      },
+      vectorLane:
+        vector.status === "ready"
+          ? { status: "ready", candidatesReturned: vector.candidatesReturned }
+          : { status: "failed", reason: vector.reason, evidence: vector.evidence as Record<string, unknown> },
+      reranker: {
+        name: reranker?.name ?? "none",
+        ran: Boolean(reranker),
+        acceptedCandidates: sanitized.accepted.length,
+        rejectedCandidates: sanitized.rejectedCount,
+      },
+      lexicalEvidence: lexical.debugEvidence,
+      vectorHits: vector.vectorHits,
+      fusedHits,
+    },
+  };
+}
+
+async function retrieveVectorCandidatesSafely(
+  query: string,
+  options: {
+    knowledgeBaseIds?: string[];
+    provider?: EmbeddingProvider;
+    limit?: number;
+  }
+): Promise<HybridVectorLaneResult> {
+  try {
+    const result = await retrieveVectorCandidates(query, options);
+    if (result.status === "ready") {
+      return {
+        status: "ready",
+        candidatesReturned: result.candidatesReturned,
+        vectorHits: result.vectorHits,
+      };
+    }
+    return {
+      status: "failed",
+      reason: result.reason,
+      evidence: result.evidence as Record<string, unknown>,
+      vectorHits: [],
+    };
+  } catch (error) {
+    return {
+      status: "failed",
+      reason: "vector-exception",
+      evidence: { message: error instanceof Error ? error.message : "Unknown vector retrieval error" },
+      vectorHits: [],
+    };
+  }
+}
+
+function createSkippedVectorResult(reason: string): HybridVectorLaneResult {
+  return {
+    status: "failed",
+    reason,
+    evidence: {},
+    vectorHits: [],
   };
 }
 
@@ -202,6 +367,113 @@ function createDebugEvidence(
     cap: MAX_PERSISTED_SNIPPETS,
     lexicalHits,
   };
+}
+
+function fuseWithRrf(
+  lexicalHits: LexicalHitEvidence[],
+  vectorHits: VectorRetrievalResult["vectorHits"]
+): HybridFusedHitEvidence[] {
+  const bySnippet = new Map<string, HybridFusedHitEvidence>();
+
+  for (const hit of lexicalHits) {
+    const lexicalContribution = rrfContribution(hit.rank);
+    bySnippet.set(hit.snippetId, {
+      snippetId: hit.snippetId,
+      sourceId: hit.sourceId,
+      sourceTitle: hit.sourceTitle,
+      path: hit.path,
+      section: hit.section,
+      fusedRank: 0,
+      fusedScore: lexicalContribution,
+      lexicalRank: hit.rank,
+      lexicalScore: hit.score,
+      rrf: {
+        k: RRF_K,
+        lexicalContribution,
+        vectorContribution: 0,
+      },
+    });
+  }
+
+  for (const hit of vectorHits) {
+    const vectorContribution = rrfContribution(hit.rank);
+    const existing = bySnippet.get(hit.snippetId);
+    if (existing) {
+      existing.vectorRank = hit.rank;
+      existing.vectorScore = hit.score;
+      existing.rrf.vectorContribution = vectorContribution;
+      existing.fusedScore = existing.rrf.lexicalContribution + vectorContribution;
+      continue;
+    }
+    bySnippet.set(hit.snippetId, {
+      snippetId: hit.snippetId,
+      sourceId: hit.sourceId,
+      sourceTitle: hit.sourceTitle,
+      path: hit.path,
+      section: hit.section,
+      fusedRank: 0,
+      fusedScore: vectorContribution,
+      vectorRank: hit.rank,
+      vectorScore: hit.score,
+      rrf: {
+        k: RRF_K,
+        lexicalContribution: 0,
+        vectorContribution,
+      },
+    });
+  }
+
+  return Array.from(bySnippet.values())
+    .sort((a, b) => b.fusedScore - a.fusedScore || (a.lexicalRank ?? a.vectorRank ?? 0) - (b.lexicalRank ?? b.vectorRank ?? 0))
+    .slice(0, MAX_PERSISTED_SNIPPETS)
+    .map((hit, index) => ({ ...hit, fusedRank: index + 1 }));
+}
+
+function rrfContribution(rank: number): number {
+  return 1 / (RRF_K + rank);
+}
+
+function sanitizeRerankerOutput(
+  reranked: HybridFusedHitEvidence[],
+  allowed: HybridFusedHitEvidence[]
+): { accepted: HybridFusedHitEvidence[]; rejectedCount: number } {
+  const allowedById = new Map(allowed.map((hit) => [hit.snippetId, hit]));
+  const seen = new Set<string>();
+  const accepted: HybridFusedHitEvidence[] = [];
+  let rejectedCount = 0;
+
+  for (const candidate of reranked) {
+    const original = allowedById.get(candidate.snippetId);
+    if (!original || seen.has(candidate.snippetId)) {
+      rejectedCount += 1;
+      continue;
+    }
+    seen.add(candidate.snippetId);
+    accepted.push(original);
+    if (accepted.length === MAX_PERSISTED_SNIPPETS) break;
+  }
+
+  return { accepted, rejectedCount: rejectedCount + Math.max(0, reranked.length - seen.size - rejectedCount) };
+}
+
+async function citationsForFusedHits(fusedHits: HybridFusedHitEvidence[]): Promise<KnowledgeCitation[]> {
+  if (fusedHits.length === 0) return [];
+  const order = new Map(fusedHits.map((hit, index) => [hit.snippetId, index]));
+  const snippets = await prisma.knowledgeSnippet.findMany({
+    where: { id: { in: fusedHits.map((hit) => hit.snippetId) } },
+    include: { source: true, version: true },
+  });
+
+  return snippets
+    .sort((a, b) => (order.get(a.id) ?? 0) - (order.get(b.id) ?? 0))
+    .map((snippet) => ({
+      sourceId: `kb-${snippet.sourceId}`,
+      sourceTitle: snippet.source.title,
+      path: snippet.sourcePath,
+      section: snippet.section ?? undefined,
+      snippet: snippet.content,
+      freshness: `imported ${snippet.version.createdAt.toISOString()} v${snippet.version.version}`,
+    }));
 }
 
 function extractDomainEntities(normalizedQuery: string, terms: string[]): string[] {
