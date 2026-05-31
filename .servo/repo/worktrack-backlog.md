@@ -1193,7 +1193,7 @@
 - plan_task_queue: .servo/worktrack/WT-20260529-089/plan-task-queue.md
 - gate_evidence: .servo/worktrack/WT-20260529-089/gate-evidence.md
 - branch: worktrack/wt-20260529-089-ai-draft-hybrid-context
-- merge_commit: pending closeout merge
+- merge_commit: 90550ee7ecf096bbd61843f512e2ea3c90869e4a
 - validation: focused AI draft tests pass 3 files / 19 tests; retrieval tests pass 1 file / 26 tests; lint pass; build pass; full test pass 30 files / 235 tests; PostgreSQL readiness pass with local reqflow_dev URL; diff check pass
 - planning_notes: Connect AI draft knowledge assembly to MS-10 hybrid retrieval and Context Window Builder with selected knowledge-base filtering and provider context caps; citation UI/debug surface remains WT-090.
 
