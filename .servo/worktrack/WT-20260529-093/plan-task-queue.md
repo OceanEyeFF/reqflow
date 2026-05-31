@@ -13,4 +13,4 @@
 3. [x] Patch README, handoff, operator runbook, and historical-scope notices.
 4. [x] Run strict local validation.
 5. [x] Record gate evidence.
-6. [ ] Merge to `develop`, refresh MS-11 control state, and clean worktree.
+6. [x] Merge to `develop`, refresh MS-11 control state, and clean worktree.

@@ -1250,10 +1250,15 @@
 - title: Docs/operator 文档追平
 - milestone_id: MS-11
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 5
-- contract_path: TBD
+- contract_path: .servo/worktrack/WT-20260529-093/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260529-093/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260529-093/gate-evidence.md
 - branch: worktrack/wt-20260529-093-docs-operator-catch-up
+- merge_commit: 38da2ba
+- validation: stale-doc search pass; retrieval evaluation pass; postgres readiness pass; search extensions pass; lint pass; test pass 31 files / 242 tests; build pass; diff check pass
+- planning_notes: Added current operator runbook and refreshed README/handoff/historical AI docs so SQLite-only/MS6-only facts are no longer presented as current implementation truth.
 
 ### WT-20260531-100
 

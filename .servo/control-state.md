@@ -24,7 +24,7 @@
 - active_milestone: MS-11
 - milestone_title: AI 草稿 Hybrid Context 接入与文档追平
 - milestone_status: active
-- milestone_pipeline_summary: total=14 planned=0 active=1 completed=11 superseded=2; MS-11 active with 4/6 worktracks completed and WT-20260529-093 next
+- milestone_pipeline_summary: total=14 planned=0 active=1 completed=11 superseded=2; MS-11 active with 5/6 worktracks completed and WT-20260531-100 next
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260529-092 completed and merged. Next action is RepoScope observe/what-next for MS-11 WT-20260529-093 docs/operator catch-up scope.
+- WT-20260529-093 completed and merged. Next action is RepoScope observe/what-next for MS-11 WT-20260531-100 local CPU embedding sidecar PoC scope.
 
 ## Linked Formal Documents
 
@@ -47,7 +47,7 @@
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: fdch0 explicitly approved opening MS-11 and continuing the MS-11 execution cycle; WT-092 is now completed.
+- reason: fdch0 explicitly approved opening MS-11 and continuing the MS-11 execution cycle; WT-093 is now completed.
 - approval_scope: MS-11 active milestone worktracks; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
 - approval_persistence: active for MS-11 execution cycle until interrupted or milestone final acceptance handback.
 
@@ -87,8 +87,8 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint: 629f7c7232e425d08484877593222cbeaec2ec1f
-- latest_observed_checkpoint: ea55f10de52ab307ceb36f4b5e4b688cb5873fe8
-- last_doc_catch_up_checkpoint: 8ac2a235bde15e2698be1f9bffa55b13f38c0805
+- latest_observed_checkpoint: 38da2ba
+- last_doc_catch_up_checkpoint: 38da2ba
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
@@ -124,6 +124,7 @@
 - latest_completed_ms11_worktrack: WT-20260529-090 completed and merged at 59e37669bdb51146563c749fbbdf1f1cbbf995e6; gate evidence `.servo/worktrack/WT-20260529-090/gate-evidence.md`.
 - latest_completed_ms11_worktrack: WT-20260529-091 completed and merged at 27d57651aa1325fb394a548134dc7f944ec6f945; gate evidence `.servo/worktrack/WT-20260529-091/gate-evidence.md`.
 - latest_completed_ms11_worktrack: WT-20260529-092 completed and merged at ea55f10de52ab307ceb36f4b5e4b688cb5873fe8; gate evidence `.servo/worktrack/WT-20260529-092/gate-evidence.md`.
+- latest_completed_ms11_worktrack: WT-20260529-093 completed and merged at 38da2ba; gate evidence `.servo/worktrack/WT-20260529-093/gate-evidence.md`.
 - next_worktrack_candidate: MS-10 milestone gate handback; no remaining MS-10 worktracks.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
