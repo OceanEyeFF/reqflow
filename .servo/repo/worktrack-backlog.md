@@ -1266,8 +1266,12 @@
 - title: 本地 CPU Embedding sidecar PoC
 - milestone_id: MS-11
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 6
-- contract_path: TBD
+- contract_path: .servo/worktrack/WT-20260531-100/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260531-100/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260531-100/gate-evidence.md
 - branch: worktrack/wt-20260531-100-local-embedding-sidecar-poc
+- merge_commit: 5c8897c
+- validation: focused embedding tests pass 2 files / 22 tests; focused embedding/retrieval tests pass 3 files / 48 tests; full test pass 32 files / 250 tests; probe script syntax pass; retrieval evaluation pass; postgres readiness pass; search extensions pass; lint pass; build pass; diff check pass
 - planning_notes: Implement an optional local embedding HTTP sidecar PoC based on `docs/local-embedding-docker-feasibility.md`; do not bundle model weights into the main Next.js app image. Use a fixed model revision, CPU runtime, `EmbeddingProviderConfig.baseUrl`, `SearchIndexProfile` provider/model/dimensions lock, benchmark p50/p95 latency and memory, and validate retrieval quality with the MS-10 evaluation gate before making it a default path.
