@@ -10,13 +10,13 @@
 ## Current Control Level
 
 - repo_scope: inactive
-- worktrack_scope: active
+- worktrack_scope: closed
 
 ## Active Worktrack
 
 - active_worktrack: WT-20260529-085
 - worktrack_title: Embedding 生成与 pgvector 索引
-- worktrack_status: initialized
+- worktrack_status: gate-passed
 - target_milestone_id: MS-10
 
 ## Active Milestone
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260529-085 initialized; dispatch implementation for embedding generation and pgvector index next.
+- WT-20260529-085 completed and ready for repo refresh; initialize WT-20260529-086 next.
 
 ## Linked Formal Documents
 
@@ -113,7 +113,8 @@
 - latest_acceptance: MS-9 accepted by fdch0 on 2026-05-31 after WT-096 final CodeReview
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
-- next_worktrack_candidate: WT-20260529-085 initialized; dispatch implementation next.
+- latest_completed_ms10_worktrack: WT-20260529-085 completed and validated at 02c7ea2bdfb48ed06be424a30c1785b897a0978b; gate evidence `.servo/worktrack/WT-20260529-085/gate-evidence.md`.
+- next_worktrack_candidate: WT-20260529-086 ready for initialization after WT-085 repo refresh.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.

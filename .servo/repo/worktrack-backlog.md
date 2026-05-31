@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 96
-- planned: 15
-- active: 1
-- completed: 72
+- planned: 14
+- active: 0
+- completed: 73
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1076,12 +1076,14 @@
 - title: Embedding 生成与 pgvector 索引
 - milestone_id: MS-10
 - node_type: feature
-- status: active
+- status: completed
 - priority: 3
 - contract_path: .servo/worktrack/WT-20260529-085/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260529-085/plan-task-queue.md
 - gate_evidence: .servo/worktrack/WT-20260529-085/gate-evidence.md
 - branch: worktrack/wt-20260529-085-embedding-pgvector-index
+- merge_commit: 02c7ea2bdfb48ed06be424a30c1785b897a0978b
+- validation: pgvector migration deploy/status pass; search extensions pass; postgres readiness pass; focused embedding/vector tests pass 1 file / 14 tests; focused knowledge tests pass 3 files / 24 tests; lint pass; test pass 30 files / 221 tests; build pass
 - planning_notes: EmbeddingProviderConfig is separate from AiProviderConfig; vectors are only comparable inside the same active SearchIndexProfile and dimensions mismatch must fail closed.
 
 ### WT-20260529-086
