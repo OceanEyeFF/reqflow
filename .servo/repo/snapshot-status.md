@@ -258,7 +258,7 @@ reqflow/
 - scope_boundary: knowledge search index schema, lexical BM25/FTS search, SearchIndexProfile-bound embedding + pgvector index, hybrid fusion, permission filtering, context expansion, and regression tests.
 - planned_worktracks: WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088
 - activation_status: activated by fdch0 on 2026-05-31 17:16:10 +08:00; MS-9 dependency is completed and accepted.
-- active_or_next_worktrack: WT-20260529-083
+- active_or_next_worktrack: WT-20260529-083 active on `worktrack/wt-20260529-083-knowledge-search-index-schema`
 
 ### Planned Milestone
 

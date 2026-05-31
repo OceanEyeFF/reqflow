@@ -9,15 +9,15 @@
 
 ## Current Control Level
 
-- repo_scope: active
-- worktrack_scope: closed
+- repo_scope: inactive
+- worktrack_scope: initializing
 
 ## Active Worktrack
 
-- active_worktrack: none
-- worktrack_title: none
-- worktrack_status: none
-- target_milestone_id: none
+- active_worktrack: WT-20260529-083
+- worktrack_title: Knowledge search index schema、SearchIndexProfile 与 metadata migration
+- worktrack_status: initialized
+- target_milestone_id: MS-10
 
 ## Active Milestone
 
@@ -32,14 +32,14 @@
 
 ## Current Next Action
 
-- MS-10 activated by fdch0 on 2026-05-31. Initialize WT-20260529-083 next.
+- WT-20260529-083 initialized. Dispatch schema and migration implementation next.
 
 ## Linked Formal Documents
 
 - repo_snapshot: .servo/repo/snapshot-status.md
 - repo_analysis: .servo/repo/analysis.md
-- worktrack_contract: N/A
-- plan_task_queue: N/A
+- worktrack_contract: .servo/worktrack/WT-20260529-083/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260529-083/plan-task-queue.md
 - gate_evidence: N/A
 - milestone_backlog: .servo/repo/milestone-backlog.md
 - worktrack_backlog: .servo/repo/worktrack-backlog.md
@@ -113,7 +113,7 @@
 - latest_acceptance: MS-9 accepted by fdch0 on 2026-05-31 after WT-096 final CodeReview
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
-- next_worktrack_candidate: WT-20260529-083.
+- next_worktrack_candidate: WT-20260529-083 initialized; dispatch implementation next.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
