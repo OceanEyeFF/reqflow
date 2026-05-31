@@ -36,7 +36,7 @@
 | 3 | WT-20260529-080 | Prisma PostgreSQL provider 迁移边界 | migration | completed |
 | 4 | WT-20260529-081 | pgvector 与 BM25/FTS extension readiness | architecture | completed |
 | 5 | WT-20260529-082 | 中文检索评测语料、Evaluation Harness 与质量 Gate | test | completed |
-| 6 | WT-20260531-094 | MS-9 代码验收与集成风险审查 | review | planned |
+| 6 | WT-20260531-094 | MS-9 代码验收与集成风险审查 | review | completed |
 | 7 | WT-20260531-095 | MS-9 grill-me 反向拷打验收 | review | planned |
 
 ## Design Decisions To Carry Forward
@@ -82,7 +82,7 @@
 ## Progress Counter
 
 - total_worktracks: 7
-- completed: 5
+- completed: 6
 - blocked: 0
 - deferred: 0
 
@@ -93,6 +93,7 @@
 - .servo/worktrack/WT-20260529-080/gate-evidence.md
 - .servo/worktrack/WT-20260529-081/gate-evidence.md
 - .servo/worktrack/WT-20260529-082/gate-evidence.md
+- .servo/worktrack/WT-20260531-094/gate-evidence.md
 - docs/ms9-final-acceptance-report.md
 
 ## Final Acceptance Handback

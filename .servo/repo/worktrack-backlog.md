@@ -4,10 +4,10 @@
 
 ## Summary
 
-- total: 93
-- planned: 16
+- total: 95
+- planned: 17
 - active: 0
-- completed: 69
+- completed: 70
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -997,11 +997,13 @@
 - title: MS-9 代码验收与集成风险审查
 - milestone_id: MS-9
 - node_type: review
-- status: active
+- status: completed
 - priority: 6
 - contract_path: .servo/worktrack/WT-20260531-094/contract.md
 - gate_evidence: .servo/worktrack/WT-20260531-094/gate-evidence.md
-- branch: worktrack/wt-20260531-094-ms9-code-acceptance-review
+- branch: worktrack/wt-20260531-094-ms9-code-acceptance-review (merged)
+- merge_commit: 4da14f1c5c0e960ac5f7b9c38ba4217be08baead
+- validation: sidecar review blockers fixed; retrieval positive/cheat gates pass; postgres readiness pass; search extensions pass; lint pass; test pass 28 files / 201 tests; build pass
 - planning_notes: Review MS-9 code, scripts, CI, Prisma/PostgreSQL migration boundary, docs, and tests for acceptance blockers before fdch0 final milestone decision. Must include at least git diff scope review, Prisma/PostgreSQL readiness review, CI workflow review, retrieval evaluation harness review, and risk findings with severity.
 
 ### WT-20260531-095
