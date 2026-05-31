@@ -6,7 +6,7 @@
 - title: 中文业务端到端场景验收
 - milestone_id: MS-11
 - node_type: test
-- status: gate-passed
+- status: completed
 - branch: worktrack/wt-20260529-091-chinese-business-e2e-validation
 - created_by: harness-kernel
 - created_at: 2026-05-31 23:23:00 +08:00

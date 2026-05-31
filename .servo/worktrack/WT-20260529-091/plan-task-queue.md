@@ -13,4 +13,4 @@
 3. [x] Add focused Chinese scenario automated tests.
 4. [x] Record manual/operator E2E scenario evidence.
 5. [x] Run validation and readiness gates.
-6. [ ] Close worktrack and refresh control artifacts.
+6. [x] Close worktrack and refresh control artifacts.

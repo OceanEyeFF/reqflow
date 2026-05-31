@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 100
-- planned: 8
+- planned: 7
 - active: 0
-- completed: 81
+- completed: 82
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1219,10 +1219,14 @@
 - title: 中文业务端到端场景验收
 - milestone_id: MS-11
 - node_type: test
-- status: planned
+- status: completed
 - priority: 3
-- contract_path: TBD
+- contract_path: .servo/worktrack/WT-20260529-091/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260529-091/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260529-091/gate-evidence.md
 - branch: worktrack/wt-20260529-091-chinese-business-e2e-validation
+- merge_commit: 27d57651aa1325fb394a548134dc7f944ec6f945
+- validation: focused Chinese E2E tests pass 3 files / 21 tests; retrieval evaluation corpus gate pass; lint pass; build pass; full test pass 31 files / 242 tests; PostgreSQL readiness pass with local reqflow_dev URL; diff check pass
 - planning_notes: Manual and automated evidence should include Chinese query, selected knowledge bases, citations, debug evidence inspection, AI draft generation, and ticket form handoff.
 
 ### WT-20260529-092
