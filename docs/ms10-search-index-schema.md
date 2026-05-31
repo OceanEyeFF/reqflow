@@ -9,7 +9,7 @@ WT-20260529-083 adds the schema baseline for MS-10 hybrid retrieval. It does not
 - `EmbeddingProviderConfig`: stores server-side embedding provider configuration separately from `AiProviderConfig`.
 - `SearchIndexProfile`: locks embedding provider, model, dimensions, semantic space, lexical engine, status, and active intent for a searchable vector/lexical space.
 - `KnowledgeSnippetSearchMetadata`: stores snippet-level lexical/index metadata such as document title, source path, section, content hash, and structured business tags.
-- `KnowledgeEmbedding`: binds a snippet to exactly one profile-specific embedding record with model, dimensions, content hash, generation status, and a placeholder `vectorRef`.
+- `KnowledgeEmbedding`: binds a snippet to exactly one profile-specific embedding record with model, dimensions, content hash, generation status, optional `vectorRef`, and WT-085 `public.vector` payload.
 
 ## Invariants
 
@@ -18,7 +18,7 @@ WT-20260529-083 adds the schema baseline for MS-10 hybrid retrieval. It does not
 - A snippet can have at most one embedding record per profile.
 - Metadata remains attached to an existing `KnowledgeSnippet` and cascades when that snippet is deleted.
 - Existing knowledge base, source, version, and snippet import data is not deleted or rewritten by this migration.
-- Actual pgvector column/index implementation is deferred to WT-20260529-085.
+- Actual pgvector column/index implementation is added by WT-20260529-085. Runtime behavior is documented in `docs/ms10-embedding-pgvector.md`.
 
 ## Rollback Notes
 

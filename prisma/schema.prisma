@@ -336,6 +336,7 @@ model KnowledgeEmbedding {
   contentHash  String
   status       String   @default("pending")
   vectorRef    String?
+  embedding    Unsupported("public.vector")?
   errorCode    String?
   generatedAt  DateTime?
   createdAt    DateTime @default(now())

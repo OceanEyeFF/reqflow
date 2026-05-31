@@ -34,6 +34,7 @@ export function createTestDatabaseUrl(label: string): string {
 
 export function pushTestDatabaseSchema(databaseUrl: string): void {
   const schemaName = getPostgresSchemaName(databaseUrl);
+  runPrismaDbExecute(databaseUrl, `CREATE EXTENSION IF NOT EXISTS vector;`);
   runPrismaDbExecute(databaseUrl, `CREATE SCHEMA IF NOT EXISTS "${schemaName}";`);
   execFileSync(
     process.execPath,
