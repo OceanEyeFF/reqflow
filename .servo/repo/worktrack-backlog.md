@@ -958,7 +958,7 @@
 - contract_path: .servo/worktrack/WT-20260529-080/contract.md
 - gate_evidence: .servo/worktrack/WT-20260529-080/gate-evidence.md
 - branch: worktrack/wt-20260529-080-prisma-postgres-provider-boundary (merged)
-- merge_commit: COMMIT_PENDING
+- merge_commit: 7b80afeb0552e07b6212d68d4ce248f5ae0704d3
 - validation: PostgreSQL migrate deploy/status pass; postgres readiness pass; seed pass; lint pass; test pass 28 files / 201 tests; build pass
 
 ### WT-20260529-081
