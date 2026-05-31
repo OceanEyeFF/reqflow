@@ -253,10 +253,10 @@ reqflow/
 - milestone_id: MS-10
 - title: 知识库索引与 Hybrid Retrieval 实现
 - status: active
-- progress: 6/6 completed
+- progress: 9/9 completed
 - depends_on_milestones: MS-9
 - scope_boundary: knowledge search index schema, lexical BM25/FTS search, SearchIndexProfile-bound embedding + pgvector index, hybrid fusion, permission filtering, context expansion, and regression tests.
-- completed_worktracks: WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088
+- completed_worktracks: WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088, WT-20260531-097, WT-20260531-099, WT-20260531-098
 - planned_worktracks: none
 - activation_status: activated by fdch0 on 2026-05-31 17:16:10 +08:00; MS-9 dependency is completed and accepted.
 - latest_evidence: WT-20260529-083 added SearchIndexProfile, EmbeddingProviderConfig, snippet metadata, and profile-scoped embedding schema; validation passed Prisma generate/validate, migration deploy/status, postgres readiness, focused tests, lint, full test, and build.
@@ -265,6 +265,9 @@ reqflow/
 - latest_evidence: WT-20260529-086 added RRF hybrid retrieval, rank-based score evidence, vector failure degradation, empty-query guard, and no-op/injected reranker seam with candidate sanitization; validation passed focused hybrid tests, postgres readiness, search extensions, lint, full test, and build.
 - latest_evidence: WT-20260529-087 added Context Window Builder with adjacent chunk expansion, strict filter recheck, context caps, selected-hit priority, and citation aggregation; validation passed focused context tests, postgres readiness, lint, full test, and build.
 - latest_evidence: WT-20260529-088 added MS-10 hybrid retrieval regression result gate and canonical fixture covering lexical-only, vector-only, hybrid fusion, context-window, forbidden filters, citation traceability, provider failure, dimensions mismatch, returned-snippet evidence alignment, and context caps; validation passed retrieval gates, postgres readiness, lint, full test, and build.
+- latest_evidence: WT-20260531-097 recorded final CodeReview finding that lexical evidence overstated PostgreSQL FTS fallback; final acceptance was blocked pending repair.
+- latest_evidence: WT-20260531-099 repaired lexical retrieval to use database-side PostgreSQL FTS fallback and added older-snippet recall regression; validation passed focused retrieval tests, postgres readiness, retrieval gates, lint, full test 30 files / 235 tests, build, and diff check.
+- latest_evidence: WT-20260531-098 assessed local open-source embedding CPU/Docker feasibility; verdict is feasible as a sidecar service, not recommended inside the main app image by default.
 - active_or_next_worktrack: Milestone Gate handback
 - current_worktrack_status: completed
 - milestone_gate_verdict: pass

@@ -4,10 +4,10 @@
 
 ## Summary
 
-- total: 96
+- total: 99
 - planned: 9
 - active: 0
-- completed: 76
+- completed: 79
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1133,6 +1133,51 @@
 - merge_commit: be96c27a51e5796312544c4476f8b4a2e4db2811
 - validation: retrieval corpus gate pass; MS-10 result fixture gate pass 5 results with lexical-only/vector-only/hybrid-fusion/context-window coverage, provider failure, dimensions mismatch, snippet evidence alignment, and context cap checks; postgres readiness pass; lint pass; test pass 30 files / 234 tests; build pass
 - planning_notes: Regression must cover lexical-only, vector-only, fusion, forbidden sources, filter reasons, context caps, citation traceability, embedding provider failure, and profile status/dimension mismatch.
+
+### WT-20260531-097
+
+- worktrack_id: WT-20260531-097
+- title: MS-10 最终 CodeReview Worktrack
+- milestone_id: MS-10
+- node_type: review
+- status: completed
+- priority: 7
+- contract_path: .servo/worktrack/WT-20260531-097/contract.md
+- gate_evidence: .servo/worktrack/WT-20260531-097/gate-evidence.md
+- branch: worktrack/wt-20260531-097-ms10-code-review
+- merge_commit: pending closeout merge
+- validation: review found one High blocker: lexical retrieval claimed PostgreSQL FTS fallback while using application-side newest-100 scoring; blocker routed to WT-20260531-099.
+- planning_notes: Final MS-10 CodeReview before fdch0 acceptance decision.
+
+### WT-20260531-099
+
+- worktrack_id: WT-20260531-099
+- title: MS-10 Lexical PostgreSQL FTS fallback 修复
+- milestone_id: MS-10
+- node_type: bugfix
+- status: completed
+- priority: 8
+- contract_path: .servo/worktrack/WT-20260531-099/contract.md
+- gate_evidence: .servo/worktrack/WT-20260531-099/gate-evidence.md
+- branch: worktrack/wt-20260531-099-lexical-fts-repair
+- merge_commit: pending closeout merge
+- validation: focused retrieval tests pass 1 file / 26 tests; postgres readiness pass; retrieval corpus/result gates pass; lint pass; test pass 30 files / 235 tests; build pass; diff check pass
+- planning_notes: Repairs WT-097 blocker by using database-side PostgreSQL FTS fallback before result selection and adding older-snippet recall regression.
+
+### WT-20260531-098
+
+- worktrack_id: WT-20260531-098
+- title: 本地开源 Embedding 模型 Docker/CPU 可行性研判
+- milestone_id: MS-10
+- node_type: research
+- status: completed
+- priority: 9
+- contract_path: .servo/worktrack/WT-20260531-098/contract.md
+- gate_evidence: .servo/worktrack/WT-20260531-098/gate-evidence.md
+- branch: worktrack/wt-20260531-098-local-embedding-docker-feasibility
+- merge_commit: pending closeout merge
+- validation: external docs/model-card research recorded; git diff --check pass; lint pass
+- planning_notes: Feasible with CPU sidecar embedding service; do not bundle model weights into main Next.js app image by default.
 
 ## MS-11: AI 草稿 Hybrid Context 接入与文档追平
 

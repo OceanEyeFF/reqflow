@@ -24,7 +24,7 @@
 - active_milestone: MS-10
 - milestone_title: 知识库索引与 Hybrid Retrieval 实现
 - milestone_status: active
-- milestone_pipeline_summary: total=14 planned=1 active=0 completed=11 superseded=2; MS-20260528-002 and MS-20260529-001 superseded by MS-9/MS-10/MS-11
+- milestone_pipeline_summary: total=17 planned=1 active=0 completed=14 superseded=2; MS-20260528-002 and MS-20260529-001 superseded by MS-9/MS-10/MS-11
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260529-088 gate passed and is ready for closeout merge, repo refresh, and MS-10 milestone gate handback. MS-10 final acceptance remains fdch0-only.
+- Supplemental MS-10 review/research worktracks completed; WT-097 blocker was repaired by WT-099. Next action is final MS-10 handback. MS-10 final acceptance remains fdch0-only.
 
 ## Linked Formal Documents
 
@@ -117,6 +117,9 @@
 - latest_completed_ms10_worktrack: WT-20260529-086 completed and validated at 7374e990a30fc3290e1ca47eb32e290bc5ff9e09; gate evidence `.servo/worktrack/WT-20260529-086/gate-evidence.md`.
 - latest_completed_ms10_worktrack: WT-20260529-087 completed and validated at a9ddffde65c12b20e778caaaf8f5531c13114912; gate evidence `.servo/worktrack/WT-20260529-087/gate-evidence.md`.
 - latest_completed_ms10_worktrack: WT-20260529-088 completed and validated at ede02348c95cfabfd50598367b934f9618de37f4; gate evidence `.servo/worktrack/WT-20260529-088/gate-evidence.md`.
+- latest_completed_ms10_worktrack: WT-20260531-097 completed with blocker finding at 23a65042db4a96d96e59f10f6775f6379e66095f; gate evidence `.servo/worktrack/WT-20260531-097/gate-evidence.md`.
+- latest_completed_ms10_worktrack: WT-20260531-099 completed and validated at 66f44c886498bd3c531f4dfe8dd74558a5dfbbce; gate evidence `.servo/worktrack/WT-20260531-099/gate-evidence.md`.
+- latest_completed_ms10_worktrack: WT-20260531-098 completed and validated at c0bbf36b3a2626fe6252d7421f410923c3186ab4; gate evidence `.servo/worktrack/WT-20260531-098/gate-evidence.md`.
 - next_worktrack_candidate: MS-10 milestone gate handback; no remaining MS-10 worktracks.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
