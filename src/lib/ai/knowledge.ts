@@ -1,5 +1,5 @@
-import type { DraftCitation, KnowledgeCitation } from "./types";
-import { buildHybridContextWindow } from "@/lib/knowledge/retrieval";
+import type { AiCitationGroup, AiSearchEvidence, DraftCitation, KnowledgeCitation } from "./types";
+import { buildHybridContextWindow, type CitationGroup, type ContextWindowResult } from "@/lib/knowledge/retrieval";
 
 const MAX_AI_DRAFT_CONTEXT_CITATIONS = 5;
 const AI_DRAFT_CONTEXT_MAX_CHARS = 1600;
@@ -97,20 +97,30 @@ export type AssembleKnowledgeOptions = {
   knowledgeBaseIds?: string[];
 };
 
+export type AssembledKnowledgeContext = {
+  knowledge: KnowledgeCitation[];
+  citationGroups: AiCitationGroup[];
+  searchEvidence?: AiSearchEvidence;
+};
+
 export async function assembleKnowledgeContext(
   requirement: string,
   options: AssembleKnowledgeOptions = {}
-): Promise<KnowledgeCitation[]> {
+): Promise<AssembledKnowledgeContext> {
   const knowledgeBaseIds = options.knowledgeBaseIds ?? [];
-  const persisted = (
-    await buildHybridContextWindow(requirement, {
-      knowledgeBaseIds,
-      maxContextChars: AI_DRAFT_CONTEXT_MAX_CHARS,
-      adjacentChunks: AI_DRAFT_CONTEXT_ADJACENT_CHUNKS,
-    })
-  ).citations;
+  const persistedContext = await buildHybridContextWindow(requirement, {
+    knowledgeBaseIds,
+    maxContextChars: AI_DRAFT_CONTEXT_MAX_CHARS,
+    adjacentChunks: AI_DRAFT_CONTEXT_ADJACENT_CHUNKS,
+  });
+  const persisted = persistedContext.citations;
+  const searchEvidence = toSafeSearchEvidence(persistedContext);
   if (knowledgeBaseIds.length > 0) {
-    return persisted.slice(0, MAX_AI_DRAFT_CONTEXT_CITATIONS);
+    return {
+      knowledge: persisted.slice(0, MAX_AI_DRAFT_CONTEXT_CITATIONS),
+      citationGroups: toSafeCitationGroups(persistedContext.citationGroups),
+      searchEvidence,
+    };
   }
 
   const loweredRequirement = requirement.toLowerCase();
@@ -127,15 +137,114 @@ export async function assembleKnowledgeContext(
     .sort((a, b) => b.score - a.score)
     .map(({ source }) => source);
 
-  return [...persisted, ...selected.map(citationFromSource), ...scored.map(citationFromSource)].slice(0, MAX_AI_DRAFT_CONTEXT_CITATIONS);
+  return {
+    knowledge: [...persisted, ...selected.map(citationFromSource), ...scored.map(citationFromSource)].slice(0, MAX_AI_DRAFT_CONTEXT_CITATIONS),
+    citationGroups: toSafeCitationGroups(persistedContext.citationGroups),
+    searchEvidence,
+  };
 }
 
 export function toDraftCitations(citations: KnowledgeCitation[]): DraftCitation[] {
-  return citations.map(({ sourceId, sourceTitle, snippet }) => ({
+  return citations.map(({ sourceId, sourceTitle, path, section, snippet, freshness }) => ({
     sourceId,
     sourceTitle,
+    path,
+    section,
     snippet,
+    freshness,
   }));
+}
+
+export function toSafeCitationGroups(groups: CitationGroup[]): AiCitationGroup[] {
+  return groups.map((group) => ({
+    sourceId: group.sourceId,
+    sourceTitle: group.sourceTitle,
+    path: group.path,
+    section: group.section,
+    snippetCount: group.snippetIds.length,
+    snippets: group.snippets,
+  }));
+}
+
+export function toSafeSearchEvidence(result: ContextWindowResult): AiSearchEvidence {
+  const evidence = result.debugEvidence;
+  return {
+    query: {
+      normalizedQuery: evidence.query.normalizedQuery,
+      lexicalQuery: evidence.query.lexicalQuery,
+      embeddingQuery: evidence.query.embeddingQuery,
+      mustTerms: evidence.query.mustTerms,
+      domainEntities: evidence.query.domainEntities,
+    },
+    filters: {
+      knowledgeBaseIds: evidence.lexicalEvidence.filters.knowledgeBaseIds,
+      sourceStatuses: evidence.lexicalEvidence.filters.sourceStatuses,
+      enabledOnly: evidence.lexicalEvidence.filters.enabledOnly,
+      versionStatuses: evidence.lexicalEvidence.filters.versionStatuses,
+    },
+    lexical: {
+      candidatesScanned: evidence.lexicalEvidence.candidatesScanned,
+      candidatesReturned: evidence.lexicalEvidence.candidatesReturned,
+      cap: evidence.lexicalEvidence.cap,
+      hits: evidence.lexicalEvidence.lexicalHits.map((hit) => ({
+        sourceId: hit.sourceId,
+        sourceTitle: hit.sourceTitle,
+        path: hit.path,
+        section: hit.section,
+        rank: hit.rank,
+        score: hit.score,
+        matchedTerms: hit.matchedTerms,
+        mustTermsMatched: hit.mustTermsMatched,
+        lexicalTextSource: hit.lexicalTextSource,
+      })),
+    },
+    vectorLane:
+      evidence.vectorLane.status === "ready"
+        ? { status: "ready", candidatesReturned: evidence.vectorLane.candidatesReturned }
+        : { status: "failed", reason: evidence.vectorLane.reason },
+    vector: {
+      hits: evidence.vectorHits.map((hit) => ({
+        sourceId: hit.sourceId,
+        sourceTitle: hit.sourceTitle,
+        path: hit.path,
+        section: hit.section,
+        rank: hit.rank,
+        score: hit.score,
+      })),
+    },
+    fusion: {
+      algorithm: evidence.fusion.algorithm,
+      k: evidence.fusion.k,
+      hits: evidence.fusedHits.map((hit) => ({
+        sourceId: hit.sourceId,
+        sourceTitle: hit.sourceTitle,
+        path: hit.path,
+        section: hit.section,
+        fusedRank: hit.fusedRank,
+        fusedScore: hit.fusedScore,
+        lexicalRank: hit.lexicalRank,
+        vectorRank: hit.vectorRank,
+      })),
+    },
+    contextWindow: {
+      maxContextChars: evidence.contextWindow.maxContextChars,
+      adjacentChunks: evidence.contextWindow.adjacentChunks,
+      includedCount: evidence.contextWindow.included.length,
+      dedupedCount: evidence.contextWindow.dedupedSnippetIds.length,
+      cappedCount: evidence.contextWindow.cappedSnippetIds.length,
+      skippedCount: evidence.contextWindow.skippedSnippetIds.length,
+      included: evidence.contextWindow.included.map((item) => ({
+        sourceId: item.sourceId,
+        sourceTitle: item.sourceTitle,
+        path: item.path,
+        section: item.section,
+        chunkIndex: item.chunkIndex,
+        reason: item.reason,
+        chars: item.chars,
+      })),
+    },
+    citationGroups: toSafeCitationGroups(result.citationGroups),
+  };
 }
 
 function citationFromSource(source: KnowledgeSource): KnowledgeCitation {

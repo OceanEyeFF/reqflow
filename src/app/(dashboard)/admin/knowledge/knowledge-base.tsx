@@ -11,6 +11,7 @@ import {
   Power,
   RefreshCw,
   Save,
+  Search,
   Trash2,
   Upload,
   X,
@@ -19,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import type { AiCitationGroup, AiSearchEvidence, DraftCitation } from "@/lib/ai/types";
 
 type KnowledgeVersion = {
   id: string;
@@ -78,6 +80,12 @@ type KnowledgeBaseForm = {
   description: string;
 };
 
+type KnowledgeDebugResult = {
+  citations: DraftCitation[];
+  citationGroups: AiCitationGroup[];
+  searchEvidence: AiSearchEvidence;
+};
+
 export function AdminKnowledgeBase() {
   const [sources, setSources] = useState<KnowledgeSource[]>([]);
   const [knowledgeBases, setKnowledgeBases] = useState<KnowledgeBase[]>([]);
@@ -87,6 +95,9 @@ export function AdminKnowledgeBase() {
   const [editingBaseId, setEditingBaseId] = useState("");
   const [baseForm, setBaseForm] = useState<KnowledgeBaseForm>({ name: "", description: "" });
   const [createBaseForm, setCreateBaseForm] = useState<KnowledgeBaseForm>({ name: "", description: "" });
+  const [debugQuery, setDebugQuery] = useState("");
+  const [debugKnowledgeBaseIds, setDebugKnowledgeBaseIds] = useState<Set<string>>(new Set());
+  const [debugResult, setDebugResult] = useState<KnowledgeDebugResult | null>(null);
   const [loading, setLoading] = useState(true);
   const [busyId, setBusyId] = useState("");
   const [uploading, setUploading] = useState(false);
@@ -341,6 +352,35 @@ export function AdminKnowledgeBase() {
     setSelectedSourceIds((current) => new Set(cleanupEligibleSources.filter((source) => !current.has(source.id)).map((source) => source.id)));
   }
 
+  function toggleDebugKnowledgeBase(id: string) {
+    setDebugKnowledgeBaseIds((current) => {
+      const next = new Set(current);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  }
+
+  async function runDebugSearch() {
+    await runAction("debug:search", async () => {
+      const response = await fetch("/api/admin/knowledge/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          query: debugQuery,
+          knowledgeBaseIds: Array.from(debugKnowledgeBaseIds),
+        }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "检索调试失败");
+      setDebugResult(data as KnowledgeDebugResult);
+      setMessage("检索调试完成");
+    });
+  }
+
   async function runAction(id: string, action: () => Promise<void>) {
     setBusyId(id);
     setError("");
@@ -496,6 +536,59 @@ export function AdminKnowledgeBase() {
               );
             })
           )}
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Search className="h-5 w-5" />
+            检索调试
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid gap-3 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+            <div className="space-y-2">
+              <Label htmlFor="knowledge-debug-query">检索问题</Label>
+              <Input
+                id="knowledge-debug-query"
+                value={debugQuery}
+                onChange={(event) => setDebugQuery(event.target.value)}
+                maxLength={500}
+                placeholder="例如：审批流程需要哪些材料"
+              />
+            </div>
+            <Button type="button" onClick={runDebugSearch} disabled={debugQuery.trim().length < 2 || busyId === "debug:search"}>
+              {busyId === "debug:search" ? <Loader2 className="h-4 w-4 animate-spin" /> : <Search className="h-4 w-4" />}
+              检索
+            </Button>
+          </div>
+          {knowledgeBases.length > 0 && (
+            <div className="space-y-2">
+              <Label>知识库范围</Label>
+              <div className="flex flex-wrap gap-2">
+                {knowledgeBases.map((base) => {
+                  const selected = debugKnowledgeBaseIds.has(base.id);
+                  return (
+                    <button
+                      key={base.id}
+                      type="button"
+                      onClick={() => toggleDebugKnowledgeBase(base.id)}
+                      disabled={!base.enabled}
+                      className={
+                        selected
+                          ? "rounded-md border border-gray-900 bg-gray-900 px-3 py-2 text-sm text-white disabled:opacity-50"
+                          : "rounded-md border bg-white px-3 py-2 text-sm text-gray-700 disabled:opacity-50"
+                      }
+                    >
+                      {base.enabled ? base.name : `${base.name}（已禁用）`}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+          {debugResult && <KnowledgeDebugEvidence result={debugResult} />}
         </CardContent>
       </Card>
 
@@ -757,6 +850,96 @@ function SourceCard({
         </div>
       </CardContent>
     </Card>
+  );
+}
+
+function KnowledgeDebugEvidence({ result }: { result: KnowledgeDebugResult }) {
+  const evidence = result.searchEvidence;
+  const vectorLabel =
+    evidence.vectorLane.status === "ready"
+      ? `ready / ${evidence.vectorLane.candidatesReturned}`
+      : `failed / ${evidence.vectorLane.reason}`;
+
+  return (
+    <div className="space-y-4 rounded-md border bg-gray-50 p-3">
+      <div className="grid gap-2 md:grid-cols-4">
+        <Field label="lexical" value={`${evidence.lexical.candidatesReturned}/${evidence.lexical.candidatesScanned}`} />
+        <Field label="vector" value={vectorLabel} />
+        <Field label="fusion" value={`${evidence.fusion.hits.length}`} />
+        <Field label="context" value={`${evidence.contextWindow.includedCount}`} />
+      </div>
+      <div className="space-y-1 text-xs text-gray-500">
+        <p>query：{evidence.query.lexicalQuery || evidence.query.normalizedQuery}</p>
+        <p>scope：{evidence.filters.knowledgeBaseIds.length ? evidence.filters.knowledgeBaseIds.join(", ") : "all enabled bases"}</p>
+        <p>
+          window：included {evidence.contextWindow.includedCount}, deduped {evidence.contextWindow.dedupedCount}, capped{" "}
+          {evidence.contextWindow.cappedCount}, skipped {evidence.contextWindow.skippedCount}
+        </p>
+      </div>
+      <div className="grid gap-3 lg:grid-cols-2">
+        <DebugList
+          title="Fused hits"
+          items={evidence.fusion.hits.map((hit) => ({
+            id: `${hit.sourceId}-${hit.path}-${hit.fusedRank}`,
+            title: `${hit.fusedRank}. ${hit.sourceTitle}`,
+            meta: `${hit.path}${hit.section ? ` / ${hit.section}` : ""}`,
+            detail: `score ${hit.fusedScore.toFixed(4)} / lexical ${hit.lexicalRank ?? "-"} / vector ${hit.vectorRank ?? "-"}`,
+          }))}
+        />
+        <DebugList
+          title="Citation groups"
+          items={result.citationGroups.map((group) => ({
+            id: `${group.sourceId}-${group.path}-${group.section ?? ""}`,
+            title: group.sourceTitle,
+            meta: `${group.path}${group.section ? ` / ${group.section}` : ""}`,
+            detail: `${group.snippetCount} snippets`,
+          }))}
+        />
+      </div>
+      <div className="space-y-2">
+        <p className="text-sm font-medium text-gray-700">引用片段</p>
+        {result.citations.length === 0 ? (
+          <p className="text-sm text-gray-500">没有命中可用片段</p>
+        ) : (
+          result.citations.map((citation) => (
+            <div key={`${citation.sourceId}-${citation.path ?? ""}-${citation.snippet}`} className="rounded-md border bg-white p-3">
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-sm font-medium text-gray-900">{citation.sourceTitle}</p>
+                <Badge>{citation.sourceId}</Badge>
+              </div>
+              {citation.path && <p className="mt-1 break-all text-xs text-gray-500">{citation.path}</p>}
+              {citation.section && <p className="mt-1 text-xs text-gray-500">章节：{citation.section}</p>}
+              <p className="mt-2 line-clamp-3 text-sm leading-6 text-gray-700">{citation.snippet}</p>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
+function DebugList({
+  title,
+  items,
+}: {
+  title: string;
+  items: Array<{ id: string; title: string; meta: string; detail: string }>;
+}) {
+  return (
+    <div className="space-y-2">
+      <p className="text-sm font-medium text-gray-700">{title}</p>
+      {items.length === 0 ? (
+        <p className="rounded-md border bg-white p-3 text-sm text-gray-500">暂无</p>
+      ) : (
+        items.slice(0, 5).map((item) => (
+          <div key={item.id} className="rounded-md border bg-white p-3 text-sm">
+            <p className="font-medium text-gray-900">{item.title}</p>
+            <p className="mt-1 break-all text-xs text-gray-500">{item.meta}</p>
+            <p className="mt-1 text-xs text-gray-600">{item.detail}</p>
+          </div>
+        ))
+      )}
+    </div>
   );
 }
 

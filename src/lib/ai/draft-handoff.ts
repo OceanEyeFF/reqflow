@@ -4,7 +4,10 @@ const VALID_PRIORITIES = ["low", "medium", "high", "urgent"] as const;
 export type DraftCitation = {
   sourceId: string;
   sourceTitle: string;
+  path?: string;
+  section?: string;
   snippet: string;
+  freshness?: string;
 };
 
 export type AiRequirementDraft = {
