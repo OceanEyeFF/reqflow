@@ -248,11 +248,11 @@ reqflow/
 - acceptance_note: accepted after WT-096 final CodeReview; local validation is sufficient for MS-9 and remote GitHub Actions freshness remains a non-blocking follow-up.
 - grill_me_decision: fdch0 accepted local WT-094 validation as sufficient; remote CI freshness is non-blocking follow-up.
 
-### Active Milestone
+### Accepted Milestone
 
 - milestone_id: MS-10
 - title: 知识库索引与 Hybrid Retrieval 实现
-- status: active
+- status: completed
 - progress: 9/9 completed
 - depends_on_milestones: MS-9
 - scope_boundary: knowledge search index schema, lexical BM25/FTS search, SearchIndexProfile-bound embedding + pgvector index, hybrid fusion, permission filtering, context expansion, and regression tests.
@@ -271,7 +271,10 @@ reqflow/
 - active_or_next_worktrack: Milestone Gate handback
 - current_worktrack_status: completed
 - milestone_gate_verdict: pass
-- final_acceptance: pending fdch0 decision
+- final_acceptance: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-05-31 20:31:00 +08:00
+- acceptance_note: accepted after WT-097 final CodeReview, WT-099 lexical FTS repair, WT-098 local embedding Docker/CPU feasibility research, and final local validation.
 
 ### Planned Milestone
 

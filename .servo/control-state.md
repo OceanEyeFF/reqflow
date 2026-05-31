@@ -9,7 +9,7 @@
 
 ## Current Control Level
 
-- repo_scope: inactive
+- repo_scope: observing
 - worktrack_scope: closed
 
 ## Active Worktrack
@@ -23,7 +23,7 @@
 
 - active_milestone: MS-10
 - milestone_title: 知识库索引与 Hybrid Retrieval 实现
-- milestone_status: active
+- milestone_status: completed
 - milestone_pipeline_summary: total=17 planned=1 active=0 completed=14 superseded=2; MS-20260528-002 and MS-20260529-001 superseded by MS-9/MS-10/MS-11
 
 ## Baseline Branch
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- Supplemental MS-10 review/research worktracks completed; WT-097 blocker was repaired by WT-099. Next action is final MS-10 handback. MS-10 final acceptance remains fdch0-only.
+- MS-10 accepted by fdch0. Next action is RepoScope observe/what-next for MS-11 activation readiness.
 
 ## Linked Formal Documents
 
@@ -111,6 +111,7 @@
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
 - Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已完成 12/12 worktracks，并由用户在 2026-05-28 最终验收。
 - latest_acceptance: MS-9 accepted by fdch0 on 2026-05-31 after WT-096 final CodeReview
+- latest_acceptance: MS-10 accepted by fdch0 on 2026-05-31 after WT-097 final CodeReview, WT-099 lexical FTS repair, and WT-098 local embedding Docker/CPU feasibility assessment.
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
 - latest_completed_ms10_worktrack: WT-20260529-085 completed and validated at 02c7ea2bdfb48ed06be424a30c1785b897a0978b; gate evidence `.servo/worktrack/WT-20260529-085/gate-evidence.md`.
@@ -137,7 +138,8 @@
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
 - superseded_milestones: MS-20260528-002 docs 文档更新迭代与整理; MS-20260529-001 中文知识检索增强与结构化索引.
-- current_active_milestone: MS-10 知识库索引与 Hybrid Retrieval 实现
+- current_active_milestone: none
+- latest_completed_milestone: MS-10 知识库索引与 Hybrid Retrieval 实现 accepted by fdch0 on 2026-05-31.
 - planned_followup_milestones: MS-10 知识库索引与 Hybrid Retrieval 实现; MS-11 AI 草稿 Hybrid Context 接入与文档追平
 - embedding_profile_decision: Embedding provider is separate from AI chat provider; active SearchIndexProfile locks model/dimensions/semantic space and any model/dimension change requires explicit reindex.
 - hybrid_search_planning_addendum: Follow-up design points folded into MS-9/MS-10/MS-11: query understanding, structured metadata indexing, RRF fusion, optional reranker seam, context window builder, retrieval evaluation harness, admin/debug evidence, pgvector filtered-search risk boundary.
