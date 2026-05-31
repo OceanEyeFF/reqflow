@@ -91,6 +91,14 @@
 - .servo/worktrack/WT-20260529-080/gate-evidence.md
 - .servo/worktrack/WT-20260529-081/gate-evidence.md
 - .servo/worktrack/WT-20260529-082/gate-evidence.md
+- docs/ms9-final-acceptance-report.md
+
+## Final Acceptance Handback
+
+- milestone_gate_verdict: pass
+- final_acceptance_status: awaiting fdch0 decision
+- acceptance_report: docs/ms9-final-acceptance-report.md
+- handback_at: 2026-05-31
 
 ## Milestone Gate Design
 

@@ -4,7 +4,7 @@
 
 - updated: 2026-05-31
 - baseline_branch: develop
-- baseline_commit: 629f7c7232e425d08484877593222cbeaec2ec1f
+- baseline_commit: ce47388bff033383146971b225fb81a7a0ddab11
 
 ## Codebase State
 
@@ -240,6 +240,9 @@ reqflow/
 - completed_worktracks: WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082
 - planned_worktracks: none
 - activation_status: active on 2026-05-31 by fdch0 approval; WT-20260529-082 completed at 6f2cabef39f0f6c1ad95d58327f4c8f1c9cae420; awaiting fdch0 final acceptance decision.
+- final_acceptance_report: docs/ms9-final-acceptance-report.md
+- milestone_gate_verdict: pass
+- final_acceptance: awaiting fdch0 decision
 
 ### Planned Milestone
 

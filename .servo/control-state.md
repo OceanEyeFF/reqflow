@@ -46,8 +46,8 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: false
-- reason: fdch0 reopened full permission after WT-078; WT-079 completed under the MS-9 execution budget.
+- needs_programmer_approval: true
+- reason: MS-9 worktrack list is complete and milestone final acceptance is fdch0-only.
 - approval_scope: MS-9 active milestone worktracks; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
 - approval_persistence: active for MS-9 execution cycle until interrupted or milestone final acceptance handback.
 
@@ -76,9 +76,9 @@
 
 ## Handback Guard
 
-- handoff_state: none
-- last_stop_reason: goal_reference_changed
-- last_handback_signature: goal-change::postgres-hybrid-search::2026-05-29
+- handoff_state: waiting_for_fdch0_ms9_final_acceptance
+- last_stop_reason: milestone_final_acceptance_required
+- last_handback_signature: milestone-final-acceptance::MS-9::2026-05-31
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
 - handback_lock_active: false
@@ -87,12 +87,12 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint: 629f7c7232e425d08484877593222cbeaec2ec1f
-- latest_observed_checkpoint: 629f7c7232e425d08484877593222cbeaec2ec1f
+- latest_observed_checkpoint: PENDING_REFRESH_COMMIT
 - last_doc_catch_up_checkpoint: 8ac2a235bde15e2698be1f9bffa55b13f38c0805
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
-- verified_at: 2026-05-29
+- verified_at: 2026-05-31
 - if_no_commit_reason:
 - alternative_traceability:
 
@@ -111,7 +111,7 @@
 - Phase 9 上一阶段: M3 API route handler 集成测试已验收
 - Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已完成 12/12 worktracks，并由用户在 2026-05-28 最终验收。
 - latest_acceptance: MS-20260528-003 accepted by fdch0 on 2026-05-29 after WT-20260529-077 AI clarification visibility fix
-- latest_repo_baseline: 629f7c7232e425d08484877593222cbeaec2ec1f (`Merge MS8 addendum final acceptance`)
+- latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
 - next_worktrack_candidate: none until fdch0 decides MS-9 final acceptance.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
