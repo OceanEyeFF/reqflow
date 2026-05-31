@@ -1032,7 +1032,7 @@
 - contract_path: .servo/worktrack/WT-20260531-096/contract.md
 - gate_evidence: .servo/worktrack/WT-20260531-096/gate-evidence.md
 - branch: worktrack/wt-20260531-096-ms9-final-code-review (merged)
-- merge_commit: WT096_COMMIT_PENDING
+- merge_commit: 6cf5b347e652f30cafed645e7792dfd94d6fee8e
 - validation: final CodeReview findings fixed; pg_search probe isolation fixed; retrieval duplicate/unknown/overbroad negative gates pass; search extensions pass; postgres readiness pass; lint pass; test pass 28 files / 201 tests; build pass
 - planning_notes: Final MS-9 CodeReview after WT-094 fixes and WT-095 decision. Re-check retrieval evaluation anti-cheat, search extension isolation, PostgreSQL test baseline, CI, Prisma migration/provider boundary, and runtime AI/knowledge scope drift. Must record findings by severity and final gate verdict before MS-9 final acceptance handback.
 
