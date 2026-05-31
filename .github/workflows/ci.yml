@@ -174,3 +174,24 @@ jobs:
 
       - name: Run search extension readiness
         run: npm run search:extensions
+
+  retrieval-evaluation-corpus:
+    name: retrieval evaluation corpus
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.19.0"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate retrieval evaluation corpus
+        run: npm run retrieval:evaluate

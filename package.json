@@ -13,7 +13,8 @@
     "db:studio": "prisma studio",
     "postgres:wait": "node scripts/wait-for-postgres.mjs",
     "postgres:readiness": "node scripts/postgres-readiness.mjs",
-    "search:extensions": "node scripts/search-extension-readiness.mjs"
+    "search:extensions": "node scripts/search-extension-readiness.mjs",
+    "retrieval:evaluate": "node scripts/retrieval-evaluation-gate.mjs"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"

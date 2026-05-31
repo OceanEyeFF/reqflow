@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "description": "Fixed Chinese retrieval evaluation cases for MS-9/MS-10 hybrid retrieval gates.",
+  "cases": [
+    {
+      "id": "cn-procurement-approval-flow",
+      "query": "采购审批流程需要哪些材料，谁来复核？",
+      "selectedKnowledgeBaseIds": ["kb-procurement"],
+      "expectedSourceIds": ["src-procurement-policy"],
+      "expectedSnippetIds": ["snip-procurement-materials", "snip-procurement-review"],
+      "mustContainTerms": ["采购", "审批", "材料", "复核"],
+      "forbiddenSourceIds": ["src-login-style-guide", "src-disabled-archive"],
+      "minRecallAt5": 0.8,
+      "maxNoiseAt5": 0.2,
+      "citationTraceability": {
+        "required": true,
+        "sourceIdField": "sourceId",
+        "snippetIdField": "snippetId"
+      },
+      "tags": ["lexical-fallback", "citation"]
+    },
+    {
+      "id": "cn-contract-change-filtered-kb",
+      "query": "合同变更超过十万需要走什么审批路径？",
+      "selectedKnowledgeBaseIds": ["kb-contract"],
+      "expectedSourceIds": ["src-contract-change-rules"],
+      "expectedSnippetIds": ["snip-contract-threshold", "snip-contract-approval-path"],
+      "mustContainTerms": ["合同", "变更", "十万", "审批"],
+      "forbiddenSourceIds": ["src-procurement-policy", "src-disabled-archive"],
+      "minRecallAt5": 0.8,
+      "maxNoiseAt5": 0.2,
+      "citationTraceability": {
+        "required": true,
+        "sourceIdField": "sourceId",
+        "snippetIdField": "snippetId"
+      },
+      "tags": ["selected-scope", "filtering"]
+    },
+    {
+      "id": "cn-employee-onboarding-semantic",
+      "query": "新员工入职时账号、设备、权限分别找谁处理？",
+      "selectedKnowledgeBaseIds": ["kb-hr", "kb-it"],
+      "expectedSourceIds": ["src-onboarding-checklist", "src-it-access"],
+      "expectedSnippetIds": ["snip-onboarding-account", "snip-onboarding-device", "snip-it-permission-owner"],
+      "mustContainTerms": ["入职", "账号", "设备", "权限"],
+      "forbiddenSourceIds": ["src-offboarding-checklist", "src-disabled-archive"],
+      "minRecallAt5": 0.75,
+      "maxNoiseAt5": 0.25,
+      "citationTraceability": {
+        "required": true,
+        "sourceIdField": "sourceId",
+        "snippetIdField": "snippetId"
+      },
+      "tags": ["semantic", "multi-source", "fusion"]
+    },
+    {
+      "id": "cn-disabled-source-exclusion",
+      "query": "归档知识库里的旧报销规则还能引用吗？",
+      "selectedKnowledgeBaseIds": ["kb-finance"],
+      "expectedSourceIds": ["src-expense-current-policy"],
+      "expectedSnippetIds": ["snip-expense-current-limit"],
+      "mustContainTerms": ["报销", "规则", "归档", "引用"],
+      "forbiddenSourceIds": ["src-expense-archived-policy", "src-disabled-archive"],
+      "minRecallAt5": 0.7,
+      "maxNoiseAt5": 0.2,
+      "citationTraceability": {
+        "required": true,
+        "sourceIdField": "sourceId",
+        "snippetIdField": "snippetId"
+      },
+      "tags": ["forbidden-source", "lifecycle-filter"]
+    },
+    {
+      "id": "cn-production-incident-urgent",
+      "query": "线上故障影响付款时，需要如何升级和通知？",
+      "selectedKnowledgeBaseIds": ["kb-operations"],
+      "expectedSourceIds": ["src-incident-response"],
+      "expectedSnippetIds": ["snip-incident-payment-severity", "snip-incident-notification"],
+      "mustContainTerms": ["线上故障", "付款", "升级", "通知"],
+      "forbiddenSourceIds": ["src-login-style-guide", "src-disabled-archive"],
+      "minRecallAt5": 0.8,
+      "maxNoiseAt5": 0.2,
+      "citationTraceability": {
+        "required": true,
+        "sourceIdField": "sourceId",
+        "snippetIdField": "snippetId"
+      },
+      "tags": ["priority", "citation", "context-builder"]
+    }
+  ]
+}

@@ -982,10 +982,13 @@
 - title: 中文检索评测语料、Evaluation Harness 与质量 Gate
 - milestone_id: MS-9
 - node_type: test
-- status: planned
+- status: completed
 - priority: 5
-- contract_path: TBD
-- branch: worktrack/wt-20260529-082-chinese-retrieval-quality-gate
+- contract_path: .servo/worktrack/WT-20260529-082/contract.md
+- gate_evidence: .servo/worktrack/WT-20260529-082/gate-evidence.md
+- branch: worktrack/wt-20260529-082-chinese-retrieval-quality-gate (merged)
+- merge_commit: COMMIT_PENDING
+- validation: retrieval evaluation corpus gate pass; lint pass; test pass 28 files / 201 tests; build pass
 - planning_notes: Harness cases should include query, expectedSourceIds, expectedSnippetIds, mustContainTerms, forbiddenSourceIds, minRecallAt5, maxNoiseAt5, and citation traceability expectations.
 
 ## MS-10: 知识库索引与 Hybrid Retrieval 实现

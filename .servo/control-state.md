@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260529-081 is complete. Next Worktrack candidate is WT-20260529-082 / Chinese retrieval evaluation harness and quality gate.
+- MS-9 worktrack list is complete at 5/5. Hand back to fdch0 for milestone final acceptance decision.
 
 ## Linked Formal Documents
 
@@ -98,8 +98,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 26
-- autonomous_worktracks_opened: 4
+- autonomy_budget_remaining: 25
+- autonomous_worktracks_opened: 5
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-31
 - autonomy_budget_notes: MS-9 执行周期授权；允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack。危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。用户随后要求完成第一个 Worktrack 后停止，等待下一轮完整权限；Milestone final acceptance 必须由 fdch0 决定。
@@ -113,7 +113,7 @@
 - latest_acceptance: MS-20260528-003 accepted by fdch0 on 2026-05-29 after WT-20260529-077 AI clarification visibility fix
 - latest_repo_baseline: 629f7c7232e425d08484877593222cbeaec2ec1f (`Merge MS8 addendum final acceptance`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
-- next_worktrack_candidate: WT-20260529-082 under active MS-9.
+- next_worktrack_candidate: none until fdch0 decides MS-9 final acceptance.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.

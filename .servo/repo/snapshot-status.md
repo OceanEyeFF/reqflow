@@ -169,7 +169,7 @@ reqflow/
 ### Preparation Work
 
 - current_preparation_milestone: MS-9
-- current_preparation_item: WT-20260529-081 completed; next candidate is WT-20260529-082 Chinese retrieval evaluation harness and quality gate.
+- current_preparation_item: WT-20260529-082 completed; MS-9 awaits fdch0 final acceptance decision.
 - preparation_goal: establish PostgreSQL + pgvector + BM25/FTS architecture, migration, extension readiness, and Chinese retrieval quality gates before implementation.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior completed under MS-20260528-001/MS-20260528-003; docs cleanup is now folded into MS-11 after hybrid search implementation.
@@ -234,12 +234,12 @@ reqflow/
 - milestone_id: MS-9
 - title: PostgreSQL 与 Hybrid Search 架构基线
 - status: active
-- progress: 4/5 completed
+- progress: 5/5 completed
 - depends_on_milestones: MS-20260528-003
 - scope_boundary: PostgreSQL dev/test/CI baseline, Prisma provider migration boundary, pgvector readiness, BM25/FTS/pg_search feasibility, fallback strategy, independent EmbeddingProviderConfig, SearchIndexProfile model/dimensions lock, and Chinese retrieval quality gate.
-- completed_worktracks: WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081
-- planned_worktracks: WT-20260529-082
-- activation_status: active on 2026-05-31 by fdch0 approval; WT-20260529-081 completed at 35ae590d648f2e9b491684b925221850f7a3f551; next candidate WT-20260529-082.
+- completed_worktracks: WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082
+- planned_worktracks: none
+- activation_status: active on 2026-05-31 by fdch0 approval; WT-20260529-082 completed at COMMIT_PENDING; awaiting fdch0 final acceptance decision.
 
 ### Planned Milestone
 
