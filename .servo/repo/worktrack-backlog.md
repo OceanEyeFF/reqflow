@@ -939,10 +939,13 @@
 - title: PostgreSQL dev/test/CI 数据库基线
 - milestone_id: MS-9
 - node_type: migration
-- status: planned
+- status: completed
 - priority: 2
-- contract_path: TBD
-- branch: worktrack/wt-20260529-079-postgres-dev-test-ci-baseline
+- contract_path: .servo/worktrack/WT-20260529-079/contract.md
+- gate_evidence: .servo/worktrack/WT-20260529-079/gate-evidence.md
+- branch: worktrack/wt-20260529-079-postgres-dev-test-ci-baseline (merged)
+- merge_commit: COMMIT_PENDING
+- validation: node script syntax pass; postgres readiness boundary pass; lint pass; test pass 28 files / 201 tests; build pass
 
 ### WT-20260529-080
 

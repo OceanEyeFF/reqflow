@@ -10,7 +10,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "db:seed": "npx tsx prisma/seed.ts",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "postgres:wait": "node scripts/wait-for-postgres.mjs",
+    "postgres:readiness": "node scripts/postgres-readiness.mjs"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"
