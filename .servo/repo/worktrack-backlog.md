@@ -1066,6 +1066,7 @@
 - plan_task_queue: .servo/worktrack/WT-20260529-084/plan-task-queue.md
 - gate_evidence: .servo/worktrack/WT-20260529-084/gate-evidence.md
 - branch: worktrack/wt-20260529-084-lexical-bm25-fts-search
+- merge_commit: 5aa57c522e204a91548fc42ef69091a82c8a44b2
 - validation: query understanding and lexical fallback tests pass; postgres readiness pass; lint pass; test pass 29 files / 207 tests; build pass
 - planning_notes: Query understanding should produce rawQuery, normalizedQuery, lexicalQuery, embeddingQuery, mustTerms, and domainEntities; lexical implementation must retain explainable hit evidence.
 

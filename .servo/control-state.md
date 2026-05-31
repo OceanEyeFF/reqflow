@@ -10,7 +10,7 @@
 ## Current Control Level
 
 - repo_scope: inactive
-- worktrack_scope: judging
+- worktrack_scope: closed
 
 ## Active Worktrack
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260529-084 gate passed. Close and merge next.
+- WT-20260529-084 completed and ready for repo refresh; initialize WT-20260529-085 next.
 
 ## Linked Formal Documents
 
