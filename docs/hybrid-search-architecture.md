@@ -75,7 +75,7 @@ Fallback is not optional. If `pg_search` cannot be installed everywhere ReqFlow 
 
 ### Vector Search
 
-Use `pgvector` for semantic retrieval only after an active SearchIndexProfile exists. Vector retrieval must fail closed when:
+WT-081 verified pgvector as the dev/test/CI vector extension baseline using `pgvector/pgvector:0.8.2-pg16`. Use `pgvector` for semantic retrieval only after an active SearchIndexProfile exists. Vector retrieval must fail closed when:
 
 - no active profile exists,
 - profile status is `building`, `deprecated`, or invalid,

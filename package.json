@@ -12,7 +12,8 @@
     "db:seed": "npx tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "postgres:wait": "node scripts/wait-for-postgres.mjs",
-    "postgres:readiness": "node scripts/postgres-readiness.mjs"
+    "postgres:readiness": "node scripts/postgres-readiness.mjs",
+    "search:extensions": "node scripts/search-extension-readiness.mjs"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"

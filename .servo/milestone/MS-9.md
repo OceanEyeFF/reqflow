@@ -34,7 +34,7 @@
 | 1 | WT-20260529-078 | Hybrid Search 架构决策与风险边界 | architecture | completed |
 | 2 | WT-20260529-079 | PostgreSQL dev/test/CI 数据库基线 | migration | completed |
 | 3 | WT-20260529-080 | Prisma PostgreSQL provider 迁移边界 | migration | completed |
-| 4 | WT-20260529-081 | pgvector 与 BM25/FTS extension readiness | architecture | planned |
+| 4 | WT-20260529-081 | pgvector 与 BM25/FTS extension readiness | architecture | completed |
 | 5 | WT-20260529-082 | 中文检索评测语料、Evaluation Harness 与质量 Gate | test | planned |
 
 ## Design Decisions To Carry Forward
@@ -80,7 +80,7 @@
 ## Progress Counter
 
 - total_worktracks: 5
-- completed: 3
+- completed: 4
 - blocked: 0
 - deferred: 0
 
@@ -89,6 +89,7 @@
 - .servo/worktrack/WT-20260529-078/gate-evidence.md
 - .servo/worktrack/WT-20260529-079/gate-evidence.md
 - .servo/worktrack/WT-20260529-080/gate-evidence.md
+- .servo/worktrack/WT-20260529-081/gate-evidence.md
 
 ## Milestone Gate Design
 

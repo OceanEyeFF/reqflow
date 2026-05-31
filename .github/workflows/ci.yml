@@ -16,7 +16,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:16-alpine
+        image: pgvector/pgvector:0.8.2-pg16
         env:
           POSTGRES_DB: reqflow_ci
           POSTGRES_USER: reqflow
@@ -81,7 +81,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:16-alpine
+        image: pgvector/pgvector:0.8.2-pg16
         env:
           POSTGRES_DB: reqflow_ci
           POSTGRES_USER: reqflow
@@ -124,3 +124,53 @@ jobs:
 
       - name: Run PostgreSQL readiness boundary
         run: npm run postgres:readiness
+
+  search-extension-readiness:
+    name: search extension readiness
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: pgvector/pgvector:0.8.2-pg16
+        env:
+          POSTGRES_DB: reqflow_ci
+          POSTGRES_USER: reqflow
+          POSTGRES_PASSWORD: reqflow
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U reqflow -d reqflow_ci"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 12
+
+    env:
+      POSTGRES_HOST: 127.0.0.1
+      POSTGRES_PORT: "5432"
+      DATABASE_URL: postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_ci?schema=public
+      SEARCH_EXTENSION_DATABASE_URL: postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_ci?schema=extension_readiness
+      AUTH_SECRET: ci-auth-secret-for-build-and-tests
+      NEXT_TELEMETRY_DISABLED: "1"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.19.0"
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Wait for PostgreSQL
+        run: npm run postgres:wait
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Run search extension readiness
+        run: npm run search:extensions
