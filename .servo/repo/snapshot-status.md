@@ -2,7 +2,7 @@
 
 ## Metadata
 
-- updated: 2026-05-29
+- updated: 2026-05-31
 - baseline_branch: develop
 - baseline_commit: 629f7c7232e425d08484877593222cbeaec2ec1f
 
@@ -168,9 +168,9 @@ reqflow/
 
 ### Preparation Work
 
-- current_preparation_milestone: none
-- current_preparation_item: PostgreSQL hybrid search goal rewrite accepted by fdch0; MS-9/MS-10/MS-11 are now the planned pipeline.
-- preparation_goal: activate MS-9 and establish PostgreSQL + pgvector + BM25/FTS architecture, migration, extension readiness, and Chinese retrieval quality gates before implementation.
+- current_preparation_milestone: MS-9
+- current_preparation_item: MS-9 activated by fdch0 on 2026-05-31; next control step is WT-20260529-078 intake review before WorktrackScope initialization.
+- preparation_goal: establish PostgreSQL + pgvector + BM25/FTS architecture, migration, extension readiness, and Chinese retrieval quality gates before implementation.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior completed under MS-20260528-001/MS-20260528-003; docs cleanup is now folded into MS-11 after hybrid search implementation.
 
@@ -229,16 +229,16 @@ reqflow/
 - activation_status: superseded, not active.
 - superseded_by: MS-9, MS-10, MS-11
 
-### Planned Milestone
+### Active Milestone
 
 - milestone_id: MS-9
 - title: PostgreSQL 与 Hybrid Search 架构基线
-- status: planned
+- status: active
 - progress: 0/5 completed
 - depends_on_milestones: MS-20260528-003
 - scope_boundary: PostgreSQL dev/test/CI baseline, Prisma provider migration boundary, pgvector readiness, BM25/FTS/pg_search feasibility, fallback strategy, independent EmbeddingProviderConfig, SearchIndexProfile model/dimensions lock, and Chinese retrieval quality gate.
 - planned_worktracks: WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082
-- activation_status: planned, not active.
+- activation_status: active on 2026-05-31 by fdch0 approval; WT-20260529-078 is the next candidate pending RepoScope intake review.
 
 ### Planned Milestone
 

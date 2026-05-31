@@ -5,8 +5,8 @@
 ## Pipeline Summary
 
 - total: 14
-- planned: 3
-- active: 0
+- planned: 2
+- active: 1
 - completed: 9
 - superseded: 2
 
@@ -215,13 +215,13 @@
 - milestone_id: MS-9
 - title: PostgreSQL 与 Hybrid Search 架构基线
 - milestone_kind: goal-driven
-- status: planned
+- status: active
 - priority: 12
 - depends_on_milestones: [MS-20260528-003]
 - worktrack_list: [WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082]
 - created_by: fdch0
 - created_at: 2026-05-29
-- updated: 2026-05-29
+- updated: 2026-05-31
 - updated_by: harness-kernel
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
 - supersedes: [MS-20260528-002, MS-20260529-001]

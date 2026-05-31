@@ -5,11 +5,11 @@
 - milestone_id: MS-9
 - title: PostgreSQL 与 Hybrid Search 架构基线
 - milestone_kind: goal-driven
-- status: planned
+- status: active
 - priority: 9
 - created_by: fdch0
 - created_at: 2026-05-29
-- updated: 2026-05-29
+- updated: 2026-05-31
 - updated_by: harness-kernel
 
 ## Purpose

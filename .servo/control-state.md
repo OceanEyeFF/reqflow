@@ -4,7 +4,7 @@
 
 ## Metadata
 
-- updated: 2026-05-29
+- updated: 2026-05-31
 - owner: fdch0
 
 ## Current Control Level
@@ -21,10 +21,10 @@
 
 ## Active Milestone
 
-- active_milestone: none
-- milestone_title: none
-- milestone_status: none
-- milestone_pipeline_summary: total=14 planned=3 active=0 completed=9 superseded=2; MS-20260528-002 and MS-20260529-001 superseded by MS-9/MS-10/MS-11
+- active_milestone: MS-9
+- milestone_title: PostgreSQL 与 Hybrid Search 架构基线
+- milestone_status: active
+- milestone_pipeline_summary: total=14 planned=2 active=1 completed=9 superseded=2; MS-20260528-002 and MS-20260529-001 superseded by MS-9/MS-10/MS-11
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- Goal reference changed to PostgreSQL hybrid search; no milestone is active. Next RepoScope observation should activate MS-9 / PostgreSQL 与 Hybrid Search 架构基线 when ready.
+- MS-9 / PostgreSQL 与 Hybrid Search 架构基线 is active. Next RepoScope decision should produce the WT-20260529-078 intake review before WorktrackScope initialization.
 
 ## Linked Formal Documents
 
@@ -47,8 +47,8 @@
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: MS8 addendum final acceptance was confirmed by fdch0 on 2026-05-29 and the repo has returned to RepoScope.
-- approval_scope: N/A; no active worktrack or active milestone.
+- reason: fdch0 approved preparing MS-9 work on 2026-05-31; activation does not start a Worktrack until intake review is ready.
+- approval_scope: MS-9 activation accepted by fdch0 on 2026-05-31; no active worktrack yet.
 - approval_persistence: ended for MS8 addendum execution cycle after final acceptance.
 
 ## Continuation Authority
@@ -113,7 +113,7 @@
 - latest_acceptance: MS-20260528-003 accepted by fdch0 on 2026-05-29 after WT-20260529-077 AI clarification visibility fix
 - latest_repo_baseline: 629f7c7232e425d08484877593222cbeaec2ec1f (`Merge MS8 addendum final acceptance`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
-- next_worktrack_candidate: WT-20260529-078 under MS-9 after RepoScope activates the milestone.
+- next_worktrack_candidate: WT-20260529-078 under active MS-9 after RepoScope intake review is ready.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
@@ -124,13 +124,13 @@
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
-- active_next_milestone: none
-- active_milestone_clarification_status: N/A; no active milestone after goal reference change.
+- active_next_milestone: MS-9 PostgreSQL 与 Hybrid Search 架构基线
+- active_milestone_clarification_status: confirmed; fdch0 approved preparing MS-9 work on 2026-05-31.
 - routed_new_requests: PostgreSQL hybrid search replaces previous docs cleanup and lightweight Chinese retrieval plans.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
 - superseded_milestones: MS-20260528-002 docs 文档更新迭代与整理; MS-20260529-001 中文知识检索增强与结构化索引.
-- planned_next_milestone: MS-9 PostgreSQL 与 Hybrid Search 架构基线
+- planned_next_milestone: MS-10 知识库索引与 Hybrid Retrieval 实现 after MS-9 completion
 - planned_followup_milestones: MS-10 知识库索引与 Hybrid Retrieval 实现; MS-11 AI 草稿 Hybrid Context 接入与文档追平
 - embedding_profile_decision: Embedding provider is separate from AI chat provider; active SearchIndexProfile locks model/dimensions/semantic space and any model/dimension change requires explicit reindex.
 - hybrid_search_planning_addendum: Follow-up design points folded into MS-9/MS-10/MS-11: query understanding, structured metadata indexing, RRF fusion, optional reranker seam, context window builder, retrieval evaluation harness, admin/debug evidence, pgvector filtered-search risk boundary.
