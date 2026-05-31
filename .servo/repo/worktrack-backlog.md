@@ -991,6 +991,30 @@
 - validation: retrieval evaluation corpus gate pass; lint pass; test pass 28 files / 201 tests; build pass
 - planning_notes: Harness cases should include query, expectedSourceIds, expectedSnippetIds, mustContainTerms, forbiddenSourceIds, minRecallAt5, maxNoiseAt5, and citation traceability expectations.
 
+### WT-20260531-094
+
+- worktrack_id: WT-20260531-094
+- title: MS-9 代码验收与集成风险审查
+- milestone_id: MS-9
+- node_type: review
+- status: planned
+- priority: 6
+- contract_path: TBD
+- branch: worktrack/wt-20260531-094-ms9-code-acceptance-review
+- planning_notes: Review MS-9 code, scripts, CI, Prisma/PostgreSQL migration boundary, docs, and tests for acceptance blockers before fdch0 final milestone decision. Must include at least git diff scope review, Prisma/PostgreSQL readiness review, CI workflow review, retrieval evaluation harness review, and risk findings with severity.
+
+### WT-20260531-095
+
+- worktrack_id: WT-20260531-095
+- title: MS-9 grill-me 反向拷打验收
+- milestone_id: MS-9
+- node_type: review
+- status: planned
+- priority: 7
+- contract_path: TBD
+- branch: worktrack/wt-20260531-095-ms9-grill-me-acceptance
+- planning_notes: Use the thinking style from https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/grill-me/SKILL.md: gather repo evidence first, ask fdch0 one pointed question at a time, include a recommended answer, and focus on decisions that cannot be answered from the repo. Output must record questions, fdch0 answers, recommended answers, and any resulting acceptance blockers or follow-up worktracks.
+
 ## MS-10: 知识库索引与 Hybrid Retrieval 实现
 
 ### WT-20260529-083

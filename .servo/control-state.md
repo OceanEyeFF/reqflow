@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- MS-9 worktrack list is complete at 5/5. Hand back to fdch0 for milestone final acceptance decision.
+- fdch0 added WT-20260531-094 and WT-20260531-095 as final MS-9 validation worktracks. Next Worktrack candidate is WT-20260531-094.
 
 ## Linked Formal Documents
 
@@ -46,8 +46,8 @@
 
 ## Approval Boundary
 
-- needs_programmer_approval: true
-- reason: MS-9 worktrack list is complete and milestone final acceptance is fdch0-only.
+- needs_programmer_approval: false
+- reason: fdch0 explicitly requested two additional MS-9 validation worktracks before final milestone acceptance.
 - approval_scope: MS-9 active milestone worktracks; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
 - approval_persistence: active for MS-9 execution cycle until interrupted or milestone final acceptance handback.
 
@@ -76,9 +76,9 @@
 
 ## Handback Guard
 
-- handoff_state: waiting_for_fdch0_ms9_final_acceptance
-- last_stop_reason: milestone_final_acceptance_required
-- last_handback_signature: milestone-final-acceptance::MS-9::2026-05-31
+- handoff_state: none
+- last_stop_reason: fdch0_reopened_ms9_validation_scope
+- last_handback_signature: ms9-additional-validation::WT-094-WT-095::2026-05-31
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
 - handback_lock_active: false
@@ -98,8 +98,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 25
-- autonomous_worktracks_opened: 5
+- autonomy_budget_remaining: 23
+- autonomous_worktracks_opened: 7
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-31
 - autonomy_budget_notes: MS-9 执行周期授权；允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack。危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。用户随后要求完成第一个 Worktrack 后停止，等待下一轮完整权限；Milestone final acceptance 必须由 fdch0 决定。
@@ -113,7 +113,7 @@
 - latest_acceptance: MS-20260528-003 accepted by fdch0 on 2026-05-29 after WT-20260529-077 AI clarification visibility fix
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
-- next_worktrack_candidate: none until fdch0 decides MS-9 final acceptance.
+- next_worktrack_candidate: WT-20260531-094 under active MS-9.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.

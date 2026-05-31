@@ -4,7 +4,7 @@
 
 - milestone_id: MS-9
 - title: PostgreSQL 与 Hybrid Search 架构基线
-- status: ready-for-fdch0-acceptance
+- status: superseded-by-additional-validation
 - prepared_at: 2026-05-31
 - prepared_by: harness-kernel
 - final_acceptance_owner: fdch0
@@ -120,6 +120,15 @@ Excluded scope:
 - Production SQLite-to-PostgreSQL migration execution remains a separate approval item.
 - Remote CI after WT-082 remains unobserved from this local session.
 
+## Additional Validation Reopen
+
+fdch0 requested two extra MS-9 validation worktracks after this report was prepared:
+
+- WT-20260531-094: MS-9 代码验收与集成风险审查.
+- WT-20260531-095: MS-9 grill-me 反向拷打验收.
+
+This report is retained as pre-additional-validation evidence and is no longer the final handback artifact.
+
 ## Acceptance Decision Boundary
 
-MS-9 is ready for fdch0 final acceptance review. This report does not mark the milestone accepted and does not activate MS-10. Final acceptance must be explicitly decided by fdch0.
+MS-9 final acceptance is reopened until WT-20260531-094 and WT-20260531-095 complete. This report does not mark the milestone accepted and does not activate MS-10. Final acceptance must be explicitly decided by fdch0 after the added worktracks close.

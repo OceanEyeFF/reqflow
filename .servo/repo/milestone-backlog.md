@@ -218,7 +218,7 @@
 - status: active
 - priority: 12
 - depends_on_milestones: [MS-20260528-003]
-- worktrack_list: [WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082]
+- worktrack_list: [WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082, WT-20260531-094, WT-20260531-095]
 - created_by: fdch0
 - created_at: 2026-05-29
 - updated: 2026-05-31
