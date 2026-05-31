@@ -87,4 +87,4 @@ Worktrees may need `npm install` before Prisma CLI commands if `node_modules/pri
 
 ## Current Follow-Up Boundary
 
-Local CPU embedding sidecar implementation is planned as WT-20260531-100. The feasibility verdict is documented in `docs/local-embedding-docker-feasibility.md`: feasible as a separate CPU sidecar, not recommended as model weights bundled into the main Next.js image by default.
+Local CPU embedding sidecar PoC is documented in `docs/local-embedding-sidecar-poc.md`. The sidecar remains optional and non-default. The feasibility verdict is documented in `docs/local-embedding-docker-feasibility.md`: feasible as a separate CPU sidecar, not recommended as model weights bundled into the main Next.js image by default.

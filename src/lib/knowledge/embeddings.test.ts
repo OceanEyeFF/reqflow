@@ -112,6 +112,29 @@ describe("generateKnowledgeSnippetEmbedding", () => {
     });
   });
 
+  it("fails closed when the selected provider throws during generation", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const config = await seedEmbeddingProviderConfig(admin.id, {
+      provider: "local-cpu-sidecar",
+      model: "local-model",
+      dimensions: 3,
+    });
+    const snippet = await seedSnippet(admin.id, { content: "管理员审批流程" });
+    await seedSearchProfile({ provider: "local-cpu-sidecar", model: "local-model", dimensions: 3, providerConfigId: config.id });
+    const throwingProvider: EmbeddingProvider = {
+      name: "local-cpu-sidecar",
+      async embed() {
+        throw new Error("sidecar unavailable");
+      },
+    };
+
+    await expect(generateKnowledgeSnippetEmbedding(snippet.id, throwingProvider)).resolves.toMatchObject({
+      status: "failed",
+      reason: "provider-unavailable",
+      evidence: { provider: "local-cpu-sidecar", model: "local-model", expectedDimensions: 3, snippetId: snippet.id },
+    });
+  });
+
   it("fails closed when provider output identity does not match the active profile", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     const snippet = await seedSnippet(admin.id, { content: "管理员审批流程" });
@@ -298,6 +321,29 @@ describe("retrieveVectorCandidates", () => {
     });
   });
 
+  it("fails closed when the selected provider throws during vector retrieval", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const config = await seedEmbeddingProviderConfig(admin.id, {
+      provider: "local-cpu-sidecar",
+      model: "local-model",
+      dimensions: 3,
+    });
+    await seedSearchProfile({ provider: "local-cpu-sidecar", model: "local-model", dimensions: 3, providerConfigId: config.id });
+    const throwingProvider: EmbeddingProvider = {
+      name: "local-cpu-sidecar",
+      async embed() {
+        throw new Error("sidecar unavailable");
+      },
+    };
+
+    await expect(retrieveVectorCandidates("审批流程", { provider: throwingProvider })).resolves.toMatchObject({
+      status: "failed",
+      reason: "provider-unavailable",
+      evidence: { provider: "local-cpu-sidecar", model: "local-model", expectedDimensions: 3 },
+      vectorHits: [],
+    });
+  });
+
   it("ignores corrupt rows whose physical vector dimensions do not match metadata", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     const snippet = await seedSnippet(admin.id, { content: "审批流程来自损坏向量。" });
@@ -446,4 +492,26 @@ function createPassthroughProvider(name: string, dimensions: number): EmbeddingP
       };
     },
   };
+}
+
+function seedEmbeddingProviderConfig(
+  userId: string,
+  input: {
+    provider: string;
+    model: string;
+    dimensions: number;
+  }
+) {
+  return prisma.embeddingProviderConfig.create({
+    data: {
+      name: `embedding-${Math.random().toString(36).slice(2, 8)}`,
+      provider: input.provider,
+      model: input.model,
+      dimensions: input.dimensions,
+      baseUrl: "http://127.0.0.1:8081",
+      noKeyMode: true,
+      enabled: true,
+      updatedById: userId,
+    },
+  });
 }

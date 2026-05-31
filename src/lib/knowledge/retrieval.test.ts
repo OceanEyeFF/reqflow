@@ -438,8 +438,8 @@ describe("retrieveHybridKnowledgeSnippets", () => {
     expect(result.citations).toHaveLength(1);
     expect(result.debugEvidence.vectorLane).toMatchObject({
       status: "failed",
-      reason: "vector-exception",
-      evidence: { message: "provider offline" },
+      reason: "provider-unavailable",
+      evidence: { provider: "deterministic-test", model: "fake-embedding-v1", expectedDimensions: 3 },
     });
     expect(result.debugEvidence.fusedHits[0]).toMatchObject({
       lexicalRank: 1,
