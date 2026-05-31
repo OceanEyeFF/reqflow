@@ -1017,7 +1017,7 @@
 - contract_path: .servo/worktrack/WT-20260531-095/contract.md
 - gate_evidence: .servo/worktrack/WT-20260531-095/gate-evidence.md
 - branch: worktrack/wt-20260531-095-ms9-grill-me-acceptance (merged)
-- merge_commit: WT095_COMMIT_PENDING
+- merge_commit: f90ad159c3a8a2b4f18b346dc433d7cd3582dca1
 - validation: fdch0 accepted local WT-094 validation as sufficient for MS-9 acceptance gate; remote CI freshness is non-blocking follow-up
 - planning_notes: Use the thinking style from https://raw.githubusercontent.com/mattpocock/skills/main/skills/productivity/grill-me/SKILL.md: gather repo evidence first, ask fdch0 one pointed question at a time, include a recommended answer, and focus on decisions that cannot be answered from the repo. Output must record questions, fdch0 answers, recommended answers, and any resulting acceptance blockers or follow-up worktracks.
 
