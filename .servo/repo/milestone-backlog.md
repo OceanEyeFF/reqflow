@@ -6,8 +6,8 @@
 
 - total: 14
 - planned: 1
-- active: 1
-- completed: 10
+- active: 0
+- completed: 11
 - superseded: 2
 
 ## Milestones
@@ -236,10 +236,10 @@
 - milestone_id: MS-10
 - title: 知识库索引与 Hybrid Retrieval 实现
 - milestone_kind: goal-driven
-- status: active
+- status: completed
 - priority: 13
 - depends_on_milestones: [MS-9]
-- worktrack_list: [WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088]
+- worktrack_list: [WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088, WT-20260531-097, WT-20260531-099, WT-20260531-098]
 - created_by: fdch0
 - created_at: 2026-05-29
 - updated: 2026-05-31
@@ -247,6 +247,10 @@
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
 - activated_by: fdch0
 - activated_at: 2026-05-31 17:16:10 +08:00
+- acceptance_handback_status: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-05-31 20:31:00 +08:00
+- acceptance_note: accepted after supplemental CodeReview, lexical PostgreSQL FTS fallback repair, local embedding Docker/CPU feasibility assessment, and final local validation.
 - purpose: 实现 lexical BM25/FTS、embedding + pgvector、fusion、权限过滤、上下文扩展和可解释 citation。
 
 ### MS-11
@@ -257,10 +261,10 @@
 - status: planned
 - priority: 14
 - depends_on_milestones: [MS-10]
-- worktrack_list: [WT-20260529-089, WT-20260529-090, WT-20260529-091, WT-20260529-092, WT-20260529-093]
+- worktrack_list: [WT-20260529-089, WT-20260529-090, WT-20260529-091, WT-20260529-092, WT-20260529-093, WT-20260531-100]
 - created_by: fdch0
 - created_at: 2026-05-29
-- updated: 2026-05-29
+- updated: 2026-05-31
 - updated_by: harness-kernel
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
 - purpose: 接入 AI draft hybrid context，完成中文业务端到端验收、PostgreSQL/extension readiness 和 docs/operator 文档追平。

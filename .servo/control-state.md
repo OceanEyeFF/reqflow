@@ -14,17 +14,17 @@
 
 ## Active Worktrack
 
-- active_worktrack: WT-20260529-088
-- worktrack_title: Hybrid Retrieval evaluation harness 与回归测试
-- worktrack_status: completed
-- target_milestone_id: MS-10
+- active_worktrack: none
+- worktrack_title: N/A
+- worktrack_status: closed
+- target_milestone_id: none
 
 ## Active Milestone
 
-- active_milestone: MS-10
-- milestone_title: 知识库索引与 Hybrid Retrieval 实现
-- milestone_status: completed
-- milestone_pipeline_summary: total=17 planned=1 active=0 completed=14 superseded=2; MS-20260528-002 and MS-20260529-001 superseded by MS-9/MS-10/MS-11
+- active_milestone: none
+- milestone_title: N/A
+- milestone_status: none
+- milestone_pipeline_summary: total=14 planned=1 active=0 completed=11 superseded=2; MS-10 accepted and MS-11 remains planned with six worktracks including WT-20260531-100
 
 ## Baseline Branch
 
@@ -38,18 +38,18 @@
 
 - repo_snapshot: .servo/repo/snapshot-status.md
 - repo_analysis: .servo/repo/analysis.md
-- worktrack_contract: .servo/worktrack/WT-20260529-088/contract.md
-- plan_task_queue: .servo/worktrack/WT-20260529-088/plan-task-queue.md
-- gate_evidence: .servo/worktrack/WT-20260529-088/gate-evidence.md
+- worktrack_contract: N/A
+- plan_task_queue: N/A
+- gate_evidence: N/A
 - milestone_backlog: .servo/repo/milestone-backlog.md
 - worktrack_backlog: .servo/repo/worktrack-backlog.md
 
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: fdch0 explicitly activated MS-10 and granted 30 continuous Worktrack actions for this execution cycle.
-- approval_scope: MS-10 active milestone worktracks; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
-- approval_persistence: active for MS-10 execution cycle until interrupted or milestone final acceptance handback.
+- reason: MS-10 execution cycle completed and accepted by fdch0.
+- approval_scope: no active milestone; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
+- approval_persistence: no active execution-cycle approval after MS-10 final acceptance.
 
 ## Continuation Authority
 
@@ -76,13 +76,13 @@
 
 ## Handback Guard
 
-- handoff_state: unlocked_ms10_execution
-- last_stop_reason: none
-- last_handback_signature: ms10-activated::2026-05-31::6-worktracks
+- handoff_state: repo_scope_observing_after_ms10_acceptance
+- last_stop_reason: MS-10 final acceptance completed
+- last_handback_signature: ms10-accepted::2026-05-31::9-worktracks
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
 - handback_lock_active: false
-- last_unlock_signal: fdch0 explicitly activated MS-10 and approved 30 continuous Worktrack actions on 2026-05-31.
+- last_unlock_signal: fdch0 accepted MS-10 final handback on 2026-05-31.
 
 ## Baseline Traceability
 
@@ -98,11 +98,11 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 30
-- autonomous_worktracks_opened: 0
+- autonomy_budget_remaining: 0
+- autonomous_worktracks_opened: 3
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-31
-- autonomy_budget_notes: MS-10 执行周期授权；允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack。危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。Milestone final acceptance 必须由 fdch0 决定。
+- autonomy_budget_notes: MS-10 执行周期授权已在最终验收后关闭；本周期自动追加并完成 WT-20260531-097、WT-20260531-099、WT-20260531-098，并追加 MS-11 计划项 WT-20260531-100。危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时仍必须 handback。
 
 ## Notes
 
@@ -132,7 +132,7 @@
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
-- active_next_milestone: MS-10 知识库索引与 Hybrid Retrieval 实现.
+- active_next_milestone: none; MS-11 AI 草稿 Hybrid Context 接入与文档追平 is planned and ready for activation after fdch0 decision.
 - active_milestone_clarification_status: confirmed; fdch0 activated MS-10 on 2026-05-31 and approved 30 continuous Worktrack actions.
 - routed_new_requests: PostgreSQL hybrid search replaces previous docs cleanup and lightweight Chinese retrieval plans.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.

@@ -168,9 +168,9 @@ reqflow/
 
 ### Preparation Work
 
-- current_preparation_milestone: MS-10
-- current_preparation_item: WT-20260529-083 ready for worktrack initialization.
-- preparation_goal: implement knowledge search index schema, lexical/vector retrieval, fusion, filtering, context expansion, and regression tests on the MS-9 PostgreSQL hybrid search baseline.
+- current_preparation_milestone: MS-11
+- current_preparation_item: WT-20260529-089 ready for worktrack initialization after fdch0 activation.
+- preparation_goal: connect MS-10 hybrid retrieval to AI draft context, citation/debug surfaces, Chinese E2E validation, PostgreSQL readiness, docs/operator catch-up, and the optional local CPU embedding sidecar PoC.
 - provider_decision: Deepseek
 - split_decision: multiple knowledge bases, multi-file/zip import with path preservation, selected deletion, AI knowledge-base selection, AI language/multi-draft behavior completed under MS-20260528-001/MS-20260528-003; docs cleanup is now folded into MS-11 after hybrid search implementation.
 

@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 12
-- completed: 10
+- total: 13
+- completed: 11
 - superseded: 2
 
 ## Completed Milestones
@@ -107,6 +107,17 @@
 - source_artifact: .servo/milestone/MS-9.md
 - completed_worktracks: WT-20260529-078, WT-20260529-079, WT-20260529-080, WT-20260529-081, WT-20260529-082, WT-20260531-094, WT-20260531-095, WT-20260531-096
 - acceptance_note: accepted after WT-096 final CodeReview; local validation is sufficient for MS-9 and remote GitHub Actions freshness remains a non-blocking follow-up.
+
+### MS-10
+
+- milestone_id: MS-10
+- title: 知识库索引与 Hybrid Retrieval 实现
+- status: completed
+- accepted_by: fdch0
+- accepted_at: 2026-05-31 20:31:00 +08:00
+- source_artifact: .servo/milestone/MS-10.md
+- completed_worktracks: WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088, WT-20260531-097, WT-20260531-099, WT-20260531-098
+- acceptance_note: accepted after supplemental CodeReview, lexical PostgreSQL FTS fallback repair, local embedding Docker/CPU feasibility assessment, and final local validation.
 
 ## Superseded Milestones
 
