@@ -1050,6 +1050,7 @@
 - plan_task_queue: .servo/worktrack/WT-20260529-083/plan-task-queue.md
 - gate_evidence: .servo/worktrack/WT-20260529-083/gate-evidence.md
 - branch: worktrack/wt-20260529-083-knowledge-search-index-schema
+- merge_commit: 476918ea510251a11d6d89aca34958fdaa77a218
 - validation: Prisma generate/validate pass; migration deploy/status pass; postgres readiness pass; focused schema tests pass 1 file / 2 tests; lint pass; test pass 29 files / 203 tests; build pass
 - planning_notes: Index schema should carry profileId/model/dimensions/contentHash/status plus structured metadata such as domainEntities, processNames, materialTypes, approvalActions, applicabilityRules, sourcePath, section, and documentTitle.
 
