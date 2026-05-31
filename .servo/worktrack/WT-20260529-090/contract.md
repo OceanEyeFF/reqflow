@@ -6,7 +6,7 @@
 - title: Citation UI、检索证据与 Admin Debug 展示追平
 - milestone_id: MS-11
 - node_type: feature
-- status: gate-passed
+- status: completed
 - branch: worktrack/wt-20260529-090-citation-ui-search-evidence
 - created_by: harness-kernel
 - created_at: 2026-05-31 22:50:53 +08:00

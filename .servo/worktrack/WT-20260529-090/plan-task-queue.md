@@ -14,4 +14,4 @@
 4. [x] Render citation provenance and search evidence in AI discussion/admin knowledge UI.
 5. [x] Add focused tests for API/lib behavior and leakage boundaries.
 6. [x] Run validation and record evidence.
-7. [ ] Close worktrack and refresh control artifacts.
+7. [x] Close worktrack and refresh control artifacts.

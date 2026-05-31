@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 100
-- planned: 9
+- planned: 8
 - active: 0
-- completed: 80
+- completed: 81
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1203,10 +1203,14 @@
 - title: Citation UI、检索证据与 Admin Debug 展示追平
 - milestone_id: MS-11
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 2
-- contract_path: TBD
+- contract_path: .servo/worktrack/WT-20260529-090/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260529-090/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260529-090/gate-evidence.md
 - branch: worktrack/wt-20260529-090-citation-ui-search-evidence
+- merge_commit: 59e37669bdb51146563c749fbbdf1f1cbbf995e6
+- validation: focused AI/admin tests pass 4 files / 23 tests; retrieval tests pass 1 file / 26 tests; lint pass; build pass; full test pass 31 files / 239 tests; PostgreSQL readiness pass with local reqflow_dev URL; diff check pass
 - planning_notes: Debug view should expose lexical hits, vector hits, fused hits, filtered reasons, final context, score breakdown, and citation grouping without leaking secrets or unauthorized knowledge content.
 
 ### WT-20260529-091
