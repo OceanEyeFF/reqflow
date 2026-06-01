@@ -352,7 +352,7 @@
 - milestone_id: MS-15
 - title: ParadeDB `pg_search` Runtime Replacement Validation
 - milestone_kind: goal-driven
-- status: active
+- status: ready_for_acceptance
 - priority: 18
 - depends_on_milestones: [MS-14]
 - worktrack_list: [WT-20260601-123, WT-20260601-124, WT-20260601-125, WT-20260601-126, WT-20260601-127]
@@ -364,5 +364,5 @@
 - activated_by: fdch0
 - activated_at: 2026-06-01
 - pre_milestone_intake_review: .servo/repo/pre-milestone-intake-MS-15.md
-- worktrack_progress: WT-20260601-123=done, WT-20260601-124=done, WT-20260601-125=done, WT-20260601-126=done, WT-20260601-127=planned
+- worktrack_progress: WT-20260601-123=done, WT-20260601-124=done, WT-20260601-125=done, WT-20260601-126=done, WT-20260601-127=done
 - purpose: Validate whether ReqFlow can safely use a ParadeDB PostgreSQL runtime candidate for BM25 search while preserving pgvector, Prisma migrations, app runtime smoke behavior, Chinese retrieval quality, and rollback to the current MS-13 runtime.

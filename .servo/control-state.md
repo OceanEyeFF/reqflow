@@ -23,8 +23,8 @@
 
 - active_milestone: MS-15
 - milestone_title: ParadeDB `pg_search` Runtime Replacement Validation
-- milestone_status: active
-- milestone_pipeline_summary: total=18 planned=1 active=1 completed=14 superseded=2; MS-14 accepted; MS-15 active with 4/5 worktracks completed
+- milestone_status: ready_for_acceptance
+- milestone_pipeline_summary: total=18 planned=1 active=1 completed=14 superseded=2; MS-14 accepted; MS-15 ready for fdch0 final acceptance with 5/5 worktracks completed
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260601-126 completed and merged at 4e1dbfc; next repo-scope action is WT-20260601-127 intake/init for rollback, operator runbook, and default-runtime switch decision report.
+- WT-20260601-127 completed and merged at d28a7ac; next repo-scope action is fdch0 final acceptance review for MS-15. Do not mark MS-15 accepted without fdch0 decision.
 
 ## Linked Formal Documents
 
@@ -98,8 +98,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 26
-- autonomous_worktracks_opened: 4
+- autonomy_budget_remaining: 25
+- autonomous_worktracks_opened: 5
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-06-01
 - autonomy_budget_notes: MS-15 已由 fdch0 明确批准推进，低危险 Worktrack 可自行通过并连续执行；危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。Milestone final acceptance 必须由 fdch0 决定。
@@ -156,7 +156,8 @@
 - latest_completed_ms15_worktrack: WT-20260601-124 completed and merged at b367011; gate evidence `.servo/worktrack/WT-20260601-124/gate-evidence.md`; ParadeDB candidate runtime passed compose config, Prisma migrate deploy, seed, readiness, strict pg_search readiness, web HTTP smoke, lint/test/build, and non-destructive stop; `pg_search` 0.23.5 and `vector` 0.8.1 coexist on PostgreSQL 18.4.
 - latest_completed_ms15_worktrack: WT-20260601-125 completed and merged at 4aea964; gate evidence `.servo/worktrack/WT-20260601-125/gate-evidence.md`; candidate compose pg_search benchmark passed the MS-14 Chinese corpus gate with ParadeDB custom scan EXPLAIN evidence and `pdb.unicode default` tokenizer caveat.
 - latest_completed_ms15_worktrack: WT-20260601-126 completed and merged at 4e1dbfc; gate evidence `.servo/worktrack/WT-20260601-126/gate-evidence.md`; same-corpus lexical comparison and separate hybrid invariant evidence passed without claiming app-level ParadeDB hybrid performance.
-- next_worktrack_candidate: WT-20260601-127 Rollback, operator runbook, and default-runtime switch decision report.
+- latest_completed_ms15_worktrack: WT-20260601-127 completed and merged at d28a7ac; gate evidence `.servo/worktrack/WT-20260601-127/gate-evidence.md`; final report `docs/ms15-final-decision-report.md` recommends deferring default runtime switch while approving ParadeDB as the next implementation candidate.
+- next_worktrack_candidate: none; MS-15 awaits fdch0 final acceptance decision.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
