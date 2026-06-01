@@ -1752,13 +1752,14 @@
 - title: App retrieval integration impact and expected product benefit
 - milestone_id: MS-16
 - node_type: research
-- status: planned
+- status: completed
 - priority: 3
 - contract_path: .servo/worktrack/WT-20260601-130/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260601-130/plan-task-queue.md
 - gate_evidence: .servo/worktrack/WT-20260601-130/gate-evidence.md
 - branch: worktrack/wt-20260601-130-app-retrieval-benefit
-- planning_notes: Estimate the scope and expected benefit of wiring ParadeDB `pg_search` into the app lexical lane while preserving RRF-style fusion, permission filters, citations, Chinese benchmark assumptions, and no raw-score addition.
+- validation: integration impact pass; product benefit pass; evidence traceability pass; policy scan pass; git diff --check pass
+- planning_notes: Estimated the scope and expected benefit of wiring ParadeDB `pg_search` into the app lexical lane while preserving RRF-style fusion, permission filters, citations, Chinese benchmark assumptions, and no raw-score addition.
 
 ### WT-20260601-131
 
