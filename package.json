@@ -17,7 +17,8 @@
     "retrieval:evaluate": "node scripts/retrieval-evaluation-gate.mjs",
     "clarification:golden": "node scripts/clarification-golden-case-gate.mjs",
     "embedding:probe": "node scripts/local-embedding-sidecar-probe.mjs",
-    "embedding:indexing-trial": "tsx scripts/local-embedding-indexing-trial.ts"
+    "embedding:indexing-trial": "tsx scripts/local-embedding-indexing-trial.ts",
+    "runtime:smoke": "node scripts/runtime-bundle-smoke.mjs"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"
