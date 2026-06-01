@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 122
-- planned: 10
+- planned: 9
 - active: 0
-- completed: 104
+- completed: 105
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1396,7 +1396,7 @@
 - title: 本地 embedding sidecar 真实索引链路试接入
 - milestone_id: MS-12
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 7
 - contract_path: pending
 - plan_task_queue: pending
@@ -1658,11 +1658,13 @@
 - node_type: test
 - status: planned
 - priority: 2
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-124-paradedb-prisma-smoke
-- planning_notes: Validate Prisma, migrate deploy, seed/readiness, search extension readiness, and web smoke against the candidate ParadeDB runtime without touching existing persistent data.
+- contract_path: .servo/worktrack/WT-20260601-124/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-124/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-124/gate-evidence.md
+- branch: worktrack/wt-20260601-124-paradedb-prisma-smoke (merged)
+- merge_commit: b367011
+- validation: compose config pass; ParadeDB web image build pass; Prisma migrate deploy pass; seed pass; PostgreSQL readiness pass; strict pg_search readiness pass; web HTTP 200; pg_search 0.23.5 and vector 0.8.1 installed; bm25 and hnsw access methods present; lint/test/build pass; non-destructive stop pass
+- planning_notes: Validated Prisma, migrate deploy, seed/readiness, search extension readiness, and web smoke against the candidate ParadeDB runtime without touching existing persistent data.
 
 ### WT-20260601-125
 
