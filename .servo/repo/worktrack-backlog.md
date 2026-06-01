@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 114
-- planned: 10
+- planned: 9
 - active: 0
-- completed: 96
+- completed: 97
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1348,12 +1348,14 @@
 - title: Provider prompt 升级为业务审查/拷问模式
 - milestone_id: MS-12
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 4
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-104-business-interrogation-prompt
+- contract_path: .servo/worktrack/WT-20260601-104/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-104/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-104/gate-evidence.md
+- branch: worktrack/wt-20260601-104-business-interrogation-prompt (merged)
+- merge_commit: 0ee02bb
+- validation: focused provider/API/service tests pass 3 files / 27 tests; lint pass; full test pass 33 files / 256 tests; build pass; diff check pass
 - planning_notes: Change clarify prompt from generic clarification to business process interrogation over coverage gaps, exception rules, actor boundaries, state flow, failure paths, data rules, and acceptance risk.
 
 ### WT-20260601-105
