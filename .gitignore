@@ -57,6 +57,16 @@ scratchpad.md
 # local AI/tool runtime caches
 /.opencode/tmp/
 /.opencode/node_modules/
+/.agents/
+/.claude/
+/.harness/
+/.mavis/
+/.worktrees/
+/.logs/
+
+# local/manual test document packages
+/docs*.zip
+/docs-codewiki_*.zip
 
 # env files (can opt-in for committing if needed)
 .env*
