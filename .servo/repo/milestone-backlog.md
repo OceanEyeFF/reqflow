@@ -4,9 +4,9 @@
 
 ## Pipeline Summary
 
-- total: 19
+- total: 20
 - planned: 0
-- active: 0
+- active: 1
 - completed: 17
 - superseded: 2
 
@@ -394,3 +394,23 @@
 - handback_report: docs/ms16-final-handback.md
 - acceptance_note: fdch0 accepted Option 3; ParadeDB `pg_search` is the intended future default PostgreSQL runtime direction, but MS-16 made no default runtime switch, no app retrieval implementation, and no data migration/deletion. A follow-up implementation milestone or approved worktracks are required before any switch.
 - purpose: Decide whether ReqFlow should keep the current non-BM25 PostgreSQL default runtime, keep ParadeDB optional, or move toward ParadeDB as default using explicit cost, benefit, risk, migration, rollback, and product-value estimates before any runtime switch is implemented.
+
+### MS-17
+
+- milestone_id: MS-17
+- title: ParadeDB Default Runtime Implementation with Fresh Test Data
+- milestone_kind: goal-driven
+- status: active
+- priority: 20
+- depends_on_milestones: [MS-16]
+- worktrack_list: [WT-20260602-132, WT-20260602-133, WT-20260602-134, WT-20260602-135, WT-20260602-136, WT-20260602-137, WT-20260602-138, WT-20260602-139]
+- created_by: fdch0
+- created_at: 2026-06-02
+- updated: 2026-06-02
+- updated_by: codex
+- activation_rules: current_active_milestone == none and depends_on_milestones completed/accepted
+- activated_by: fdch0
+- activated_at: 2026-06-02
+- pre_milestone_intake_review: .servo/repo/pre-milestone-intake-MS-17.md
+- worktrack_progress: WT-20260602-132=planned, WT-20260602-133=planned, WT-20260602-134=planned, WT-20260602-135=planned, WT-20260602-136=planned, WT-20260602-137=planned, WT-20260602-138=planned, WT-20260602-139=planned
+- purpose: Implement ParadeDB `pg_search` as ReqFlow's default local PostgreSQL runtime using fresh validation data, wire the app lexical lane to `pg_search`, preserve native FTS fallback, and validate runtime/config rollback without migrating old MS-13 development data.

@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 131
-- planned: 4
+- total: 139
+- planned: 12
 - active: 0
 - completed: 119
 - superseded: 8
@@ -1775,3 +1775,85 @@
 - branch: worktrack/wt-20260601-131-runtime-selection-adr
 - validation: ADR gate pass; decision gate pass; final handback gate pass; evidence traceability pass; policy scan pass; git diff --check pass
 - planning_notes: Synthesized the option comparison into a decision ADR with recommendation, confidence, residual risks, follow-up implementation worktracks if ParadeDB default wins, and explicit fdch0 final decision boundary.
+
+## MS-17: ParadeDB Default Runtime Implementation with Fresh Test Data
+
+### WT-20260602-132
+
+- worktrack_id: WT-20260602-132
+- title: ParadeDB default runtime compose implementation with fresh volume
+- milestone_id: MS-17
+- node_type: feature
+- status: planned
+- priority: 1
+- planning_notes: Implement the selected default local runtime path using ParadeDB and fresh validation volume/data. Preserve old MS-13 volumes untouched and do not claim old data migration.
+
+### WT-20260602-133
+
+- worktrack_id: WT-20260602-133
+- title: New test corpus and seed baseline for ParadeDB validation
+- milestone_id: MS-17
+- node_type: test
+- status: planned
+- priority: 2
+- planning_notes: Define the fresh seed/test corpus that will replace old MS-13 development data as the MS-17 validation baseline.
+
+### WT-20260602-134
+
+- worktrack_id: WT-20260602-134
+- title: Runtime smoke, readiness, and config rollback validation on fresh data
+- milestone_id: MS-17
+- node_type: test
+- status: planned
+- priority: 3
+- planning_notes: Validate compose config, Prisma migrate deploy, seed, `pg_search`/vector readiness, web smoke, and runtime/config rollback without old-data restoration claims.
+
+### WT-20260602-135
+
+- worktrack_id: WT-20260602-135
+- title: `pg_search` schema/index migration for fresh database
+- milestone_id: MS-17
+- node_type: feature
+- status: planned
+- priority: 4
+- planning_notes: Add safe `pg_search` index DDL/migration behavior for a fresh database, with explicit extension readiness gates.
+
+### WT-20260602-136
+
+- worktrack_id: WT-20260602-136
+- title: App lexical adapter and engine gating
+- milestone_id: MS-17
+- node_type: feature
+- status: planned
+- priority: 5
+- planning_notes: Wire app lexical retrieval to ParadeDB `pg_search` when available while preserving native FTS fallback and RRF raw-score separation.
+
+### WT-20260602-137
+
+- worktrack_id: WT-20260602-137
+- title: Hybrid retrieval validation with actual ParadeDB lexical lane
+- milestone_id: MS-17
+- node_type: test
+- status: planned
+- priority: 6
+- planning_notes: Prove app-level hybrid retrieval uses actual ParadeDB lexical lane with citations, filters, and RRF fusion; do not rely only on isolated SQL probes.
+
+### WT-20260602-138
+
+- worktrack_id: WT-20260602-138
+- title: Chinese/product corpus quality gate and tokenizer caveat review
+- milestone_id: MS-17
+- node_type: test
+- status: planned
+- priority: 7
+- planning_notes: Run Chinese/product search quality gates on the fresh corpus and record tokenizer caveats without overclaiming production quality.
+
+### WT-20260602-139
+
+- worktrack_id: WT-20260602-139
+- title: Operator runbook, final CodeReview, and MS-17 handback
+- milestone_id: MS-17
+- node_type: review
+- status: planned
+- priority: 8
+- planning_notes: Update operator runbook, collect final validation evidence, run CodeReview, and prepare fdch0 final acceptance handback.
