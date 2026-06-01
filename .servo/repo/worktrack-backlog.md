@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 122
-- planned: 15
+- planned: 14
 - active: 0
-- completed: 99
+- completed: 100
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1510,13 +1510,15 @@
 - title: BM25 插件候选矩阵与评测方案
 - milestone_id: MS-14
 - node_type: research
-- status: planned
+- status: completed
 - priority: 1
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-115-bm25-candidate-matrix
-- planning_notes: Verify current primary-source facts for ParadeDB pg_search, pg_textsearch, VectorChord-BM25/pg_tokenizer, PostgreSQL version support, license/distribution, preload requirements, and candidate test matrix.
+- contract_path: .servo/worktrack/WT-20260601-115/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-115/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-115/gate-evidence.md
+- branch: worktrack/wt-20260601-115-bm25-candidate-matrix (merged)
+- merge_commit: ce99c5fffcc1f563be85524089e7b8b24800bed7
+- validation: git diff --check pass; policy/stale-claim scan pass; research/docs-only scope respected
+- planning_notes: Verified primary-source facts for ParadeDB pg_search, pg_textsearch, VectorChord-BM25/pg_tokenizer, zhparser, and pg_jieba; produced candidate matrix and evaluation plan without changing default runtime.
 
 ### WT-20260601-116
 
