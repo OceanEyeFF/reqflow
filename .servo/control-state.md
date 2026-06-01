@@ -24,7 +24,7 @@
 - active_milestone: MS-14
 - milestone_title: PostgreSQL BM25 插件中文兼容与性能准确率评估
 - milestone_status: active
-- milestone_pipeline_summary: total=17 planned=1 active=1 completed=13 superseded=2; MS-13 accepted; MS-14 active with 2/8 worktracks completed
+- milestone_pipeline_summary: total=17 planned=1 active=1 completed=13 superseded=2; MS-13 accepted; MS-14 active with 3/8 worktracks completed
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260601-116 completed and merged at a15a6b9; next repo-scope action is WT-20260601-117 intake/init for ParadeDB pg_search runtime PoC in an isolated candidate runtime.
+- WT-20260601-117 completed and merged at f3bf8b0; next repo-scope action is WT-20260601-118 intake/init for VectorChord-BM25 / pg_tokenizer runtime PoC in an isolated candidate runtime.
 
 ## Linked Formal Documents
 
@@ -87,7 +87,7 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint: 629f7c7232e425d08484877593222cbeaec2ec1f
-- latest_observed_checkpoint: 7f7085e5d86f0c80935deb4d831d7ef682965191
+- latest_observed_checkpoint: f3bf8b0367fb1c7c95c78ff3bc8a744b31e18491
 - last_doc_catch_up_checkpoint: 38da2ba
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
@@ -145,7 +145,8 @@
 - latest_completed_ms13_worktrack: WT-20260601-113 completed and merged at 438cba9; gate evidence `.servo/worktrack/WT-20260601-113/gate-evidence.md`; final validation report `docs/ms13-final-validation.md`; lint/test/build/compose/runtime smoke passed and MS-13 is ready for fdch0 final acceptance review.
 - latest_completed_ms14_worktrack: WT-20260601-115 completed and merged at ce99c5f; gate evidence `.servo/worktrack/WT-20260601-115/gate-evidence.md`; candidate matrix `docs/ms14-bm25-candidate-matrix.md` defines BM25 plugin candidates, Chinese evaluation plan, compatibility gates, and non-claim boundaries.
 - latest_completed_ms14_worktrack: WT-20260601-116 completed and merged at a15a6b9; gate evidence `.servo/worktrack/WT-20260601-116/gate-evidence.md`; `npm run bm25:evaluate` validates the MS-14 Chinese BM25 benchmark corpus and result contract.
-- next_worktrack_candidate: WT-20260601-117 ParadeDB pg_search runtime PoC.
+- latest_completed_ms14_worktrack: WT-20260601-117 completed and merged at f3bf8b0; gate evidence `.servo/worktrack/WT-20260601-117/gate-evidence.md`; ParadeDB `pg_search` passed isolated runtime and Chinese benchmark gates as a future runtime candidate with caveats.
+- next_worktrack_candidate: WT-20260601-118 VectorChord-BM25 / pg_tokenizer runtime PoC.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
