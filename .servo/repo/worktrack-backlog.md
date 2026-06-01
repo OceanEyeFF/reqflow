@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 122
-- planned: 7
+- planned: 6
 - active: 0
-- completed: 107
+- completed: 108
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1688,7 +1688,7 @@
 - title: Same-corpus hybrid retrieval comparison with ParadeDB lexical lane
 - milestone_id: MS-15
 - node_type: test
-- status: planned
+- status: completed
 - priority: 4
 - contract_path: .servo/worktrack/WT-20260601-126/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260601-126/plan-task-queue.md
@@ -1706,8 +1706,10 @@
 - node_type: review
 - status: planned
 - priority: 5
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-127-paradedb-runtime-decision
-- planning_notes: Document rollback to MS-13 runtime, operator runbook, final enable/defer/reject recommendation, and explicit fdch0 approval boundary for any default runtime switch.
+- contract_path: .servo/worktrack/WT-20260601-127/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-127/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-127/gate-evidence.md
+- branch: worktrack/wt-20260601-127-paradedb-runtime-decision (merged)
+- merge_commit: d28a7ac
+- validation: BM25 ParadeDB gate pass; MS-10 retrieval gate pass; hybrid comparison pass; candidate compose config pass; lint/test/build pass; policy scan pass
+- planning_notes: Documented rollback to MS-13 runtime, operator runbook, final recommendation to defer default runtime switch while approving ParadeDB as next implementation candidate, and explicit fdch0 approval boundary for any default runtime switch.
