@@ -1631,3 +1631,75 @@
 - merge_commit: 17c8139025f6f2cab1f4a669542d2b79976936dc
 - validation: BM25 corpus gate pass; ParadeDB result gate pass; native fixture result gate pass; VectorChord result gate expected fail on synonym Recall@5; MS-10 retrieval gate pass; diff check pass; policy/non-claim scan pass
 - planning_notes: Produced `docs/ms14-final-decision-report.md`; final recommendation is ParadeDB `pg_search` as future runtime-enablement candidate only, VectorChord-BM25 and pg_textsearch deferred, native PostgreSQL FTS fallback remains default, and any runtime switch requires fdch0 approval.
+
+## MS-15: ParadeDB `pg_search` Runtime Replacement Validation
+
+### WT-20260601-123
+
+- worktrack_id: WT-20260601-123
+- title: ParadeDB image pinning and alternate compose/profile design
+- milestone_id: MS-15
+- node_type: research
+- status: planned
+- priority: 1
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-123-paradedb-runtime-design
+- planning_notes: Pin or document the target ParadeDB image identity, design an alternate compose/profile that avoids current default volumes, and preserve rollback to MS-13 runtime.
+
+### WT-20260601-124
+
+- worktrack_id: WT-20260601-124
+- title: Prisma migration, seed, readiness, and web smoke on ParadeDB runtime
+- milestone_id: MS-15
+- node_type: test
+- status: planned
+- priority: 2
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-124-paradedb-prisma-smoke
+- planning_notes: Validate Prisma, migrate deploy, seed/readiness, search extension readiness, and web smoke against the candidate ParadeDB runtime without touching existing persistent data.
+
+### WT-20260601-125
+
+- worktrack_id: WT-20260601-125
+- title: pg_search integration probe, tokenizer selection, and Chinese benchmark rerun
+- milestone_id: MS-15
+- node_type: test
+- status: planned
+- priority: 3
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-125-paradedb-pg-search-tokenizer
+- planning_notes: Re-run pg_search index/query probes, compare tokenizer configuration including Chinese-compatible options, and validate MS-14 Chinese benchmark results on the candidate runtime.
+
+### WT-20260601-126
+
+- worktrack_id: WT-20260601-126
+- title: Same-corpus hybrid retrieval comparison with ParadeDB lexical lane
+- milestone_id: MS-15
+- node_type: test
+- status: planned
+- priority: 4
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-126-paradedb-hybrid-comparison
+- planning_notes: Compare ParadeDB lexical lane against current fallback/hybrid behavior using same-corpus evidence while preserving RRF-style fusion and avoiding raw score addition.
+
+### WT-20260601-127
+
+- worktrack_id: WT-20260601-127
+- title: Rollback, operator runbook, and default-runtime switch decision report
+- milestone_id: MS-15
+- node_type: review
+- status: planned
+- priority: 5
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-127-paradedb-runtime-decision
+- planning_notes: Document rollback to MS-13 runtime, operator runbook, final enable/defer/reject recommendation, and explicit fdch0 approval boundary for any default runtime switch.
