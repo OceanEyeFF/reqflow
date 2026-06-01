@@ -1,0 +1,50 @@
+services:
+  postgres:
+    image: ${PARADEDB_IMAGE:-paradedb/paradedb@sha256:c3efc689b6ebd2fb396d7f50d68735b2dcff3e03f3bf51a926258d942201da2d}
+    platform: ${PARADEDB_PLATFORM:-linux/amd64}
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-reqflow_dev}
+      POSTGRES_USER: ${POSTGRES_USER:-reqflow}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-reqflow}
+    ports:
+      - "${POSTGRES_PORT:-55437}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 18
+    volumes:
+      - reqflow-paradedb-postgres-data:/var/lib/postgresql/data
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${REQFLOW_WEB_IMAGE:-reqflow-web:paradedb-candidate}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      DATABASE_URL: postgresql://${POSTGRES_USER:-reqflow}:${POSTGRES_PASSWORD:-reqflow}@postgres:5432/${POSTGRES_DB:-reqflow_dev}?schema=public
+      AUTH_SECRET: ${AUTH_SECRET:?Set AUTH_SECRET before starting the ParadeDB runtime candidate}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      DEEPSEEK_BASE_URL: ${DEEPSEEK_BASE_URL:-https://api.deepseek.com}
+      DEEPSEEK_MODEL: ${DEEPSEEK_MODEL:-deepseek-v4-flash}
+      DEEPSEEK_TIMEOUT_MS: ${DEEPSEEK_TIMEOUT_MS:-20000}
+      AI_MAX_DRAFTS: ${AI_MAX_DRAFTS:-}
+      LOCAL_EMBEDDING_BASE_URL: ${LOCAL_EMBEDDING_BASE_URL:-http://embedding:80}
+      LOCAL_EMBEDDING_PATH: ${LOCAL_EMBEDDING_PATH:-/embed}
+      LOCAL_EMBEDDING_REQUEST_FORMAT: ${LOCAL_EMBEDDING_REQUEST_FORMAT:-tei}
+      LOCAL_EMBEDDING_MODEL: ${LOCAL_EMBEDDING_MODEL:-intfloat/multilingual-e5-large}
+      LOCAL_EMBEDDING_DIMENSIONS: ${LOCAL_EMBEDDING_DIMENSIONS:-1024}
+    ports:
+      - "${REQFLOW_WEB_PORT:-3307}:3000"
+    volumes:
+      - reqflow-paradedb-uploads:/app/public/uploads
+
+volumes:
+  reqflow-paradedb-postgres-data:
+  reqflow-paradedb-uploads:
