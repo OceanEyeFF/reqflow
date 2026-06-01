@@ -14,7 +14,7 @@ RUN npm ci
 FROM deps AS builder
 COPY . .
 RUN npx prisma generate --schema prisma/schema.prisma
-RUN npm run build
+RUN npm run build:webpack
 
 FROM base AS runner
 WORKDIR /app

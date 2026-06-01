@@ -11,7 +11,7 @@ or destructive volume/cache cleanup.
 
 - Dockerfile: `Dockerfile`
 - Base runtime: `node:20-bookworm-slim`
-- Build command: `npm run build`
+- Container build command: `npm run build:webpack`
 - Next.js runtime: standalone output from `.next/standalone/server.js`
 - Runtime user: non-root `nextjs`
 - Exposed port: `3000`
@@ -53,6 +53,10 @@ Build the image:
 ```bash
 docker build -t reqflow-web:local .
 ```
+
+The Docker builder uses `npm run build:webpack` because Next.js 16 defaults
+`next build` to Turbopack, and Turbopack requires platform-specific native
+bindings. The host validation command remains `npm run build`.
 
 Run it against an existing PostgreSQL database:
 

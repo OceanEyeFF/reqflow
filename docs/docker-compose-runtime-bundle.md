@@ -10,6 +10,10 @@ This is still a local/operator runtime path. It is not production deployment,
 backup/restore, cloud secret management, migration automation, seed automation,
 BM25 runtime selection, or destructive volume/cache cleanup.
 
+Use `docs/ms13-runtime-operator-runbook.md` as the step-by-step operator
+runbook for local start, smoke validation, logs, stop behavior, optional
+embedding probing, and troubleshooting.
+
 ## Services
 
 | Service | Default image/build | Purpose |
@@ -70,6 +74,10 @@ runs seed, runs PostgreSQL/search-extension readiness checks, and performs an
 HTTP smoke against the web URL. It does not start, stop, reset, or remove
 containers, volumes, uploads, model cache, or database state.
 
+If default host ports are already in use, set `POSTGRES_PORT` and
+`REQFLOW_WEB_PORT` for Compose and pass the same PostgreSQL/web values through
+`RUNTIME_POSTGRES_PORT` and `RUNTIME_WEB_URL` when running `runtime:smoke`.
+
 ## Optional Embedding Sidecar
 
 Start the embedding sidecar only when you intentionally want the local CPU model
@@ -107,6 +115,15 @@ RUNTIME_PROBE_EMBEDDING=true npm run runtime:smoke
 
 Cleanup is intentionally not automated. Any volume/model-cache deletion requires
 an explicit operator decision.
+
+The standard stop command is:
+
+```bash
+docker compose -f docker-compose.runtime.yml stop web postgres
+```
+
+Do not use `down -v`, `volume rm`, `system prune`, or manual cache deletion as
+part of the normal runtime bundle flow.
 
 ## Boundaries
 
