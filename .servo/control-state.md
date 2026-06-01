@@ -9,7 +9,7 @@
 
 ## Current Control Level
 
-- repo_scope: worktrack
+- repo_scope: scheduling
 - worktrack_scope: closed
 
 ## Active Worktrack
@@ -86,8 +86,8 @@
 
 ## Baseline Traceability
 
-- last_verified_checkpoint: 629f7c7232e425d08484877593222cbeaec2ec1f
-- latest_observed_checkpoint: e9e2da4d44b7844846fbb978fbe5acd050096298
+- last_verified_checkpoint: 0f2e7a2e617cb84841ecd0750a3d7667cf9820d9
+- latest_observed_checkpoint: 0f2e7a2e617cb84841ecd0750a3d7667cf9820d9
 - last_doc_catch_up_checkpoint: 38da2ba
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
