@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import type { KnowledgeCitation } from "@/lib/ai/types";
 import { Prisma } from "@prisma/client";
 import { retrieveVectorCandidates, type EmbeddingProvider, type VectorRetrievalResult } from "./embeddings";
+import { ACTIVE_LEXICAL_ENGINE, type LexicalEngineId } from "./lexical-engines";
 
 const MAX_PERSISTED_SNIPPETS = 3;
 const MAX_CANDIDATES = 100;
@@ -29,7 +30,7 @@ export type LexicalHitEvidence = {
   path: string;
   section?: string;
   rank: number;
-  engine: "postgres-native-fts-fallback";
+  engine: LexicalEngineId;
   score: number;
   matchedTerms: string[];
   mustTerms: string[];
@@ -39,7 +40,7 @@ export type LexicalHitEvidence = {
 
 export type KnowledgeRetrievalDebugEvidence = {
   query: QueryUnderstanding;
-  engine: "postgres-native-fts-fallback";
+  engine: LexicalEngineId;
   filters: {
     knowledgeBaseIds: string[];
     sourceStatuses: string[];
@@ -200,7 +201,7 @@ export async function retrieveKnowledgeSnippets(
     path: candidate.sourcePath,
     section: candidate.section ?? undefined,
     rank: index + 1,
-    engine: "postgres-native-fts-fallback" as const,
+    engine: ACTIVE_LEXICAL_ENGINE.id,
     score,
     matchedTerms,
     mustTerms: query.mustTerms,
@@ -554,7 +555,7 @@ function createDebugEvidence(
 ): KnowledgeRetrievalDebugEvidence {
   return {
     query,
-    engine: "postgres-native-fts-fallback",
+    engine: ACTIVE_LEXICAL_ENGINE.id,
     filters: {
       knowledgeBaseIds,
       sourceStatuses: ["ready", "enabled"],

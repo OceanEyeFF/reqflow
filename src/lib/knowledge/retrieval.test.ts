@@ -1,6 +1,12 @@
 import { beforeAll, beforeEach, describe, expect, it, vi } from "vitest";
 import type { PrismaClient } from "@prisma/client";
 import {
+  ACTIVE_LEXICAL_ENGINE,
+  TARGET_BM25_LEXICAL_ENGINE,
+  isRuntimeClaimAllowed,
+} from "./lexical-engines";
+
+import {
   clearDatabase,
   createTestDatabaseUrl,
   disconnectPrisma,
@@ -162,8 +168,10 @@ describe("selectKnowledgeSnippets", () => {
 
     const result = await retrieveKnowledgeSnippets("审批流程");
 
-    expect(result.debugEvidence.engine).toBe("postgres-native-fts-fallback");
-    expect(result.debugEvidence.lexicalHits.every((hit) => hit.engine === "postgres-native-fts-fallback")).toBe(true);
+    expect(result.debugEvidence.engine).toBe(ACTIVE_LEXICAL_ENGINE.id);
+    expect(ACTIVE_LEXICAL_ENGINE.bm25).toBe(false);
+    expect(isRuntimeClaimAllowed(TARGET_BM25_LEXICAL_ENGINE.id)).toBe(false);
+    expect(result.debugEvidence.lexicalHits.every((hit) => hit.engine === ACTIVE_LEXICAL_ENGINE.id)).toBe(true);
   });
 
   it("uses database-side lexical recall beyond the previous newest candidate window", async () => {

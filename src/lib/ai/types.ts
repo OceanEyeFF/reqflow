@@ -1,3 +1,5 @@
+import type { LexicalEngineId } from "@/lib/knowledge/lexical-engines";
+
 export type DraftPriority = "low" | "medium" | "high" | "urgent";
 
 export type KnowledgeCitation = {
@@ -35,7 +37,7 @@ export type AiCoverageDiagnostics = {
   vectorLaneStatus:
     | { status: "ready"; candidatesReturned: number }
     | { status: "failed"; reason: string };
-  lexicalEngine: "postgres-native-fts-fallback";
+  lexicalEngine: LexicalEngineId;
   lexicalCandidatesScanned: number;
   lexicalCandidatesReturned: number;
 };
