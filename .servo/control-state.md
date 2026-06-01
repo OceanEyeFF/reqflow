@@ -23,8 +23,8 @@
 
 - active_milestone: MS-15
 - milestone_title: ParadeDB `pg_search` Runtime Replacement Validation
-- milestone_status: ready_for_acceptance
-- milestone_pipeline_summary: total=18 planned=1 active=1 completed=14 superseded=2; MS-14 accepted; MS-15 ready for fdch0 final acceptance with 5/5 worktracks completed
+- milestone_status: accepted
+- milestone_pipeline_summary: total=18 planned=1 active=0 completed=15 superseded=2; MS-15 accepted by fdch0 after 5/5 worktracks completed
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260601-127 completed and merged at d28a7ac; next repo-scope action is fdch0 final acceptance review for MS-15. Do not mark MS-15 accepted without fdch0 decision.
+- MS-15 accepted by fdch0 on 2026-06-01. Next repo-scope action is observe/plan the next milestone; no default ParadeDB runtime switch was made.
 
 ## Linked Formal Documents
 
@@ -49,7 +49,7 @@
 - needs_programmer_approval: false
 - reason: fdch0 explicitly accepted MS-14 and approved MS-15 execution on 2026-06-01 with a 30 Worktrack autonomy budget.
 - approval_scope: MS-15 worktrack execution; low-risk Worktracks may be self-approved, missing Worktracks may be added and started, and dangerous operations, destructive deletion, system configuration changes, context-loss signals, or developer decisions still require handback.
-- approval_persistence: active for MS-15 until milestone handback; final milestone acceptance remains fdch0-only.
+- approval_persistence: MS-15 acceptance completed; future milestone/worktrack authority requires fresh goal/context or explicit continuation.
 
 ## Continuation Authority
 
@@ -116,6 +116,7 @@
 - latest_acceptance: MS-12 accepted by fdch0 on 2026-06-01 after all 8/8 worktracks completed, Playwright smoke passed, direct embedding environment tests passed, local sidecar indexing trial passed, and pg_search unavailable cause was recorded as a runtime image packaging boundary.
 - latest_acceptance: MS-13 accepted by fdch0 on 2026-06-01 after Docker runtime final validation and CodeReview; web + PostgreSQL/pgvector compose runtime smoke passed, native FTS fallback remained explicit, and no destructive volume/cache cleanup was used.
 - latest_acceptance: MS-14 accepted by fdch0 on 2026-06-01 after all 8/8 worktracks completed; final decision report recommends ParadeDB `pg_search` only as a future runtime-enablement candidate, defers VectorChord-BM25 and `pg_textsearch`, and keeps default runtime unchanged.
+- latest_acceptance: MS-15 accepted by fdch0 on 2026-06-01 after all 5/5 worktracks completed; ParadeDB `pg_search` candidate runtime passed compose, Prisma/app smoke, strict extension readiness, Chinese BM25 benchmark, hybrid invariant comparison, and rollback/runbook documentation; default runtime switch remains deferred and no production migration was performed.
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
 - latest_completed_ms10_worktrack: WT-20260529-085 completed and validated at 02c7ea2bdfb48ed06be424a30c1785b897a0978b; gate evidence `.servo/worktrack/WT-20260529-085/gate-evidence.md`.
