@@ -24,7 +24,7 @@
 - active_milestone: MS-12
 - milestone_title: AI 需求追问质量升级与 Business Interrogation
 - milestone_status: active
-- milestone_pipeline_summary: total=16 planned=1 active=1 completed=12 superseded=2; MS-12 active with 6/8 worktracks completed; MS-13 remains planned
+- milestone_pipeline_summary: total=16 planned=1 active=1 completed=12 superseded=2; MS-12 active with 7/8 worktracks completed; MS-13 remains planned
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260601-105 completed and merged. Next action is WT-20260601-106 consumables outbound-inspection golden case validation.
+- WT-20260601-106 completed and merged. Next action is WT-20260601-107 local embedding sidecar real indexing trial.
 
 ## Linked Formal Documents
 
@@ -87,7 +87,7 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint: 629f7c7232e425d08484877593222cbeaec2ec1f
-- latest_observed_checkpoint: 4965a55
+- latest_observed_checkpoint: 023912f
 - last_doc_catch_up_checkpoint: 38da2ba
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
@@ -98,8 +98,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 24
-- autonomous_worktracks_opened: 9
+- autonomy_budget_remaining: 23
+- autonomous_worktracks_opened: 10
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-31
 - autonomy_budget_notes: MS-11 已由 fdch0 明确批准开启，并先推进 WT-20260529-089；危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。Milestone final acceptance 必须由 fdch0 决定。
@@ -133,6 +133,7 @@
 - latest_completed_ms12_worktrack: WT-20260601-103 completed and merged at a723c8a; gate evidence `.servo/worktrack/WT-20260601-103/gate-evidence.md`.
 - latest_completed_ms12_worktrack: WT-20260601-104 completed and merged at 0ee02bb; gate evidence `.servo/worktrack/WT-20260601-104/gate-evidence.md`.
 - latest_completed_ms12_worktrack: WT-20260601-105 completed and merged at 4965a55; gate evidence `.servo/worktrack/WT-20260601-105/gate-evidence.md`.
+- latest_completed_ms12_worktrack: WT-20260601-106 completed and merged at 023912f; gate evidence `.servo/worktrack/WT-20260601-106/gate-evidence.md`; `npm run clarification:golden` added for the consumables golden case.
 - next_worktrack_candidate: MS-10 milestone gate handback; no remaining MS-10 worktracks.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
@@ -145,7 +146,7 @@
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
 - active_next_milestone: MS-12 AI 需求追问质量升级与 Business Interrogation.
-- active_milestone_clarification_status: MS-12 active; WT-20260601-101, WT-20260601-114, WT-20260601-102, WT-20260601-103, WT-20260601-104, and WT-20260601-105 completed on 2026-06-01; next planned worktrack is WT-20260601-106.
+- active_milestone_clarification_status: MS-12 active; WT-20260601-101, WT-20260601-114, WT-20260601-102, WT-20260601-103, WT-20260601-104, WT-20260601-105, and WT-20260601-106 completed on 2026-06-01; next planned worktrack is WT-20260601-107.
 - routed_new_requests: PostgreSQL hybrid search replaces previous docs cleanup and lightweight Chinese retrieval plans.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.

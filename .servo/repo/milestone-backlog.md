@@ -292,7 +292,7 @@
 - activation_rules: current_active_milestone == none and depends_on_milestones completed/accepted
 - activated_by: fdch0
 - activated_at: 2026-06-01
-- worktrack_progress: WT-20260601-101=done, WT-20260601-114=done, WT-20260601-102=done, WT-20260601-103=done, WT-20260601-104=done, WT-20260601-105=done, WT-20260601-106=planned, WT-20260601-107=planned
+- worktrack_progress: WT-20260601-101=done, WT-20260601-114=done, WT-20260601-102=done, WT-20260601-103=done, WT-20260601-104=done, WT-20260601-105=done, WT-20260601-106=done, WT-20260601-107=planned
 - purpose: 将 AI 追问从普通澄清升级为 coverage-aware business interrogation，能发现知识库覆盖缺口、流程矛盾、例外规则、责任边界、异常分支和验收风险。
 
 ### MS-13

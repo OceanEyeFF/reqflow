@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 114
-- planned: 8
+- planned: 7
 - active: 0
-- completed: 98
+- completed: 99
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1380,12 +1380,14 @@
 - title: 耗材标准检验出库 golden case 验收
 - milestone_id: MS-12
 - node_type: test
-- status: planned
+- status: completed
 - priority: 6
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-106-consumables-golden-case
+- contract_path: .servo/worktrack/WT-20260601-106/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-106/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-106/gate-evidence.md
+- branch: worktrack/wt-20260601-106-consumables-golden-case (merged)
+- merge_commit: 023912f
+- validation: clarification golden gate pass; negative generic-output probe failed as expected; focused AI tests pass 2 files / 20 tests; lint pass; full test pass 33 files / 256 tests; build pass; diff check pass
 - planning_notes: Add the "一般耗材标准检验出库" scenario as a golden case that requires coverage-gap, exception-rule, QC sampling, failure-path, and warehouse-responsibility questions.
 
 ### WT-20260601-107
