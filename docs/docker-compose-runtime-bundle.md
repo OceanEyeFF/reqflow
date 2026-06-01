@@ -56,6 +56,20 @@ DATABASE_URL="postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_dev?schema=pub
 
 Open http://localhost:3000/login after migrations and seed complete.
 
+For a local smoke that performs the same setup checks without deleting volumes:
+
+```bash
+RUNTIME_POSTGRES_PORT="5432" \
+RUNTIME_WEB_URL="http://127.0.0.1:3000/login" \
+RUNTIME_RUN_SEED=true \
+npm run runtime:smoke
+```
+
+`runtime:smoke` waits for PostgreSQL, runs `prisma migrate deploy`, optionally
+runs seed, runs PostgreSQL/search-extension readiness checks, and performs an
+HTTP smoke against the web URL. It does not start, stop, reset, or remove
+containers, volumes, uploads, model cache, or database state.
+
 ## Optional Embedding Sidecar
 
 Start the embedding sidecar only when you intentionally want the local CPU model
@@ -75,6 +89,12 @@ LOCAL_EMBEDDING_REQUEST_FORMAT="tei" \
 LOCAL_EMBEDDING_MODEL="intfloat/multilingual-e5-large" \
 LOCAL_EMBEDDING_DIMENSIONS="1024" \
 npm run embedding:probe
+```
+
+When the sidecar is running, the runtime smoke can include the probe:
+
+```bash
+RUNTIME_PROBE_EMBEDDING=true npm run runtime:smoke
 ```
 
 ## Volumes
