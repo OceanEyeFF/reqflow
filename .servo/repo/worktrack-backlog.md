@@ -1451,7 +1451,7 @@
 ### WT-20260601-111
 
 - worktrack_id: WT-20260601-111
-- title: pg_search/BM25 runtime image feasibility and fallback packaging
+- title: Postgres BM25 extension runtime feasibility and fallback packaging
 - milestone_id: MS-13
 - node_type: research
 - status: planned
@@ -1460,7 +1460,7 @@
 - plan_task_queue: pending
 - gate_evidence: pending
 - branch: worktrack/wt-20260601-111-bm25-runtime-image
-- planning_notes: Evaluate whether the chosen Docker runtime can safely support pg_search/BM25; keep native PostgreSQL FTS fallback if unavailable.
+- planning_notes: Evaluate whether the chosen Docker runtime can safely support a true Postgres BM25 extension, comparing at least ParadeDB pg_search, Timescale/TigerData pg_textsearch, and VectorChord-BM25. PostgreSQL core/native FTS is not BM25. Keep native PostgreSQL FTS fallback if no candidate is deployable.
 
 ### WT-20260601-112
 

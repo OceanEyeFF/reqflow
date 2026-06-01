@@ -309,4 +309,4 @@
 - updated: 2026-06-01
 - updated_by: codex
 - activation_rules: current_active_milestone == none and depends_on_milestones completed/accepted
-- purpose: 提供 web + PostgreSQL/pgvector + optional embedding sidecar 的 Docker Compose runtime bundle、readiness/probe 编排和 operator runbook；不把模型权重打进主 app image。
+- purpose: 提供 web + PostgreSQL/pgvector + optional embedding sidecar 的 Docker Compose runtime bundle、readiness/probe 编排和 operator runbook；不把模型权重打进主 app image；BM25 只通过可验证的 Postgres extension runtime 候选进入，不把 PostgreSQL core/native FTS 当作 BM25。
