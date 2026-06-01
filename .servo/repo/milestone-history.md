@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 13
-- completed: 12
+- total: 19
+- completed: 17
 - superseded: 2
 
 ## Completed Milestones
@@ -129,6 +129,61 @@
 - source_artifact: .servo/milestone/MS-11.md
 - completed_worktracks: WT-20260529-089, WT-20260529-090, WT-20260529-091, WT-20260529-092, WT-20260529-093, WT-20260531-100
 - acceptance_note: accepted after all 6/6 MS-11 worktracks completed, local AI draft hybrid context validation passed, Chinese business E2E evidence and PostgreSQL/extension readiness were recorded, docs/operator catch-up completed, and local CPU embedding sidecar PoC was verified.
+
+### MS-12
+
+- milestone_id: MS-12
+- title: AI 需求追问质量升级与 Business Interrogation
+- status: completed
+- accepted_by: fdch0
+- accepted_at: 2026-06-01
+- source_artifact: .servo/milestone/MS-12.md
+- completed_worktracks: WT-20260601-101, WT-20260601-114, WT-20260601-102, WT-20260601-103, WT-20260601-104, WT-20260601-105, WT-20260601-106, WT-20260601-107
+- acceptance_note: accepted after all 8/8 worktracks completed, Playwright smoke passed, direct embedding environment tests passed, local sidecar indexing trial passed, and pg_search unavailable cause was recorded as a runtime image packaging boundary.
+
+### MS-13
+
+- milestone_id: MS-13
+- title: Docker Compose Runtime Bundle 与本地一键运行
+- status: completed
+- accepted_by: fdch0
+- accepted_at: 2026-06-01
+- source_artifact: .servo/milestone/MS-13.md
+- completed_worktracks: WT-20260601-108, WT-20260601-109, WT-20260601-110, WT-20260601-111, WT-20260601-112, WT-20260601-113
+- acceptance_note: accepted after Docker runtime final validation and CodeReview; runtime smoke passed with web + PostgreSQL/pgvector, native FTS fallback, explicit migrate/seed/readiness, and non-destructive stop.
+
+### MS-14
+
+- milestone_id: MS-14
+- title: PostgreSQL BM25 插件中文兼容与性能准确率评估
+- status: completed
+- accepted_by: fdch0
+- accepted_at: 2026-06-01
+- source_artifact: .servo/milestone/MS-14.md
+- completed_worktracks: WT-20260601-115, WT-20260601-116, WT-20260601-117, WT-20260601-118, WT-20260601-119, WT-20260601-120, WT-20260601-121, WT-20260601-122
+- acceptance_note: accepted after all 8/8 worktracks completed; ParadeDB `pg_search` remains future runtime-enablement candidate only, VectorChord-BM25 and `pg_textsearch` are deferred, and default runtime remains native PostgreSQL FTS fallback plus pgvector.
+
+### MS-15
+
+- milestone_id: MS-15
+- title: ParadeDB `pg_search` Runtime Replacement Validation
+- status: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-06-01
+- source_artifact: .servo/milestone/MS-15.md
+- completed_worktracks: WT-20260601-123, WT-20260601-124, WT-20260601-125, WT-20260601-126, WT-20260601-127
+- acceptance_note: accepted after all 5/5 worktracks completed; ParadeDB `pg_search` candidate runtime passed compose, Prisma/app smoke, strict extension readiness, Chinese BM25 benchmark, hybrid invariant comparison, and rollback/runbook documentation; default runtime switch remained deferred and no production migration was performed.
+
+### MS-16
+
+- milestone_id: MS-16
+- title: PostgreSQL Runtime Selection Review and ParadeDB Default Switch Decision
+- status: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-06-02
+- source_artifact: .servo/milestone/MS-16.md
+- completed_worktracks: WT-20260601-128, WT-20260601-129, WT-20260601-130, WT-20260601-131
+- acceptance_note: fdch0 accepted Option 3; ParadeDB `pg_search` is the intended future default PostgreSQL runtime direction, but MS-16 made no default runtime switch, no app retrieval implementation, and no data migration/deletion. A follow-up implementation milestone or approved worktracks are required before any switch.
 
 ## Superseded Milestones
 

@@ -4,12 +4,12 @@
 
 ## Metadata
 
-- updated: 2026-06-01
+- updated: 2026-06-02
 - owner: fdch0
 
 ## Current Control Level
 
-- repo_scope: scheduling
+- repo_scope: observing
 - worktrack_scope: closed
 
 ## Active Worktrack
@@ -21,10 +21,10 @@
 
 ## Active Milestone
 
-- active_milestone: MS-16
-- milestone_title: PostgreSQL Runtime Selection Review and ParadeDB Default Switch Decision
-- milestone_status: active
-- milestone_pipeline_summary: total=19 planned=0 active=1 completed=16 superseded=2; MS-16 activated after fdch0 accepted MS-15 and requested runtime option selection review
+- active_milestone: none
+- milestone_title: none
+- milestone_status: none
+- milestone_pipeline_summary: total=19 planned=0 active=0 completed=17 superseded=2; MS-16 accepted by fdch0 on 2026-06-02 with Option 3 selected as intended future ParadeDB default runtime direction
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- MS-16 worktrack list completed. Next action is fdch0 final runtime selection decision and milestone acceptance review; no default ParadeDB runtime switch has been made.
+- MS-16 accepted by fdch0 on 2026-06-02 with `accept-option-3`. Next action is follow-up milestone intake/initialization for ParadeDB default runtime implementation if fdch0 authorizes it; no default ParadeDB runtime switch has been made.
 
 ## Linked Formal Documents
 
@@ -47,9 +47,9 @@
 ## Approval Boundary
 
 - needs_programmer_approval: true
-- reason: fdch0 granted a 30-Worktrack continuous MS-16 execution budget on 2026-06-02, including SubAgent use, low-risk Worktrack self-approval, continuous work, strict validation, and automatic backlog expansion when needed; dangerous operations, obvious context noise, and fdch0 decision points still require handback.
-- approval_scope: MS-16 runtime-selection Worktracks and low-risk follow-up Worktracks within the same milestone. Dangerous operations, destructive deletion, system configuration changes, context-loss signals, runtime default switch implementation, volume/data migration, production/deployment choices, and final milestone acceptance require fdch0 handback.
-- approval_persistence: persistent for this MS-16 execution cycle until 30 Worktrack budget is consumed or a stop condition is hit.
+- reason: fdch0 granted a 30-Worktrack continuous MS-16 execution budget on 2026-06-02, including SubAgent use, low-risk Worktrack self-approval, continuous work, strict validation, and automatic backlog expansion when needed; fdch0 then accepted the MS-16 final decision as Option 3 on 2026-06-02.
+- approval_scope: MS-16 runtime-selection Worktracks and acceptance writeback. Dangerous operations, destructive deletion, system configuration changes, context-loss signals, runtime default switch implementation, volume/data migration, production/deployment choices, and any new milestone acceptance require fdch0 handback or separate authorization.
+- approval_persistence: MS-16 execution cycle closed by fdch0 acceptance on 2026-06-02.
 
 ## Continuation Authority
 
@@ -72,7 +72,7 @@
   - attempted_carrier:
   - carrier_decision:
   - fallback_reason:
-- persistent_authority_notes: 用户在 2026-06-02 明确授予 MS-16 执行周期 30 个连续 Worktrack 额度，允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack；危险操作、上下文噪声明显或需要用户业务判断时必须 handback；MS-16 milestone final acceptance 必须由用户决定。
+- persistent_authority_notes: 用户在 2026-06-02 明确授予 MS-16 执行周期 30 个连续 Worktrack 额度，允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack；危险操作、上下文噪声明显或需要用户业务判断时必须 handback；MS-16 milestone final acceptance 已由 fdch0 在 2026-06-02 选择 Option 3 完成。
 
 ## Handback Guard
 
@@ -102,7 +102,7 @@
 - autonomous_worktracks_opened: 3
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-06-02
-- autonomy_budget_notes: MS-16 received a 30-Worktrack continuous execution budget on 2026-06-02. WT-20260601-129, WT-20260601-130, and WT-20260601-131 consumed three budget units in this execution cycle. Final milestone acceptance remains fdch0-only.
+- autonomy_budget_notes: MS-16 received a 30-Worktrack continuous execution budget on 2026-06-02. WT-20260601-129, WT-20260601-130, and WT-20260601-131 consumed three budget units in this execution cycle. Final milestone acceptance was completed by fdch0 on 2026-06-02 with `accept-option-3`; follow-up runtime implementation requires a separate approved milestone/worktrack boundary.
 
 ## Notes
 
@@ -117,11 +117,12 @@
 - latest_acceptance: MS-13 accepted by fdch0 on 2026-06-01 after Docker runtime final validation and CodeReview; web + PostgreSQL/pgvector compose runtime smoke passed, native FTS fallback remained explicit, and no destructive volume/cache cleanup was used.
 - latest_acceptance: MS-14 accepted by fdch0 on 2026-06-01 after all 8/8 worktracks completed; final decision report recommends ParadeDB `pg_search` only as a future runtime-enablement candidate, defers VectorChord-BM25 and `pg_textsearch`, and keeps default runtime unchanged.
 - latest_acceptance: MS-15 accepted by fdch0 on 2026-06-01 after all 5/5 worktracks completed; ParadeDB `pg_search` candidate runtime passed compose, Prisma/app smoke, strict extension readiness, Chinese BM25 benchmark, hybrid invariant comparison, and rollback/runbook documentation; default runtime switch remains deferred and no production migration was performed.
+- latest_acceptance: MS-16 accepted by fdch0 on 2026-06-02 with `accept-option-3`; ParadeDB `pg_search` is the intended future default PostgreSQL runtime direction, but MS-16 made no default runtime switch, no app retrieval implementation, and no data migration/deletion.
 - active_milestone_init: MS-16 activated on 2026-06-01 for PostgreSQL runtime selection review and ParadeDB default-switch decision gate.
 - latest_completed_ms16_worktrack: WT-20260601-128 completed with decision model `docs/ms16-runtime-path-cost-benefit-model.md`; gate evidence `.servo/worktrack/WT-20260601-128/gate-evidence.md`; no runtime switch, no compose default change, no data migration.
 - latest_completed_ms16_worktrack: WT-20260601-129 completed with migration/rollback cost report `docs/ms16-paradedb-default-migration-rollback-cost.md`; gate evidence `.servo/worktrack/WT-20260601-129/gate-evidence.md`; recommended fresh ParadeDB volume for pre-production if selected, rejected direct PostgreSQL 16 volume reuse, and preserved fdch0 decision boundary.
 - latest_completed_ms16_worktrack: WT-20260601-130 completed with app retrieval integration impact report `docs/ms16-app-retrieval-integration-impact.md`; gate evidence `.servo/worktrack/WT-20260601-130/gate-evidence.md`; product benefit requires a later app lexical adapter and retrieval gates before any BM25 app-behavior claim.
-- latest_completed_ms16_worktrack: WT-20260601-131 completed with runtime selection ADR `docs/ms16-runtime-selection-adr.md` and final handback `docs/ms16-final-handback.md`; gate evidence `.servo/worktrack/WT-20260601-131/gate-evidence.md`; recommendation is Option 3 as intended future direction without switching runtime inside MS-16; final decision pending fdch0.
+- latest_completed_ms16_worktrack: WT-20260601-131 completed with runtime selection ADR `docs/ms16-runtime-selection-adr.md` and final handback `docs/ms16-final-handback.md`; gate evidence `.servo/worktrack/WT-20260601-131/gate-evidence.md`; fdch0 accepted Option 3 as intended future direction without switching runtime inside MS-16.
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
 - latest_completed_ms10_worktrack: WT-20260529-085 completed and validated at 02c7ea2bdfb48ed06be424a30c1785b897a0978b; gate evidence `.servo/worktrack/WT-20260529-085/gate-evidence.md`.
@@ -163,7 +164,7 @@
 - latest_completed_ms15_worktrack: WT-20260601-125 completed and merged at 4aea964; gate evidence `.servo/worktrack/WT-20260601-125/gate-evidence.md`; candidate compose pg_search benchmark passed the MS-14 Chinese corpus gate with ParadeDB custom scan EXPLAIN evidence and `pdb.unicode default` tokenizer caveat.
 - latest_completed_ms15_worktrack: WT-20260601-126 completed and merged at 4e1dbfc; gate evidence `.servo/worktrack/WT-20260601-126/gate-evidence.md`; same-corpus lexical comparison and separate hybrid invariant evidence passed without claiming app-level ParadeDB hybrid performance.
 - latest_completed_ms15_worktrack: WT-20260601-127 completed and merged at d28a7ac; gate evidence `.servo/worktrack/WT-20260601-127/gate-evidence.md`; final report `docs/ms15-final-decision-report.md` recommends deferring default runtime switch while approving ParadeDB as the next implementation candidate.
-- next_worktrack_candidate: none; MS-16 worktrack list completed, pending fdch0 final decision.
+- next_worktrack_candidate: follow-up milestone intake for ParadeDB default runtime implementation, if fdch0 authorizes it.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
@@ -174,15 +175,15 @@
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
-- active_next_milestone: MS-16 PostgreSQL Runtime Selection Review and ParadeDB Default Switch Decision.
+- active_next_milestone: none; candidate follow-up is ParadeDB default runtime implementation planning.
 - active_milestone_clarification_status: MS-12 accepted by fdch0 on 2026-06-01 after WT-20260601-101, WT-20260601-114, WT-20260601-102, WT-20260601-103, WT-20260601-104, WT-20260601-105, WT-20260601-106, and WT-20260601-107 completed.
 - routed_new_requests: PostgreSQL hybrid search replaces previous docs cleanup and lightweight Chinese retrieval plans.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
 - superseded_milestones: MS-20260528-002 docs 文档更新迭代与整理; MS-20260529-001 中文知识检索增强与结构化索引.
-- current_active_milestone: MS-16 PostgreSQL Runtime Selection Review and ParadeDB Default Switch Decision.
-- latest_completed_milestone: MS-15 ParadeDB `pg_search` Runtime Replacement Validation accepted by fdch0 on 2026-06-01.
-- planned_followup_milestones: none; MS-16 will decide whether a ParadeDB default-runtime implementation milestone should be created.
+- current_active_milestone: none.
+- latest_completed_milestone: MS-16 PostgreSQL Runtime Selection Review and ParadeDB Default Switch Decision accepted by fdch0 on 2026-06-02.
+- planned_followup_milestones: candidate ParadeDB default-runtime implementation milestone; not yet initialized in MS-16 acceptance writeback.
 - bm25_planning_update: BM25/pg_search support is planned as MS-12 readiness/design plus MS-13 runtime-image feasibility/fallback packaging; it must not be claimed as active runtime behavior until target Docker/PostgreSQL environment readiness passes.
 - business_interrogation_planning_update: MS-12 is planned to upgrade AI clarify from generic questions to coverage-aware business interrogation with high-value question categories, blocking priority, evidence basis, UI grouping, and the consumables outbound-inspection golden case.
 - context_noise_assessment: high for MS-12 implementation; this window is acceptable for MS-12 control-plane activation or handoff planning, but actual WT-20260601-101+ execution should preferably start in a fresh window using .servo/control-state.md, .servo/milestone/MS-12.md, and .servo/repo/worktrack-backlog.md as canonical context.

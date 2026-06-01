@@ -6,8 +6,8 @@
 
 - total: 19
 - planned: 0
-- active: 1
-- completed: 16
+- active: 0
+- completed: 17
 - superseded: 2
 
 ## Milestones
@@ -374,18 +374,23 @@
 - milestone_id: MS-16
 - title: PostgreSQL Runtime Selection Review and ParadeDB Default Switch Decision
 - milestone_kind: goal-driven
-- status: active
+- status: accepted
 - priority: 19
 - depends_on_milestones: [MS-15]
 - worktrack_list: [WT-20260601-128, WT-20260601-129, WT-20260601-130, WT-20260601-131]
 - created_by: fdch0
 - created_at: 2026-06-01
-- updated: 2026-06-01
+- updated: 2026-06-02
 - updated_by: codex
 - activation_rules: current_active_milestone == MS-15 accepted and depends_on_milestones completed/accepted
 - activated_by: fdch0
 - activated_at: 2026-06-01
 - pre_milestone_intake_review: .servo/repo/pre-milestone-intake-MS-16.md
 - worktrack_progress: WT-20260601-128=done, WT-20260601-129=done, WT-20260601-130=done, WT-20260601-131=done
-- acceptance_handback_status: pending
+- acceptance_handback_status: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-06-02
+- accepted_decision: accept-option-3
+- handback_report: docs/ms16-final-handback.md
+- acceptance_note: fdch0 accepted Option 3; ParadeDB `pg_search` is the intended future default PostgreSQL runtime direction, but MS-16 made no default runtime switch, no app retrieval implementation, and no data migration/deletion. A follow-up implementation milestone or approved worktracks are required before any switch.
 - purpose: Decide whether ReqFlow should keep the current non-BM25 PostgreSQL default runtime, keep ParadeDB optional, or move toward ParadeDB as default using explicit cost, benefit, risk, migration, rollback, and product-value estimates before any runtime switch is implemented.

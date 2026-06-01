@@ -5,9 +5,11 @@
 - milestone: MS-16
 - worktrack: WT-20260601-131
 - updated: 2026-06-02
-- status: fdch0 decision gate
+- status: accepted
 - final_decision_owner: fdch0
-- final_decision: pending fdch0
+- final_decision: accept-option-3
+- final_decision_by: fdch0
+- final_decision_at: 2026-06-02
 
 ## Context
 
@@ -100,18 +102,18 @@ Residual risk:
 - Tokenizer evidence is ranking-compatible on the current corpus but not final
   Chinese word-level segmentation proof.
 
-## Recommended ADR Position
+## Accepted ADR Position
 
-Recommendation for fdch0 review: **choose Option 3 as the intended direction,
-but do not switch runtime inside MS-16.**
+fdch0 accepted **Option 3 as the intended direction, but no runtime switch is
+performed inside MS-16.**
 
 This means:
 
 - MS-16 recommends ParadeDB `pg_search` as the future default PostgreSQL runtime
   direction.
 - MS-16 does not approve or perform the switch.
-- A follow-up implementation milestone should be created only after fdch0
-  accepts this recommendation.
+- A follow-up implementation milestone or approved implementation worktracks are
+  required before any default runtime switch.
 - Native FTS fallback remains the active default until the follow-up
   implementation and gates pass.
 
@@ -158,18 +160,26 @@ worktracks after fdch0 accepts the MS-16 final decision:
    - Add local zip-import business corpus if fdch0 wants stronger product proof
      before accepting the runtime switch implementation.
 
-## Final Decision Gate For fdch0
+## Final Decision
 
-fdch0 should decide one of:
+fdch0 selected `accept-option-3` on 2026-06-02:
+
+- Approve ParadeDB `pg_search` as the intended future default PostgreSQL runtime
+  direction.
+- Use the pre-production window to avoid larger runtime rework later.
+- Keep the actual runtime switch, app retrieval implementation, migration, and
+  rollback validation in a later approved milestone or worktracks.
+
+The considered choices were:
 
 - `accept-option-1`: keep current default runtime.
 - `accept-option-2`: keep ParadeDB optional/candidate only.
 - `accept-option-3`: approve ParadeDB as the intended future default direction
-  and authorize a follow-up implementation milestone.
+  and require a follow-up implementation milestone before switching.
 - `request-more-evidence`: require extra corpus/tokenizer/operator evidence
   before choosing.
 
-Recommended decision: `accept-option-3`.
+Accepted decision: `accept-option-3`.
 
 ## Explicit Non-Claims
 
@@ -177,4 +187,5 @@ Recommended decision: `accept-option-3`.
 - MS-16 does not migrate or delete data.
 - MS-16 does not implement app retrieval changes.
 - MS-16 does not claim BM25 is active in default runtime or product behavior.
-- MS-16 final selection remains pending fdch0.
+- MS-16 final selection is accepted as `accept-option-3` by fdch0 on
+  2026-06-02.

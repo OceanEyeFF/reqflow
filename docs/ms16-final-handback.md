@@ -4,9 +4,12 @@
 
 - milestone: MS-16
 - updated: 2026-06-02
-- status: ready for fdch0 decision
+- status: accepted
 - final_acceptance_owner: fdch0
-- final_acceptance: pending
+- final_acceptance: accepted
+- final_acceptance_by: fdch0
+- final_acceptance_at: 2026-06-02
+- accepted_decision: accept-option-3
 
 ## Completed Worktracks
 
@@ -31,6 +34,17 @@ Meaning:
 - Any actual runtime switch, data migration, production deployment, or app
   retrieval implementation remains out of MS-16.
 
+## Accepted Decision
+
+fdch0 accepted Option 3 on 2026-06-02. ParadeDB `pg_search` is now the intended
+future default PostgreSQL runtime direction for follow-up implementation
+planning.
+
+This acceptance does not perform the switch. The current default remains
+PostgreSQL/pgvector plus native FTS fallback until a later approved
+implementation milestone or worktracks complete the compose/runtime,
+schema/index, app retrieval, validation, runbook, and rollback gates.
+
 ## Acceptance Basis
 
 - Cost/benefit model exists: `docs/ms16-runtime-path-cost-benefit-model.md`.
@@ -43,8 +57,9 @@ Meaning:
 
 1. Accept Option 1: keep current default runtime.
 2. Accept Option 2: keep ParadeDB optional/candidate only.
-3. Accept Option 3: approve ParadeDB as intended future default and authorize a
-   follow-up implementation milestone.
+3. Accept Option 3: approve ParadeDB as intended future default and require a
+   follow-up implementation milestone before switching. Accepted by fdch0 on
+   2026-06-02.
 4. Request more evidence before deciding.
 
 ## Non-Claims
