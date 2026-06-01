@@ -1492,10 +1492,12 @@
 - title: Docker runtime final validation and CodeReview
 - milestone_id: MS-13
 - node_type: review
-- status: planned
+- status: completed
 - priority: 6
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-113-runtime-final-validation
+- contract_path: .servo/worktrack/WT-20260601-113/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-113/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-113/gate-evidence.md
+- branch: worktrack/wt-20260601-113-runtime-final-validation (merged)
+- merge_commit: 438cba9
+- validation: lint pass; test pass 33 files / 257 tests; host Turbopack build pass; host Webpack build pass; compose config pass; embedding profile config pass; Docker build/up pass; runtime smoke pass on POSTGRES_PORT=55433 and REQFLOW_WEB_PORT=3301; non-destructive stop pass
 - planning_notes: Final code review and smoke validation before MS-13 handback; confirm no hidden destructive volume/cache behavior and no false BM25/model-bundling claims.
