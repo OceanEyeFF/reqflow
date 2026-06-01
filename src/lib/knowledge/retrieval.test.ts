@@ -5,6 +5,7 @@ import {
   TARGET_BM25_LEXICAL_ENGINE,
   isRuntimeClaimAllowed,
 } from "./lexical-engines";
+import { createHttpEmbeddingProviderFromConfig } from "./embedding-http-provider";
 
 import {
   clearDatabase,
@@ -455,6 +456,101 @@ describe("retrieveHybridKnowledgeSnippets", () => {
     });
   });
 
+  it("keeps the local HTTP sidecar indexing path explicit from provider config through hybrid evidence", async () => {
+    const admin = await seedUser(prisma, { role: "admin" });
+    const source = await seedSnippet(admin.id, {
+      sourceEnabled: true,
+      sourceStatus: "ready",
+      versionStatus: "ready",
+      snippetEnabled: true,
+      content: "一般耗材检验合格后才允许出库。",
+      searchMetadata: {
+        lexicalText: "一般耗材 标准检验 检验合格 出库",
+        documentTitle: "一般耗材标准检验出库",
+        domainEntities: ["一般耗材"],
+        processNames: ["标准检验出库"],
+        materialTypes: ["耗材"],
+        approvalActions: ["检验合格"],
+        applicabilityRules: ["合格后出库"],
+      },
+    });
+    const providerConfig = await seedEmbeddingProviderConfig(admin.id, {
+      provider: "local-cpu-sidecar",
+      model: "local-e5-small",
+      dimensions: 3,
+    });
+    const profile = await seedSearchProfile({
+      provider: "local-cpu-sidecar",
+      model: "local-e5-small",
+      dimensions: 3,
+      providerConfigId: providerConfig.id,
+    });
+    const fetchImpl = vi.fn(async () => jsonResponse([[0.2, 0.4, 0.6]]));
+    const sidecarProvider = createHttpEmbeddingProviderFromConfig(
+      {
+        provider: providerConfig.provider,
+        baseUrl: providerConfig.baseUrl,
+        apiKey: providerConfig.apiKey,
+        noKeyMode: providerConfig.noKeyMode,
+      },
+      { path: "/embed", requestFormat: "tei", fetchImpl }
+    );
+    const snippetId = await findOnlySnippetId();
+
+    const defaultProviderResult = await retrieveHybridKnowledgeSnippets("一般耗材标准检验出库", {
+      knowledgeBaseIds: [source.knowledgeBaseId],
+    });
+    expect(defaultProviderResult.debugEvidence.vectorLane).toMatchObject({
+      status: "failed",
+      reason: "provider-unavailable",
+    });
+
+    await expect(generateKnowledgeSnippetEmbedding(snippetId, sidecarProvider)).resolves.toMatchObject({
+      status: "ready",
+      snippetId,
+      profileId: profile.id,
+      provider: "local-cpu-sidecar",
+      model: "local-e5-small",
+      dimensions: 3,
+    });
+    expect(fetchImpl).toHaveBeenCalledWith(
+      new URL("http://127.0.0.1:8081/embed"),
+      expect.objectContaining({
+        method: "POST",
+        body: JSON.stringify({ inputs: "一般耗材 标准检验 检验合格 出库" }),
+      })
+    );
+
+    const result = await retrieveHybridKnowledgeSnippets("一般耗材标准检验出库", {
+      knowledgeBaseIds: [source.knowledgeBaseId],
+      vectorProvider: sidecarProvider,
+    });
+
+    expect(result.debugEvidence).toMatchObject({
+      vectorLane: { status: "ready", candidatesReturned: 1 },
+      vectorHits: [
+        expect.objectContaining({
+          snippetId,
+          profileId: profile.id,
+          sourceId: `kb-${source.id}`,
+          model: "local-e5-small",
+          dimensions: 3,
+        }),
+      ],
+      fusedHits: [
+        expect.objectContaining({
+          snippetId,
+          lexicalRank: 1,
+          vectorRank: 1,
+          rrf: expect.objectContaining({
+            vectorContribution: expect.any(Number),
+          }),
+        }),
+      ],
+    });
+    expect(fetchImpl).toHaveBeenCalledTimes(2);
+  });
+
   it("does not run vector retrieval for empty hybrid queries", async () => {
     const admin = await seedUser(prisma, { role: "admin" });
     const snippet = await seedSnippet(admin.id, {
@@ -817,13 +913,21 @@ async function seedSnippetWindow(
   return { knowledgeBaseId: knowledgeBase.id, sourceId: source.id, snippets };
 }
 
-async function seedSearchProfile() {
+async function seedSearchProfile(
+  input: {
+    provider?: string;
+    model?: string;
+    dimensions?: number;
+    providerConfigId?: string | null;
+  } = {}
+) {
   return prisma.searchIndexProfile.create({
     data: {
       name: `profile-${Math.random().toString(36).slice(2, 8)}`,
-      embeddingProvider: "deterministic-test",
-      embeddingModel: "fake-embedding-v1",
-      embeddingDimensions: 3,
+      embeddingProviderConfigId: input.providerConfigId,
+      embeddingProvider: input.provider ?? "deterministic-test",
+      embeddingModel: input.model ?? "fake-embedding-v1",
+      embeddingDimensions: input.dimensions ?? 3,
       semanticSpace: "test-semantic-space",
       lexicalEngine: "postgres-native-fts-fallback",
       status: "active",
@@ -835,4 +939,33 @@ async function seedSearchProfile() {
 async function findOnlySnippetId(): Promise<string> {
   const snippet = await prisma.knowledgeSnippet.findFirstOrThrow({ orderBy: { createdAt: "desc" } });
   return snippet.id;
+}
+
+function seedEmbeddingProviderConfig(
+  userId: string,
+  input: {
+    provider: string;
+    model: string;
+    dimensions: number;
+  }
+) {
+  return prisma.embeddingProviderConfig.create({
+    data: {
+      name: `embedding-${Math.random().toString(36).slice(2, 8)}`,
+      provider: input.provider,
+      model: input.model,
+      dimensions: input.dimensions,
+      baseUrl: "http://127.0.0.1:8081",
+      noKeyMode: true,
+      enabled: true,
+      updatedById: userId,
+    },
+  });
+}
+
+function jsonResponse(payload: unknown, status = 200): Response {
+  return new Response(JSON.stringify(payload), {
+    status,
+    headers: { "content-type": "application/json" },
+  });
 }

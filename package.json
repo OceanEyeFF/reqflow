@@ -16,7 +16,8 @@
     "search:extensions": "node scripts/search-extension-readiness.mjs",
     "retrieval:evaluate": "node scripts/retrieval-evaluation-gate.mjs",
     "clarification:golden": "node scripts/clarification-golden-case-gate.mjs",
-    "embedding:probe": "node scripts/local-embedding-sidecar-probe.mjs"
+    "embedding:probe": "node scripts/local-embedding-sidecar-probe.mjs",
+    "embedding:indexing-trial": "tsx scripts/local-embedding-indexing-trial.ts"
   },
   "prisma": {
     "seed": "npx tsx prisma/seed.ts"
