@@ -19,6 +19,16 @@ type ClarificationDirection = {
   questions: AiClarificationQuestion[];
 };
 type AnswerMap = Record<string, string>;
+type GroupedClarificationQuestion = AiClarificationQuestion & {
+  directionId: ClarificationDirectionId;
+  directionLabel: string;
+};
+type ClarificationQuestionGroup = {
+  id: "blocking" | "gaps" | "recommended";
+  label: string;
+  detail: string;
+  questions: GroupedClarificationQuestion[];
+};
 
 type AiDraftResponse =
   | {
@@ -60,6 +70,35 @@ const CLARIFICATION_DIRECTIONS: Array<{ id: ClarificationDirectionId; label: str
   { id: "application_scenario", label: "应用场景" },
   { id: "requirement_details", label: "需求细节" },
 ];
+const QUESTION_CATEGORY_LABELS: Record<AiClarificationQuestion["category"], string> = {
+  coverage_gap: "覆盖缺口",
+  exception_rule: "例外规则",
+  actor_boundary: "责任边界",
+  state_flow: "状态流转",
+  failure_path: "异常分支",
+  data_rule: "数据规则",
+  acceptance_risk: "验收风险",
+  knowledge_conflict: "知识冲突",
+};
+const QUESTION_PRIORITY_LABELS: Record<AiClarificationQuestion["priority"], string> = {
+  blocking: "阻塞",
+  recommended: "建议",
+  optional: "可选",
+};
+const QUESTION_BASIS_LABELS: Record<AiClarificationQuestion["basis"], string> = {
+  knowledge: "知识依据",
+  coverage_gap: "覆盖缺口",
+  user_input: "用户输入",
+  inference: "推断",
+};
+const ANSWER_FORMAT_LABELS: Record<AiClarificationQuestion["expectedAnswerFormat"], string> = {
+  free_text: "文本",
+  single_choice: "单选",
+  multi_choice: "多选",
+  number: "数字",
+  date: "日期",
+  yes_no: "是/否",
+};
 
 export default function AiDiscussionPage() {
   const router = useRouter();
@@ -192,6 +231,7 @@ export default function AiDiscussionPage() {
   const canSubmit = requirement.trim().length >= 8 && !loading;
   const selectedKnowledgeBaseCount = selectedKnowledgeBaseIds.size;
   const allKnowledgeBasesSelected = knowledgeBases.length > 0 && selectedKnowledgeBaseCount === knowledgeBases.length;
+  const clarificationGroups = groupClarificationQuestions(clarificationDirections);
 
   return (
     <div className="space-y-6">
@@ -316,32 +356,29 @@ export default function AiDiscussionPage() {
                 <div className="rounded-md border bg-gray-50 p-3 text-sm text-gray-700">
                   已生成追问。请按问题逐项回答；也可以留空后直接生成草稿。
                 </div>
-                {clarificationDirections.map((direction) => (
-                  <div key={direction.id} className="space-y-3 rounded-md border p-4">
-                    <Badge variant="outline">{direction.label}</Badge>
-                    {direction.questions.length > 0 ? (
+                {clarificationGroups.map((group) => (
+                  <div key={group.id} className={questionGroupClassName(group.id)}>
+                    <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                      <div>
+                        <h3 className="text-sm font-semibold text-gray-900">{group.label}</h3>
+                        <p className="mt-1 text-xs text-gray-500">{group.detail}</p>
+                      </div>
+                      <Badge variant="outline">{group.questions.length} 个</Badge>
+                    </div>
+                    {group.questions.length > 0 ? (
                       <div className="space-y-3">
-                        {direction.questions.map((question) => (
-                          <div key={question.id} className="space-y-2">
-                            <Label htmlFor={`answer-${question.id}`} className="font-medium">
-                              {question.question}
-                            </Label>
-                            <p className="mt-1 text-sm text-gray-500">{question.reason}</p>
-                            <Textarea
-                              id={`answer-${question.id}`}
-                              rows={3}
-                              value={answers[question.id] ?? ""}
-                              onChange={(event) =>
-                                setAnswers((current) => ({ ...current, [question.id]: event.target.value }))
-                              }
-                              placeholder="回答这个问题，也可以留空"
-                            />
-                          </div>
+                        {group.questions.map((question) => (
+                          <ClarificationQuestionField
+                            key={question.id}
+                            question={question}
+                            value={answers[question.id] ?? ""}
+                            onChange={(value) => setAnswers((current) => ({ ...current, [question.id]: value }))}
+                          />
                         ))}
                       </div>
                     ) : (
                       <p className="rounded-md bg-amber-50 p-3 text-sm text-amber-700">
-                        这一方向本次没有返回追问；你可以直接继续生成草稿。
+                        这一组本次没有返回追问；你可以继续处理其他问题。
                       </p>
                     )}
                   </div>
@@ -436,6 +473,84 @@ function preserveAnswers(current: AnswerMap, directions: ClarificationDirection[
     next[question.id] = current[question.id] ?? "";
   }
   return next;
+}
+
+function groupClarificationQuestions(directions: ClarificationDirection[]): ClarificationQuestionGroup[] {
+  const allQuestions = directions.flatMap((direction) =>
+    direction.questions.map((question) => ({
+      ...question,
+      directionId: direction.id,
+      directionLabel: direction.label,
+    }))
+  );
+  const gaps = allQuestions.filter((question) => question.category === "coverage_gap" || question.basis === "coverage_gap");
+  const gapIds = new Set(gaps.map((question) => question.id));
+  const blocking = allQuestions.filter((question) => (question.priority === "blocking" || question.blocksDraft) && !gapIds.has(question.id));
+  const blockingIds = new Set(blocking.map((question) => question.id));
+  const recommended = allQuestions.filter((question) => !gapIds.has(question.id) && !blockingIds.has(question.id));
+
+  return [
+    {
+      id: "blocking",
+      label: "阻塞问题",
+      detail: "缺少回答时草稿可能不安全或不可验收。",
+      questions: blocking,
+    },
+    {
+      id: "gaps",
+      label: "知识库缺口",
+      detail: "检索覆盖不足或核心术语未命中，需要先确认依据。",
+      questions: gaps,
+    },
+    {
+      id: "recommended",
+      label: "推荐追问",
+      detail: "补齐业务流程、例外规则和验收细节。",
+      questions: recommended,
+    },
+  ];
+}
+
+function questionGroupClassName(groupId: ClarificationQuestionGroup["id"]): string {
+  const base = "space-y-3 rounded-md border p-4";
+  if (groupId === "blocking") return `${base} border-red-200 bg-red-50/40`;
+  if (groupId === "gaps") return `${base} border-amber-200 bg-amber-50/40`;
+  return base;
+}
+
+function ClarificationQuestionField({
+  question,
+  value,
+  onChange,
+}: {
+  question: GroupedClarificationQuestion;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="space-y-2 rounded-md border bg-white p-3">
+      <div className="flex flex-wrap gap-2">
+        <Badge variant="outline">{question.directionLabel}</Badge>
+        <Badge variant="outline">{QUESTION_CATEGORY_LABELS[question.category]}</Badge>
+        <Badge variant="outline">{QUESTION_PRIORITY_LABELS[question.priority]}</Badge>
+        {question.blocksDraft && <Badge variant="destructive">阻塞草稿</Badge>}
+        <Badge variant="outline">{QUESTION_BASIS_LABELS[question.basis]}</Badge>
+        <Badge variant="outline">{ANSWER_FORMAT_LABELS[question.expectedAnswerFormat]}</Badge>
+      </div>
+      <Label htmlFor={`answer-${question.id}`} className="font-medium">
+        {question.question}
+      </Label>
+      <p className="mt-1 text-sm text-gray-500">{question.reason}</p>
+      {question.relatedText && <p className="rounded-md bg-gray-50 p-2 text-xs text-gray-500">{question.relatedText}</p>}
+      <Textarea
+        id={`answer-${question.id}`}
+        rows={3}
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        placeholder="回答这个问题，也可以留空"
+      />
+    </div>
+  );
 }
 
 function DraftPreview({
