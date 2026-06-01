@@ -38,6 +38,13 @@
 - `node --check scripts/local-embedding-sidecar-probe.mjs`: pass.
 - `npm run embedding:probe`: pass against `http://127.0.0.1:8081/embed`, TEI format, 1024 dimensions, 3 iterations.
 - `npm run embedding:indexing-trial`: pass with a real local HTTP sidecar endpoint, temporary PostgreSQL schema, 1024-dimensional pgvector persistence, ready vector lane, and fused hit evidence.
+- Playwright browser smoke: pass on `http://127.0.0.1:3012/tickets/ai-discussion`.
+  - Logged in with seeded `admin/admin123`.
+  - Intercepted `POST /api/ai/draft` with deterministic MS-12 clarification schema.
+  - Verified `阻塞问题`, `知识库缺口`, and `推荐追问` groups render in the browser.
+  - Verified `阻塞草稿` badges render, an answer can be entered and preserved, and search evidence shows `active-profile-missing`.
+  - Browser console check: 0 errors, 0 warnings.
+  - Network check: `/api/knowledge/bases` 200, `/api/auth/session` 200, intercepted `/api/ai/draft` 200.
 - `git diff --check`: pass.
 
 ## Acceptance Criteria Mapping
