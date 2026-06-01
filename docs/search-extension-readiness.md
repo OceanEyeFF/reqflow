@@ -41,9 +41,11 @@ The command uses `SEARCH_EXTENSION_DATABASE_URL`, `POSTGRES_DATABASE_URL`, or `D
 - HNSW vector index DDL succeeds.
 - Native PostgreSQL FTS can search pre-tokenized Chinese business text using the `simple` configuration and `websearch_to_tsquery`.
 - Native FTS GIN index DDL succeeds.
-- `pg_search` availability is detected.
+- BM25 candidate availability is detected for `pg_search`, `pg_textsearch`, `vchord_bm25`, and `pg_tokenizer`.
+- `pg_search` availability and loadability are still detected separately for the ParadeDB-specific strict path.
 
 If `pg_search` is unavailable, the command passes with an explicit fallback message. Set `SEARCH_REQUIRE_PG_SEARCH=true` only in an environment where BM25 extension availability is mandatory.
+If no BM25 candidate is available, the command also passes with an explicit fallback message. Set `SEARCH_REQUIRE_BM25_EXTENSION=true` only when validating a target runtime image that is expected to expose at least one supported BM25 candidate.
 
 Do not point this command at a production database or a database user that cannot create/drop temporary databases. It is a dev/test/CI readiness probe.
 

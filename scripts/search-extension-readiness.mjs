@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { PrismaClient } from "@prisma/client";
 
 const databaseUrl = process.env.SEARCH_EXTENSION_DATABASE_URL || process.env.POSTGRES_DATABASE_URL || process.env.DATABASE_URL;
+const bm25CandidateNames = ["pg_search", "pg_textsearch", "vchord_bm25", "pg_tokenizer"];
 
 if (!databaseUrl) {
   console.error("Set SEARCH_EXTENSION_DATABASE_URL, POSTGRES_DATABASE_URL, or DATABASE_URL before running search extension readiness.");
@@ -34,14 +35,15 @@ async function runReadiness() {
   console.log(`PostgreSQL server_version: ${versionRows[0]?.server_version ?? "unknown"}`);
 
   const availableExtensions = await maintenance.$queryRawUnsafe(
-    "SELECT name, default_version, installed_version FROM pg_available_extensions WHERE name IN ('vector', 'pg_search') ORDER BY name"
+    "SELECT name, default_version, installed_version FROM pg_available_extensions WHERE name = ANY($1) ORDER BY name",
+    ["vector", ...bm25CandidateNames]
   );
   console.log(`Available search extensions: ${JSON.stringify(availableExtensions)}`);
 
   await ensureVectorAvailable(availableExtensions);
   await verifyPgvector();
   await verifyNativeFts();
-  await verifyPgSearchBoundary(availableExtensions);
+  await verifyBm25ExtensionBoundary(availableExtensions);
 }
 
 async function ensureVectorAvailable(availableExtensions) {
@@ -92,8 +94,18 @@ async function verifyNativeFts() {
   console.log("native PostgreSQL FTS readiness: pass");
 }
 
-async function verifyPgSearchBoundary(availableExtensions) {
+async function verifyBm25ExtensionBoundary(availableExtensions) {
   const pgSearch = availableExtensions.find((extension) => extension.name === "pg_search");
+  const bm25Candidates = availableExtensions.filter((extension) => bm25CandidateNames.includes(extension.name));
+  if (bm25Candidates.length > 0) {
+    console.log(`BM25 extension candidates available: ${JSON.stringify(bm25Candidates)}`);
+  } else {
+    console.log("BM25 extension candidates unavailable in current image; native PostgreSQL FTS fallback is required.");
+    if (process.env.SEARCH_REQUIRE_BM25_EXTENSION === "true") {
+      throw new Error("SEARCH_REQUIRE_BM25_EXTENSION=true but no BM25 extension candidate is available.");
+    }
+  }
+
   if (!pgSearch) {
     console.log("pg_search readiness: unavailable in current image; native PostgreSQL FTS fallback is required.");
     if (process.env.SEARCH_REQUIRE_PG_SEARCH === "true") {
