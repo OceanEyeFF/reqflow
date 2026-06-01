@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 122
-- planned: 8
+- planned: 7
 - active: 0
-- completed: 106
+- completed: 107
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1672,7 +1672,7 @@
 - title: pg_search integration probe, tokenizer selection, and Chinese benchmark rerun
 - milestone_id: MS-15
 - node_type: test
-- status: planned
+- status: completed
 - priority: 3
 - contract_path: .servo/worktrack/WT-20260601-125/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260601-125/plan-task-queue.md
@@ -1690,11 +1690,13 @@
 - node_type: test
 - status: planned
 - priority: 4
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-126-paradedb-hybrid-comparison
-- planning_notes: Compare ParadeDB lexical lane against current fallback/hybrid behavior using same-corpus evidence while preserving RRF-style fusion and avoiding raw score addition.
+- contract_path: .servo/worktrack/WT-20260601-126/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-126/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-126/gate-evidence.md
+- branch: worktrack/wt-20260601-126-paradedb-hybrid-comparison (merged)
+- merge_commit: 4e1dbfc
+- validation: BM25 baseline gate pass; BM25 ParadeDB candidate gate pass; MS-10 retrieval gate pass; derived comparison pass; lint/test/build pass; no runtime mutation
+- planning_notes: Compared ParadeDB lexical lane against same-corpus native fixture and current hybrid invariant evidence while preserving RRF-style fusion and avoiding raw score addition; no same-corpus hybrid performance claim was made.
 
 ### WT-20260601-127
 
