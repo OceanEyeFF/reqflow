@@ -1444,12 +1444,14 @@
 - title: Migrate/seed/readiness/probe 编排脚本
 - milestone_id: MS-13
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 3
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-110-runtime-orchestration
+- contract_path: .servo/worktrack/WT-20260601-110/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-110/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-110/gate-evidence.md
+- branch: worktrack/wt-20260601-110-runtime-orchestration (merged)
+- merge_commit: 45a1372
+- validation: npm ci pass; runtime smoke pass against compose bundle on alternate ports; migrate deploy pass; postgres readiness pass; search extension readiness pass; web HTTP 200; build pass; destructive scan pass
 - planning_notes: Add safe orchestration for migrate, seed, readiness, HTTP smoke, PG smoke, and embedding probe.
 
 ### WT-20260601-111
