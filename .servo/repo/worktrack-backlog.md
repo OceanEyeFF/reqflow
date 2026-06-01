@@ -4,8 +4,8 @@
 
 ## Summary
 
-- total: 114
-- planned: 7
+- total: 122
+- planned: 15
 - active: 0
 - completed: 99
 - superseded: 8
@@ -1501,3 +1501,117 @@
 - merge_commit: 438cba9
 - validation: lint pass; test pass 33 files / 257 tests; host Turbopack build pass; host Webpack build pass; compose config pass; embedding profile config pass; Docker build/up pass; runtime smoke pass on POSTGRES_PORT=55433 and REQFLOW_WEB_PORT=3301; non-destructive stop pass
 - planning_notes: Final code review and smoke validation before MS-13 handback; confirm no hidden destructive volume/cache behavior and no false BM25/model-bundling claims.
+
+## MS-14: PostgreSQL BM25 插件中文兼容与性能准确率评估
+
+### WT-20260601-115
+
+- worktrack_id: WT-20260601-115
+- title: BM25 插件候选矩阵与评测方案
+- milestone_id: MS-14
+- node_type: research
+- status: planned
+- priority: 1
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-115-bm25-candidate-matrix
+- planning_notes: Verify current primary-source facts for ParadeDB pg_search, pg_textsearch, VectorChord-BM25/pg_tokenizer, PostgreSQL version support, license/distribution, preload requirements, and candidate test matrix.
+
+### WT-20260601-116
+
+- worktrack_id: WT-20260601-116
+- title: 中文检索语料与 BM25 benchmark harness
+- milestone_id: MS-14
+- node_type: test
+- status: planned
+- priority: 2
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-116-bm25-benchmark-harness
+- planning_notes: Build repeatable Chinese retrieval fixtures and benchmark harness covering pure Chinese, mixed Chinese-English, business vocabulary, zip path/source citation, and native FTS baseline.
+
+### WT-20260601-117
+
+- worktrack_id: WT-20260601-117
+- title: ParadeDB pg_search runtime PoC
+- milestone_id: MS-14
+- node_type: research
+- status: planned
+- priority: 3
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-117-pg-search-runtime-poc
+- planning_notes: Test ParadeDB pg_search candidate in an isolated runtime, proving extension availability, CREATE EXTENSION, index/query probes, Chinese behavior, and rollback boundary.
+
+### WT-20260601-118
+
+- worktrack_id: WT-20260601-118
+- title: VectorChord-BM25 / pg_tokenizer runtime PoC
+- milestone_id: MS-14
+- node_type: research
+- status: planned
+- priority: 4
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-118-vectorchord-bm25-poc
+- planning_notes: Test VectorChord-BM25 and tokenizer requirements in an isolated runtime, including Chinese tokenization behavior and PostgreSQL version/image compatibility.
+
+### WT-20260601-119
+
+- worktrack_id: WT-20260601-119
+- title: pg_textsearch runtime compatibility PoC
+- milestone_id: MS-14
+- node_type: research
+- status: planned
+- priority: 5
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-119-pg-textsearch-poc
+- planning_notes: Test pg_textsearch compatibility, version requirements, preload/setup, index/query shape, and whether it is viable for ReqFlow's Docker/runtime constraints.
+
+### WT-20260601-120
+
+- worktrack_id: WT-20260601-120
+- title: 中文分词/tokenization 兼容性评估
+- milestone_id: MS-14
+- node_type: test
+- status: planned
+- priority: 6
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-120-chinese-tokenization-eval
+- planning_notes: Compare Chinese tokenization/segmentation behavior across candidates and native FTS fallback, including failure cases and business-domain vocabulary.
+
+### WT-20260601-121
+
+- worktrack_id: WT-20260601-121
+- title: BM25 vs native FTS vs hybrid retrieval 准确率/性能对比
+- milestone_id: MS-14
+- node_type: test
+- status: planned
+- priority: 7
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-121-bm25-performance-accuracy
+- planning_notes: Run repeatable accuracy and performance comparisons including recall/precision-style evidence, p50/p95 query latency, index build time, explain plans, and resource notes.
+
+### WT-20260601-122
+
+- worktrack_id: WT-20260601-122
+- title: MS-14 决策报告与默认 runtime 建议
+- milestone_id: MS-14
+- node_type: review
+- status: planned
+- priority: 8
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-122-bm25-decision-report
+- planning_notes: Produce final adopt/defer/reject recommendation, default-runtime boundary, rollback plan, and whether to open a future BM25 runtime enablement milestone.

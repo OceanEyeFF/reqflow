@@ -15,16 +15,16 @@
 ## Active Worktrack
 
 - active_worktrack: none
-- worktrack_title: Postgres BM25 extension runtime feasibility and fallback packaging
+- worktrack_title: N/A
 - worktrack_status: closed
-- target_milestone_id: MS-13
+- target_milestone_id: MS-14
 
 ## Active Milestone
 
-- active_milestone: MS-13
-- milestone_title: Docker Compose Runtime Bundle 与本地一键运行
-- milestone_status: handback_pending
-- milestone_pipeline_summary: total=16 planned=0 active=1 completed=13 superseded=2; MS-12 accepted; MS-13 has 6/6 worktracks completed and is ready for fdch0 final acceptance review
+- active_milestone: MS-14
+- milestone_title: PostgreSQL BM25 插件中文兼容与性能准确率评估
+- milestone_status: active
+- milestone_pipeline_summary: total=17 planned=1 active=1 completed=13 superseded=2; MS-13 accepted; MS-14 active with 0/8 worktracks completed
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260601-113 completed and merged at 438cba9. Next action is fdch0 final acceptance review for MS-13 using docs/ms13-final-validation.md.
+- MS-13 accepted by fdch0. MS-14 registered and activated; next repo-scope action is WT-20260601-115 intake/init for BM25 candidate matrix and evaluation plan.
 
 ## Linked Formal Documents
 
@@ -114,6 +114,7 @@
 - latest_acceptance: MS-10 accepted by fdch0 on 2026-05-31 after WT-097 final CodeReview, WT-099 lexical FTS repair, and WT-098 local embedding Docker/CPU feasibility assessment.
 - latest_acceptance: MS-11 accepted by fdch0 on 2026-06-01 after all 6/6 worktracks completed, docs/operator catch-up, PostgreSQL/extension readiness, Chinese business E2E validation, and local CPU embedding sidecar PoC.
 - latest_acceptance: MS-12 accepted by fdch0 on 2026-06-01 after all 8/8 worktracks completed, Playwright smoke passed, direct embedding environment tests passed, local sidecar indexing trial passed, and pg_search unavailable cause was recorded as a runtime image packaging boundary.
+- latest_acceptance: MS-13 accepted by fdch0 on 2026-06-01 after Docker runtime final validation and CodeReview; web + PostgreSQL/pgvector compose runtime smoke passed, native FTS fallback remained explicit, and no destructive volume/cache cleanup was used.
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
 - latest_completed_ms10_worktrack: WT-20260529-085 completed and validated at 02c7ea2bdfb48ed06be424a30c1785b897a0978b; gate evidence `.servo/worktrack/WT-20260529-085/gate-evidence.md`.
@@ -153,15 +154,15 @@
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
-- active_next_milestone: MS-12 AI 需求追问质量升级与 Business Interrogation.
+- active_next_milestone: MS-14 PostgreSQL BM25 插件中文兼容与性能准确率评估.
 - active_milestone_clarification_status: MS-12 accepted by fdch0 on 2026-06-01 after WT-20260601-101, WT-20260601-114, WT-20260601-102, WT-20260601-103, WT-20260601-104, WT-20260601-105, WT-20260601-106, and WT-20260601-107 completed.
 - routed_new_requests: PostgreSQL hybrid search replaces previous docs cleanup and lightweight Chinese retrieval plans.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
 - superseded_milestones: MS-20260528-002 docs 文档更新迭代与整理; MS-20260529-001 中文知识检索增强与结构化索引.
-- current_active_milestone: MS-13 Docker Compose Runtime Bundle 与本地一键运行.
-- latest_completed_milestone: MS-12 AI 需求追问质量升级与 Business Interrogation accepted by fdch0 on 2026-06-01.
-- planned_followup_milestones: MS-12 AI 需求追问质量升级与 Business Interrogation; MS-13 Docker Compose Runtime Bundle 与本地一键运行.
+- current_active_milestone: MS-14 PostgreSQL BM25 插件中文兼容与性能准确率评估.
+- latest_completed_milestone: MS-13 Docker Compose Runtime Bundle 与本地一键运行 accepted by fdch0 on 2026-06-01.
+- planned_followup_milestones: MS-14 PostgreSQL BM25 插件中文兼容与性能准确率评估.
 - bm25_planning_update: BM25/pg_search support is planned as MS-12 readiness/design plus MS-13 runtime-image feasibility/fallback packaging; it must not be claimed as active runtime behavior until target Docker/PostgreSQL environment readiness passes.
 - business_interrogation_planning_update: MS-12 is planned to upgrade AI clarify from generic questions to coverage-aware business interrogation with high-value question categories, blocking priority, evidence basis, UI grouping, and the consumables outbound-inspection golden case.
 - context_noise_assessment: high for MS-12 implementation; this window is acceptable for MS-12 control-plane activation or handoff planning, but actual WT-20260601-101+ execution should preferably start in a fresh window using .servo/control-state.md, .servo/milestone/MS-12.md, and .servo/repo/worktrack-backlog.md as canonical context.

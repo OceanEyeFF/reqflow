@@ -4,10 +4,10 @@
 
 ## Pipeline Summary
 
-- total: 16
+- total: 17
 - planned: 1
 - active: 1
-- completed: 12
+- completed: 13
 - superseded: 2
 
 ## Milestones
@@ -303,7 +303,7 @@
 - milestone_id: MS-13
 - title: Docker Compose Runtime Bundle 与本地一键运行
 - milestone_kind: goal-driven
-- status: active
+- status: completed
 - priority: 16
 - depends_on_milestones: [MS-12]
 - worktrack_list: [WT-20260601-108, WT-20260601-109, WT-20260601-110, WT-20260601-111, WT-20260601-112, WT-20260601-113]
@@ -315,6 +315,29 @@
 - activated_by: fdch0
 - activated_at: 2026-06-01
 - worktrack_progress: WT-20260601-108=done, WT-20260601-109=done, WT-20260601-110=done, WT-20260601-111=done, WT-20260601-112=done, WT-20260601-113=done
-- acceptance_handback_status: ready_for_fdch0_review
+- acceptance_handback_status: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-06-01
+- acceptance_note: accepted after Docker runtime final validation and CodeReview; runtime smoke passed with web + PostgreSQL/pgvector, native FTS fallback, explicit migrate/seed/readiness, and non-destructive stop.
 - handback_report: docs/ms13-final-validation.md
 - purpose: 提供 web + PostgreSQL/pgvector + optional embedding sidecar 的 Docker Compose runtime bundle、readiness/probe 编排和 operator runbook；不把模型权重打进主 app image；BM25 只通过可验证的 Postgres extension runtime 候选进入，不把 PostgreSQL core/native FTS 当作 BM25。
+
+### MS-14
+
+- milestone_id: MS-14
+- title: PostgreSQL BM25 插件中文兼容与性能准确率评估
+- milestone_kind: goal-driven
+- status: active
+- priority: 17
+- depends_on_milestones: [MS-13]
+- worktrack_list: [WT-20260601-115, WT-20260601-116, WT-20260601-117, WT-20260601-118, WT-20260601-119, WT-20260601-120, WT-20260601-121, WT-20260601-122]
+- created_by: fdch0
+- created_at: 2026-06-01
+- updated: 2026-06-01
+- updated_by: codex
+- activation_rules: current_active_milestone == MS-13 accepted and depends_on_milestones completed/accepted
+- activated_by: fdch0
+- activated_at: 2026-06-01
+- pre_milestone_intake_review: .servo/repo/pre-milestone-intake-MS-14.md
+- worktrack_progress: WT-20260601-115=planned, WT-20260601-116=planned, WT-20260601-117=planned, WT-20260601-118=planned, WT-20260601-119=planned, WT-20260601-120=planned, WT-20260601-121=planned, WT-20260601-122=planned
+- purpose: 评估 PostgreSQL BM25 插件候选与 ReqFlow 检索架构的中文兼容、性能、准确率和运维复杂度；不直接替换默认 runtime。
