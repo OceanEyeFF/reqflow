@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 114
-- planned: 11
+- planned: 10
 - active: 0
-- completed: 95
+- completed: 96
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1332,12 +1332,14 @@
 - title: Clarify question schema 升级
 - milestone_id: MS-12
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 3
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-103-clarify-question-schema
+- contract_path: .servo/worktrack/WT-20260601-103/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-103/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-103/gate-evidence.md
+- branch: worktrack/wt-20260601-103-clarify-question-schema (merged)
+- merge_commit: a723c8a
+- validation: focused provider/service/API tests pass 3 files / 26 tests; lint pass; full test pass 33 files / 255 tests; build pass; diff check pass
 - planning_notes: Extend clarification questions with category, priority, blocksDraft, basis, reason, relatedText, and expectedAnswerFormat while keeping provider output safe.
 
 ### WT-20260601-104
