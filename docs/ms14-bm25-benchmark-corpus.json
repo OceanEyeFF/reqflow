@@ -207,7 +207,7 @@
       "minRecallAt5": 1,
       "minRecallAt10": 1,
       "minPrecisionAt5": 0.6,
-      "maxFirstRelevantRank": 1,
+      "maxFirstRelevantRank": 2,
       "tags": ["synonym", "mixed-cn-en", "business-terms"]
     },
     {

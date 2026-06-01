@@ -1,0 +1,678 @@
+{
+  "run": {
+    "candidateId": "paradedb-pg-search",
+    "engine": "pg_search",
+    "candidateClass": "bm25-plugin",
+    "measurementMode": "measured",
+    "postgresVersion": "18.4 (Debian 18.4-1.pgdg13+1)",
+    "runtimeImage": "paradedb/paradedb:latest",
+    "extensionStatus": {
+      "lexicalEngine": "pg_search",
+      "bm25Enabled": true,
+      "availableExtensions": [
+        {
+          "name": "pg_search",
+          "default_version": "0.23.5",
+          "installed_version": "0.23.5"
+        },
+        {
+          "name": "vector",
+          "default_version": "0.8.1",
+          "installed_version": "0.8.1"
+        }
+      ],
+      "installedExtensions": [
+        {
+          "extname": "pg_search",
+          "extversion": "0.23.5"
+        },
+        {
+          "extname": "vector",
+          "extversion": "0.8.1"
+        }
+      ]
+    },
+    "indexPerformance": {
+      "indexBuildMs": 346.152,
+      "indexSizeBytes": 3022848,
+      "documentCount": 12,
+      "snippetCount": 12
+    },
+    "policyEvidence": {
+      "isolatedRuntime": true,
+      "defaultRuntimeMutated": false,
+      "destructiveActions": false,
+      "rawScoreFusion": false,
+      "notes": "Temporary Docker container reqflow-ms14-paradedb-59920-1780305014869 on 127.0.0.1:55437; no host volume mounted."
+    }
+  },
+  "results": [
+    {
+      "caseId": "ms14-consumables-standard-outbound",
+      "matchedTerms": [
+        "一般耗材",
+        "标准检验出库",
+        "质检抽样",
+        "异常退回"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": 44.97183
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": 24.260107
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": 17.763805
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": 14.093168
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": 12.9794855
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": 11.312805
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": 8.15376
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": 5.1381445
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "pdb.unicode default",
+        "segmentationMode": "mixed",
+        "queryTokens": [
+          "一般耗材标准检验出库需要哪些质检抽样和异常退回步骤"
+        ],
+        "focusTermBehavior": [
+          "标准检验出库: queried via ParadeDB match operator and checked against ranked hits",
+          "质检抽样: queried via ParadeDB match operator and checked against ranked hits",
+          "异常退回: queried via ParadeDB match operator and checked against ranked hits"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 164.676,
+        "warmQueryMs": 149.891,
+        "p50Ms": 157.49,
+        "p95Ms": 163.617,
+        "limit5Ms": 164.676,
+        "limit10Ms": 155.862,
+        "limit20Ms": 149.868,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=10.00..10.01 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=10.00..10.01 rows=1 width=68)",
+          "->  Custom Scan (ParadeDB Base Scan) on ms14_docs  (cost=10.00..10.01 rows=1 width=68)",
+          "Table: ms14_docs",
+          "Index: ms14_docs_vector_idx",
+          "Segment Count: 1",
+          "Exec Method: TopKScanExecState",
+          "Scores: true",
+          "TopK Order By: pdb.score() desc"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary ParadeDB container only."
+      }
+    },
+    {
+      "caseId": "ms14-qc-sampling-mixed-language",
+      "matchedTerms": [
+        "QC sampling",
+        "SKU",
+        "ERP",
+        "批次"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": 21.626066
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": 16.687092
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": 8.886569
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": 5.324242
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": 4.645585
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": 3.306865
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": 2.6555107
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": 1.3561386
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "pdb.unicode default",
+        "segmentationMode": "mixed",
+        "queryTokens": [
+          "QC",
+          "sampling",
+          "和",
+          "SKU",
+          "批次在",
+          "ERP",
+          "里怎么记录"
+        ],
+        "focusTermBehavior": [
+          "QC sampling: queried via ParadeDB match operator and checked against ranked hits",
+          "SKU: queried via ParadeDB match operator and checked against ranked hits",
+          "ERP: queried via ParadeDB match operator and checked against ranked hits"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 150.563,
+        "warmQueryMs": 150.993,
+        "p50Ms": 158.094,
+        "p95Ms": 170.239,
+        "limit5Ms": 150.563,
+        "limit10Ms": 160.578,
+        "limit20Ms": 151.714,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=10.00..10.01 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=10.00..10.01 rows=1 width=68)",
+          "->  Custom Scan (ParadeDB Base Scan) on ms14_docs  (cost=10.00..10.01 rows=1 width=68)",
+          "Table: ms14_docs",
+          "Index: ms14_docs_vector_idx",
+          "Segment Count: 1",
+          "Exec Method: TopKScanExecState",
+          "Scores: true",
+          "TopK Order By: pdb.score() desc"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary ParadeDB container only."
+      }
+    },
+    {
+      "caseId": "ms14-warehouse-responsibility-boundary",
+      "matchedTerms": [
+        "内仓",
+        "外仓",
+        "质检取样",
+        "责任边界"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": 31.9706
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": 16.935453
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": 12.979887
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": 12.639135
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": 11.919037
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": 10.921873
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": 4.8289237
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": 2.761641
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "pdb.unicode default",
+        "segmentationMode": "mixed",
+        "queryTokens": [
+          "内仓外仓在质检取样和放行出库里的责任边界是什么"
+        ],
+        "focusTermBehavior": [
+          "内仓: queried via ParadeDB match operator and checked against ranked hits",
+          "外仓: queried via ParadeDB match operator and checked against ranked hits",
+          "责任边界: queried via ParadeDB match operator and checked against ranked hits"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 167.119,
+        "warmQueryMs": 148.022,
+        "p50Ms": 162.135,
+        "p95Ms": 171.77,
+        "limit5Ms": 167.119,
+        "limit10Ms": 171.622,
+        "limit20Ms": 139.435,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=10.00..10.01 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=10.00..10.01 rows=1 width=68)",
+          "->  Custom Scan (ParadeDB Base Scan) on ms14_docs  (cost=10.00..10.01 rows=1 width=68)",
+          "Table: ms14_docs",
+          "Index: ms14_docs_vector_idx",
+          "Segment Count: 1",
+          "Exec Method: TopKScanExecState",
+          "Scores: true",
+          "TopK Order By: pdb.score() desc"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary ParadeDB container only."
+      }
+    },
+    {
+      "caseId": "ms14-zip-path-source-citation",
+      "matchedTerms": [
+        "流程包.zip",
+        "标准检验出库",
+        "来源路径",
+        "责任边界"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-zip-import-paths",
+          "snippetId": "snip-zip-path-consumables",
+          "score": 39.174847
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": 22.315636
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": 16.949055
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": 14.412046
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": 11.545802
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": 11.316218
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": 3.4063783
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": 1.9015058
+        },
+        {
+          "rank": 9,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": 0.7493821
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "pdb.unicode default",
+        "segmentationMode": "mixed",
+        "queryTokens": [
+          "流程包",
+          "zip",
+          "里标准检验出库的来源路径和责任边界在哪里"
+        ],
+        "focusTermBehavior": [
+          "流程包.zip: queried via ParadeDB match operator and checked against ranked hits",
+          "标准检验出库: queried via ParadeDB match operator and checked against ranked hits",
+          "uploads/2026: queried via ParadeDB match operator and checked against ranked hits"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 155.042,
+        "warmQueryMs": 156.497,
+        "p50Ms": 163.263,
+        "p95Ms": 166.96,
+        "limit5Ms": 155.042,
+        "limit10Ms": 157.768,
+        "limit20Ms": 147.312,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=10.00..10.01 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=10.00..10.01 rows=1 width=68)",
+          "->  Custom Scan (ParadeDB Base Scan) on ms14_docs  (cost=10.00..10.01 rows=1 width=68)",
+          "Table: ms14_docs",
+          "Index: ms14_docs_vector_idx",
+          "Segment Count: 1",
+          "Exec Method: TopKScanExecState",
+          "Scores: true",
+          "TopK Order By: pdb.score() desc"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary ParadeDB container only."
+      }
+    },
+    {
+      "caseId": "ms14-synonym-qc-sampling",
+      "matchedTerms": [
+        "检验取样",
+        "QC取样",
+        "检验后出库",
+        "标准检验出库"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": 26.524946
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": 24.506678
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": 23.180105
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": 13.335602
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": 10.091282
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": 9.803662
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": 9.061331
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": 4.412107
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "pdb.unicode default",
+        "segmentationMode": "mixed",
+        "queryTokens": [
+          "检验取样和",
+          "QC取样是不是同一个动作",
+          "检验后出库应该查哪些说明"
+        ],
+        "focusTermBehavior": [
+          "检验取样: queried via ParadeDB match operator and checked against ranked hits",
+          "QC取样: queried via ParadeDB match operator and checked against ranked hits",
+          "检验后出库: queried via ParadeDB match operator and checked against ranked hits"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 156.29,
+        "warmQueryMs": 143.456,
+        "p50Ms": 155.97,
+        "p95Ms": 168.443,
+        "limit5Ms": 156.29,
+        "limit10Ms": 153.433,
+        "limit20Ms": 143.553,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=10.00..10.01 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=10.00..10.01 rows=1 width=68)",
+          "->  Custom Scan (ParadeDB Base Scan) on ms14_docs  (cost=10.00..10.01 rows=1 width=68)",
+          "Table: ms14_docs",
+          "Index: ms14_docs_vector_idx",
+          "Segment Count: 1",
+          "Exec Method: TopKScanExecState",
+          "Scores: true",
+          "TopK Order By: pdb.score() desc"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary ParadeDB container only."
+      }
+    },
+    {
+      "caseId": "ms14-negative-disabled-legacy",
+      "matchedTerms": [
+        "旧流程",
+        "免检",
+        "直接出库",
+        "质检抽样"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": 18.391935
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": 16.096252
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": 14.116627
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": 10.73633
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": 9.079004
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": 4.554275
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": 2.6002343
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": 1.8519591
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "pdb.unicode default",
+        "segmentationMode": "mixed",
+        "queryTokens": [
+          "还能按旧流程免检直接出库并跳过质检抽样吗"
+        ],
+        "focusTermBehavior": [
+          "免检直接出库: queried via ParadeDB match operator and checked against ranked hits",
+          "质检抽样: queried via ParadeDB match operator and checked against ranked hits"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 143.764,
+        "warmQueryMs": 148.744,
+        "p50Ms": 157.007,
+        "p95Ms": 167.699,
+        "limit5Ms": 143.764,
+        "limit10Ms": 153.394,
+        "limit20Ms": 155.858,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=10.00..10.01 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=10.00..10.01 rows=1 width=68)",
+          "->  Custom Scan (ParadeDB Base Scan) on ms14_docs  (cost=10.00..10.01 rows=1 width=68)",
+          "Table: ms14_docs",
+          "Index: ms14_docs_vector_idx",
+          "Segment Count: 1",
+          "Exec Method: TopKScanExecState",
+          "Scores: true",
+          "TopK Order By: pdb.score() desc"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary ParadeDB container only."
+      }
+    }
+  ]
+}

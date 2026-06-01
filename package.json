@@ -17,6 +17,7 @@
     "search:extensions": "node scripts/search-extension-readiness.mjs",
     "retrieval:evaluate": "node scripts/retrieval-evaluation-gate.mjs",
     "bm25:evaluate": "node scripts/bm25-benchmark-gate.mjs",
+    "paradedb:poc": "node scripts/paradedb-pg-search-poc.mjs",
     "clarification:golden": "node scripts/clarification-golden-case-gate.mjs",
     "embedding:probe": "node scripts/local-embedding-sidecar-probe.mjs",
     "embedding:indexing-trial": "tsx scripts/local-embedding-indexing-trial.ts",
