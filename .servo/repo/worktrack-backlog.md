@@ -1476,12 +1476,14 @@
 - title: Operator runbook 与本地 smoke 验收
 - milestone_id: MS-13
 - node_type: docs
-- status: planned
+- status: completed
 - priority: 5
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-112-runtime-runbook
+- contract_path: .servo/worktrack/WT-20260601-112/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-112/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-112/gate-evidence.md
+- branch: worktrack/wt-20260601-112-runtime-runbook (merged)
+- merge_commit: b9c6ed7
+- validation: compose config pass; embedding profile config pass; host Turbopack build pass; host Webpack build pass; Docker image build fallback repaired; runtime smoke pass on POSTGRES_PORT=55432 and REQFLOW_WEB_PORT=3300; non-destructive stop pass
 - planning_notes: Document start, stop, logs, migrate, seed, probe, cache, volume, and troubleshooting commands for the runtime bundle.
 
 ### WT-20260601-113

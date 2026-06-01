@@ -24,7 +24,7 @@
 - active_milestone: MS-13
 - milestone_title: Docker Compose Runtime Bundle 与本地一键运行
 - milestone_status: active
-- milestone_pipeline_summary: total=16 planned=0 active=1 completed=13 superseded=2; MS-12 accepted; MS-13 active with 4/6 worktracks completed
+- milestone_pipeline_summary: total=16 planned=0 active=1 completed=13 superseded=2; MS-12 accepted; MS-13 active with 5/6 worktracks completed
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260601-111 completed and merged at ccf283f. Next repo-scope action is MS-13 WT-20260601-112 intake/init if no new blocker appears.
+- WT-20260601-112 completed and merged at b9c6ed7. Next repo-scope action is MS-13 WT-20260601-113 final validation and CodeReview.
 
 ## Linked Formal Documents
 
@@ -87,7 +87,7 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint: 629f7c7232e425d08484877593222cbeaec2ec1f
-- latest_observed_checkpoint: ccf283fed9811f33d60c4fe425c37fbae505c267
+- latest_observed_checkpoint: b9c6ed7fc77ef680558d2be72f2743a0f1c7bf87
 - last_doc_catch_up_checkpoint: 38da2ba
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
@@ -140,6 +140,7 @@
 - latest_completed_ms13_worktrack: WT-20260601-109 completed and merged at 1e7af35; gate evidence `.servo/worktrack/WT-20260601-109/gate-evidence.md`; compose runtime config, embedding profile gating, web image build, non-destructive command scan, and compose startup smoke passed with alternate local ports.
 - latest_completed_ms13_worktrack: WT-20260601-110 completed and merged at 45a1372; gate evidence `.servo/worktrack/WT-20260601-110/gate-evidence.md`; `npm run runtime:smoke` added and validated against compose runtime with migrate deploy, readiness, search extension checks, web HTTP smoke, and non-destructive boundaries.
 - latest_completed_ms13_worktrack: WT-20260601-111 completed and merged at ccf283f; gate evidence `.servo/worktrack/WT-20260601-111/gate-evidence.md`; BM25 candidates documented, readiness candidate detection added, default runtime kept on native FTS fallback plus pgvector.
+- latest_completed_ms13_worktrack: WT-20260601-112 completed and merged at b9c6ed7; gate evidence `.servo/worktrack/WT-20260601-112/gate-evidence.md`; operator runtime runbook added, stale handoff refreshed, Docker build fallback repaired with `npm run build:webpack`, and runtime smoke passed on alternate local ports without deleting volumes/cache.
 - next_worktrack_candidate: MS-10 milestone gate handback; no remaining MS-10 worktracks.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
