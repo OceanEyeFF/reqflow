@@ -1,0 +1,265 @@
+{
+  "run": {
+    "candidateId": "native-fts-baseline-schema-fixture",
+    "engine": "postgres-native-fts-fallback",
+    "candidateClass": "native-fts-baseline",
+    "measurementMode": "schema-fixture",
+    "postgresVersion": "16.x baseline",
+    "runtimeImage": "pgvector/pgvector:0.8.2-pg16",
+    "extensionStatus": {
+      "lexicalEngine": "postgres-native-fts-fallback",
+      "bm25Enabled": false,
+      "availableExtensions": ["vector"],
+      "missingExtensions": ["pg_search", "pg_textsearch", "vchord_bm25", "pg_tokenizer"]
+    },
+    "indexPerformance": {
+      "indexBuildMs": 0,
+      "indexSizeBytes": null,
+      "documentCount": 12,
+      "snippetCount": 12
+    },
+    "policyEvidence": {
+      "isolatedRuntime": true,
+      "defaultRuntimeMutated": false,
+      "destructiveActions": false,
+      "rawScoreFusion": false,
+      "notes": "Schema fixture only; no candidate container was started and no runtime state was mutated."
+    }
+  },
+  "results": [
+    {
+      "caseId": "ms14-consumables-standard-outbound",
+      "matchedTerms": ["一般耗材", "标准检验出库", "质检抽样", "异常退回"],
+      "topK": [
+        { "rank": 1, "sourceId": "src-consumables-outbound-sop", "snippetId": "snip-consumables-standard-inspection", "score": 0.92 },
+        { "rank": 2, "sourceId": "src-return-exception-rules", "snippetId": "snip-return-exception-owner", "score": 0.81 },
+        { "rank": 3, "sourceId": "src-direct-outbound-rule", "snippetId": "snip-direct-outbound-allowed", "score": 0.52 },
+        { "rank": 4, "sourceId": "src-quality-synonyms", "snippetId": "snip-quality-synonym-sampling", "score": 0.47 },
+        { "rank": 5, "sourceId": "src-qc-sampling-rules", "snippetId": "snip-qc-sampling-ratio", "score": 0.43 }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "postgres-simple",
+        "segmentationMode": "simple",
+        "queryTokens": ["一般耗材标准检验出库需要哪些质检抽样和异常退回步骤"],
+        "focusTermBehavior": ["标准检验出库: preserved in fixture hit text", "质检抽样: preserved in fixture hit text", "异常退回: preserved in fixture hit text"]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 0,
+        "warmQueryMs": 0,
+        "p50Ms": 0,
+        "p95Ms": 0,
+        "limit5Ms": 0,
+        "limit10Ms": 0,
+        "limit20Ms": 0,
+        "sampleSize": 1
+      },
+      "explain": {
+        "available": false,
+        "summary": "Schema fixture; no EXPLAIN ANALYZE captured.",
+        "planHighlights": []
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Fixture result validates the benchmark shape only."
+      }
+    },
+    {
+      "caseId": "ms14-qc-sampling-mixed-language",
+      "matchedTerms": ["QC sampling", "SKU", "ERP", "批次"],
+      "topK": [
+        { "rank": 1, "sourceId": "src-qc-sampling-rules", "snippetId": "snip-qc-sampling-ratio", "score": 0.9 },
+        { "rank": 2, "sourceId": "src-erp-sync-rule", "snippetId": "snip-erp-sync-sku", "score": 0.76 },
+        { "rank": 3, "sourceId": "src-qc-sampling-rules", "snippetId": "snip-qc-sampling-sop", "score": 0.62 },
+        { "rank": 4, "sourceId": "src-quality-synonyms", "snippetId": "snip-quality-synonym-sampling", "score": 0.44 },
+        { "rank": 5, "sourceId": "src-direct-outbound-rule", "snippetId": "snip-direct-outbound-allowed", "score": 0.31 }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "postgres-simple",
+        "segmentationMode": "simple",
+        "queryTokens": ["QC", "sampling", "SKU", "ERP"],
+        "focusTermBehavior": ["QC sampling: split as latin words", "SKU: preserved as latin token", "ERP: preserved as latin token"]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 0,
+        "warmQueryMs": 0,
+        "p50Ms": 0,
+        "p95Ms": 0,
+        "limit5Ms": 0,
+        "limit10Ms": 0,
+        "limit20Ms": 0,
+        "sampleSize": 1
+      },
+      "explain": {
+        "available": false,
+        "summary": "Schema fixture; no EXPLAIN ANALYZE captured.",
+        "planHighlights": []
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Fixture result validates mixed Chinese-English evidence shape."
+      }
+    },
+    {
+      "caseId": "ms14-warehouse-responsibility-boundary",
+      "matchedTerms": ["内仓", "外仓", "质检取样", "责任边界"],
+      "topK": [
+        { "rank": 1, "sourceId": "src-consumables-outbound-sop", "snippetId": "snip-consumables-warehouse-boundary", "score": 0.91 },
+        { "rank": 2, "sourceId": "src-return-exception-rules", "snippetId": "snip-return-exception-owner", "score": 0.77 },
+        { "rank": 3, "sourceId": "src-direct-outbound-rule", "snippetId": "snip-direct-outbound-allowed", "score": 0.54 },
+        { "rank": 4, "sourceId": "src-qc-sampling-rules", "snippetId": "snip-qc-sampling-ratio", "score": 0.4 },
+        { "rank": 5, "sourceId": "src-procurement-vendor-chat", "snippetId": "snip-vendor-communication", "score": 0.25 }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "postgres-simple",
+        "segmentationMode": "simple",
+        "queryTokens": ["内仓外仓在质检取样和放行出库里的责任边界是什么"],
+        "focusTermBehavior": ["内仓: preserved in fixture hit text", "外仓: preserved in fixture hit text", "责任边界: preserved in fixture hit text"]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 0,
+        "warmQueryMs": 0,
+        "p50Ms": 0,
+        "p95Ms": 0,
+        "limit5Ms": 0,
+        "limit10Ms": 0,
+        "limit20Ms": 0,
+        "sampleSize": 1
+      },
+      "explain": {
+        "available": false,
+        "summary": "Schema fixture; no EXPLAIN ANALYZE captured.",
+        "planHighlights": []
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Fixture result validates Chinese responsibility-boundary evidence shape."
+      }
+    },
+    {
+      "caseId": "ms14-zip-path-source-citation",
+      "matchedTerms": ["流程包.zip", "标准检验出库", "来源路径", "责任边界"],
+      "topK": [
+        { "rank": 1, "sourceId": "src-zip-import-paths", "snippetId": "snip-zip-path-consumables", "score": 0.95 },
+        { "rank": 2, "sourceId": "src-consumables-outbound-sop", "snippetId": "snip-consumables-standard-inspection", "score": 0.51 },
+        { "rank": 3, "sourceId": "src-consumables-outbound-sop", "snippetId": "snip-consumables-warehouse-boundary", "score": 0.49 },
+        { "rank": 4, "sourceId": "src-return-exception-rules", "snippetId": "snip-return-exception-owner", "score": 0.43 },
+        { "rank": 5, "sourceId": "src-direct-outbound-rule", "snippetId": "snip-direct-outbound-allowed", "score": 0.38 }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "postgres-simple",
+        "segmentationMode": "simple",
+        "queryTokens": ["流程包", "zip", "标准检验出库", "来源路径"],
+        "focusTermBehavior": ["流程包.zip: split around punctuation", "标准检验出库: preserved in fixture hit text", "uploads/2026: path token retained in sourcePath evidence"]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 0,
+        "warmQueryMs": 0,
+        "p50Ms": 0,
+        "p95Ms": 0,
+        "limit5Ms": 0,
+        "limit10Ms": 0,
+        "limit20Ms": 0,
+        "sampleSize": 1
+      },
+      "explain": {
+        "available": false,
+        "summary": "Schema fixture; no EXPLAIN ANALYZE captured.",
+        "planHighlights": []
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Fixture result validates zip path citation evidence shape."
+      }
+    },
+    {
+      "caseId": "ms14-synonym-qc-sampling",
+      "matchedTerms": ["检验取样", "QC取样", "检验后出库", "标准检验出库"],
+      "topK": [
+        { "rank": 1, "sourceId": "src-quality-synonyms", "snippetId": "snip-quality-synonym-sampling", "score": 0.96 },
+        { "rank": 2, "sourceId": "src-consumables-outbound-sop", "snippetId": "snip-consumables-standard-inspection", "score": 0.84 },
+        { "rank": 3, "sourceId": "src-direct-outbound-rule", "snippetId": "snip-direct-outbound-allowed", "score": 0.73 },
+        { "rank": 4, "sourceId": "src-qc-sampling-rules", "snippetId": "snip-qc-sampling-ratio", "score": 0.58 },
+        { "rank": 5, "sourceId": "src-return-exception-rules", "snippetId": "snip-return-exception-owner", "score": 0.41 }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "postgres-simple",
+        "segmentationMode": "simple",
+        "queryTokens": ["检验取样和QC取样是不是同一个动作"],
+        "focusTermBehavior": ["检验取样: preserved in synonym fixture", "QC取样: mixed token retained in fixture", "检验后出库: mapped by expected synonym snippet"]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 0,
+        "warmQueryMs": 0,
+        "p50Ms": 0,
+        "p95Ms": 0,
+        "limit5Ms": 0,
+        "limit10Ms": 0,
+        "limit20Ms": 0,
+        "sampleSize": 1
+      },
+      "explain": {
+        "available": false,
+        "summary": "Schema fixture; no EXPLAIN ANALYZE captured.",
+        "planHighlights": []
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Fixture result validates synonym benchmark shape."
+      }
+    },
+    {
+      "caseId": "ms14-negative-disabled-legacy",
+      "matchedTerms": ["旧流程", "免检", "直接出库", "质检抽样"],
+      "topK": [
+        { "rank": 1, "sourceId": "src-direct-outbound-rule", "snippetId": "snip-direct-outbound-allowed", "score": 0.88 },
+        { "rank": 2, "sourceId": "src-consumables-outbound-sop", "snippetId": "snip-consumables-standard-inspection", "score": 0.79 },
+        { "rank": 3, "sourceId": "src-return-exception-rules", "snippetId": "snip-return-exception-owner", "score": 0.52 },
+        { "rank": 4, "sourceId": "src-quality-synonyms", "snippetId": "snip-quality-synonym-sampling", "score": 0.48 },
+        { "rank": 5, "sourceId": "src-qc-sampling-rules", "snippetId": "snip-qc-sampling-ratio", "score": 0.39 }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "postgres-simple",
+        "segmentationMode": "simple",
+        "queryTokens": ["还能按旧流程免检直接出库并跳过质检抽样吗"],
+        "focusTermBehavior": ["免检直接出库: disabled trap excluded by source policy", "质检抽样: preserved in allowed hit text"]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 0,
+        "warmQueryMs": 0,
+        "p50Ms": 0,
+        "p95Ms": 0,
+        "limit5Ms": 0,
+        "limit10Ms": 0,
+        "limit20Ms": 0,
+        "sampleSize": 1
+      },
+      "explain": {
+        "available": false,
+        "summary": "Schema fixture; no EXPLAIN ANALYZE captured.",
+        "planHighlights": []
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Fixture result validates forbidden disabled-source exclusion shape."
+      }
+    }
+  ]
+}
