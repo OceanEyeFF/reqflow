@@ -314,5 +314,5 @@
 - activation_rules: current_active_milestone == none and depends_on_milestones completed/accepted
 - activated_by: fdch0
 - activated_at: 2026-06-01
-- worktrack_progress: WT-20260601-108=done, WT-20260601-109=planned, WT-20260601-110=planned, WT-20260601-111=planned, WT-20260601-112=planned, WT-20260601-113=planned
+- worktrack_progress: WT-20260601-108=done, WT-20260601-109=done, WT-20260601-110=planned, WT-20260601-111=planned, WT-20260601-112=planned, WT-20260601-113=planned
 - purpose: 提供 web + PostgreSQL/pgvector + optional embedding sidecar 的 Docker Compose runtime bundle、readiness/probe 编排和 operator runbook；不把模型权重打进主 app image；BM25 只通过可验证的 Postgres extension runtime 候选进入，不把 PostgreSQL core/native FTS 当作 BM25。

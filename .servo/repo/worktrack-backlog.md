@@ -1428,12 +1428,14 @@
 - title: Compose bundle: web + postgres/pgvector + embedding sidecar
 - milestone_id: MS-13
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 2
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-109-compose-runtime-bundle
+- contract_path: .servo/worktrack/WT-20260601-109/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-109/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-109/gate-evidence.md
+- branch: worktrack/wt-20260601-109-compose-runtime-bundle (merged)
+- merge_commit: 1e7af35
+- validation: compose config pass; embedding profile config pass; web image build pass; non-destructive scan pass; startup smoke pass with POSTGRES_PORT=55432 and REQFLOW_WEB_PORT=3300
 - planning_notes: Compose the web app, PostgreSQL/pgvector, and optional embedding sidecar into one documented local runtime bundle.
 
 ### WT-20260601-110
