@@ -38,6 +38,12 @@
 - `node --check scripts/local-embedding-sidecar-probe.mjs`: pass.
 - `npm run embedding:probe`: pass against `http://127.0.0.1:8081/embed`, TEI format, 1024 dimensions, 3 iterations.
 - `npm run embedding:indexing-trial`: pass with a real local HTTP sidecar endpoint, temporary PostgreSQL schema, 1024-dimensional pgvector persistence, ready vector lane, and fused hit evidence.
+- Direct embedding environment test plan: pass.
+  - Sidecar metadata probe: `GET http://127.0.0.1:8081/health` returned 200; `GET http://127.0.0.1:8081/info` reported `model_id: intfloat/multilingual-e5-large`, `model_dtype: float32`, `pooling: mean`, TEI `version: 1.9.3`, docker label `sha-0667015`, max input length `512`, max batch requests `8`.
+  - Direct vector probe: `POST http://127.0.0.1:8081/embed` with a Chinese consumables outbound-inspection query returned a finite 1024-dimensional vector in `809.43ms`; first three values were `0.04207405`, `-0.01662089`, `0.002197301`.
+  - Database/vector environment probe: `DATABASE_URL=postgresql://reqflow:reqflow@127.0.0.1:5432/reqflow_dev?schema=public npm run search:extensions` passed PostgreSQL `16.14`, pgvector `0.8.2`, and native FTS; `pg_search` remained unavailable as expected.
+  - Sidecar latency probe: `npm run embedding:probe` passed with 3 TEI calls, min `69.98ms`, p50 `91.61ms`, p95 `115.92ms`, max `118.62ms`.
+  - Application indexing probe: `npm run embedding:indexing-trial` passed using temporary schema `test_local_embedding_indexing_12044_1780289613633_3aow5i`; persisted `KnowledgeEmbedding.embedding` with 1024 vector dimensions; hybrid `vectorLane` was `ready` with 1 candidate and top fused hit had `lexicalRank: 1` and `vectorRank: 1`.
 - Playwright browser smoke: pass on `http://127.0.0.1:3012/tickets/ai-discussion`.
   - Logged in with seeded `admin/admin123`.
   - Intercepted `POST /api/ai/draft` with deterministic MS-12 clarification schema.
