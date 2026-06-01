@@ -1606,13 +1606,15 @@
 - title: BM25 vs native FTS vs hybrid retrieval 准确率/性能对比
 - milestone_id: MS-14
 - node_type: test
-- status: planned
+- status: completed
 - priority: 7
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-121-bm25-performance-accuracy
-- planning_notes: Run repeatable accuracy and performance comparisons including recall/precision-style evidence, p50/p95 query latency, index build time, explain plans, and resource notes.
+- contract_path: .servo/worktrack/WT-20260601-121/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-121/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-121/gate-evidence.md
+- branch: worktrack/wt-20260601-121-bm25-performance-accuracy (merged)
+- merge_commit: 55a19fd33a53a409d1960e8065bb75514ceec153
+- validation: BM25 corpus gate pass; native fixture result gate pass; ParadeDB result gate pass; VectorChord result gate expected fail on synonym Recall@5; MS-10 retrieval gate pass; diff check pass; policy/non-claim scan pass
+- planning_notes: Produced `docs/ms14-bm25-accuracy-performance-comparison.md`; ParadeDB measured Recall@5/10 is 1.0000 on the MS-14 corpus, VectorChord measured Recall@5 is 0.9444 due to synonym-case miss, native FTS remains fixture/control evidence only, and hybrid retrieval evidence remains MS-10 architecture evidence rather than same-corpus performance evidence.
 
 ### WT-20260601-122
 
