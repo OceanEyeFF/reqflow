@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 122
-- planned: 12
+- planned: 11
 - active: 0
-- completed: 102
+- completed: 103
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1558,13 +1558,15 @@
 - title: VectorChord-BM25 / pg_tokenizer runtime PoC
 - milestone_id: MS-14
 - node_type: research
-- status: planned
+- status: completed
 - priority: 4
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-118-vectorchord-bm25-poc
-- planning_notes: Test VectorChord-BM25 and tokenizer requirements in an isolated runtime, including Chinese tokenization behavior and PostgreSQL version/image compatibility.
+- contract_path: .servo/worktrack/WT-20260601-118/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-118/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-118/gate-evidence.md
+- branch: worktrack/wt-20260601-118-vectorchord-bm25-poc (merged)
+- merge_commit: af4fe950a6f91083b5b9711d76432f9b07c30a44
+- validation: VectorChord isolated Docker PoC completed; BM25 corpus gate pass; VectorChord result gate expected fail on synonym Recall@5; lint pass; diff check pass; Docker cleanup check pass
+- planning_notes: Validated VectorChord-BM25 / pg_tokenizer runtime compatibility in an isolated temporary container; extensions and index/query path work, but current tokenizer/query configuration misses one synonym-case expected snippet in top 5, so candidate decision is defer.
 
 ### WT-20260601-119
 
