@@ -308,9 +308,27 @@ describe("createDeepseekProvider", () => {
       kind: "clarification",
       result: {
         directions: [
-          { id: "knowledge_basis", questions: [{ id: "knowledge_basis-fallback-1" }] },
-          { id: "application_scenario", questions: [{ id: "application_scenario-fallback-1" }] },
-          { id: "requirement_details", questions: [{ id: "requirement_details-fallback-1" }] },
+          {
+            id: "knowledge_basis",
+            questions: [
+              {
+                id: "knowledge_basis-fallback-1",
+                category: "coverage_gap",
+                priority: "blocking",
+                blocksDraft: true,
+                basis: "coverage_gap",
+                expectedAnswerFormat: "free_text",
+              },
+            ],
+          },
+          {
+            id: "application_scenario",
+            questions: [{ id: "application_scenario-fallback-1", category: "actor_boundary", priority: "recommended" }],
+          },
+          {
+            id: "requirement_details",
+            questions: [{ id: "requirement_details-fallback-1", category: "acceptance_risk", priority: "recommended" }],
+          },
         ],
       },
     });
@@ -361,19 +379,131 @@ describe("createDeepseekProvider", () => {
     expect(result).toMatchObject({
       kind: "clarification",
       result: {
-        questions: [{ id: "q1", question: "目标用户是谁？", reason: "确认使用场景" }],
+        questions: [
+          {
+            id: "q1",
+            question: "目标用户是谁？",
+            reason: "确认使用场景",
+            category: "data_rule",
+            priority: "recommended",
+            blocksDraft: false,
+            basis: "inference",
+            relatedText: "",
+            expectedAnswerFormat: "free_text",
+          },
+        ],
         directions: [
           { id: "knowledge_basis", label: "知识库依据", questions: [] },
           { id: "application_scenario", label: "应用场景", questions: [] },
           {
             id: "requirement_details",
             label: "需求细节",
-            questions: [{ id: "q1", question: "目标用户是谁？", reason: "确认使用场景" }],
+            questions: [
+              {
+                id: "q1",
+                question: "目标用户是谁？",
+                reason: "确认使用场景",
+                category: "data_rule",
+                priority: "recommended",
+                blocksDraft: false,
+                basis: "inference",
+                relatedText: "",
+                expectedAnswerFormat: "free_text",
+              },
+            ],
           },
         ],
         canDraftNow: false,
       },
     });
+  });
+
+  it("normalizes structured clarification question schema fields", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        Response.json({
+          choices: [
+            {
+              message: {
+                content: JSON.stringify({
+                  kind: "clarification",
+                  directions: [
+                    {
+                      id: "knowledge_basis",
+                      questions: [
+                        {
+                          id: "gap-1",
+                          question: "知识库是否覆盖直发出库？",
+                          reason: "核心术语未命中",
+                          category: "coverage_gap",
+                          priority: "blocking",
+                          basis: "coverage_gap",
+                          relatedText: "missingCoreTerms: 直发出库",
+                          expectedAnswerFormat: "yes_no",
+                        },
+                      ],
+                    },
+                    {
+                      id: "application_scenario",
+                      questions: [
+                        {
+                          question: "无效分类会被降级吗？",
+                          reason: "验证兼容性",
+                          category: "bad-category",
+                          priority: "bad-priority",
+                          blocksDraft: "not-boolean",
+                          basis: "bad-basis",
+                          expectedAnswerFormat: "bad-format",
+                        },
+                      ],
+                    },
+                  ],
+                }),
+              },
+            },
+          ],
+        })
+      )
+    );
+
+    const provider = createDeepseekProvider({
+      apiKey: "test-key",
+      baseUrl: "https://example.test",
+      model: "deepseek-v4-flash",
+      timeoutMs: 1000,
+    });
+
+    const result = await provider.generate({
+      mode: "clarify",
+      requirement: "需要耗材检验出库",
+      answers: [],
+      knowledgeBaseIds: [],
+      answerLanguage: "zh",
+      maxDrafts: 3,
+      knowledge: [],
+    });
+
+    expect(result.kind).toBe("clarification");
+    if (result.kind === "clarification") {
+      expect(result.result.questions[0]).toMatchObject({
+        id: "gap-1",
+        category: "coverage_gap",
+        priority: "blocking",
+        blocksDraft: true,
+        basis: "coverage_gap",
+        relatedText: "missingCoreTerms: 直发出库",
+        expectedAnswerFormat: "yes_no",
+      });
+      expect(result.result.questions[1]).toMatchObject({
+        category: "data_rule",
+        priority: "recommended",
+        blocksDraft: false,
+        basis: "inference",
+        relatedText: "",
+        expectedAnswerFormat: "free_text",
+      });
+    }
   });
 
   it("normalizes fixed clarification directions and caps each direction", async () => {

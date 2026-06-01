@@ -11,25 +11,19 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { PRIORITY_LABELS } from "@/types";
 import { stageAiDraft, type AiRequirementDraft, type DraftCitation } from "@/lib/ai/draft-handoff";
-import type { AiSearchEvidence, ClarificationDirectionId, DraftAnswerLanguage } from "@/lib/ai/types";
-
-type ClarificationQuestion = {
-  id: string;
-  question: string;
-  reason: string;
-};
+import type { AiClarificationQuestion, AiSearchEvidence, ClarificationDirectionId, DraftAnswerLanguage } from "@/lib/ai/types";
 
 type ClarificationDirection = {
   id: ClarificationDirectionId;
   label: string;
-  questions: ClarificationQuestion[];
+  questions: AiClarificationQuestion[];
 };
 type AnswerMap = Record<string, string>;
 
 type AiDraftResponse =
   | {
       kind: "clarification";
-      result: { questions: ClarificationQuestion[]; directions?: ClarificationDirection[]; canDraftNow: boolean };
+      result: { questions: AiClarificationQuestion[]; directions?: ClarificationDirection[]; canDraftNow: boolean };
       citations: DraftCitation[];
       emptyKnowledge: boolean;
       searchEvidence?: AiSearchEvidence;
@@ -70,7 +64,7 @@ const CLARIFICATION_DIRECTIONS: Array<{ id: ClarificationDirectionId; label: str
 export default function AiDiscussionPage() {
   const router = useRouter();
   const [requirement, setRequirement] = useState("");
-  const [questions, setQuestions] = useState<ClarificationQuestion[]>([]);
+  const [questions, setQuestions] = useState<AiClarificationQuestion[]>([]);
   const [clarificationDirections, setClarificationDirections] = useState<ClarificationDirection[]>([]);
   const [answers, setAnswers] = useState<AnswerMap>({});
   const [draftCandidates, setDraftCandidates] = useState<AiRequirementDraft[]>([]);
@@ -423,7 +417,7 @@ export default function AiDiscussionPage() {
 
 function normalizeClarificationDirections(
   directions: ClarificationDirection[] | undefined,
-  questions: ClarificationQuestion[]
+  questions: AiClarificationQuestion[]
 ): ClarificationDirection[] {
   return CLARIFICATION_DIRECTIONS.map((direction, index) => {
     const matchingDirection = directions?.find((candidate) => candidate.id === direction.id || candidate.label === direction.label);

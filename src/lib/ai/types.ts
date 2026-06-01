@@ -131,11 +131,29 @@ export type AiRequirementDraft = {
 };
 
 export type ClarificationDirectionId = "knowledge_basis" | "application_scenario" | "requirement_details";
+export type ClarificationQuestionCategory =
+  | "coverage_gap"
+  | "exception_rule"
+  | "actor_boundary"
+  | "state_flow"
+  | "failure_path"
+  | "data_rule"
+  | "acceptance_risk"
+  | "knowledge_conflict";
+export type ClarificationQuestionPriority = "blocking" | "recommended" | "optional";
+export type ClarificationQuestionBasis = "knowledge" | "coverage_gap" | "user_input" | "inference";
+export type ClarificationExpectedAnswerFormat = "free_text" | "single_choice" | "multi_choice" | "number" | "date" | "yes_no";
 
 export type AiClarificationQuestion = {
   id: string;
   question: string;
   reason: string;
+  category: ClarificationQuestionCategory;
+  priority: ClarificationQuestionPriority;
+  blocksDraft: boolean;
+  basis: ClarificationQuestionBasis;
+  relatedText: string;
+  expectedAnswerFormat: ClarificationExpectedAnswerFormat;
 };
 
 export type AiClarificationDirection = {
