@@ -1622,10 +1622,12 @@
 - title: MS-14 决策报告与默认 runtime 建议
 - milestone_id: MS-14
 - node_type: review
-- status: planned
+- status: completed
 - priority: 8
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-122-bm25-decision-report
-- planning_notes: Produce final adopt/defer/reject recommendation, default-runtime boundary, rollback plan, and whether to open a future BM25 runtime enablement milestone.
+- contract_path: .servo/worktrack/WT-20260601-122/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-122/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-122/gate-evidence.md
+- branch: worktrack/wt-20260601-122-bm25-decision-report (merged)
+- merge_commit: 17c8139025f6f2cab1f4a669542d2b79976936dc
+- validation: BM25 corpus gate pass; ParadeDB result gate pass; native fixture result gate pass; VectorChord result gate expected fail on synonym Recall@5; MS-10 retrieval gate pass; diff check pass; policy/non-claim scan pass
+- planning_notes: Produced `docs/ms14-final-decision-report.md`; final recommendation is ParadeDB `pg_search` as future runtime-enablement candidate only, VectorChord-BM25 and pg_textsearch deferred, native PostgreSQL FTS fallback remains default, and any runtime switch requires fdch0 approval.
