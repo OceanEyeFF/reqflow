@@ -26,11 +26,19 @@ The file is a standalone candidate compose path with:
 
 - `postgres`: ParadeDB PostgreSQL candidate image;
 - `web`: the existing ReqFlow web image build;
-- `reqflow-paradedb-postgres-data`: separate candidate database volume;
+- `reqflow-paradedb-postgres18-data`: separate candidate database volume;
 - `reqflow-paradedb-uploads`: separate candidate upload volume.
+
+Because the current ParadeDB image is PostgreSQL 18 based, the database volume
+is mounted at `/var/lib/postgresql`, not `/var/lib/postgresql/data`. PostgreSQL
+18 Docker images create major-version-specific data directories under that
+mount, and mounting directly at `/var/lib/postgresql/data` makes startup fail
+with an unused-mount/upgrade-layout error.
 
 It does not reuse:
 
+- `reqflow-paradedb-postgres-data`, the superseded WT-123 pre-smoke candidate
+  volume name that mounted at the PostgreSQL 16-era data path;
 - `reqflow-postgres-data`;
 - `reqflow-uploads`;
 - `reqflow-embedding-model-cache`.
