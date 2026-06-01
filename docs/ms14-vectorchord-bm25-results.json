@@ -1,0 +1,721 @@
+{
+  "run": {
+    "candidateId": "vectorchord-bm25-pg-tokenizer",
+    "engine": "vchord_bm25",
+    "candidateClass": "bm25-plugin",
+    "measurementMode": "measured",
+    "postgresVersion": "18.3 (Debian 18.3-1.pgdg12+1)",
+    "runtimeImage": "tensorchord/vchord-suite:pg18-latest",
+    "extensionStatus": {
+      "lexicalEngine": "vchord_bm25",
+      "bm25Enabled": true,
+      "availableExtensions": [
+        {
+          "name": "pg_tokenizer",
+          "default_version": "0.1.1",
+          "installed_version": null
+        },
+        {
+          "name": "vchord_bm25",
+          "default_version": "0.3.0",
+          "installed_version": null
+        },
+        {
+          "name": "vector",
+          "default_version": "0.8.2",
+          "installed_version": null
+        }
+      ],
+      "installedExtensions": [
+        {
+          "extname": "pg_tokenizer",
+          "extversion": "0.1.1"
+        },
+        {
+          "extname": "vchord_bm25",
+          "extversion": "0.3.0"
+        },
+        {
+          "extname": "vector",
+          "extversion": "0.8.2"
+        }
+      ]
+    },
+    "indexPerformance": {
+      "indexBuildMs": 386.583,
+      "indexSizeBytes": 1433600,
+      "documentCount": 12,
+      "snippetCount": 12
+    },
+    "policyEvidence": {
+      "isolatedRuntime": true,
+      "defaultRuntimeMutated": false,
+      "destructiveActions": false,
+      "rawScoreFusion": false,
+      "notes": "Temporary Docker container reqflow-ms14-vectorchord-58080-1780305984054 on 127.0.0.1:55439; no host volume mounted."
+    }
+  },
+  "results": [
+    {
+      "caseId": "ms14-consumables-standard-outbound",
+      "matchedTerms": [
+        "一般耗材",
+        "标准检验出库",
+        "质检抽样",
+        "异常退回"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": -10.451407
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": -5.6538224
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": -5.2989597
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": -4.360628
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": -2.9624667
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": -2.2954855
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": -2.057047
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": -0.3008671
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "ms14_jieba",
+        "segmentationMode": "word",
+        "queryTokens": [
+          "23",
+          "42",
+          "3",
+          "15",
+          "38",
+          "13",
+          "31",
+          "69",
+          "21",
+          "50"
+        ],
+        "focusTermBehavior": [
+          "标准检验出库: jieba/custom tokenizer probe used for bm25vector query",
+          "质检抽样: jieba/custom tokenizer probe used for bm25vector query",
+          "异常退回: jieba/custom tokenizer probe used for bm25vector query"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 169.93,
+        "warmQueryMs": 152.098,
+        "p50Ms": 163.443,
+        "p95Ms": 167.012,
+        "limit5Ms": 169.93,
+        "limit10Ms": 164.044,
+        "limit20Ms": 171.571,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=2.42..2.42 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=2.42..2.42 rows=1 width=68)",
+          "->  Sort  (cost=2.42..2.42 rows=1 width=68)",
+          "Sort Key: ((embedding <&> to_bm25query('ms14_docs_embedding_bm25'::regclass, (tokenize('一般耗材标准检验出库需要哪些质检抽样和异常退回步骤？'::text, 'ms14_jieba'::text))::bm25vector)))",
+          "->  Seq Scan on ms14_docs  (cost=0.00..2.41 rows=1 width=68)",
+          "Filter: (enabled AND (knowledge_base_id = 'kb-warehouse-qc'::text))"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary VectorChord candidate container only."
+      }
+    },
+    {
+      "caseId": "ms14-qc-sampling-mixed-language",
+      "matchedTerms": [
+        "QC sampling",
+        "SKU",
+        "ERP",
+        "批次"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": -18.865877
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": -16.224155
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": -14.297054
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": -3.788395
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": -3.5212007
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": -3.1428666
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": -1.4664277
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": -0.6648817
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "ms14_jieba",
+        "segmentationMode": "word",
+        "queryTokens": [
+          "81",
+          "88",
+          "99",
+          "88",
+          "69",
+          "88",
+          "86",
+          "88",
+          "35",
+          "59",
+          "88",
+          "80",
+          "88",
+          "62"
+        ],
+        "focusTermBehavior": [
+          "QC sampling: jieba/custom tokenizer probe used for bm25vector query",
+          "SKU: jieba/custom tokenizer probe used for bm25vector query",
+          "ERP: jieba/custom tokenizer probe used for bm25vector query"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 149.73,
+        "warmQueryMs": 147.908,
+        "p50Ms": 152.022,
+        "p95Ms": 173.773,
+        "limit5Ms": 149.73,
+        "limit10Ms": 159.778,
+        "limit20Ms": 147.268,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=2.42..2.42 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=2.42..2.42 rows=1 width=68)",
+          "->  Sort  (cost=2.42..2.42 rows=1 width=68)",
+          "Sort Key: ((embedding <&> to_bm25query('ms14_docs_embedding_bm25'::regclass, (tokenize('QC sampling 和 SKU 批次在 ERP 里怎么记录？'::text, 'ms14_jieba'::text))::bm25vector)))",
+          "->  Seq Scan on ms14_docs  (cost=0.00..2.41 rows=1 width=68)",
+          "Filter: (enabled AND (knowledge_base_id = 'kb-warehouse-qc'::text))"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary VectorChord candidate container only."
+      }
+    },
+    {
+      "caseId": "ms14-warehouse-responsibility-boundary",
+      "matchedTerms": [
+        "内仓",
+        "外仓",
+        "质检取样",
+        "责任边界"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": -10.6055975
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": -4.9434247
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": -3.125493
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": -3.1076837
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": -2.3305182
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": -1.4664772
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": -1.2586775
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": -0.40755716
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "ms14_jieba",
+        "segmentationMode": "word",
+        "queryTokens": [
+          "78",
+          "79",
+          "59",
+          "13",
+          "57",
+          "69",
+          "61",
+          "67",
+          "77"
+        ],
+        "focusTermBehavior": [
+          "内仓: jieba/custom tokenizer probe used for bm25vector query",
+          "外仓: jieba/custom tokenizer probe used for bm25vector query",
+          "责任边界: jieba/custom tokenizer probe used for bm25vector query"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 158.858,
+        "warmQueryMs": 141.674,
+        "p50Ms": 157.67,
+        "p95Ms": 173.834,
+        "limit5Ms": 158.858,
+        "limit10Ms": 165.238,
+        "limit20Ms": 157.824,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=2.42..2.42 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=2.42..2.42 rows=1 width=68)",
+          "->  Sort  (cost=2.42..2.42 rows=1 width=68)",
+          "Sort Key: ((embedding <&> to_bm25query('ms14_docs_embedding_bm25'::regclass, (tokenize('内仓外仓在质检取样和放行出库里的责任边界是什么？'::text, 'ms14_jieba'::text))::bm25vector)))",
+          "->  Seq Scan on ms14_docs  (cost=0.00..2.41 rows=1 width=68)",
+          "Filter: (enabled AND (knowledge_base_id = 'kb-warehouse-qc'::text))"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary VectorChord candidate container only."
+      }
+    },
+    {
+      "caseId": "ms14-zip-path-source-citation",
+      "matchedTerms": [
+        "流程包.zip",
+        "标准检验出库",
+        "来源路径",
+        "责任边界"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-zip-import-paths",
+          "snippetId": "snip-zip-path-consumables",
+          "score": -18.76141
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": -6.524989
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": -5.0078273
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": -4.946787
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": -4.2778997
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": -3.757948
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": -3.6941009
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": -3.5227575
+        },
+        {
+          "rank": 9,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": -3.495431
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "ms14_jieba",
+        "segmentationMode": "word",
+        "queryTokens": [
+          "11",
+          "146",
+          "88",
+          "137",
+          "88",
+          "3",
+          "15",
+          "38",
+          "135",
+          "148",
+          "69",
+          "67",
+          "77",
+          "59"
+        ],
+        "focusTermBehavior": [
+          "流程包.zip: jieba/custom tokenizer probe used for bm25vector query",
+          "标准检验出库: jieba/custom tokenizer probe used for bm25vector query",
+          "uploads/2026: jieba/custom tokenizer probe used for bm25vector query"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 151.022,
+        "warmQueryMs": 154.247,
+        "p50Ms": 164.465,
+        "p95Ms": 177.88,
+        "limit5Ms": 151.022,
+        "limit10Ms": 161.362,
+        "limit20Ms": 173.398,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=2.42..2.42 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=2.42..2.42 rows=1 width=68)",
+          "->  Sort  (cost=2.42..2.42 rows=1 width=68)",
+          "Sort Key: ((embedding <&> to_bm25query('ms14_docs_embedding_bm25'::regclass, (tokenize('流程包 zip 里标准检验出库的来源路径和责任边界在哪里？'::text, 'ms14_jieba'::text))::bm25vector)))",
+          "->  Seq Scan on ms14_docs  (cost=0.00..2.41 rows=1 width=68)",
+          "Filter: (enabled AND (knowledge_base_id = ANY ('{kb-imported-zip,kb-warehouse-qc}'::text[])))"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary VectorChord candidate container only."
+      }
+    },
+    {
+      "caseId": "ms14-synonym-qc-sampling",
+      "matchedTerms": [
+        "检验取样",
+        "QC取样",
+        "检验后出库",
+        "标准检验出库"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": -12.4950695
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": -8.245928
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": -7.131066
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": -6.558865
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": -4.2626567
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": -2.317181
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": -1.9202238
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": -1.8305683
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "ms14_jieba",
+        "segmentationMode": "word",
+        "queryTokens": [
+          "15",
+          "57",
+          "69",
+          "88",
+          "81",
+          "57",
+          "217",
+          "27",
+          "15",
+          "2",
+          "38",
+          "113"
+        ],
+        "focusTermBehavior": [
+          "检验取样: jieba/custom tokenizer probe used for bm25vector query",
+          "QC取样: jieba/custom tokenizer probe used for bm25vector query",
+          "检验后出库: jieba/custom tokenizer probe used for bm25vector query"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 140.043,
+        "warmQueryMs": 146.894,
+        "p50Ms": 153.913,
+        "p95Ms": 175.086,
+        "limit5Ms": 140.043,
+        "limit10Ms": 161.827,
+        "limit20Ms": 161.485,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=2.42..2.42 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=2.42..2.42 rows=1 width=68)",
+          "->  Sort  (cost=2.42..2.42 rows=1 width=68)",
+          "Sort Key: ((embedding <&> to_bm25query('ms14_docs_embedding_bm25'::regclass, (tokenize('检验取样和 QC取样是不是同一个动作，检验后出库应该查哪些说明？'::text, 'ms14_jieba'::text))::bm25vector)))",
+          "->  Seq Scan on ms14_docs  (cost=0.00..2.41 rows=1 width=68)",
+          "Filter: (enabled AND (knowledge_base_id = 'kb-warehouse-qc'::text))"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary VectorChord candidate container only."
+      }
+    },
+    {
+      "caseId": "ms14-negative-disabled-legacy",
+      "matchedTerms": [
+        "旧流程",
+        "免检",
+        "直接出库",
+        "质检抽样"
+      ],
+      "topK": [
+        {
+          "rank": 1,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-standard-inspection",
+          "score": -4.3546133
+        },
+        {
+          "rank": 2,
+          "sourceId": "src-direct-outbound-rule",
+          "snippetId": "snip-direct-outbound-allowed",
+          "score": -3.3804414
+        },
+        {
+          "rank": 3,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-ratio",
+          "score": -2.967369
+        },
+        {
+          "rank": 4,
+          "sourceId": "src-erp-sync-rule",
+          "snippetId": "snip-erp-sync-sku",
+          "score": -2.372291
+        },
+        {
+          "rank": 5,
+          "sourceId": "src-quality-synonyms",
+          "snippetId": "snip-quality-synonym-sampling",
+          "score": -1.9215602
+        },
+        {
+          "rank": 6,
+          "sourceId": "src-consumables-outbound-sop",
+          "snippetId": "snip-consumables-warehouse-boundary",
+          "score": -1.1778104
+        },
+        {
+          "rank": 7,
+          "sourceId": "src-return-exception-rules",
+          "snippetId": "snip-return-exception-owner",
+          "score": -1.1724118
+        },
+        {
+          "rank": 8,
+          "sourceId": "src-qc-sampling-rules",
+          "snippetId": "snip-qc-sampling-sop",
+          "score": -0.69723785
+        }
+      ],
+      "tokenizerEvidence": {
+        "tokenizer": "ms14_jieba",
+        "segmentationMode": "word",
+        "queryTokens": [
+          "52",
+          "190",
+          "11",
+          "186",
+          "37",
+          "38",
+          "184",
+          "13",
+          "31"
+        ],
+        "focusTermBehavior": [
+          "免检直接出库: jieba/custom tokenizer probe used for bm25vector query",
+          "质检抽样: jieba/custom tokenizer probe used for bm25vector query"
+        ]
+      },
+      "queryPerformance": {
+        "firstQueryMs": 183.922,
+        "warmQueryMs": 151.008,
+        "p50Ms": 162.4,
+        "p95Ms": 174.023,
+        "limit5Ms": 183.922,
+        "limit10Ms": 173.172,
+        "limit20Ms": 159.226,
+        "sampleSize": 5
+      },
+      "explain": {
+        "available": true,
+        "summary": "Limit  (cost=2.42..2.42 rows=1 width=68)",
+        "planHighlights": [
+          "Limit  (cost=2.42..2.42 rows=1 width=68)",
+          "->  Sort  (cost=2.42..2.42 rows=1 width=68)",
+          "Sort Key: ((embedding <&> to_bm25query('ms14_docs_embedding_bm25'::regclass, (tokenize('还能按旧流程免检直接出库并跳过质检抽样吗？'::text, 'ms14_jieba'::text))::bm25vector)))",
+          "->  Seq Scan on ms14_docs  (cost=0.00..2.41 rows=1 width=68)",
+          "Filter: (enabled AND (knowledge_base_id = 'kb-warehouse-qc'::text))"
+        ]
+      },
+      "policyEvidence": {
+        "isolatedRuntime": true,
+        "defaultRuntimeMutated": false,
+        "destructiveActions": false,
+        "rawScoreFusion": false,
+        "notes": "Case ran inside the temporary VectorChord candidate container only."
+      }
+    }
+  ]
+}
