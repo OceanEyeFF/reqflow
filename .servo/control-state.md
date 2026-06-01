@@ -24,7 +24,7 @@
 - active_milestone: MS-15
 - milestone_title: ParadeDB `pg_search` Runtime Replacement Validation
 - milestone_status: active
-- milestone_pipeline_summary: total=18 planned=1 active=1 completed=14 superseded=2; MS-14 accepted; MS-15 active with 2/5 worktracks completed
+- milestone_pipeline_summary: total=18 planned=1 active=1 completed=14 superseded=2; MS-14 accepted; MS-15 active with 3/5 worktracks completed
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260601-124 completed and merged at b367011; next repo-scope action is WT-20260601-125 intake/init for pg_search integration probe, tokenizer selection, and Chinese benchmark rerun.
+- WT-20260601-125 completed and merged at 4aea964; next repo-scope action is WT-20260601-126 intake/init for same-corpus hybrid retrieval comparison with ParadeDB lexical lane.
 
 ## Linked Formal Documents
 
@@ -98,8 +98,8 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 28
-- autonomous_worktracks_opened: 2
+- autonomy_budget_remaining: 27
+- autonomous_worktracks_opened: 3
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-06-01
 - autonomy_budget_notes: MS-15 已由 fdch0 明确批准推进，低危险 Worktrack 可自行通过并连续执行；危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。Milestone final acceptance 必须由 fdch0 决定。
@@ -154,7 +154,8 @@
 - latest_completed_ms14_worktrack: WT-20260601-122 completed and merged at 17c8139; gate evidence `.servo/worktrack/WT-20260601-122/gate-evidence.md`; final decision report `docs/ms14-final-decision-report.md`; ParadeDB `pg_search` is adopted only as a future runtime-enablement candidate, VectorChord-BM25 and `pg_textsearch` are deferred, default runtime remains native PostgreSQL FTS fallback plus pgvector, and MS-14 is ready for fdch0 acceptance review.
 - latest_completed_ms15_worktrack: WT-20260601-123 completed and merged at 91fd071; gate evidence `.servo/worktrack/WT-20260601-123/gate-evidence.md`; isolated ParadeDB candidate compose `docker-compose.paradedb.yml` and design doc `docs/ms15-paradedb-runtime-design.md` added without changing default runtime.
 - latest_completed_ms15_worktrack: WT-20260601-124 completed and merged at b367011; gate evidence `.servo/worktrack/WT-20260601-124/gate-evidence.md`; ParadeDB candidate runtime passed compose config, Prisma migrate deploy, seed, readiness, strict pg_search readiness, web HTTP smoke, lint/test/build, and non-destructive stop; `pg_search` 0.23.5 and `vector` 0.8.1 coexist on PostgreSQL 18.4.
-- next_worktrack_candidate: WT-20260601-125 pg_search integration probe, tokenizer selection, and Chinese benchmark rerun.
+- latest_completed_ms15_worktrack: WT-20260601-125 completed and merged at 4aea964; gate evidence `.servo/worktrack/WT-20260601-125/gate-evidence.md`; candidate compose pg_search benchmark passed the MS-14 Chinese corpus gate with ParadeDB custom scan EXPLAIN evidence and `pdb.unicode default` tokenizer caveat.
+- next_worktrack_candidate: WT-20260601-126 Same-corpus hybrid retrieval comparison with ParadeDB lexical lane.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.

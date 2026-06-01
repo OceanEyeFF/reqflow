@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 122
-- planned: 9
+- planned: 8
 - active: 0
-- completed: 105
+- completed: 106
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1656,7 +1656,7 @@
 - title: Prisma migration, seed, readiness, and web smoke on ParadeDB runtime
 - milestone_id: MS-15
 - node_type: test
-- status: planned
+- status: completed
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260601-124/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260601-124/plan-task-queue.md
@@ -1674,11 +1674,13 @@
 - node_type: test
 - status: planned
 - priority: 3
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-125-paradedb-pg-search-tokenizer
-- planning_notes: Re-run pg_search index/query probes, compare tokenizer configuration including Chinese-compatible options, and validate MS-14 Chinese benchmark results on the candidate runtime.
+- contract_path: .servo/worktrack/WT-20260601-125/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-125/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-125/gate-evidence.md
+- branch: worktrack/wt-20260601-125-paradedb-pg-search-tokenizer (merged)
+- merge_commit: 4aea964
+- validation: candidate compose pg_search benchmark pass; BM25 result gate pass for 6 cases / 12 snippets; pg_search 0.23.5 and vector 0.8.1 present; BM25 index build 581.23ms / 3022848 bytes; EXPLAIN shows ParadeDB custom scan; lint/test/build pass; non-destructive stop pass
+- planning_notes: Re-ran pg_search index/query probes and validated MS-14 Chinese benchmark results on the candidate runtime; `pdb.unicode default` is ranking-compatible for this corpus but not final Chinese word-level tokenizer proof.
 
 ### WT-20260601-126
 
