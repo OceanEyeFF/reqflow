@@ -86,13 +86,13 @@
 
 ## Baseline Traceability
 
-- last_verified_checkpoint: 0f2e7a2e617cb84841ecd0750a3d7667cf9820d9
-- latest_observed_checkpoint: 0f2e7a2e617cb84841ecd0750a3d7667cf9820d9
+- last_verified_checkpoint: 90c7ef30a5c7e6e1ffb8a8be0670aab12de27c00
+- latest_observed_checkpoint: 90c7ef30a5c7e6e1ffb8a8be0670aab12de27c00
 - last_doc_catch_up_checkpoint: 38da2ba
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
-- verified_at: 2026-06-01
+- verified_at: 2026-06-02
 - if_no_commit_reason:
 - alternative_traceability:
 
