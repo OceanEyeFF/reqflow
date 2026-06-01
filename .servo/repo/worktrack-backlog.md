@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 114
-- planned: 9
+- planned: 8
 - active: 0
-- completed: 97
+- completed: 98
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1364,12 +1364,14 @@
 - title: AI 追问前端分组展示与回答交互改造
 - milestone_id: MS-12
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 5
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-105-clarify-ui-grouping
+- contract_path: .servo/worktrack/WT-20260601-105/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-105/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-105/gate-evidence.md
+- branch: worktrack/wt-20260601-105-clarify-ui-grouping (merged)
+- merge_commit: 4965a55
+- validation: focused provider/API/service tests pass 3 files / 27 tests; lint pass; full test pass 33 files / 256 tests; build pass; diff check pass
 - planning_notes: Group blocking questions, recommended questions, and knowledge-base gaps in the AI discussion UI; preserve answers across regeneration and make weak retrieval visible.
 
 ### WT-20260601-106
