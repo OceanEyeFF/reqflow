@@ -1640,13 +1640,15 @@
 - title: ParadeDB image pinning and alternate compose/profile design
 - milestone_id: MS-15
 - node_type: research
-- status: planned
+- status: completed
 - priority: 1
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-123-paradedb-runtime-design
-- planning_notes: Pin or document the target ParadeDB image identity, design an alternate compose/profile that avoids current default volumes, and preserve rollback to MS-13 runtime.
+- contract_path: .servo/worktrack/WT-20260601-123/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-123/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-123/gate-evidence.md
+- branch: worktrack/wt-20260601-123-paradedb-runtime-design (merged)
+- merge_commit: 91fd071a67a6d730e3287e5a4cc5e52d6aa27ac9
+- validation: docker compose candidate config pass; git diff --check pass; policy/non-claim scan pass
+- planning_notes: Added isolated `docker-compose.paradedb.yml` and `docs/ms15-paradedb-runtime-design.md`; candidate uses digest-pinned ParadeDB image, alternate default ports, separate candidate volumes, and does not mutate MS-13 default runtime.
 
 ### WT-20260601-124
 

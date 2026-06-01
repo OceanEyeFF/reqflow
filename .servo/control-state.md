@@ -24,7 +24,7 @@
 - active_milestone: MS-15
 - milestone_title: ParadeDB `pg_search` Runtime Replacement Validation
 - milestone_status: active
-- milestone_pipeline_summary: total=18 planned=1 active=1 completed=14 superseded=2; MS-14 accepted; MS-15 active with 0/5 worktracks completed
+- milestone_pipeline_summary: total=18 planned=1 active=1 completed=14 superseded=2; MS-14 accepted; MS-15 active with 1/5 worktracks completed
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- MS-14 accepted by fdch0; MS-15 created and activated for ParadeDB `pg_search` runtime replacement validation. Next repo-scope action is WT-20260601-123 intake/init for ParadeDB image pinning and alternate compose/profile design.
+- WT-20260601-123 completed and merged at 91fd071; next repo-scope action is WT-20260601-124 intake/init for Prisma migration, seed, readiness, and web smoke on ParadeDB runtime.
 
 ## Linked Formal Documents
 
@@ -152,7 +152,8 @@
 - latest_completed_ms14_worktrack: WT-20260601-120 completed and merged at 6b304a8; gate evidence `.servo/worktrack/WT-20260601-120/gate-evidence.md`; tokenizer synthesis report `docs/ms14-chinese-tokenization-evaluation.md`; ParadeDB is the strongest measured ranking-compatible BM25 candidate so far with tokenizer caveats, VectorChord remains deferred due to synonym Recall@5/token-audit caveats, and `pg_textsearch` remains unavailable in tested runtime.
 - latest_completed_ms14_worktrack: WT-20260601-121 completed and merged at 55a19fd; gate evidence `.servo/worktrack/WT-20260601-121/gate-evidence.md`; comparison report `docs/ms14-bm25-accuracy-performance-comparison.md`; ParadeDB passed MS-14 result gate, VectorChord remains deferred due to synonym Recall@5, native FTS remains fixture/control evidence, and hybrid evidence remains MS-10 architecture evidence rather than same-corpus performance evidence.
 - latest_completed_ms14_worktrack: WT-20260601-122 completed and merged at 17c8139; gate evidence `.servo/worktrack/WT-20260601-122/gate-evidence.md`; final decision report `docs/ms14-final-decision-report.md`; ParadeDB `pg_search` is adopted only as a future runtime-enablement candidate, VectorChord-BM25 and `pg_textsearch` are deferred, default runtime remains native PostgreSQL FTS fallback plus pgvector, and MS-14 is ready for fdch0 acceptance review.
-- next_worktrack_candidate: WT-20260601-123 ParadeDB image pinning and alternate compose/profile design.
+- latest_completed_ms15_worktrack: WT-20260601-123 completed and merged at 91fd071; gate evidence `.servo/worktrack/WT-20260601-123/gate-evidence.md`; isolated ParadeDB candidate compose `docker-compose.paradedb.yml` and design doc `docs/ms15-paradedb-runtime-design.md` added without changing default runtime.
+- next_worktrack_candidate: WT-20260601-124 Prisma migration, seed, readiness, and web smoke on ParadeDB runtime.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
