@@ -149,7 +149,32 @@ function buildMessages(request: DraftProviderRequest): DeepseekMessage[] {
                 })),
                 canDraftNow: false,
                 instruction:
-                  "Ask clarification questions only. Use exactly these three direction labels. Return at most five questions for each direction. Do not draft tickets in clarify mode.",
+                  [
+                    "Ask business-interrogation questions only. Do not draft tickets in clarify mode.",
+                    "Use coverageDiagnostics as first-class evidence: missingCoreTerms, low citationCount, failed vectorLaneStatus, or weak lexical evidence should produce coverage_gap questions instead of pretending coverage exists.",
+                    "Cover high-value business risk categories when relevant: coverage_gap, exception_rule, actor_boundary, state_flow, failure_path, data_rule, acceptance_risk, and knowledge_conflict.",
+                    "Return exactly these three direction labels and at most five questions for each direction.",
+                    "Each question must include category, priority, blocksDraft, basis, reason, relatedText, and expectedAnswerFormat.",
+                    "Use priority=blocking and blocksDraft=true when a missing answer would make the draft unsafe, misleading, or unsupported by knowledge evidence.",
+                    "Use basis=knowledge only when the provided knowledge directly supports the question; use basis=coverage_gap when coverageDiagnostics shows missing terms or empty citations.",
+                  ].join(" "),
+                questionSchema: {
+                  category: [
+                    "coverage_gap",
+                    "exception_rule",
+                    "actor_boundary",
+                    "state_flow",
+                    "failure_path",
+                    "data_rule",
+                    "acceptance_risk",
+                    "knowledge_conflict",
+                  ],
+                  priority: ["blocking", "recommended", "optional"],
+                  blocksDraft: "boolean",
+                  basis: ["knowledge", "coverage_gap", "user_input", "inference"],
+                  relatedText: "short source phrase, missing term, user phrase, or empty string",
+                  expectedAnswerFormat: ["free_text", "single_choice", "multi_choice", "number", "date", "yes_no"],
+                },
               }
             : {
                 kind: "draft or drafts",

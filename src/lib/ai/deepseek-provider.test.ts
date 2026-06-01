@@ -506,6 +506,65 @@ describe("createDeepseekProvider", () => {
     }
   });
 
+  it("instructs clarify mode to run coverage-aware business interrogation", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () =>
+        Response.json({
+          choices: [{ message: { content: JSON.stringify({ kind: "clarification", questions: [] }) } }],
+        })
+      )
+    );
+
+    const provider = createDeepseekProvider({
+      apiKey: "test-key",
+      baseUrl: "https://example.test",
+      model: "deepseek-v4-flash",
+      timeoutMs: 1000,
+    });
+
+    await provider.generate({
+      mode: "clarify",
+      requirement: "需要一般耗材标准检验出库",
+      answers: [],
+      knowledgeBaseIds: ["kb-consumables"],
+      answerLanguage: "zh",
+      maxDrafts: 3,
+      knowledge: [],
+      coverageDiagnostics: {
+        selectedKnowledgeBaseIds: ["kb-consumables"],
+        citationCount: 0,
+        matchedCoreTerms: ["耗材"],
+        missingCoreTerms: ["标准检验", "出库"],
+        vectorLaneStatus: { status: "failed", reason: "active-profile-missing" },
+        lexicalEngine: "postgres-native-fts-fallback",
+        lexicalCandidatesScanned: 0,
+        lexicalCandidatesReturned: 0,
+      },
+    });
+
+    const body = JSON.parse(vi.mocked(fetch).mock.calls[0][1]?.body as string) as {
+      messages: Array<{ content: string }>;
+    };
+    const prompt = body.messages[1].content;
+
+    expect(prompt).toContain("business-interrogation");
+    expect(prompt).toContain("coverageDiagnostics");
+    expect(prompt).toContain("missingCoreTerms");
+    expect(prompt).toContain("coverage_gap");
+    expect(prompt).toContain("exception_rule");
+    expect(prompt).toContain("actor_boundary");
+    expect(prompt).toContain("state_flow");
+    expect(prompt).toContain("failure_path");
+    expect(prompt).toContain("data_rule");
+    expect(prompt).toContain("acceptance_risk");
+    expect(prompt).toContain("knowledge_conflict");
+    expect(prompt).toContain("blocksDraft");
+    expect(prompt).toContain("expectedAnswerFormat");
+    expect(prompt).toContain('"citationCount":0');
+    expect(prompt).not.toMatch(/apiKey|secret/);
+  });
+
   it("normalizes fixed clarification directions and caps each direction", async () => {
     vi.stubGlobal(
       "fetch",
