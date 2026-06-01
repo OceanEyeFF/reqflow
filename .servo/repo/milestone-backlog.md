@@ -364,5 +364,5 @@
 - activated_by: fdch0
 - activated_at: 2026-06-01
 - pre_milestone_intake_review: .servo/repo/pre-milestone-intake-MS-15.md
-- worktrack_progress: WT-20260601-123=done, WT-20260601-124=done, WT-20260601-125=planned, WT-20260601-126=planned, WT-20260601-127=planned
+- worktrack_progress: WT-20260601-123=done, WT-20260601-124=done, WT-20260601-125=done, WT-20260601-126=planned, WT-20260601-127=planned
 - purpose: Validate whether ReqFlow can safely use a ParadeDB PostgreSQL runtime candidate for BM25 search while preserving pgvector, Prisma migrations, app runtime smoke behavior, Chinese retrieval quality, and rollback to the current MS-13 runtime.
