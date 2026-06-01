@@ -1412,12 +1412,14 @@
 - title: Web app Dockerfile 与 runtime env contract
 - milestone_id: MS-13
 - node_type: feature
-- status: planned
+- status: completed
 - priority: 1
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-108-web-dockerfile
+- contract_path: .servo/worktrack/WT-20260601-108/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-108/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-108/gate-evidence.md
+- branch: worktrack/wt-20260601-108-web-dockerfile (merged)
+- merge_commit: 47e0c79
+- validation: Prisma validate pass; Next build pass; Docker build pass; image content probe pass; non-root runtime pass; OpenSSL/Prisma engine probe pass; standalone startup probe pass
 - planning_notes: Add a web runtime image and env contract without bundling embedding model weights into the main app image.
 
 ### WT-20260601-109

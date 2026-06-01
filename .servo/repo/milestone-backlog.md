@@ -281,7 +281,7 @@
 - milestone_id: MS-12
 - title: AI 需求追问质量升级与 Business Interrogation
 - milestone_kind: goal-driven
-- status: active
+- status: completed
 - priority: 15
 - depends_on_milestones: [MS-11]
 - worktrack_list: [WT-20260601-101, WT-20260601-114, WT-20260601-102, WT-20260601-103, WT-20260601-104, WT-20260601-105, WT-20260601-106, WT-20260601-107]
@@ -292,7 +292,10 @@
 - activation_rules: current_active_milestone == none and depends_on_milestones completed/accepted
 - activated_by: fdch0
 - activated_at: 2026-06-01
-- worktrack_progress: WT-20260601-101=done, WT-20260601-114=done, WT-20260601-102=done, WT-20260601-103=done, WT-20260601-104=done, WT-20260601-105=done, WT-20260601-106=done, WT-20260601-107=planned
+- worktrack_progress: WT-20260601-101=done, WT-20260601-114=done, WT-20260601-102=done, WT-20260601-103=done, WT-20260601-104=done, WT-20260601-105=done, WT-20260601-106=done, WT-20260601-107=done
+- acceptance_handback_status: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-06-01
 - purpose: 将 AI 追问从普通澄清升级为 coverage-aware business interrogation，能发现知识库覆盖缺口、流程矛盾、例外规则、责任边界、异常分支和验收风险。
 
 ### MS-13
@@ -300,7 +303,7 @@
 - milestone_id: MS-13
 - title: Docker Compose Runtime Bundle 与本地一键运行
 - milestone_kind: goal-driven
-- status: planned
+- status: active
 - priority: 16
 - depends_on_milestones: [MS-12]
 - worktrack_list: [WT-20260601-108, WT-20260601-109, WT-20260601-110, WT-20260601-111, WT-20260601-112, WT-20260601-113]
@@ -309,4 +312,7 @@
 - updated: 2026-06-01
 - updated_by: codex
 - activation_rules: current_active_milestone == none and depends_on_milestones completed/accepted
+- activated_by: fdch0
+- activated_at: 2026-06-01
+- worktrack_progress: WT-20260601-108=done, WT-20260601-109=planned, WT-20260601-110=planned, WT-20260601-111=planned, WT-20260601-112=planned, WT-20260601-113=planned
 - purpose: 提供 web + PostgreSQL/pgvector + optional embedding sidecar 的 Docker Compose runtime bundle、readiness/probe 编排和 operator runbook；不把模型权重打进主 app image；BM25 只通过可验证的 Postgres extension runtime 候选进入，不把 PostgreSQL core/native FTS 当作 BM25。

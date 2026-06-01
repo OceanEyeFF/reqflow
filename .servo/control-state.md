@@ -15,16 +15,16 @@
 ## Active Worktrack
 
 - active_worktrack: none
-- worktrack_title: N/A
+- worktrack_title: Web app Dockerfile 与 runtime env contract
 - worktrack_status: closed
-- target_milestone_id: none
+- target_milestone_id: MS-13
 
 ## Active Milestone
 
-- active_milestone: MS-12
-- milestone_title: AI 需求追问质量升级与 Business Interrogation
-- milestone_status: accepted
-- milestone_pipeline_summary: total=16 planned=1 active=0 completed=13 superseded=2; MS-12 accepted with 8/8 worktracks completed; MS-13 remains planned
+- active_milestone: MS-13
+- milestone_title: Docker Compose Runtime Bundle 与本地一键运行
+- milestone_status: active
+- milestone_pipeline_summary: total=16 planned=0 active=1 completed=13 superseded=2; MS-12 accepted; MS-13 active with 1/6 worktracks completed
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- MS-12 accepted by fdch0 on 2026-06-01. Next repo-scope action is MS-13 planning/activation when requested.
+- WT-20260601-108 completed and merged at 47e0c79. Next repo-scope action is MS-13 WT-20260601-109 intake/init if no new blocker appears.
 
 ## Linked Formal Documents
 
@@ -87,7 +87,7 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint: 629f7c7232e425d08484877593222cbeaec2ec1f
-- latest_observed_checkpoint: 023912f
+- latest_observed_checkpoint: 47e0c79c02bd0948cf89619f4d056ae541490fd0
 - last_doc_catch_up_checkpoint: 38da2ba
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
@@ -136,6 +136,7 @@
 - latest_completed_ms12_worktrack: WT-20260601-105 completed and merged at 4965a55; gate evidence `.servo/worktrack/WT-20260601-105/gate-evidence.md`.
 - latest_completed_ms12_worktrack: WT-20260601-106 completed and merged at 023912f; gate evidence `.servo/worktrack/WT-20260601-106/gate-evidence.md`; `npm run clarification:golden` added for the consumables golden case.
 - latest_completed_ms12_worktrack: WT-20260601-107 completed with local HTTP embedding sidecar -> temporary DB schema -> pgvector -> hybrid retrieval evidence; gate evidence `.servo/worktrack/WT-20260601-107/gate-evidence.md`; `npm run embedding:indexing-trial` added for explicit local sidecar indexing validation.
+- latest_completed_ms13_worktrack: WT-20260601-108 completed and merged at 47e0c79; gate evidence `.servo/worktrack/WT-20260601-108/gate-evidence.md`; web Dockerfile, standalone output, runtime env contract, Docker build, image content probe, non-root runtime, OpenSSL/Prisma engine probe, and standalone startup probe passed.
 - next_worktrack_candidate: MS-10 milestone gate handback; no remaining MS-10 worktracks.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
@@ -153,7 +154,7 @@
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
 - superseded_milestones: MS-20260528-002 docs 文档更新迭代与整理; MS-20260529-001 中文知识检索增强与结构化索引.
-- current_active_milestone: none
+- current_active_milestone: MS-13 Docker Compose Runtime Bundle 与本地一键运行.
 - latest_completed_milestone: MS-12 AI 需求追问质量升级与 Business Interrogation accepted by fdch0 on 2026-06-01.
 - planned_followup_milestones: MS-12 AI 需求追问质量升级与 Business Interrogation; MS-13 Docker Compose Runtime Bundle 与本地一键运行.
 - bm25_planning_update: BM25/pg_search support is planned as MS-12 readiness/design plus MS-13 runtime-image feasibility/fallback packaging; it must not be claimed as active runtime behavior until target Docker/PostgreSQL environment readiness passes.
