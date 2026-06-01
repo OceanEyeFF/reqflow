@@ -1737,13 +1737,14 @@
 - title: ParadeDB default-runtime migration impact and rollback cost
 - milestone_id: MS-16
 - node_type: research
-- status: planned
+- status: completed
 - priority: 2
 - contract_path: .servo/worktrack/WT-20260601-129/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260601-129/plan-task-queue.md
 - gate_evidence: .servo/worktrack/WT-20260601-129/gate-evidence.md
 - branch: worktrack/wt-20260601-129-paradedb-migration-rollback-cost
-- planning_notes: Estimate default runtime switch impact from MS-13/MS-15 to ParadeDB, including compose/image changes, Prisma/migration behavior, volume/data handling, rollback path, operator runbook deltas, and pre-production risk modifiers without performing the switch.
+- validation: migration impact pass; rollback cost pass; evidence traceability pass; policy scan pass; git diff --check pass
+- planning_notes: Estimated default runtime switch impact from MS-13/MS-15 to ParadeDB, including compose/image changes, Prisma/migration behavior, volume/data handling, rollback path, operator runbook deltas, and pre-production risk modifiers without performing the switch.
 
 ### WT-20260601-130
 
