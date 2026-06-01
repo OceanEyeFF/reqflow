@@ -4,10 +4,12 @@
 
 - milestone_id: MS-12
 - title: AI 需求追问质量升级与 Business Interrogation
-- status: ready-for-fdch0-acceptance
+- status: accepted
 - date: 2026-06-01
 - develop_head: `600dddf`
 - worktracks_completed: 8/8
+- accepted_by: fdch0
+- accepted_at: 2026-06-01
 
 ## Completed Worktracks
 
@@ -69,6 +71,19 @@
 - MS-12 does not introduce external hosted search, third-party vector databases, external rerankers, batch production embedding rebuilds, or provider cost-boundary changes.
 - AI draft human confirmation boundary remains unchanged.
 
+## pg_search Unavailable Analysis
+
+`pg_search` is unavailable because the current local and CI PostgreSQL baseline uses `pgvector/pgvector:0.8.2-pg16`, which packages PostgreSQL 16 with the `vector` extension but does not expose ParadeDB's `pg_search` extension in `pg_available_extensions`.
+
+The readiness script checks the database capability directly:
+
+- It queries `pg_available_extensions` for `vector` and `pg_search`.
+- In the current image, only `vector` appears and passes creation/query/index probes.
+- Native PostgreSQL FTS also passes with the `simple` configuration.
+- Because `pg_search` is absent from the image, `CREATE EXTENSION pg_search` is not attempted as an active runtime path unless a target environment exposes it.
+
+This is an environment packaging boundary, not an application fallback failure. Enabling BM25 requires a future target runtime that either uses a PostgreSQL image with ParadeDB `pg_search` installed or a managed PostgreSQL service that exposes and permits `CREATE EXTENSION pg_search`. That future work must prove extension availability, isolated extension creation, BM25 index/query probes, retrieval quality, fallback behavior, and operator documentation before changing the active lexical engine from `postgres-native-fts-fallback` to `pg-search-bm25`.
+
 ## Handback
 
-MS-12 is ready for fdch0 final acceptance decision. Harness must not mark the milestone accepted without that decision.
+MS-12 was accepted by fdch0 on 2026-06-01 after reviewing the Playwright smoke, direct embedding environment tests, local sidecar indexing trial, and the `pg_search` unavailable analysis above.

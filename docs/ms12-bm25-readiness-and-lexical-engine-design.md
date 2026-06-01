@@ -19,6 +19,8 @@ Current local evidence still matches the MS-11 readiness boundary:
 - `pg_search` is not available in the current local image.
 - The application must not label the active path as BM25 while `pg_search` readiness is unavailable.
 
+The concrete reason is the selected runtime image. Local development and CI use `pgvector/pgvector:0.8.2-pg16`, which provides PostgreSQL 16 plus the `vector` extension. It does not bundle or expose ParadeDB's `pg_search` extension, so `pg_available_extensions` reports `vector` but not `pg_search`. In that environment, the safe result is to keep `postgres-native-fts-fallback` active and treat BM25 as a target-runtime capability.
+
 The readiness command remains:
 
 ```bash
