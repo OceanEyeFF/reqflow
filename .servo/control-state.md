@@ -24,7 +24,7 @@
 - active_milestone: MS-15
 - milestone_title: ParadeDB `pg_search` Runtime Replacement Validation
 - milestone_status: active
-- milestone_pipeline_summary: total=18 planned=1 active=1 completed=14 superseded=2; MS-14 accepted; MS-15 active with 1/5 worktracks completed
+- milestone_pipeline_summary: total=18 planned=1 active=1 completed=14 superseded=2; MS-14 accepted; MS-15 active with 2/5 worktracks completed
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260601-123 completed and merged at 91fd071; next repo-scope action is WT-20260601-124 intake/init for Prisma migration, seed, readiness, and web smoke on ParadeDB runtime.
+- WT-20260601-124 completed and merged at b367011; next repo-scope action is WT-20260601-125 intake/init for pg_search integration probe, tokenizer selection, and Chinese benchmark rerun.
 
 ## Linked Formal Documents
 
@@ -47,9 +47,9 @@
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: fdch0 explicitly activated MS-12 on 2026-06-01 after accepting MS-11; context-noise assessment recommends fresh-window execution for implementation worktracks.
-- approval_scope: MS-12 planning/status and future MS-12 worktrack execution after fresh-window handoff; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
-- approval_persistence: active for MS-12 planning and handoff; execution authority for worktracks should be rehydrated from .servo in the fresh window.
+- reason: fdch0 explicitly accepted MS-14 and approved MS-15 execution on 2026-06-01 with a 30 Worktrack autonomy budget.
+- approval_scope: MS-15 worktrack execution; low-risk Worktracks may be self-approved, missing Worktracks may be added and started, and dangerous operations, destructive deletion, system configuration changes, context-loss signals, or developer decisions still require handback.
+- approval_persistence: active for MS-15 until milestone handback; final milestone acceptance remains fdch0-only.
 
 ## Continuation Authority
 
@@ -72,7 +72,7 @@
   - attempted_carrier:
   - carrier_decision:
   - fallback_reason:
-- persistent_authority_notes: 用户在 2026-05-28 明确授予 MS8 addendum 执行周期 30 个连续 Worktrack 额度，允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack；危险操作、上下文噪声明显或需要用户业务判断时必须 handback；MS8 addendum milestone final acceptance 必须由用户决定。
+- persistent_authority_notes: 用户在 2026-06-01 明确授予 MS-15 执行周期 30 个连续 Worktrack 额度，允许 SubAgent、低危险 Worktrack 自审批、连续工作、严格验收、必要时自动新增并执行 Worktrack；危险操作、上下文噪声明显或需要用户业务判断时必须 handback；MS-15 milestone final acceptance 必须由用户决定。
 
 ## Handback Guard
 
@@ -98,11 +98,11 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 23
-- autonomous_worktracks_opened: 10
+- autonomy_budget_remaining: 28
+- autonomous_worktracks_opened: 2
 - autonomy_budget_granted_by: fdch0
-- autonomy_budget_granted_at: 2026-05-31
-- autonomy_budget_notes: MS-11 已由 fdch0 明确批准开启，并先推进 WT-20260529-089；危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。Milestone final acceptance 必须由 fdch0 决定。
+- autonomy_budget_granted_at: 2026-06-01
+- autonomy_budget_notes: MS-15 已由 fdch0 明确批准推进，低危险 Worktrack 可自行通过并连续执行；危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。Milestone final acceptance 必须由 fdch0 决定。
 
 ## Notes
 
@@ -153,7 +153,8 @@
 - latest_completed_ms14_worktrack: WT-20260601-121 completed and merged at 55a19fd; gate evidence `.servo/worktrack/WT-20260601-121/gate-evidence.md`; comparison report `docs/ms14-bm25-accuracy-performance-comparison.md`; ParadeDB passed MS-14 result gate, VectorChord remains deferred due to synonym Recall@5, native FTS remains fixture/control evidence, and hybrid evidence remains MS-10 architecture evidence rather than same-corpus performance evidence.
 - latest_completed_ms14_worktrack: WT-20260601-122 completed and merged at 17c8139; gate evidence `.servo/worktrack/WT-20260601-122/gate-evidence.md`; final decision report `docs/ms14-final-decision-report.md`; ParadeDB `pg_search` is adopted only as a future runtime-enablement candidate, VectorChord-BM25 and `pg_textsearch` are deferred, default runtime remains native PostgreSQL FTS fallback plus pgvector, and MS-14 is ready for fdch0 acceptance review.
 - latest_completed_ms15_worktrack: WT-20260601-123 completed and merged at 91fd071; gate evidence `.servo/worktrack/WT-20260601-123/gate-evidence.md`; isolated ParadeDB candidate compose `docker-compose.paradedb.yml` and design doc `docs/ms15-paradedb-runtime-design.md` added without changing default runtime.
-- next_worktrack_candidate: WT-20260601-124 Prisma migration, seed, readiness, and web smoke on ParadeDB runtime.
+- latest_completed_ms15_worktrack: WT-20260601-124 completed and merged at b367011; gate evidence `.servo/worktrack/WT-20260601-124/gate-evidence.md`; ParadeDB candidate runtime passed compose config, Prisma migrate deploy, seed, readiness, strict pg_search readiness, web HTTP smoke, lint/test/build, and non-destructive stop; `pg_search` 0.23.5 and `vector` 0.8.1 coexist on PostgreSQL 18.4.
+- next_worktrack_candidate: WT-20260601-125 pg_search integration probe, tokenizer selection, and Chinese benchmark rerun.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
