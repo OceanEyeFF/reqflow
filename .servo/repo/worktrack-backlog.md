@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 122
-- planned: 14
+- planned: 13
 - active: 0
-- completed: 100
+- completed: 101
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1526,13 +1526,15 @@
 - title: 中文检索语料与 BM25 benchmark harness
 - milestone_id: MS-14
 - node_type: test
-- status: planned
+- status: completed
 - priority: 2
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-116-bm25-benchmark-harness
-- planning_notes: Build repeatable Chinese retrieval fixtures and benchmark harness covering pure Chinese, mixed Chinese-English, business vocabulary, zip path/source citation, and native FTS baseline.
+- contract_path: .servo/worktrack/WT-20260601-116/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-116/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-116/gate-evidence.md
+- branch: worktrack/wt-20260601-116-bm25-benchmark-harness (merged)
+- merge_commit: a15a6b9b44f2bfb525680b877cac909643b4003d
+- validation: node --check BM25 gate pass; JSON parse pass; BM25 corpus gate pass; BM25 baseline fixture gate pass; existing retrieval gate pass; lint pass; diff check pass
+- planning_notes: Built repeatable Chinese BM25 benchmark corpus and result gate covering pure Chinese, mixed Chinese-English, business vocabulary, zip path/source citation, synonyms, disabled-source traps, tokenizer evidence, derived metrics, performance fields, and non-destructive policy evidence.
 
 ### WT-20260601-117
 
