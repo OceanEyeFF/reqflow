@@ -1,0 +1,229 @@
+{
+  "version": 1,
+  "description": "MS-14 Chinese benchmark corpus for PostgreSQL BM25 plugin candidate evaluation.",
+  "metricGoals": [
+    "Derive Recall@5 and Recall@10 from expected snippet IDs.",
+    "Derive Precision@5 from top five ranked hits.",
+    "Derive MRR from the first relevant ranked hit.",
+    "Record tokenizer behavior, query latency, index evidence, and policy boundaries per candidate."
+  ],
+  "policyBoundaries": [
+    "Do not treat PostgreSQL native FTS as BM25.",
+    "Do not claim BM25 is active in the default runtime from this corpus alone.",
+    "Do not mutate MS-13 default Docker compose paths, volumes, uploads, model cache, or local database state while producing benchmark results."
+  ],
+  "snippets": [
+    {
+      "sourceId": "src-consumables-outbound-sop",
+      "snippetId": "snip-consumables-standard-inspection",
+      "knowledgeBaseId": "kb-warehouse-qc",
+      "sourcePath": "docs/业务流程/仓储/一般耗材标准检验出库.md",
+      "title": "一般耗材标准检验出库",
+      "content": "一般耗材标准检验出库必须先完成标准检验，再由质检人员按批次抽样。合格后仓库执行直接出库，异常时进入异常退回流程。",
+      "enabled": true,
+      "domainTerms": ["一般耗材", "标准检验出库", "质检抽样", "异常退回"]
+    },
+    {
+      "sourceId": "src-consumables-outbound-sop",
+      "snippetId": "snip-consumables-warehouse-boundary",
+      "knowledgeBaseId": "kb-warehouse-qc",
+      "sourcePath": "docs/业务流程/仓储/一般耗材标准检验出库.md",
+      "title": "内仓外仓责任边界",
+      "content": "内仓负责库存锁定、批次记录和出库复核。外仓只在收到内仓放行指令后安排装车，不得跳过质检取样。",
+      "enabled": true,
+      "domainTerms": ["内仓", "外仓", "责任边界", "质检取样"]
+    },
+    {
+      "sourceId": "src-qc-sampling-rules",
+      "snippetId": "snip-qc-sampling-ratio",
+      "knowledgeBaseId": "kb-warehouse-qc",
+      "sourcePath": "docs/业务流程/QC/QC取样规则.md",
+      "title": "QC sampling 抽样比例",
+      "content": "QC取样按 SKU 和批次执行。高风险耗材必须执行 100% 外观检查，普通耗材按 5% 抽样；QC sampling 记录要写入 ERP。",
+      "enabled": true,
+      "domainTerms": ["QC取样", "SKU", "批次", "ERP"]
+    },
+    {
+      "sourceId": "src-qc-sampling-rules",
+      "snippetId": "snip-qc-sampling-sop",
+      "knowledgeBaseId": "kb-warehouse-qc",
+      "sourcePath": "docs/业务流程/QC/SOP-QC-sampling.md",
+      "title": "SOP 中英混合术语",
+      "content": "SOP 要求 QC sampling 完成后生成 AI draft 草稿说明，草稿必须引用批次、SKU、抽样比例和异常处理责任人。",
+      "enabled": true,
+      "domainTerms": ["SOP", "QC sampling", "AI draft", "异常处理"]
+    },
+    {
+      "sourceId": "src-zip-import-paths",
+      "snippetId": "snip-zip-path-consumables",
+      "knowledgeBaseId": "kb-imported-zip",
+      "sourcePath": "uploads/2026/流程包.zip/仓储/耗材/标准检验出库.txt",
+      "title": "zip path source citation",
+      "content": "来源路径 uploads/2026/流程包.zip/仓储/耗材/标准检验出库.txt 包含标准检验、直接出库、异常退回和责任边界说明。",
+      "enabled": true,
+      "domainTerms": ["zip path", "标准检验", "直接出库", "责任边界"]
+    },
+    {
+      "sourceId": "src-return-exception-rules",
+      "snippetId": "snip-return-exception-owner",
+      "knowledgeBaseId": "kb-warehouse-qc",
+      "sourcePath": "docs/业务流程/仓储/异常退回责任.md",
+      "title": "异常退回责任",
+      "content": "检验不合格或抽样记录缺失时必须异常退回。质检负责人判定原因，内仓记录责任边界，采购只处理供应商沟通。",
+      "enabled": true,
+      "domainTerms": ["异常退回", "质检负责人", "责任边界", "供应商沟通"]
+    },
+    {
+      "sourceId": "src-direct-outbound-rule",
+      "snippetId": "snip-direct-outbound-allowed",
+      "knowledgeBaseId": "kb-warehouse-qc",
+      "sourcePath": "docs/业务流程/仓储/直接出库规则.md",
+      "title": "直接出库允许条件",
+      "content": "直接出库只允许在标准检验已通过、批次锁定完成、质检抽样记录齐全时执行。缺少任一条件不得放行。",
+      "enabled": true,
+      "domainTerms": ["直接出库", "标准检验", "批次锁定", "质检抽样"]
+    },
+    {
+      "sourceId": "src-erp-sync-rule",
+      "snippetId": "snip-erp-sync-sku",
+      "knowledgeBaseId": "kb-warehouse-qc",
+      "sourcePath": "docs/系统集成/ERP/SKU批次同步.md",
+      "title": "ERP SKU 批次同步",
+      "content": "ERP 同步失败时，SKU 批次不能进入出库队列。系统应提示内仓重新同步，并禁止 AI draft 生成已放行结论。",
+      "enabled": true,
+      "domainTerms": ["ERP", "SKU", "批次同步", "AI draft"]
+    },
+    {
+      "sourceId": "src-legacy-outbound-disabled",
+      "snippetId": "snip-legacy-skip-qc",
+      "knowledgeBaseId": "kb-warehouse-qc",
+      "sourcePath": "archive/旧流程/免检直接出库.md",
+      "title": "旧免检流程",
+      "content": "旧流程允许部分耗材免检直接出库，不要求质检抽样，也不区分内仓外仓责任。",
+      "enabled": false,
+      "domainTerms": ["旧流程", "免检", "直接出库", "内仓外仓"]
+    },
+    {
+      "sourceId": "src-login-style-guide",
+      "snippetId": "snip-login-button-copy",
+      "knowledgeBaseId": "kb-ui-style",
+      "sourcePath": "docs/UI/登录按钮文案.md",
+      "title": "登录按钮文案",
+      "content": "登录按钮应使用清晰文案，不讨论仓储、质检、出库、ERP 或 SKU 规则。",
+      "enabled": true,
+      "domainTerms": ["登录", "按钮", "文案"]
+    },
+    {
+      "sourceId": "src-procurement-vendor-chat",
+      "snippetId": "snip-vendor-communication",
+      "knowledgeBaseId": "kb-procurement",
+      "sourcePath": "docs/采购/供应商沟通.md",
+      "title": "供应商沟通",
+      "content": "采购负责供应商沟通和补货周期确认，但不负责质检抽样结论，也不能绕过仓储出库条件。",
+      "enabled": true,
+      "domainTerms": ["供应商沟通", "采购", "补货周期", "质检抽样"]
+    },
+    {
+      "sourceId": "src-quality-synonyms",
+      "snippetId": "snip-quality-synonym-sampling",
+      "knowledgeBaseId": "kb-warehouse-qc",
+      "sourcePath": "docs/业务词汇/质检近义词.md",
+      "title": "质检近义表达",
+      "content": "质检抽样、QC取样、检验取样在本流程中指同一类取样动作；标准检验出库和检验后出库属于同义检索目标。",
+      "enabled": true,
+      "domainTerms": ["质检抽样", "QC取样", "检验取样", "检验后出库"]
+    }
+  ],
+  "cases": [
+    {
+      "id": "ms14-consumables-standard-outbound",
+      "query": "一般耗材标准检验出库需要哪些质检抽样和异常退回步骤？",
+      "selectedKnowledgeBaseIds": ["kb-warehouse-qc"],
+      "expectedSourceIds": ["src-consumables-outbound-sop", "src-return-exception-rules"],
+      "expectedSnippetIds": ["snip-consumables-standard-inspection", "snip-return-exception-owner"],
+      "mustContainTerms": ["一般耗材", "标准检验出库", "质检抽样", "异常退回"],
+      "tokenizationFocus": ["标准检验出库", "质检抽样", "异常退回"],
+      "forbiddenSourceIds": ["src-legacy-outbound-disabled", "src-login-style-guide"],
+      "minRecallAt5": 1,
+      "minRecallAt10": 1,
+      "minPrecisionAt5": 0.4,
+      "maxFirstRelevantRank": 2,
+      "tags": ["pure-chinese", "business-terms", "citation"]
+    },
+    {
+      "id": "ms14-qc-sampling-mixed-language",
+      "query": "QC sampling 和 SKU 批次在 ERP 里怎么记录？",
+      "selectedKnowledgeBaseIds": ["kb-warehouse-qc"],
+      "expectedSourceIds": ["src-qc-sampling-rules", "src-erp-sync-rule"],
+      "expectedSnippetIds": ["snip-qc-sampling-ratio", "snip-erp-sync-sku"],
+      "mustContainTerms": ["QC sampling", "SKU", "ERP", "批次"],
+      "tokenizationFocus": ["QC sampling", "SKU", "ERP"],
+      "forbiddenSourceIds": ["src-login-style-guide", "src-legacy-outbound-disabled"],
+      "minRecallAt5": 1,
+      "minRecallAt10": 1,
+      "minPrecisionAt5": 0.4,
+      "maxFirstRelevantRank": 2,
+      "tags": ["mixed-cn-en", "business-terms", "citation"]
+    },
+    {
+      "id": "ms14-warehouse-responsibility-boundary",
+      "query": "内仓外仓在质检取样和放行出库里的责任边界是什么？",
+      "selectedKnowledgeBaseIds": ["kb-warehouse-qc"],
+      "expectedSourceIds": ["src-consumables-outbound-sop", "src-return-exception-rules"],
+      "expectedSnippetIds": ["snip-consumables-warehouse-boundary", "snip-return-exception-owner"],
+      "mustContainTerms": ["内仓", "外仓", "质检取样", "责任边界"],
+      "tokenizationFocus": ["内仓", "外仓", "责任边界"],
+      "forbiddenSourceIds": ["src-legacy-outbound-disabled", "src-login-style-guide"],
+      "minRecallAt5": 1,
+      "minRecallAt10": 1,
+      "minPrecisionAt5": 0.4,
+      "maxFirstRelevantRank": 2,
+      "tags": ["pure-chinese", "business-terms"]
+    },
+    {
+      "id": "ms14-zip-path-source-citation",
+      "query": "流程包 zip 里标准检验出库的来源路径和责任边界在哪里？",
+      "selectedKnowledgeBaseIds": ["kb-imported-zip", "kb-warehouse-qc"],
+      "expectedSourceIds": ["src-zip-import-paths"],
+      "expectedSnippetIds": ["snip-zip-path-consumables"],
+      "mustContainTerms": ["流程包.zip", "标准检验出库", "来源路径", "责任边界"],
+      "tokenizationFocus": ["流程包.zip", "标准检验出库", "uploads/2026"],
+      "forbiddenSourceIds": ["src-login-style-guide", "src-legacy-outbound-disabled"],
+      "minRecallAt5": 1,
+      "minRecallAt10": 1,
+      "minPrecisionAt5": 0.2,
+      "maxFirstRelevantRank": 1,
+      "tags": ["source-path", "citation"]
+    },
+    {
+      "id": "ms14-synonym-qc-sampling",
+      "query": "检验取样和 QC取样是不是同一个动作，检验后出库应该查哪些说明？",
+      "selectedKnowledgeBaseIds": ["kb-warehouse-qc"],
+      "expectedSourceIds": ["src-quality-synonyms", "src-consumables-outbound-sop", "src-direct-outbound-rule"],
+      "expectedSnippetIds": ["snip-quality-synonym-sampling", "snip-consumables-standard-inspection", "snip-direct-outbound-allowed"],
+      "mustContainTerms": ["检验取样", "QC取样", "检验后出库", "标准检验出库"],
+      "tokenizationFocus": ["检验取样", "QC取样", "检验后出库"],
+      "forbiddenSourceIds": ["src-login-style-guide", "src-legacy-outbound-disabled"],
+      "minRecallAt5": 1,
+      "minRecallAt10": 1,
+      "minPrecisionAt5": 0.6,
+      "maxFirstRelevantRank": 1,
+      "tags": ["synonym", "mixed-cn-en", "business-terms"]
+    },
+    {
+      "id": "ms14-negative-disabled-legacy",
+      "query": "还能按旧流程免检直接出库并跳过质检抽样吗？",
+      "selectedKnowledgeBaseIds": ["kb-warehouse-qc"],
+      "expectedSourceIds": ["src-direct-outbound-rule", "src-consumables-outbound-sop"],
+      "expectedSnippetIds": ["snip-direct-outbound-allowed", "snip-consumables-standard-inspection"],
+      "mustContainTerms": ["旧流程", "免检", "直接出库", "质检抽样"],
+      "tokenizationFocus": ["免检直接出库", "质检抽样"],
+      "forbiddenSourceIds": ["src-legacy-outbound-disabled", "src-login-style-guide"],
+      "minRecallAt5": 1,
+      "minRecallAt10": 1,
+      "minPrecisionAt5": 0.4,
+      "maxFirstRelevantRank": 2,
+      "tags": ["negative-trap", "pure-chinese", "citation"]
+    }
+  ]
+}
