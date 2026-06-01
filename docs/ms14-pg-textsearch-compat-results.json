@@ -1,0 +1,20 @@
+{
+  "candidateId": "pg_textsearch",
+  "image": "postgres:18",
+  "postgresVersion": "18.4 (Debian 18.4-1.pgdg13+1)",
+  "sharedPreloadLibraries": "",
+  "availableExtensions": [],
+  "createExtension": {
+    "attempted": false,
+    "passed": false,
+    "reason": "pg_textsearch is not listed in pg_available_extensions for this image."
+  },
+  "decision": "defer",
+  "reason": "No ready-to-run pg_textsearch runtime path is available from the tested PostgreSQL 18 image; a custom image/package install would be required.",
+  "policyEvidence": {
+    "isolatedRuntime": true,
+    "defaultRuntimeMutated": false,
+    "destructiveActions": false,
+    "notes": "Temporary Docker container reqflow-ms14-pg-textsearch-9336-1780306676424 on 127.0.0.1:55441; no host volume mounted."
+  }
+}
