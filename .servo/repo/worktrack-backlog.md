@@ -1590,13 +1590,15 @@
 - title: 中文分词/tokenization 兼容性评估
 - milestone_id: MS-14
 - node_type: test
-- status: planned
+- status: completed
 - priority: 6
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-120-chinese-tokenization-eval
-- planning_notes: Compare Chinese tokenization/segmentation behavior across candidates and native FTS fallback, including failure cases and business-domain vocabulary.
+- contract_path: .servo/worktrack/WT-20260601-120/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-120/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-120/gate-evidence.md
+- branch: worktrack/wt-20260601-120-chinese-tokenization-eval (merged)
+- merge_commit: 6b304a8cfa81ed1ddbfab28ab3884035d4dfb925
+- validation: JSON sanity checks pass; result coverage pass for baseline, ParadeDB, and VectorChord across all six corpus cases; git diff --check pass; policy/non-claim scan pass
+- planning_notes: Produced `docs/ms14-chinese-tokenization-evaluation.md`, synthesizing Chinese tokenizer evidence across native FTS fixture, ParadeDB pg_search, VectorChord-BM25 / pg_tokenizer, and pg_textsearch compatibility results. BM25 remains candidate evidence only; default runtime unchanged.
 
 ### WT-20260601-121
 
