@@ -339,5 +339,7 @@
 - activated_by: fdch0
 - activated_at: 2026-06-01
 - pre_milestone_intake_review: .servo/repo/pre-milestone-intake-MS-14.md
-- worktrack_progress: WT-20260601-115=done, WT-20260601-116=done, WT-20260601-117=done, WT-20260601-118=done, WT-20260601-119=done, WT-20260601-120=done, WT-20260601-121=done, WT-20260601-122=planned
+- worktrack_progress: WT-20260601-115=done, WT-20260601-116=done, WT-20260601-117=done, WT-20260601-118=done, WT-20260601-119=done, WT-20260601-120=done, WT-20260601-121=done, WT-20260601-122=done
+- acceptance_handback_status: ready_for_fdch0_review
+- handback_report: docs/ms14-final-decision-report.md
 - purpose: 评估 PostgreSQL BM25 插件候选与 ReqFlow 检索架构的中文兼容、性能、准确率和运维复杂度；不直接替换默认 runtime。
