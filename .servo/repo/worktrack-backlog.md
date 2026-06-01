@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 122
-- planned: 13
+- planned: 12
 - active: 0
-- completed: 101
+- completed: 102
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1542,13 +1542,15 @@
 - title: ParadeDB pg_search runtime PoC
 - milestone_id: MS-14
 - node_type: research
-- status: planned
+- status: completed
 - priority: 3
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-117-pg-search-runtime-poc
-- planning_notes: Test ParadeDB pg_search candidate in an isolated runtime, proving extension availability, CREATE EXTENSION, index/query probes, Chinese behavior, and rollback boundary.
+- contract_path: .servo/worktrack/WT-20260601-117/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-117/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-117/gate-evidence.md
+- branch: worktrack/wt-20260601-117-pg-search-runtime-poc (merged)
+- merge_commit: f3bf8b0367fb1c7c95c78ff3bc8a744b31e18491
+- validation: ParadeDB isolated Docker PoC pass; BM25 corpus gate pass; ParadeDB result gate pass; lint pass; diff check pass; Docker cleanup check pass
+- planning_notes: Validated ParadeDB `pg_search` as a future runtime candidate in an isolated temporary container: PostgreSQL 18.4, pg_search 0.23.5, vector 0.8.1, BM25 index/query probe, Chinese benchmark gate pass, synonym ranking caveat, no default runtime mutation.
 
 ### WT-20260601-118
 
