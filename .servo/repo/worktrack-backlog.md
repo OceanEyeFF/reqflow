@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 114
-- planned: 12
+- planned: 11
 - active: 0
-- completed: 94
+- completed: 95
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1316,12 +1316,14 @@
 - title: BM25/pg_search readiness 再评估与 lexical engine 抽象设计
 - milestone_id: MS-12
 - node_type: architecture
-- status: planned
+- status: completed
 - priority: 2
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-102-bm25-readiness-design
+- contract_path: .servo/worktrack/WT-20260601-102/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-102/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-102/gate-evidence.md
+- branch: worktrack/wt-20260601-102-bm25-readiness-design (merged)
+- merge_commit: 7d9b680
+- validation: focused lexical/retrieval/AI tests pass 6 files / 58 tests; lint pass; full test pass 33 files / 254 tests; build pass; search extension readiness pass with pg_search unavailable/native FTS fallback required; diff check pass
 - planning_notes: Re-evaluate pg_search/BM25 feasibility, design lexical engine abstraction and fallback evidence without claiming BM25 runtime availability before target environment readiness.
 
 ### WT-20260601-103
