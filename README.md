@@ -49,6 +49,23 @@ npm run dev
 
 启动后访问 http://localhost:3000/login
 
+## Docker Runtime Bundle
+
+MS-13 adds a local Docker Compose runtime bundle for product inspection:
+
+```bash
+AUTH_SECRET="replace-with-a-local-secret" docker compose -f docker-compose.runtime.yml up -d --build postgres web
+RUNTIME_POSTGRES_PORT="5432" RUNTIME_WEB_URL="http://127.0.0.1:3000/login" RUNTIME_RUN_SEED=true npm run runtime:smoke
+```
+
+The runtime bundle keeps migrations, seed, smoke checks, and optional embedding
+probing as explicit operator actions. It does not delete volumes, uploads,
+model cache, or database state. The default search runtime is PostgreSQL native
+FTS fallback plus pgvector; BM25 remains target-runtime research until a future
+image proves a supported extension.
+
+Full runbook: `docs/ms13-runtime-operator-runbook.md`.
+
 ## 测试账号
 
 | 用户名  | 密码       | 角色     |
@@ -89,6 +106,7 @@ reqflow/
 | `npm run search:extensions` | 检查 pgvector、native FTS fallback 和 pg_search 边界 |
 | `npm run retrieval:evaluate` | 运行中文 hybrid retrieval 质量 gate |
 | `npm run embedding:probe` | 手动探测可选本地 embedding sidecar 的维度和延迟 |
+| `npm run runtime:smoke` | 验证 Docker runtime bundle 的 migrate/readiness/web smoke |
 | `npx prisma studio`  | 数据库管理界面   |
 
 ## 注意事项
@@ -102,6 +120,7 @@ reqflow/
 - Hybrid search 当前使用 PostgreSQL native FTS fallback、pgvector 和 RRF-style fusion；`pg_search` 仍是可选目标，只有目标环境 readiness 通过后才可宣称 BM25 路径
 - AI 草稿只能通过 Context Window Builder 使用经过过滤和裁剪的知识上下文；引用来自真实检索命中，最终创建工单仍需用户在现有表单中确认
 - 本地 CPU embedding sidecar 是可选 PoC，见 `docs/local-embedding-sidecar-poc.md`；默认路径不会下载模型或把模型权重打入主应用镜像
+- Docker runtime bundle 见 `docs/ms13-runtime-operator-runbook.md`；标准流程只使用显式 start/smoke/stop，不自动删除 volume、uploads 或模型缓存
 - 代码改动必须在 Git worktree 中完成，详见 `AGENTS.md`
 - AI 协作入口以 `AGENTS.md` 为准，辅助说明见 `docs/ai-collaboration-entrypoints.md`
 - Repo hygiene、本地 DB 治理、worktree 中 Prisma 依赖初始化说明见 `docs/repo-hygiene-matrix.md`、`docs/worktree-branch-audit.md` 和 `docs/prisma-dev-db-governance.md`

@@ -4,10 +4,10 @@
 
 - repository: `E:\repos\personal\reqflow`
 - baseline branch: `develop`
-- current active milestone: `MS-11 / AI 草稿 Hybrid Context 接入与文档追平`
+- current active milestone: `MS-13 / Docker Compose Runtime Bundle 与本地一键运行`
 - current database provider: PostgreSQL
 - current AI provider decision: Deepseek through a server-side provider adapter
-- current operator runbook: `docs/operator-hybrid-search-ai-draft.md`
+- current operator runbook: `docs/ms13-runtime-operator-runbook.md`
 
 All code and documentation edits must be made in a Git worktree and merged back to `develop`. See `AGENTS.md`.
 
@@ -34,7 +34,9 @@ Implemented operator surfaces:
 
 - Next.js 16, React 19, TypeScript 5, TailwindCSS 4, Prisma 5, NextAuth v5 beta.
 - Prisma datasource provider is PostgreSQL.
-- Local development uses `docker-compose.postgres.yml` by default.
+- Local development can use `docker-compose.postgres.yml`; MS-13 also provides
+  `docker-compose.runtime.yml` for local product inspection with web,
+  PostgreSQL/pgvector, and an optional embedding sidecar.
 - API route tests use isolated PostgreSQL schemas.
 - Knowledge-base upload supports documents and zip archives with path preservation.
 - Knowledge bases can be created, edited, enabled/disabled, and selected in the AI discussion flow.
@@ -55,7 +57,27 @@ MS-9 and MS-10 established and implemented the PostgreSQL-backed hybrid retrieva
 - AI draft provider context comes only from the bounded Context Window Builder output.
 - Citation UI and admin debug evidence expose provenance without provider secrets.
 
-Detailed operator flow and validation commands are in `docs/operator-hybrid-search-ai-draft.md`.
+Detailed hybrid search and AI draft operator flow remains in
+`docs/operator-hybrid-search-ai-draft.md`.
+
+## Docker Runtime Bundle Facts
+
+MS-13 packages the local runtime path without productionizing deployment:
+
+- `docker-compose.runtime.yml` starts PostgreSQL/pgvector and the web image by
+  default.
+- `docs/ms13-runtime-operator-runbook.md` documents start, migrate, seed,
+  smoke, logs, stop, optional embedding probe, cache/volume policy, and
+  troubleshooting.
+- `npm run runtime:smoke` waits for PostgreSQL, runs `prisma migrate deploy`,
+  optionally runs seed, runs PostgreSQL/search readiness, and checks the web
+  login URL.
+- The optional embedding sidecar is profile-gated and not started by the default
+  `postgres web` command.
+- The default runtime remains PostgreSQL native FTS fallback plus pgvector.
+  BM25 is not enabled in the default compose bundle.
+- Standard runtime commands must not delete volumes, uploads, model cache, or
+  database state.
 
 ## Milestone Status
 
@@ -74,10 +96,13 @@ Accepted milestones include:
 
 Active milestone:
 
-- MS-11 is active.
-- Completed: WT-089 AI draft hybrid context integration; WT-090 citation UI and admin debug evidence; WT-091 Chinese business E2E validation; WT-092 PostgreSQL/extension readiness gate.
-- Remaining planned work: WT-093 docs/operator catch-up; WT-100 local CPU embedding sidecar PoC.
-- Final MS-11 acceptance remains fdch0-only.
+- MS-13 is active.
+- Completed: WT-108 web Dockerfile/runtime env contract; WT-109 compose runtime
+  bundle; WT-110 migrate/readiness/web smoke orchestration; WT-111 BM25 runtime
+  feasibility and fallback packaging.
+- Remaining planned work before final handback: WT-112 operator runbook/local
+  smoke acceptance; WT-113 Docker runtime final validation and CodeReview.
+- Final MS-13 acceptance remains fdch0-only.
 
 ## Local Setup
 
@@ -92,6 +117,13 @@ npm run dev
 ```
 
 Open `http://localhost:3000/login`.
+
+For the MS-13 runtime bundle:
+
+```bash
+AUTH_SECRET="replace-with-a-local-secret" docker compose -f docker-compose.runtime.yml up -d --build postgres web
+RUNTIME_POSTGRES_PORT="5432" RUNTIME_WEB_URL="http://127.0.0.1:3000/login" RUNTIME_RUN_SEED=true npm run runtime:smoke
+```
 
 ## Test Accounts
 
@@ -126,6 +158,8 @@ For PostgreSQL-specific commands, use an explicit PostgreSQL `DATABASE_URL`.
 | `AGENTS.md` | Worktree discipline and AI collaboration entrypoint |
 | `README.md` | Project entrypoint and current quick start |
 | `docs/operator-hybrid-search-ai-draft.md` | Current operator runbook for knowledge retrieval and AI draft |
+| `docs/ms13-runtime-operator-runbook.md` | Current MS-13 Docker runtime operator runbook |
+| `docs/docker-compose-runtime-bundle.md` | Compose bundle service and boundary contract |
 | `docs/cloud-readiness-boundary.md` | Pre-cloud deployment and production risk boundary |
 | `docs/prisma-postgres-provider-boundary.md` | Prisma PostgreSQL provider migration boundary |
 | `docs/search-extension-readiness.md` | pgvector/native FTS/pg_search readiness boundary |
@@ -142,6 +176,7 @@ MS6-era AI documents remain useful historical design records, but they do not de
 2. Production database backup, restore, pooling, and migration runbook remain future work.
 3. Upload storage is still local filesystem by default; cloud persistence requires a separate storage decision.
 4. `pg_search` is optional/unavailable in the current local image; native PostgreSQL FTS fallback is active.
-5. Local CPU embedding model sidecar is not implemented yet; WT-100 is the planned PoC.
+5. Local CPU embedding model sidecar is implemented as an optional local PoC and
+   MS-13 compose profile, but it is not the default production path.
 6. AI output is advisory and cannot directly create or mutate tickets.
 7. Untracked local tool/governance directories such as `.agents/`, `.claude/`, `.harness/`, `.mavis/`, `.local-backup/`, and `.worktrees/` must not be bulk committed or deleted without explicit decision.
