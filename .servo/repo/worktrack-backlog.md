@@ -1460,12 +1460,14 @@
 - title: Postgres BM25 extension runtime feasibility and fallback packaging
 - milestone_id: MS-13
 - node_type: research
-- status: planned
+- status: completed
 - priority: 4
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-111-bm25-runtime-image
+- contract_path: .servo/worktrack/WT-20260601-111/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-111/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-111/gate-evidence.md
+- branch: worktrack/wt-20260601-111-bm25-runtime-image (merged)
+- merge_commit: ccf283f
+- validation: search extensions pass on current runtime; strict BM25 candidate mode fails as expected; build pass; default runtime remains native PostgreSQL FTS fallback plus pgvector
 - planning_notes: Evaluate whether the chosen Docker runtime can safely support a true Postgres BM25 extension, comparing at least ParadeDB pg_search, Timescale/TigerData pg_textsearch, and VectorChord-BM25. PostgreSQL core/native FTS is not BM25. Keep native PostgreSQL FTS fallback if no candidate is deployable.
 
 ### WT-20260601-112
