@@ -4,10 +4,10 @@
 
 ## Summary
 
-- total: 122
-- planned: 6
+- total: 131
+- planned: 4
 - active: 0
-- completed: 108
+- completed: 119
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1704,7 +1704,7 @@
 - title: Rollback, operator runbook, and default-runtime switch decision report
 - milestone_id: MS-15
 - node_type: review
-- status: planned
+- status: completed
 - priority: 5
 - contract_path: .servo/worktrack/WT-20260601-127/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260601-127/plan-task-queue.md
@@ -1713,3 +1713,61 @@
 - merge_commit: d28a7ac
 - validation: BM25 ParadeDB gate pass; MS-10 retrieval gate pass; hybrid comparison pass; candidate compose config pass; lint/test/build pass; policy scan pass
 - planning_notes: Documented rollback to MS-13 runtime, operator runbook, final recommendation to defer default runtime switch while approving ParadeDB as next implementation candidate, and explicit fdch0 approval boundary for any default runtime switch.
+
+## MS-16: PostgreSQL Runtime Selection Review and ParadeDB Default Switch Decision
+
+### WT-20260601-128
+
+- worktrack_id: WT-20260601-128
+- title: Runtime path cost/benefit model and decision criteria
+- milestone_id: MS-16
+- node_type: research
+- status: planned
+- priority: 1
+- contract_path: .servo/worktrack/WT-20260601-128/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-128/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-128/gate-evidence.md
+- branch: worktrack/wt-20260601-128-runtime-cost-benefit
+- planning_notes: Build the scoring model for keep-current, optional-ParadeDB, and ParadeDB-default paths, including engineering cost, validation cost, migration/rollback cost, operator impact, developer experience, product/search benefit, and confidence.
+
+### WT-20260601-129
+
+- worktrack_id: WT-20260601-129
+- title: ParadeDB default-runtime migration impact and rollback cost
+- milestone_id: MS-16
+- node_type: research
+- status: planned
+- priority: 2
+- contract_path: .servo/worktrack/WT-20260601-129/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-129/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-129/gate-evidence.md
+- branch: worktrack/wt-20260601-129-paradedb-migration-rollback-cost
+- planning_notes: Estimate default runtime switch impact from MS-13/MS-15 to ParadeDB, including compose/image changes, Prisma/migration behavior, volume/data handling, rollback path, operator runbook deltas, and pre-production risk modifiers without performing the switch.
+
+### WT-20260601-130
+
+- worktrack_id: WT-20260601-130
+- title: App retrieval integration impact and expected product benefit
+- milestone_id: MS-16
+- node_type: research
+- status: planned
+- priority: 3
+- contract_path: .servo/worktrack/WT-20260601-130/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-130/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-130/gate-evidence.md
+- branch: worktrack/wt-20260601-130-app-retrieval-benefit
+- planning_notes: Estimate the scope and expected benefit of wiring ParadeDB `pg_search` into the app lexical lane while preserving RRF-style fusion, permission filters, citations, Chinese benchmark assumptions, and no raw-score addition.
+
+### WT-20260601-131
+
+- worktrack_id: WT-20260601-131
+- title: Runtime selection ADR and fdch0 decision gate
+- milestone_id: MS-16
+- node_type: review
+- status: planned
+- priority: 4
+- contract_path: .servo/worktrack/WT-20260601-131/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-131/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-131/gate-evidence.md
+- branch: worktrack/wt-20260601-131-runtime-selection-adr
+- planning_notes: Synthesize the option comparison into a decision ADR with recommendation, confidence, residual risks, follow-up implementation worktracks if ParadeDB default wins, and explicit fdch0 final decision boundary.

@@ -4,10 +4,10 @@
 
 ## Pipeline Summary
 
-- total: 18
-- planned: 1
+- total: 19
+- planned: 0
 - active: 1
-- completed: 14
+- completed: 16
 - superseded: 2
 
 ## Milestones
@@ -368,3 +368,24 @@
 - pre_milestone_intake_review: .servo/repo/pre-milestone-intake-MS-15.md
 - worktrack_progress: WT-20260601-123=done, WT-20260601-124=done, WT-20260601-125=done, WT-20260601-126=done, WT-20260601-127=done
 - purpose: Validate whether ReqFlow can safely use a ParadeDB PostgreSQL runtime candidate for BM25 search while preserving pgvector, Prisma migrations, app runtime smoke behavior, Chinese retrieval quality, and rollback to the current MS-13 runtime.
+
+### MS-16
+
+- milestone_id: MS-16
+- title: PostgreSQL Runtime Selection Review and ParadeDB Default Switch Decision
+- milestone_kind: goal-driven
+- status: active
+- priority: 19
+- depends_on_milestones: [MS-15]
+- worktrack_list: [WT-20260601-128, WT-20260601-129, WT-20260601-130, WT-20260601-131]
+- created_by: fdch0
+- created_at: 2026-06-01
+- updated: 2026-06-01
+- updated_by: codex
+- activation_rules: current_active_milestone == MS-15 accepted and depends_on_milestones completed/accepted
+- activated_by: fdch0
+- activated_at: 2026-06-01
+- pre_milestone_intake_review: .servo/repo/pre-milestone-intake-MS-16.md
+- worktrack_progress: WT-20260601-128=planned, WT-20260601-129=planned, WT-20260601-130=planned, WT-20260601-131=planned
+- acceptance_handback_status: pending
+- purpose: Decide whether ReqFlow should keep the current non-BM25 PostgreSQL default runtime, keep ParadeDB optional, or move toward ParadeDB as default using explicit cost, benefit, risk, migration, rollback, and product-value estimates before any runtime switch is implemented.
