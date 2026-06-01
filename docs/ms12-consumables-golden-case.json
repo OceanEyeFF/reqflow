@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "caseId": "cn-consumables-standard-inspection-outbound",
+  "title": "一般耗材标准检验出库",
+  "input": "需要建立一般耗材标准检验出库流程，区分QC抽样、QC取样、检验失败处理和内外仓责任。",
+  "expectedTopics": [
+    {
+      "id": "coverage-gap",
+      "category": "coverage_gap",
+      "requiredTerms": ["知识库", "覆盖", "一般耗材"],
+      "blocksDraft": true
+    },
+    {
+      "id": "direct-outbound-exception",
+      "category": "exception_rule",
+      "requiredTerms": ["直发", "出库", "例外"],
+      "blocksDraft": true
+    },
+    {
+      "id": "qc-sampling-quantity",
+      "category": "data_rule",
+      "requiredTerms": ["QC", "抽样", "数量"],
+      "blocksDraft": false
+    },
+    {
+      "id": "qc-sampling-vs-taking",
+      "category": "knowledge_conflict",
+      "requiredTerms": ["QC抽样", "QC取样", "区别"],
+      "blocksDraft": true
+    },
+    {
+      "id": "failure-path",
+      "category": "failure_path",
+      "requiredTerms": ["检验失败", "退回", "处置"],
+      "blocksDraft": true
+    },
+    {
+      "id": "warehouse-responsibility",
+      "category": "actor_boundary",
+      "requiredTerms": ["内仓", "外仓", "责任"],
+      "blocksDraft": true
+    },
+    {
+      "id": "acceptance-risk",
+      "category": "acceptance_risk",
+      "requiredTerms": ["验收", "标准", "记录"],
+      "blocksDraft": false
+    }
+  ],
+  "result": {
+    "kind": "clarification",
+    "questions": [
+      {
+        "id": "gap-coverage-1",
+        "question": "当前知识库是否有覆盖一般耗材标准检验出库的正式制度或SOP？如果没有，哪些规则必须由业务方补充确认？",
+        "reason": "核心流程和制度依据没有直接命中，不能把缺失知识伪装成已有依据。",
+        "category": "coverage_gap",
+        "priority": "blocking",
+        "blocksDraft": true,
+        "basis": "coverage_gap",
+        "relatedText": "missingCoreTerms: 一般耗材, 标准检验, 出库",
+        "expectedAnswerFormat": "free_text"
+      },
+      {
+        "id": "exception-direct-outbound",
+        "question": "一般耗材是否允许绕过标准检验直接出库？如果允许，直发出库的例外条件、审批人和记录要求是什么？",
+        "reason": "直接出库例外会改变流程控制点和验收边界。",
+        "category": "exception_rule",
+        "priority": "blocking",
+        "blocksDraft": true,
+        "basis": "inference",
+        "relatedText": "直发出库 exception boundary",
+        "expectedAnswerFormat": "free_text"
+      },
+      {
+        "id": "qc-sampling-quantity",
+        "question": "QC抽样数量按固定比例、批次数量还是物料风险等级计算？不同耗材类别是否有不同抽样数量规则？",
+        "reason": "缺少抽样数量规则时无法写出可执行验收标准。",
+        "category": "data_rule",
+        "priority": "recommended",
+        "blocksDraft": false,
+        "basis": "inference",
+        "relatedText": "QC抽样数量",
+        "expectedAnswerFormat": "free_text"
+      },
+      {
+        "id": "qc-sampling-vs-taking",
+        "question": "业务上“QC抽样”和“QC取样”是否表示同一个动作？如果不同，请说明二者区别、分别发生在什么节点、由谁执行并如何记录？",
+        "reason": "术语混用会导致流程节点和责任边界冲突。",
+        "category": "knowledge_conflict",
+        "priority": "blocking",
+        "blocksDraft": true,
+        "basis": "user_input",
+        "relatedText": "QC抽样 vs QC取样",
+        "expectedAnswerFormat": "free_text"
+      },
+      {
+        "id": "failure-path-reject",
+        "question": "检验失败后耗材是退回供应商、转入隔离区、复检，还是允许让步放行？每条失败路径的处置方式需要哪些审批和状态记录？",
+        "reason": "失败路径决定工单必须覆盖的异常分支。",
+        "category": "failure_path",
+        "priority": "blocking",
+        "blocksDraft": true,
+        "basis": "inference",
+        "relatedText": "检验失败处理",
+        "expectedAnswerFormat": "free_text"
+      },
+      {
+        "id": "warehouse-responsibility",
+        "question": "内仓和外仓在收样、暂存、检验放行、出库交接中的责任分别是什么？哪些节点必须双方确认？",
+        "reason": "内外仓责任不清会导致流程无法落地。",
+        "category": "actor_boundary",
+        "priority": "blocking",
+        "blocksDraft": true,
+        "basis": "user_input",
+        "relatedText": "内仓/外仓责任",
+        "expectedAnswerFormat": "free_text"
+      },
+      {
+        "id": "acceptance-record",
+        "question": "最终验收标准需要哪些记录字段，例如批次、抽样数量、检验结果、处理结论、出库单号和责任人签核？",
+        "reason": "验收记录字段决定工单完成条件。",
+        "category": "acceptance_risk",
+        "priority": "recommended",
+        "blocksDraft": false,
+        "basis": "inference",
+        "relatedText": "验收记录",
+        "expectedAnswerFormat": "free_text"
+      }
+    ]
+  }
+}

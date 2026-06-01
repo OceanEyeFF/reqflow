@@ -15,6 +15,7 @@
     "postgres:readiness": "node scripts/postgres-readiness.mjs",
     "search:extensions": "node scripts/search-extension-readiness.mjs",
     "retrieval:evaluate": "node scripts/retrieval-evaluation-gate.mjs",
+    "clarification:golden": "node scripts/clarification-golden-case-gate.mjs",
     "embedding:probe": "node scripts/local-embedding-sidecar-probe.mjs"
   },
   "prisma": {
