@@ -19,6 +19,7 @@
     "bm25:evaluate": "node scripts/bm25-benchmark-gate.mjs",
     "paradedb:poc": "node scripts/paradedb-pg-search-poc.mjs",
     "paradedb:candidate-benchmark": "node scripts/paradedb-candidate-benchmark.mjs",
+    "paradedb:hybrid-comparison": "node scripts/ms15-paradedb-hybrid-comparison.mjs",
     "vectorchord:poc": "node scripts/vectorchord-bm25-poc.mjs",
     "pg-textsearch:poc": "node scripts/pg-textsearch-compat-poc.mjs",
     "clarification:golden": "node scripts/clarification-golden-case-gate.mjs",

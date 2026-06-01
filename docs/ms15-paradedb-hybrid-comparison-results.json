@@ -1,0 +1,286 @@
+{
+  "metadata": {
+    "milestone": "MS-15",
+    "worktrack": "WT-20260601-126",
+    "generatedAt": "2026-06-01",
+    "corpus": "docs/ms14-bm25-benchmark-corpus.json",
+    "comparisonMode": "same-corpus lexical lanes plus separate hybrid invariant evidence"
+  },
+  "inputs": {
+    "nativeFtsFixture": {
+      "path": "docs/ms14-bm25-benchmark-baseline-results.json",
+      "candidateId": "native-fts-baseline-schema-fixture",
+      "measurementMode": "schema-fixture",
+      "sameCorpus": true
+    },
+    "paradedbCandidate": {
+      "path": "docs/ms15-paradedb-candidate-benchmark-results.json",
+      "candidateId": "paradedb-pg-search-ms15-candidate-runtime",
+      "measurementMode": "measured",
+      "sameCorpus": true
+    },
+    "existingHybridRetrieval": {
+      "path": "docs/retrieval-evaluation-ms10-results.json",
+      "sameCorpus": false,
+      "purpose": "RRF/no-raw-score-addition invariant evidence, not same-corpus BM25 performance"
+    }
+  },
+  "lexicalLaneComparison": {
+    "nativeFtsFixture": {
+      "run": {
+        "candidateId": "native-fts-baseline-schema-fixture",
+        "engine": "postgres-native-fts-fallback",
+        "measurementMode": "schema-fixture",
+        "postgresVersion": "16.x baseline",
+        "runtimeImage": "pgvector/pgvector:0.8.2-pg16",
+        "indexPerformance": {
+          "indexBuildMs": 0,
+          "indexSizeBytes": null,
+          "documentCount": 12,
+          "snippetCount": 12
+        }
+      },
+      "summary": {
+        "avgRecallAt5": 1,
+        "avgRecallAt10": 1,
+        "avgPrecisionAt5": 0.39999999999999997,
+        "avgFirstRelevantRank": 1,
+        "avgP50Ms": 0,
+        "avgP95Ms": 0,
+        "explainCoverage": 0,
+        "forbiddenReturnedCases": []
+      },
+      "cases": [
+        {
+          "caseId": "ms14-consumables-standard-outbound",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.4,
+          "firstRelevantRank": 1,
+          "top1SnippetId": "snip-consumables-standard-inspection",
+          "forbiddenReturned": false,
+          "p50Ms": 0,
+          "p95Ms": 0,
+          "explainAvailable": false,
+          "tokenizer": "postgres-simple",
+          "segmentationMode": "simple"
+        },
+        {
+          "caseId": "ms14-qc-sampling-mixed-language",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.4,
+          "firstRelevantRank": 1,
+          "top1SnippetId": "snip-qc-sampling-ratio",
+          "forbiddenReturned": false,
+          "p50Ms": 0,
+          "p95Ms": 0,
+          "explainAvailable": false,
+          "tokenizer": "postgres-simple",
+          "segmentationMode": "simple"
+        },
+        {
+          "caseId": "ms14-warehouse-responsibility-boundary",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.4,
+          "firstRelevantRank": 1,
+          "top1SnippetId": "snip-consumables-warehouse-boundary",
+          "forbiddenReturned": false,
+          "p50Ms": 0,
+          "p95Ms": 0,
+          "explainAvailable": false,
+          "tokenizer": "postgres-simple",
+          "segmentationMode": "simple"
+        },
+        {
+          "caseId": "ms14-zip-path-source-citation",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.2,
+          "firstRelevantRank": 1,
+          "top1SnippetId": "snip-zip-path-consumables",
+          "forbiddenReturned": false,
+          "p50Ms": 0,
+          "p95Ms": 0,
+          "explainAvailable": false,
+          "tokenizer": "postgres-simple",
+          "segmentationMode": "simple"
+        },
+        {
+          "caseId": "ms14-synonym-qc-sampling",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.6,
+          "firstRelevantRank": 1,
+          "top1SnippetId": "snip-quality-synonym-sampling",
+          "forbiddenReturned": false,
+          "p50Ms": 0,
+          "p95Ms": 0,
+          "explainAvailable": false,
+          "tokenizer": "postgres-simple",
+          "segmentationMode": "simple"
+        },
+        {
+          "caseId": "ms14-negative-disabled-legacy",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.4,
+          "firstRelevantRank": 1,
+          "top1SnippetId": "snip-direct-outbound-allowed",
+          "forbiddenReturned": false,
+          "p50Ms": 0,
+          "p95Ms": 0,
+          "explainAvailable": false,
+          "tokenizer": "postgres-simple",
+          "segmentationMode": "simple"
+        }
+      ]
+    },
+    "paradedbCandidate": {
+      "run": {
+        "candidateId": "paradedb-pg-search-ms15-candidate-runtime",
+        "engine": "pg_search",
+        "measurementMode": "measured",
+        "postgresVersion": "18.4 (Debian 18.4-1.pgdg13+1)",
+        "runtimeImage": "docker-compose.paradedb.yml resolved image",
+        "indexPerformance": {
+          "indexBuildMs": 581.23,
+          "indexSizeBytes": 3022848,
+          "documentCount": 12,
+          "snippetCount": 12
+        }
+      },
+      "summary": {
+        "avgRecallAt5": 1,
+        "avgRecallAt10": 1,
+        "avgPrecisionAt5": 0.39999999999999997,
+        "avgFirstRelevantRank": 1.1666666666666667,
+        "avgP50Ms": 279.83099999999996,
+        "avgP95Ms": 290.71916666666664,
+        "explainCoverage": 1,
+        "forbiddenReturnedCases": []
+      },
+      "cases": [
+        {
+          "caseId": "ms14-consumables-standard-outbound",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.4,
+          "firstRelevantRank": 1,
+          "top1SnippetId": "snip-consumables-standard-inspection",
+          "forbiddenReturned": false,
+          "p50Ms": 289.535,
+          "p95Ms": 304.868,
+          "explainAvailable": true,
+          "tokenizer": "pdb.unicode default",
+          "segmentationMode": "mixed"
+        },
+        {
+          "caseId": "ms14-qc-sampling-mixed-language",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.4,
+          "firstRelevantRank": 1,
+          "top1SnippetId": "snip-erp-sync-sku",
+          "forbiddenReturned": false,
+          "p50Ms": 272.871,
+          "p95Ms": 287.311,
+          "explainAvailable": true,
+          "tokenizer": "pdb.unicode default",
+          "segmentationMode": "mixed"
+        },
+        {
+          "caseId": "ms14-warehouse-responsibility-boundary",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.4,
+          "firstRelevantRank": 1,
+          "top1SnippetId": "snip-consumables-warehouse-boundary",
+          "forbiddenReturned": false,
+          "p50Ms": 281.317,
+          "p95Ms": 285.737,
+          "explainAvailable": true,
+          "tokenizer": "pdb.unicode default",
+          "segmentationMode": "mixed"
+        },
+        {
+          "caseId": "ms14-zip-path-source-citation",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.2,
+          "firstRelevantRank": 1,
+          "top1SnippetId": "snip-zip-path-consumables",
+          "forbiddenReturned": false,
+          "p50Ms": 280.698,
+          "p95Ms": 286.694,
+          "explainAvailable": true,
+          "tokenizer": "pdb.unicode default",
+          "segmentationMode": "mixed"
+        },
+        {
+          "caseId": "ms14-synonym-qc-sampling",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.6,
+          "firstRelevantRank": 2,
+          "top1SnippetId": "snip-qc-sampling-ratio",
+          "forbiddenReturned": false,
+          "p50Ms": 283.562,
+          "p95Ms": 286.703,
+          "explainAvailable": true,
+          "tokenizer": "pdb.unicode default",
+          "segmentationMode": "mixed"
+        },
+        {
+          "caseId": "ms14-negative-disabled-legacy",
+          "recallAt5": 1,
+          "recallAt10": 1,
+          "precisionAt5": 0.4,
+          "firstRelevantRank": 1,
+          "top1SnippetId": "snip-direct-outbound-allowed",
+          "forbiddenReturned": false,
+          "p50Ms": 271.003,
+          "p95Ms": 293.002,
+          "explainAvailable": true,
+          "tokenizer": "pdb.unicode default",
+          "segmentationMode": "mixed"
+        }
+      ]
+    },
+    "interpretation": [
+      "Native FTS fixture is a schema fixture and should not be treated as measured runtime latency.",
+      "ParadeDB candidate is measured on the MS-15 compose runtime and passes the same BM25 corpus gate.",
+      "Raw scores are not comparable across engines; metrics are derived only from ranks."
+    ]
+  },
+  "hybridInvariant": {
+    "source": "docs/retrieval-evaluation-ms10-results.json",
+    "sameCorpus": false,
+    "modes": [
+      "context-window",
+      "hybrid-fusion",
+      "lexical-only",
+      "vector-only"
+    ],
+    "rawScoreAddition": false,
+    "maxFusedHits": 3,
+    "vectorLaneStatuses": [
+      "failed",
+      "ready"
+    ],
+    "vectorFailureReasons": [
+      "dimensions-mismatch",
+      "embedding-provider-failure"
+    ],
+    "requiredInvariant": "Future ParadeDB lexical lane integration must use RRF-style rank fusion and preserve no raw score addition.",
+    "interpretation": "Existing MS-10 evidence validates hybrid retrieval behavior and failure handling, but it is not same-corpus MS-15 performance evidence."
+  },
+  "decisionBoundary": {
+    "defaultRuntimeMutated": false,
+    "bm25ActiveInDefaultRuntime": false,
+    "rawScoreFusionAllowed": false,
+    "sameCorpusHybridPerformanceMeasured": false,
+    "notes": "WT-126 does not implement ParadeDB in the app retrieval path; WT-127 must preserve fdch0 approval boundary for any default runtime switch."
+  }
+}
