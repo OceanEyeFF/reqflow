@@ -9,13 +9,13 @@
 
 ## Current Control Level
 
-- repo_scope: scheduling
+- repo_scope: worktrack
 - worktrack_scope: closed
 
 ## Active Worktrack
 
-- active_worktrack: none
-- worktrack_title: N/A
+- active_worktrack: WT-20260601-128
+- worktrack_title: Runtime path cost/benefit model and decision criteria
 - worktrack_status: closed
 - target_milestone_id: MS-16
 
@@ -32,24 +32,24 @@
 
 ## Current Next Action
 
-- MS-16 planning artifacts are initialized. Next action is initialize WT-20260601-128 to build the runtime path cost/benefit model and decision criteria; no default ParadeDB runtime switch has been made.
+- WT-20260601-128 completed the runtime path cost/benefit model and decision criteria. Next action is initialize WT-20260601-129 to estimate ParadeDB default-runtime migration impact and rollback cost; no default ParadeDB runtime switch has been made.
 
 ## Linked Formal Documents
 
 - repo_snapshot: .servo/repo/snapshot-status.md
 - repo_analysis: .servo/repo/analysis.md
-- worktrack_contract: N/A
-- plan_task_queue: N/A
-- gate_evidence: N/A
+- worktrack_contract: .servo/worktrack/WT-20260601-128/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-128/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-128/gate-evidence.md
 - milestone_backlog: .servo/repo/milestone-backlog.md
 - worktrack_backlog: .servo/repo/worktrack-backlog.md
 
 ## Approval Boundary
 
 - needs_programmer_approval: true
-- reason: fdch0 requested MS-16 milestone/worktrack planning and expressed a preference to seriously evaluate ParadeDB default runtime, but did not grant MS-16 continuous execution authority in this turn.
-- approval_scope: MS-16 planning/init artifacts only. Starting WT-20260601-128 or later implementation work requires explicit continuation/approval; dangerous operations, destructive deletion, system configuration changes, context-loss signals, runtime default switch decisions, volume/data migration, and production/deployment choices require handback.
-- approval_persistence: MS-16 is active; worktrack execution authority should be refreshed before starting the first MS-16 Worktrack.
+- reason: fdch0 explicitly requested continuing MS-16 from WT-20260601-128 in this turn, but also stated continuous Worktrack execution beyond the current authorization requires new fdch0 approval.
+- approval_scope: WT-20260601-128 research/modeling only. Starting WT-20260601-129 or later work requires explicit continuation/approval; dangerous operations, destructive deletion, system configuration changes, context-loss signals, runtime default switch decisions, volume/data migration, and production/deployment choices require handback.
+- approval_persistence: WT-20260601-128 one-turn continuation authority consumed; MS-16 remains active and next worktrack execution authority should be refreshed before WT-20260601-129.
 
 ## Continuation Authority
 
@@ -102,7 +102,7 @@
 - autonomous_worktracks_opened: 0
 - autonomy_budget_granted_by:
 - autonomy_budget_granted_at:
-- autonomy_budget_notes: MS-15 autonomy budget ended with MS-15 acceptance. MS-16 currently has planning approval only; runtime-selection execution Worktracks need explicit continuation/approval.
+- autonomy_budget_notes: MS-15 autonomy budget ended with MS-15 acceptance. User granted this turn's WT-20260601-128 execution by explicitly requesting MS-16 continue from WT-128; no continuous MS-16 worktrack budget is active.
 
 ## Notes
 
@@ -118,6 +118,7 @@
 - latest_acceptance: MS-14 accepted by fdch0 on 2026-06-01 after all 8/8 worktracks completed; final decision report recommends ParadeDB `pg_search` only as a future runtime-enablement candidate, defers VectorChord-BM25 and `pg_textsearch`, and keeps default runtime unchanged.
 - latest_acceptance: MS-15 accepted by fdch0 on 2026-06-01 after all 5/5 worktracks completed; ParadeDB `pg_search` candidate runtime passed compose, Prisma/app smoke, strict extension readiness, Chinese BM25 benchmark, hybrid invariant comparison, and rollback/runbook documentation; default runtime switch remains deferred and no production migration was performed.
 - active_milestone_init: MS-16 activated on 2026-06-01 for PostgreSQL runtime selection review and ParadeDB default-switch decision gate.
+- latest_completed_ms16_worktrack: WT-20260601-128 completed with decision model `docs/ms16-runtime-path-cost-benefit-model.md`; gate evidence `.servo/worktrack/WT-20260601-128/gate-evidence.md`; no runtime switch, no compose default change, no data migration.
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
 - latest_completed_ms10_worktrack: WT-20260529-085 completed and validated at 02c7ea2bdfb48ed06be424a30c1785b897a0978b; gate evidence `.servo/worktrack/WT-20260529-085/gate-evidence.md`.
@@ -159,7 +160,7 @@
 - latest_completed_ms15_worktrack: WT-20260601-125 completed and merged at 4aea964; gate evidence `.servo/worktrack/WT-20260601-125/gate-evidence.md`; candidate compose pg_search benchmark passed the MS-14 Chinese corpus gate with ParadeDB custom scan EXPLAIN evidence and `pdb.unicode default` tokenizer caveat.
 - latest_completed_ms15_worktrack: WT-20260601-126 completed and merged at 4e1dbfc; gate evidence `.servo/worktrack/WT-20260601-126/gate-evidence.md`; same-corpus lexical comparison and separate hybrid invariant evidence passed without claiming app-level ParadeDB hybrid performance.
 - latest_completed_ms15_worktrack: WT-20260601-127 completed and merged at d28a7ac; gate evidence `.servo/worktrack/WT-20260601-127/gate-evidence.md`; final report `docs/ms15-final-decision-report.md` recommends deferring default runtime switch while approving ParadeDB as the next implementation candidate.
-- next_worktrack_candidate: WT-20260601-128 Runtime path cost/benefit model and decision criteria.
+- next_worktrack_candidate: WT-20260601-129 ParadeDB default-runtime migration impact and rollback cost.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.

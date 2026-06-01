@@ -1722,13 +1722,14 @@
 - title: Runtime path cost/benefit model and decision criteria
 - milestone_id: MS-16
 - node_type: research
-- status: planned
+- status: completed
 - priority: 1
 - contract_path: .servo/worktrack/WT-20260601-128/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260601-128/plan-task-queue.md
 - gate_evidence: .servo/worktrack/WT-20260601-128/gate-evidence.md
 - branch: worktrack/wt-20260601-128-runtime-cost-benefit
-- planning_notes: Build the scoring model for keep-current, optional-ParadeDB, and ParadeDB-default paths, including engineering cost, validation cost, migration/rollback cost, operator impact, developer experience, product/search benefit, and confidence.
+- validation: decision model pass; evidence traceability pass; policy scan pass; git diff --check pass
+- planning_notes: Built the scoring model for keep-current, optional-ParadeDB, and ParadeDB-default paths, including engineering cost, validation cost, migration/rollback cost, operator impact, developer experience, product/search benefit, strategic timing, and confidence gates.
 
 ### WT-20260601-129
 

@@ -386,6 +386,6 @@
 - activated_by: fdch0
 - activated_at: 2026-06-01
 - pre_milestone_intake_review: .servo/repo/pre-milestone-intake-MS-16.md
-- worktrack_progress: WT-20260601-128=planned, WT-20260601-129=planned, WT-20260601-130=planned, WT-20260601-131=planned
+- worktrack_progress: WT-20260601-128=done, WT-20260601-129=planned, WT-20260601-130=planned, WT-20260601-131=planned
 - acceptance_handback_status: pending
 - purpose: Decide whether ReqFlow should keep the current non-BM25 PostgreSQL default runtime, keep ParadeDB optional, or move toward ParadeDB as default using explicit cost, benefit, risk, migration, rollback, and product-value estimates before any runtime switch is implemented.
