@@ -1767,10 +1767,11 @@
 - title: Runtime selection ADR and fdch0 decision gate
 - milestone_id: MS-16
 - node_type: review
-- status: planned
+- status: completed
 - priority: 4
 - contract_path: .servo/worktrack/WT-20260601-131/contract.md
 - plan_task_queue: .servo/worktrack/WT-20260601-131/plan-task-queue.md
 - gate_evidence: .servo/worktrack/WT-20260601-131/gate-evidence.md
 - branch: worktrack/wt-20260601-131-runtime-selection-adr
-- planning_notes: Synthesize the option comparison into a decision ADR with recommendation, confidence, residual risks, follow-up implementation worktracks if ParadeDB default wins, and explicit fdch0 final decision boundary.
+- validation: ADR gate pass; decision gate pass; final handback gate pass; evidence traceability pass; policy scan pass; git diff --check pass
+- planning_notes: Synthesized the option comparison into a decision ADR with recommendation, confidence, residual risks, follow-up implementation worktracks if ParadeDB default wins, and explicit fdch0 final decision boundary.

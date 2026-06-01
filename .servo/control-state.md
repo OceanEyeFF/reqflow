@@ -14,8 +14,8 @@
 
 ## Active Worktrack
 
-- active_worktrack: WT-20260601-130
-- worktrack_title: App retrieval integration impact and expected product benefit
+- active_worktrack: WT-20260601-131
+- worktrack_title: Runtime selection ADR and fdch0 decision gate
 - worktrack_status: closed
 - target_milestone_id: MS-16
 
@@ -32,15 +32,15 @@
 
 ## Current Next Action
 
-- WT-20260601-130 completed the app retrieval integration impact and expected product benefit estimate. Next action is initialize WT-20260601-131 to synthesize the runtime selection ADR and fdch0 decision gate; no default ParadeDB runtime switch has been made.
+- MS-16 worktrack list completed. Next action is fdch0 final runtime selection decision and milestone acceptance review; no default ParadeDB runtime switch has been made.
 
 ## Linked Formal Documents
 
 - repo_snapshot: .servo/repo/snapshot-status.md
 - repo_analysis: .servo/repo/analysis.md
-- worktrack_contract: .servo/worktrack/WT-20260601-130/contract.md
-- plan_task_queue: .servo/worktrack/WT-20260601-130/plan-task-queue.md
-- gate_evidence: .servo/worktrack/WT-20260601-130/gate-evidence.md
+- worktrack_contract: .servo/worktrack/WT-20260601-131/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-131/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-131/gate-evidence.md
 - milestone_backlog: .servo/repo/milestone-backlog.md
 - worktrack_backlog: .servo/repo/worktrack-backlog.md
 
@@ -98,11 +98,11 @@
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 28
-- autonomous_worktracks_opened: 2
+- autonomy_budget_remaining: 27
+- autonomous_worktracks_opened: 3
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-06-02
-- autonomy_budget_notes: MS-16 received a 30-Worktrack continuous execution budget on 2026-06-02. WT-20260601-129 and WT-20260601-130 consumed two budget units in this execution cycle. Final milestone acceptance remains fdch0-only.
+- autonomy_budget_notes: MS-16 received a 30-Worktrack continuous execution budget on 2026-06-02. WT-20260601-129, WT-20260601-130, and WT-20260601-131 consumed three budget units in this execution cycle. Final milestone acceptance remains fdch0-only.
 
 ## Notes
 
@@ -121,6 +121,7 @@
 - latest_completed_ms16_worktrack: WT-20260601-128 completed with decision model `docs/ms16-runtime-path-cost-benefit-model.md`; gate evidence `.servo/worktrack/WT-20260601-128/gate-evidence.md`; no runtime switch, no compose default change, no data migration.
 - latest_completed_ms16_worktrack: WT-20260601-129 completed with migration/rollback cost report `docs/ms16-paradedb-default-migration-rollback-cost.md`; gate evidence `.servo/worktrack/WT-20260601-129/gate-evidence.md`; recommended fresh ParadeDB volume for pre-production if selected, rejected direct PostgreSQL 16 volume reuse, and preserved fdch0 decision boundary.
 - latest_completed_ms16_worktrack: WT-20260601-130 completed with app retrieval integration impact report `docs/ms16-app-retrieval-integration-impact.md`; gate evidence `.servo/worktrack/WT-20260601-130/gate-evidence.md`; product benefit requires a later app lexical adapter and retrieval gates before any BM25 app-behavior claim.
+- latest_completed_ms16_worktrack: WT-20260601-131 completed with runtime selection ADR `docs/ms16-runtime-selection-adr.md` and final handback `docs/ms16-final-handback.md`; gate evidence `.servo/worktrack/WT-20260601-131/gate-evidence.md`; recommendation is Option 3 as intended future direction without switching runtime inside MS-16; final decision pending fdch0.
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
 - latest_completed_ms10_worktrack: WT-20260529-085 completed and validated at 02c7ea2bdfb48ed06be424a30c1785b897a0978b; gate evidence `.servo/worktrack/WT-20260529-085/gate-evidence.md`.
@@ -162,7 +163,7 @@
 - latest_completed_ms15_worktrack: WT-20260601-125 completed and merged at 4aea964; gate evidence `.servo/worktrack/WT-20260601-125/gate-evidence.md`; candidate compose pg_search benchmark passed the MS-14 Chinese corpus gate with ParadeDB custom scan EXPLAIN evidence and `pdb.unicode default` tokenizer caveat.
 - latest_completed_ms15_worktrack: WT-20260601-126 completed and merged at 4e1dbfc; gate evidence `.servo/worktrack/WT-20260601-126/gate-evidence.md`; same-corpus lexical comparison and separate hybrid invariant evidence passed without claiming app-level ParadeDB hybrid performance.
 - latest_completed_ms15_worktrack: WT-20260601-127 completed and merged at d28a7ac; gate evidence `.servo/worktrack/WT-20260601-127/gate-evidence.md`; final report `docs/ms15-final-decision-report.md` recommends deferring default runtime switch while approving ParadeDB as the next implementation candidate.
-- next_worktrack_candidate: WT-20260601-131 Runtime selection ADR and fdch0 decision gate.
+- next_worktrack_candidate: none; MS-16 worktrack list completed, pending fdch0 final decision.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
