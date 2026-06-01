@@ -4,10 +4,10 @@
 
 ## Pipeline Summary
 
-- total: 17
+- total: 18
 - planned: 1
 - active: 1
-- completed: 13
+- completed: 14
 - superseded: 2
 
 ## Milestones
@@ -327,7 +327,7 @@
 - milestone_id: MS-14
 - title: PostgreSQL BM25 插件中文兼容与性能准确率评估
 - milestone_kind: goal-driven
-- status: active
+- status: completed
 - priority: 17
 - depends_on_milestones: [MS-13]
 - worktrack_list: [WT-20260601-115, WT-20260601-116, WT-20260601-117, WT-20260601-118, WT-20260601-119, WT-20260601-120, WT-20260601-121, WT-20260601-122]
@@ -340,6 +340,29 @@
 - activated_at: 2026-06-01
 - pre_milestone_intake_review: .servo/repo/pre-milestone-intake-MS-14.md
 - worktrack_progress: WT-20260601-115=done, WT-20260601-116=done, WT-20260601-117=done, WT-20260601-118=done, WT-20260601-119=done, WT-20260601-120=done, WT-20260601-121=done, WT-20260601-122=done
-- acceptance_handback_status: ready_for_fdch0_review
+- acceptance_handback_status: accepted
 - handback_report: docs/ms14-final-decision-report.md
+- accepted_by: fdch0
+- accepted_at: 2026-06-01
+- acceptance_note: accepted after all 8/8 worktracks completed; ParadeDB `pg_search` remains future runtime-enablement candidate only, VectorChord-BM25 and `pg_textsearch` are deferred, and default runtime remains native PostgreSQL FTS fallback plus pgvector.
 - purpose: 评估 PostgreSQL BM25 插件候选与 ReqFlow 检索架构的中文兼容、性能、准确率和运维复杂度；不直接替换默认 runtime。
+
+### MS-15
+
+- milestone_id: MS-15
+- title: ParadeDB `pg_search` Runtime Replacement Validation
+- milestone_kind: goal-driven
+- status: active
+- priority: 18
+- depends_on_milestones: [MS-14]
+- worktrack_list: [WT-20260601-123, WT-20260601-124, WT-20260601-125, WT-20260601-126, WT-20260601-127]
+- created_by: fdch0
+- created_at: 2026-06-01
+- updated: 2026-06-01
+- updated_by: codex
+- activation_rules: current_active_milestone == MS-14 accepted and depends_on_milestones completed/accepted
+- activated_by: fdch0
+- activated_at: 2026-06-01
+- pre_milestone_intake_review: .servo/repo/pre-milestone-intake-MS-15.md
+- worktrack_progress: WT-20260601-123=planned, WT-20260601-124=planned, WT-20260601-125=planned, WT-20260601-126=planned, WT-20260601-127=planned
+- purpose: Validate whether ReqFlow can safely use a ParadeDB PostgreSQL runtime candidate for BM25 search while preserving pgvector, Prisma migrations, app runtime smoke behavior, Chinese retrieval quality, and rollback to the current MS-13 runtime.
