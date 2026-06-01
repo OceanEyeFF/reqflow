@@ -5,9 +5,9 @@
 ## Summary
 
 - total: 122
-- planned: 11
+- planned: 10
 - active: 0
-- completed: 103
+- completed: 104
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1574,13 +1574,15 @@
 - title: pg_textsearch runtime compatibility PoC
 - milestone_id: MS-14
 - node_type: research
-- status: planned
+- status: completed
 - priority: 5
-- contract_path: pending
-- plan_task_queue: pending
-- gate_evidence: pending
-- branch: worktrack/wt-20260601-119-pg-textsearch-poc
-- planning_notes: Test pg_textsearch compatibility, version requirements, preload/setup, index/query shape, and whether it is viable for ReqFlow's Docker/runtime constraints.
+- contract_path: .servo/worktrack/WT-20260601-119/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-119/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-119/gate-evidence.md
+- branch: worktrack/wt-20260601-119-pg-textsearch-poc (merged)
+- merge_commit: c1d5f7c8c55d854a676604b56cd68774f36633f3
+- validation: pg_textsearch compatibility probe pass; extension unavailable in tested postgres:18 image; lint pass; diff check pass; Docker cleanup check pass
+- planning_notes: Tested `pg_textsearch` availability in an isolated PostgreSQL 18 container; extension is not available and would require a custom image/package plus preload path, so candidate decision is defer.
 
 ### WT-20260601-120
 

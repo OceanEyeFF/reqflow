@@ -24,7 +24,7 @@
 - active_milestone: MS-14
 - milestone_title: PostgreSQL BM25 插件中文兼容与性能准确率评估
 - milestone_status: active
-- milestone_pipeline_summary: total=17 planned=1 active=1 completed=13 superseded=2; MS-13 accepted; MS-14 active with 4/8 worktracks completed
+- milestone_pipeline_summary: total=17 planned=1 active=1 completed=13 superseded=2; MS-13 accepted; MS-14 active with 5/8 worktracks completed
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260601-118 completed and merged at af4fe95; next repo-scope action is WT-20260601-119 intake/init for pg_textsearch runtime compatibility PoC in an isolated candidate runtime.
+- WT-20260601-119 completed and merged at c1d5f7c; next repo-scope action is WT-20260601-120 intake/init for Chinese tokenization compatibility evaluation.
 
 ## Linked Formal Documents
 
@@ -87,7 +87,7 @@
 ## Baseline Traceability
 
 - last_verified_checkpoint: 629f7c7232e425d08484877593222cbeaec2ec1f
-- latest_observed_checkpoint: 5cfb91e5b5b0825753bc4eaec614338102adad6e
+- latest_observed_checkpoint: c1d5f7c8c55d854a676604b56cd68774f36633f3
 - last_doc_catch_up_checkpoint: 38da2ba
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
@@ -147,7 +147,8 @@
 - latest_completed_ms14_worktrack: WT-20260601-116 completed and merged at a15a6b9; gate evidence `.servo/worktrack/WT-20260601-116/gate-evidence.md`; `npm run bm25:evaluate` validates the MS-14 Chinese BM25 benchmark corpus and result contract.
 - latest_completed_ms14_worktrack: WT-20260601-117 completed and merged at f3bf8b0; gate evidence `.servo/worktrack/WT-20260601-117/gate-evidence.md`; ParadeDB `pg_search` passed isolated runtime and Chinese benchmark gates as a future runtime candidate with caveats.
 - latest_completed_ms14_worktrack: WT-20260601-118 completed and merged at af4fe95; gate evidence `.servo/worktrack/WT-20260601-118/gate-evidence.md`; VectorChord-BM25 / `pg_tokenizer` runtime compatibility passed but candidate decision is defer due to synonym Recall@5 gate failure.
-- next_worktrack_candidate: WT-20260601-119 pg_textsearch runtime compatibility PoC.
+- latest_completed_ms14_worktrack: WT-20260601-119 completed and merged at c1d5f7c; gate evidence `.servo/worktrack/WT-20260601-119/gate-evidence.md`; `pg_textsearch` candidate decision is defer because the tested PostgreSQL 18 image does not expose the extension.
+- next_worktrack_candidate: WT-20260601-120 Chinese tokenization compatibility evaluation.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-066 completed and merged at dc0e98a2bb30f1a7f502ae854b33b5bb4152217b; final validation report `docs/ms8-addendum-final-validation.md`; awaiting fdch0 final acceptance.
