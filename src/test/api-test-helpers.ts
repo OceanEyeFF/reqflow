@@ -37,9 +37,9 @@ export function pushTestDatabaseSchema(databaseUrl: string): void {
   runPrismaDbExecute(databaseUrl, `CREATE EXTENSION IF NOT EXISTS vector;`);
   runPrismaDbExecute(databaseUrl, `CREATE SCHEMA IF NOT EXISTS "${schemaName}";`);
   execFileSync(
-    process.execPath,
+    "npx",
     [
-      "node_modules/prisma/build/index.js",
+      "prisma",
       "db",
       "push",
       "--schema",
@@ -50,6 +50,7 @@ export function pushTestDatabaseSchema(databaseUrl: string): void {
       cwd: process.cwd(),
       env: { ...process.env, DATABASE_URL: databaseUrl },
       stdio: "pipe",
+      shell: process.platform === "win32",
     }
   );
 }
@@ -76,9 +77,9 @@ function runPrismaDbExecute(databaseUrl: string, sql: string): void {
   const maintenanceUrl = new URL(databaseUrl);
   maintenanceUrl.searchParams.delete("schema");
   execFileSync(
-    process.execPath,
+    "npx",
     [
-      "node_modules/prisma/build/index.js",
+      "prisma",
       "db",
       "execute",
       "--schema",
@@ -90,6 +91,7 @@ function runPrismaDbExecute(databaseUrl: string, sql: string): void {
       env: { ...process.env, DATABASE_URL: maintenanceUrl.toString() },
       input: sql,
       stdio: "pipe",
+      shell: process.platform === "win32",
     }
   );
 }

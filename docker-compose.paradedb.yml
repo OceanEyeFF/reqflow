@@ -14,7 +14,7 @@ services:
       timeout: 5s
       retries: 18
     volumes:
-      - reqflow-paradedb-postgres-data:/var/lib/postgresql/data
+      - reqflow-paradedb-postgres18-data:/var/lib/postgresql
 
   web:
     build:
@@ -46,5 +46,5 @@ services:
       - reqflow-paradedb-uploads:/app/public/uploads
 
 volumes:
-  reqflow-paradedb-postgres-data:
+  reqflow-paradedb-postgres18-data:
   reqflow-paradedb-uploads:

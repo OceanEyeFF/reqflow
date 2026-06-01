@@ -18,7 +18,6 @@ if (!databaseUrl.startsWith("postgresql://") && !databaseUrl.startsWith("postgre
 }
 
 const env = { ...process.env, DATABASE_URL: databaseUrl };
-const prismaCli = "node_modules/prisma/build/index.js";
 
 if (provider !== "postgresql") {
   console.error(`PostgreSQL readiness requires Prisma provider "postgresql"; found "${provider ?? "unknown"}".`);
@@ -30,10 +29,11 @@ run("prisma migrate status", ["migrate", "status", "--schema", schemaPath], env)
 
 function run(label, args, commandEnv = env) {
   console.log(`\n> ${label}`);
-  execFileSync(process.execPath, [prismaCli, ...args],
+  execFileSync("npx", ["prisma", ...args],
   {
     cwd: process.cwd(),
     env: commandEnv,
     stdio: "inherit",
+    shell: process.platform === "win32",
   });
 }
