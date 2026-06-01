@@ -4,7 +4,7 @@
 
 ## Metadata
 
-- updated: 2026-05-31
+- updated: 2026-06-01
 - owner: fdch0
 
 ## Current Control Level
@@ -21,10 +21,10 @@
 
 ## Active Milestone
 
-- active_milestone: MS-11
-- milestone_title: AI 草稿 Hybrid Context 接入与文档追平
-- milestone_status: pending-final-acceptance
-- milestone_pipeline_summary: total=14 planned=0 active=1 completed=11 superseded=2; MS-11 active milestone has 6/6 worktracks completed and requires fdch0 final acceptance decision
+- active_milestone: MS-12
+- milestone_title: AI 需求追问质量升级与 Business Interrogation
+- milestone_status: active
+- milestone_pipeline_summary: total=16 planned=1 active=1 completed=12 superseded=2; MS-12 active with 2/8 worktracks completed including WT-20260601-101 and build-gate recovery WT-20260601-114; MS-13 remains planned
 
 ## Baseline Branch
 
@@ -32,7 +32,7 @@
 
 ## Current Next Action
 
-- WT-20260531-100 completed and merged. Next action is MS-11 milestone final acceptance handback; final acceptance must be decided by fdch0.
+- WT-20260601-101 and WT-20260601-114 completed and merged. Next action is WT-20260601-102 BM25/pg_search readiness and lexical engine abstraction design.
 
 ## Linked Formal Documents
 
@@ -47,9 +47,9 @@
 ## Approval Boundary
 
 - needs_programmer_approval: false
-- reason: fdch0 explicitly approved opening MS-11 and continuing the MS-11 execution cycle; all planned MS-11 worktracks are now completed and final acceptance is fdch0-only.
-- approval_scope: MS-11 active milestone worktracks; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
-- approval_persistence: active for MS-11 execution cycle until interrupted or milestone final acceptance handback.
+- reason: fdch0 explicitly activated MS-12 on 2026-06-01 after accepting MS-11; context-noise assessment recommends fresh-window execution for implementation worktracks.
+- approval_scope: MS-12 planning/status and future MS-12 worktrack execution after fresh-window handoff; dangerous operations, destructive deletion, system configuration changes, context-loss signals, and developer decisions still require handback.
+- approval_persistence: active for MS-12 planning and handoff; execution authority for worktracks should be rehydrated from .servo in the fresh window.
 
 ## Continuation Authority
 
@@ -76,30 +76,30 @@
 
 ## Handback Guard
 
-- handoff_state: repo_scope_observing_after_ms10_acceptance
-- last_stop_reason: MS-10 final acceptance completed
-- last_handback_signature: ms10-accepted::2026-05-31::9-worktracks
+- handoff_state: repo_scope_observing_after_ms11_acceptance
+- last_stop_reason: MS-11 final acceptance completed
+- last_handback_signature: ms11-accepted::2026-06-01::6-worktracks
 - handback_reaffirmed_rounds: 0
 - stable_handback_threshold: 2
 - handback_lock_active: false
-- last_unlock_signal: fdch0 accepted MS-10 final handback on 2026-05-31.
+- last_unlock_signal: fdch0 accepted MS-11 final handback and requested context-noise assessment before MS-12 activation on 2026-06-01.
 
 ## Baseline Traceability
 
 - last_verified_checkpoint: 629f7c7232e425d08484877593222cbeaec2ec1f
-- latest_observed_checkpoint: 5c8897c
+- latest_observed_checkpoint: 486ff25
 - last_doc_catch_up_checkpoint: 38da2ba
 - milestone_input_checkpoint: sha256:5cabd918ab388c51fc3abb0f97d413179caf0d90b15d9f666afa7551ce9ea625
 - checkpoint_type: git-commit
 - checkpoint_ref: develop
-- verified_at: 2026-05-31
+- verified_at: 2026-06-01
 - if_no_commit_reason:
 - alternative_traceability:
 
 ## Autonomy Ledger
 
-- autonomy_budget_remaining: 29
-- autonomous_worktracks_opened: 3
+- autonomy_budget_remaining: 28
+- autonomous_worktracks_opened: 5
 - autonomy_budget_granted_by: fdch0
 - autonomy_budget_granted_at: 2026-05-31
 - autonomy_budget_notes: MS-11 已由 fdch0 明确批准开启，并先推进 WT-20260529-089；危险操作、大量文件删除、系统配置修改、上下文噪声明显或需要用户业务判断时必须 handback。Milestone final acceptance 必须由 fdch0 决定。
@@ -112,6 +112,7 @@
 - Phase 9 当前阶段: MS-20260527-001 管理员知识库管理与导入已完成 12/12 worktracks，并由用户在 2026-05-28 最终验收。
 - latest_acceptance: MS-9 accepted by fdch0 on 2026-05-31 after WT-096 final CodeReview
 - latest_acceptance: MS-10 accepted by fdch0 on 2026-05-31 after WT-097 final CodeReview, WT-099 lexical FTS repair, and WT-098 local embedding Docker/CPU feasibility assessment.
+- latest_acceptance: MS-11 accepted by fdch0 on 2026-06-01 after all 6/6 worktracks completed, docs/operator catch-up, PostgreSQL/extension readiness, Chinese business E2E validation, and local CPU embedding sidecar PoC.
 - latest_repo_baseline: ce47388bff033383146971b225fb81a7a0ddab11 (`Record WT-082 closeout baseline`)
 - latest_completed_worktrack: WT-20260529-077 completed and merged at 06544725d0de8c5ff62cf771fd61fb0b8d039b2c before MS8 addendum final acceptance.
 - latest_completed_ms10_worktrack: WT-20260529-085 completed and validated at 02c7ea2bdfb48ed06be424a30c1785b897a0978b; gate evidence `.servo/worktrack/WT-20260529-085/gate-evidence.md`.
@@ -126,6 +127,8 @@
 - latest_completed_ms11_worktrack: WT-20260529-092 completed and merged at ea55f10de52ab307ceb36f4b5e4b688cb5873fe8; gate evidence `.servo/worktrack/WT-20260529-092/gate-evidence.md`.
 - latest_completed_ms11_worktrack: WT-20260529-093 completed and merged at 38da2ba; gate evidence `.servo/worktrack/WT-20260529-093/gate-evidence.md`.
 - latest_completed_ms11_worktrack: WT-20260531-100 completed and merged at 5c8897c; gate evidence `.servo/worktrack/WT-20260531-100/gate-evidence.md`.
+- latest_completed_ms12_worktrack: WT-20260601-114 completed and merged at 2c642c1; gate evidence `.servo/worktrack/WT-20260601-114/gate-evidence.md`.
+- latest_completed_ms12_worktrack: WT-20260601-101 completed and merged at 486ff25; gate evidence `.servo/worktrack/WT-20260601-101/gate-evidence.md`.
 - next_worktrack_candidate: MS-10 milestone gate handback; no remaining MS-10 worktracks.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-064 completed and merged at 7ece1b8cb8c9d77f1f04fac59eac52fe897ab14d; gate evidence `.servo/worktrack/WT-20260528-064/gate-evidence.md`.
 - latest_completed_ms8_addendum_worktrack: WT-20260528-065 completed and merged at 5198bc9f7a493a36bf9e0c5df8fe9872476715eb; gate evidence `.servo/worktrack/WT-20260528-065/gate-evidence.md`.
@@ -137,15 +140,18 @@
 - milestone_final_db_readiness_rule: standing rule added by WT-20260528-063; every future Milestone final handback must include active-checkout/active-DATABASE_URL Prisma Client, `prisma validate`, `prisma migrate status`, active DB schema surface, and Prisma-backed API readiness evidence, or an explicit not-applicable reason.
 - latest_ms7_validation_report: docs/ms7-final-validation.md
 - ms7_acceptance_handback_reopened: 2026-05-28 programmer feedback; zip upload, delete/cleanup, provider manual test record template.
-- active_next_milestone: MS-11 AI 草稿 Hybrid Context 接入与文档追平.
-- active_milestone_clarification_status: confirmed; fdch0 activated MS-11 on 2026-05-31 and approved advancing WT-20260529-089 first.
+- active_next_milestone: MS-12 AI 需求追问质量升级与 Business Interrogation.
+- active_milestone_clarification_status: MS-12 active; WT-20260601-101 and WT-20260601-114 completed on 2026-06-01; next planned worktrack is WT-20260601-102.
 - routed_new_requests: PostgreSQL hybrid search replaces previous docs cleanup and lightweight Chinese retrieval plans.
 - ms8_requirement_confirmation: answered by fdch0; model is multiple knowledge bases with preserved zip paths, selected deletion, AI page multi-knowledge-base selection, language modes `follow input / Chinese / English`, max 3 split drafts via variable, and single selected draft handoff.
 - planned_ms8_addendum: MS-20260528-003 registered for knowledge-base edit/disable-archive lifecycle and AI multi-direction clarification.
 - superseded_milestones: MS-20260528-002 docs 文档更新迭代与整理; MS-20260529-001 中文知识检索增强与结构化索引.
-- current_active_milestone: MS-11
-- latest_completed_milestone: MS-10 知识库索引与 Hybrid Retrieval 实现 accepted by fdch0 on 2026-05-31.
-- planned_followup_milestones: MS-11 AI 草稿 Hybrid Context 接入与文档追平, including WT-20260531-100 local CPU embedding sidecar PoC
+- current_active_milestone: MS-12
+- latest_completed_milestone: MS-11 AI 草稿 Hybrid Context 接入与文档追平 accepted by fdch0 on 2026-06-01.
+- planned_followup_milestones: MS-12 AI 需求追问质量升级与 Business Interrogation; MS-13 Docker Compose Runtime Bundle 与本地一键运行.
+- bm25_planning_update: BM25/pg_search support is planned as MS-12 readiness/design plus MS-13 runtime-image feasibility/fallback packaging; it must not be claimed as active runtime behavior until target Docker/PostgreSQL environment readiness passes.
+- business_interrogation_planning_update: MS-12 is planned to upgrade AI clarify from generic questions to coverage-aware business interrogation with high-value question categories, blocking priority, evidence basis, UI grouping, and the consumables outbound-inspection golden case.
+- context_noise_assessment: high for MS-12 implementation; this window is acceptable for MS-12 control-plane activation or handoff planning, but actual WT-20260601-101+ execution should preferably start in a fresh window using .servo/control-state.md, .servo/milestone/MS-12.md, and .servo/repo/worktrack-backlog.md as canonical context.
 - embedding_profile_decision: Embedding provider is separate from AI chat provider; active SearchIndexProfile locks model/dimensions/semantic space and any model/dimension change requires explicit reindex.
 - hybrid_search_planning_addendum: Follow-up design points folded into MS-9/MS-10/MS-11: query understanding, structured metadata indexing, RRF fusion, optional reranker seam, context window builder, retrieval evaluation harness, admin/debug evidence, pgvector filtered-search risk boundary.
 - remote_ci: GitHub Actions run `26502063963` success for `b5d50b8b8043dc8a35264cf96553955a4697ba8d`

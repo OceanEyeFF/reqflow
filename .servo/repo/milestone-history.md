@@ -5,7 +5,7 @@
 ## Summary
 
 - total: 13
-- completed: 11
+- completed: 12
 - superseded: 2
 
 ## Completed Milestones
@@ -118,6 +118,17 @@
 - source_artifact: .servo/milestone/MS-10.md
 - completed_worktracks: WT-20260529-083, WT-20260529-084, WT-20260529-085, WT-20260529-086, WT-20260529-087, WT-20260529-088, WT-20260531-097, WT-20260531-099, WT-20260531-098
 - acceptance_note: accepted after supplemental CodeReview, lexical PostgreSQL FTS fallback repair, local embedding Docker/CPU feasibility assessment, and final local validation.
+
+### MS-11
+
+- milestone_id: MS-11
+- title: AI 草稿 Hybrid Context 接入与文档追平
+- status: completed
+- accepted_by: fdch0
+- accepted_at: 2026-06-01
+- source_artifact: .servo/milestone/MS-11.md
+- completed_worktracks: WT-20260529-089, WT-20260529-090, WT-20260529-091, WT-20260529-092, WT-20260529-093, WT-20260531-100
+- acceptance_note: accepted after all 6/6 MS-11 worktracks completed, local AI draft hybrid context validation passed, Chinese business E2E evidence and PostgreSQL/extension readiness were recorded, docs/operator catch-up completed, and local CPU embedding sidecar PoC was verified.
 
 ## Superseded Milestones
 

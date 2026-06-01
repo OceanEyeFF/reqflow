@@ -4,10 +4,10 @@
 
 ## Summary
 
-- total: 100
-- planned: 6
+- total: 114
+- planned: 12
 - active: 0
-- completed: 83
+- completed: 94
 - superseded: 8
 - blocked: 0
 - deferred: 0
@@ -1275,3 +1275,207 @@
 - merge_commit: 5c8897c
 - validation: focused embedding tests pass 2 files / 22 tests; focused embedding/retrieval tests pass 3 files / 48 tests; full test pass 32 files / 250 tests; probe script syntax pass; retrieval evaluation pass; postgres readiness pass; search extensions pass; lint pass; build pass; diff check pass
 - planning_notes: Implement an optional local embedding HTTP sidecar PoC based on `docs/local-embedding-docker-feasibility.md`; do not bundle model weights into the main Next.js app image. Use a fixed model revision, CPU runtime, `EmbeddingProviderConfig.baseUrl`, `SearchIndexProfile` provider/model/dimensions lock, benchmark p50/p95 latency and memory, and validate retrieval quality with the MS-10 evaluation gate before making it a default path.
+
+## MS-12: AI 需求追问质量升级与 Business Interrogation
+
+### WT-20260601-101
+
+- worktrack_id: WT-20260601-101
+- title: 检索覆盖诊断与追问 evidence 结构
+- milestone_id: MS-12
+- node_type: feature
+- status: completed
+- priority: 1
+- contract_path: .servo/worktrack/WT-20260601-101/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-101/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-101/gate-evidence.md
+- branch: worktrack/wt-20260601-101-coverage-diagnostics (merged)
+- merge_commit: 486ff25
+- validation: focused coverage diagnostics tests pass 5 files / 36 tests; lint pass; full test pass 32 files / 251 tests; build pass after WT-20260601-114 build gate recovery; diff check pass
+- planning_notes: Add safe coverage diagnostics for clarify mode, including matched/missing core terms, citation count, vector lane status, selected knowledge-base scope, and lexical engine evidence.
+
+### WT-20260601-114
+
+- worktrack_id: WT-20260601-114
+- title: Build gate font network dependency recovery
+- milestone_id: MS-12
+- node_type: fix
+- status: completed
+- priority: 1.5
+- contract_path: .servo/worktrack/WT-20260601-114/contract.md
+- plan_task_queue: .servo/worktrack/WT-20260601-114/plan-task-queue.md
+- gate_evidence: .servo/worktrack/WT-20260601-114/gate-evidence.md
+- branch: worktrack/wt-20260601-114-build-font-gate (merged)
+- merge_commit: 2c642c1
+- validation: lint pass; full test pass 32 files / 250 tests; build pass; diff check pass
+- planning_notes: Added during MS-12 execution to remove the global build dependency on Google Fonts fetches so every MS-12 worktrack can satisfy the production build gate locally.
+
+### WT-20260601-102
+
+- worktrack_id: WT-20260601-102
+- title: BM25/pg_search readiness 再评估与 lexical engine 抽象设计
+- milestone_id: MS-12
+- node_type: architecture
+- status: planned
+- priority: 2
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-102-bm25-readiness-design
+- planning_notes: Re-evaluate pg_search/BM25 feasibility, design lexical engine abstraction and fallback evidence without claiming BM25 runtime availability before target environment readiness.
+
+### WT-20260601-103
+
+- worktrack_id: WT-20260601-103
+- title: Clarify question schema 升级
+- milestone_id: MS-12
+- node_type: feature
+- status: planned
+- priority: 3
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-103-clarify-question-schema
+- planning_notes: Extend clarification questions with category, priority, blocksDraft, basis, reason, relatedText, and expectedAnswerFormat while keeping provider output safe.
+
+### WT-20260601-104
+
+- worktrack_id: WT-20260601-104
+- title: Provider prompt 升级为业务审查/拷问模式
+- milestone_id: MS-12
+- node_type: feature
+- status: planned
+- priority: 4
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-104-business-interrogation-prompt
+- planning_notes: Change clarify prompt from generic clarification to business process interrogation over coverage gaps, exception rules, actor boundaries, state flow, failure paths, data rules, and acceptance risk.
+
+### WT-20260601-105
+
+- worktrack_id: WT-20260601-105
+- title: AI 追问前端分组展示与回答交互改造
+- milestone_id: MS-12
+- node_type: feature
+- status: planned
+- priority: 5
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-105-clarify-ui-grouping
+- planning_notes: Group blocking questions, recommended questions, and knowledge-base gaps in the AI discussion UI; preserve answers across regeneration and make weak retrieval visible.
+
+### WT-20260601-106
+
+- worktrack_id: WT-20260601-106
+- title: 耗材标准检验出库 golden case 验收
+- milestone_id: MS-12
+- node_type: test
+- status: planned
+- priority: 6
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-106-consumables-golden-case
+- planning_notes: Add the "一般耗材标准检验出库" scenario as a golden case that requires coverage-gap, exception-rule, QC sampling, failure-path, and warehouse-responsibility questions.
+
+### WT-20260601-107
+
+- worktrack_id: WT-20260601-107
+- title: 本地 embedding sidecar 真实索引链路试接入
+- milestone_id: MS-12
+- node_type: feature
+- status: planned
+- priority: 7
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-107-local-embedding-indexing
+- planning_notes: Try a real local CPU sidecar embedding profile/indexing path using WT-100 PoC; validate retrieval quality before making it default or defer with evidence.
+
+## MS-13: Docker Compose Runtime Bundle 与本地一键运行
+
+### WT-20260601-108
+
+- worktrack_id: WT-20260601-108
+- title: Web app Dockerfile 与 runtime env contract
+- milestone_id: MS-13
+- node_type: feature
+- status: planned
+- priority: 1
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-108-web-dockerfile
+- planning_notes: Add a web runtime image and env contract without bundling embedding model weights into the main app image.
+
+### WT-20260601-109
+
+- worktrack_id: WT-20260601-109
+- title: Compose bundle: web + postgres/pgvector + embedding sidecar
+- milestone_id: MS-13
+- node_type: feature
+- status: planned
+- priority: 2
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-109-compose-runtime-bundle
+- planning_notes: Compose the web app, PostgreSQL/pgvector, and optional embedding sidecar into one documented local runtime bundle.
+
+### WT-20260601-110
+
+- worktrack_id: WT-20260601-110
+- title: Migrate/seed/readiness/probe 编排脚本
+- milestone_id: MS-13
+- node_type: feature
+- status: planned
+- priority: 3
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-110-runtime-orchestration
+- planning_notes: Add safe orchestration for migrate, seed, readiness, HTTP smoke, PG smoke, and embedding probe.
+
+### WT-20260601-111
+
+- worktrack_id: WT-20260601-111
+- title: pg_search/BM25 runtime image feasibility and fallback packaging
+- milestone_id: MS-13
+- node_type: research
+- status: planned
+- priority: 4
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-111-bm25-runtime-image
+- planning_notes: Evaluate whether the chosen Docker runtime can safely support pg_search/BM25; keep native PostgreSQL FTS fallback if unavailable.
+
+### WT-20260601-112
+
+- worktrack_id: WT-20260601-112
+- title: Operator runbook 与本地 smoke 验收
+- milestone_id: MS-13
+- node_type: docs
+- status: planned
+- priority: 5
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-112-runtime-runbook
+- planning_notes: Document start, stop, logs, migrate, seed, probe, cache, volume, and troubleshooting commands for the runtime bundle.
+
+### WT-20260601-113
+
+- worktrack_id: WT-20260601-113
+- title: Docker runtime final validation and CodeReview
+- milestone_id: MS-13
+- node_type: review
+- status: planned
+- priority: 6
+- contract_path: pending
+- plan_task_queue: pending
+- gate_evidence: pending
+- branch: worktrack/wt-20260601-113-runtime-final-validation
+- planning_notes: Final code review and smoke validation before MS-13 handback; confirm no hidden destructive volume/cache behavior and no false BM25/model-bundling claims.

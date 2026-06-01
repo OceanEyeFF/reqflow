@@ -4,10 +4,10 @@
 
 ## Pipeline Summary
 
-- total: 14
-- planned: 0
+- total: 16
+- planned: 1
 - active: 1
-- completed: 11
+- completed: 12
 - superseded: 2
 
 ## Milestones
@@ -258,16 +258,55 @@
 - milestone_id: MS-11
 - title: AI 草稿 Hybrid Context 接入与文档追平
 - milestone_kind: goal-driven
-- status: active
+- status: completed
 - priority: 14
 - depends_on_milestones: [MS-10]
 - worktrack_list: [WT-20260529-089, WT-20260529-090, WT-20260529-091, WT-20260529-092, WT-20260529-093, WT-20260531-100]
 - created_by: fdch0
 - created_at: 2026-05-29
-- updated: 2026-05-31
-- updated_by: harness-kernel
+- updated: 2026-06-01
+- updated_by: codex
 - activation_rules: current_active_milestone == none and depends_on_milestones completed
 - activated_by: fdch0
 - activated_at: 2026-05-31 22:19:42 +08:00
-- worktrack_progress: WT-20260529-089=done, WT-20260529-090=done, WT-20260529-091=done, WT-20260529-092=done, WT-20260529-093=planned, WT-20260531-100=planned
+- acceptance_handback_status: accepted
+- accepted_by: fdch0
+- accepted_at: 2026-06-01
+- acceptance_note: accepted after all 6/6 MS-11 worktracks completed, local validation passed, docs/operator catch-up completed, and local CPU embedding sidecar PoC was verified.
+- worktrack_progress: WT-20260529-089=done, WT-20260529-090=done, WT-20260529-091=done, WT-20260529-092=done, WT-20260529-093=done, WT-20260531-100=done
 - purpose: 接入 AI draft hybrid context，完成中文业务端到端验收、PostgreSQL/extension readiness 和 docs/operator 文档追平。
+
+### MS-12
+
+- milestone_id: MS-12
+- title: AI 需求追问质量升级与 Business Interrogation
+- milestone_kind: goal-driven
+- status: active
+- priority: 15
+- depends_on_milestones: [MS-11]
+- worktrack_list: [WT-20260601-101, WT-20260601-114, WT-20260601-102, WT-20260601-103, WT-20260601-104, WT-20260601-105, WT-20260601-106, WT-20260601-107]
+- created_by: fdch0
+- created_at: 2026-06-01
+- updated: 2026-06-01
+- updated_by: codex
+- activation_rules: current_active_milestone == none and depends_on_milestones completed/accepted
+- activated_by: fdch0
+- activated_at: 2026-06-01
+- worktrack_progress: WT-20260601-101=done, WT-20260601-114=done, WT-20260601-102=planned, WT-20260601-103=planned, WT-20260601-104=planned, WT-20260601-105=planned, WT-20260601-106=planned, WT-20260601-107=planned
+- purpose: 将 AI 追问从普通澄清升级为 coverage-aware business interrogation，能发现知识库覆盖缺口、流程矛盾、例外规则、责任边界、异常分支和验收风险。
+
+### MS-13
+
+- milestone_id: MS-13
+- title: Docker Compose Runtime Bundle 与本地一键运行
+- milestone_kind: goal-driven
+- status: planned
+- priority: 16
+- depends_on_milestones: [MS-12]
+- worktrack_list: [WT-20260601-108, WT-20260601-109, WT-20260601-110, WT-20260601-111, WT-20260601-112, WT-20260601-113]
+- created_by: fdch0
+- created_at: 2026-06-01
+- updated: 2026-06-01
+- updated_by: codex
+- activation_rules: current_active_milestone == none and depends_on_milestones completed/accepted
+- purpose: 提供 web + PostgreSQL/pgvector + optional embedding sidecar 的 Docker Compose runtime bundle、readiness/probe 编排和 operator runbook；不把模型权重打进主 app image。
