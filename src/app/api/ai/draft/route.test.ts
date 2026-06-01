@@ -151,6 +151,16 @@ describe("POST /api/ai/draft", () => {
       result: { directions: [{ label: "知识库依据" }, { label: "应用场景" }, { label: "需求细节" }] },
       searchEvidence: {
         vectorLane: { status: "failed", reason: "active-profile-missing" },
+        coverageDiagnostics: {
+          selectedKnowledgeBaseIds: ["base-a"],
+          citationCount: 1,
+          matchedCoreTerms: ["审批", "流程"],
+          missingCoreTerms: [],
+          vectorLaneStatus: { status: "failed", reason: "active-profile-missing" },
+          lexicalEngine: "postgres-native-fts-fallback",
+          lexicalCandidatesScanned: 1,
+          lexicalCandidatesReturned: 1,
+        },
       },
     });
     expect(providerGenerate).toHaveBeenCalledWith(
@@ -160,6 +170,11 @@ describe("POST /api/ai/draft", () => {
         answerLanguage: "zh",
         maxDrafts: 3,
         knowledge: expect.any(Array),
+        coverageDiagnostics: expect.objectContaining({
+          selectedKnowledgeBaseIds: ["base-a"],
+          matchedCoreTerms: ["审批", "流程"],
+          missingCoreTerms: [],
+        }),
       })
     );
     expect(lastProviderConfig).toMatchObject({ model: "model-x" });
@@ -277,6 +292,16 @@ describe("POST /api/ai/draft", () => {
       searchEvidence: {
         filters: { knowledgeBaseIds: ["kb-approval"] },
         contextWindow: { includedCount: 1 },
+        coverageDiagnostics: {
+          selectedKnowledgeBaseIds: ["kb-approval"],
+          citationCount: 1,
+          matchedCoreTerms: ["审批", "流程"],
+          missingCoreTerms: [],
+          vectorLaneStatus: { status: "failed", reason: "active-profile-missing" },
+          lexicalEngine: "postgres-native-fts-fallback",
+          lexicalCandidatesScanned: 1,
+          lexicalCandidatesReturned: 1,
+        },
       },
     });
     expect(providerGenerate).toHaveBeenCalledWith(

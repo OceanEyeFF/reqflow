@@ -27,6 +27,19 @@ export type AiCitationGroup = {
   snippets: string[];
 };
 
+export type AiCoverageDiagnostics = {
+  selectedKnowledgeBaseIds: string[];
+  citationCount: number;
+  matchedCoreTerms: string[];
+  missingCoreTerms: string[];
+  vectorLaneStatus:
+    | { status: "ready"; candidatesReturned: number }
+    | { status: "failed"; reason: string };
+  lexicalEngine: "postgres-native-fts-fallback";
+  lexicalCandidatesScanned: number;
+  lexicalCandidatesReturned: number;
+};
+
 export type AiSearchEvidence = {
   query: {
     normalizedQuery: string;
@@ -102,6 +115,7 @@ export type AiSearchEvidence = {
     }>;
   };
   citationGroups: AiCitationGroup[];
+  coverageDiagnostics: AiCoverageDiagnostics;
 };
 
 export type AiRequirementDraft = {
@@ -176,6 +190,7 @@ export type DraftProviderRequest = {
   answerLanguage: DraftAnswerLanguage;
   maxDrafts: number;
   knowledge: KnowledgeCitation[];
+  coverageDiagnostics?: AiCoverageDiagnostics;
 };
 
 export interface DraftProvider {

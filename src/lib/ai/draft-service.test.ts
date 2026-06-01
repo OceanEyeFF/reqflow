@@ -106,6 +106,12 @@ describe("generateRequirementDraft", () => {
         knowledgeBaseIds: [],
         answerLanguage: "follow_input",
         maxDrafts: DEFAULT_MAX_DRAFTS,
+        coverageDiagnostics: expect.objectContaining({
+          matchedCoreTerms: [],
+          missingCoreTerms: ["审批", "流程"],
+          vectorLaneStatus: { status: "failed", reason: "active-profile-missing" },
+          lexicalEngine: "postgres-native-fts-fallback",
+        }),
       })
     );
     expect(JSON.stringify(vi.mocked(provider.generate).mock.calls)).not.toContain("real-secret");
@@ -146,9 +152,14 @@ describe("generateRequirementDraft", () => {
         knowledgeBaseIds: ["base-a", "base-b"],
         answerLanguage: "en",
         maxDrafts: DEFAULT_MAX_DRAFTS,
+        coverageDiagnostics: expect.objectContaining({
+          selectedKnowledgeBaseIds: [],
+          citationCount: 0,
+        }),
       })
     );
     expect(vi.mocked(provider.generate).mock.calls[0][0]).not.toHaveProperty("searchEvidence");
+    expect(JSON.stringify(vi.mocked(provider.generate).mock.calls[0][0])).not.toMatch(/secret-provider/);
   });
 });
 

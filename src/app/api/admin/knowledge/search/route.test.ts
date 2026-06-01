@@ -116,6 +116,18 @@ describe("POST /api/admin/knowledge/search", () => {
     expect(result.body.citationGroups[0]).toMatchObject({ snippetCount: 1 });
     expect(result.body.searchEvidence.filters.knowledgeBaseIds).toEqual(["base-a"]);
     expect(result.body.searchEvidence.vectorLane).toEqual({ status: "failed", reason: "active-profile-missing" });
+    expect(result.body.searchEvidence).toMatchObject({
+      coverageDiagnostics: {
+        selectedKnowledgeBaseIds: ["base-a"],
+        citationCount: 1,
+        matchedCoreTerms: ["审批", "流程"],
+        missingCoreTerms: [],
+        vectorLaneStatus: { status: "failed", reason: "active-profile-missing" },
+        lexicalEngine: "postgres-native-fts-fallback",
+        lexicalCandidatesScanned: 1,
+        lexicalCandidatesReturned: 1,
+      },
+    });
     expect(JSON.stringify(result.body)).not.toMatch(/secret|apiKey|storageKey|private\/admin\.md/);
   });
 

@@ -72,6 +72,42 @@ describe("assembleKnowledgeContext", () => {
     expect(context.searchEvidence?.filters.knowledgeBaseIds).toEqual(["base-a"]);
   });
 
+  it("derives safe coverage diagnostics from retrieval evidence", async () => {
+    mocks.buildHybridContextWindow.mockResolvedValueOnce({
+      contextText: "selected knowledge only",
+      citations: [
+        {
+          sourceId: "persisted-a",
+          sourceTitle: "Selected base guide",
+          path: "docs/a.md",
+          section: "Guide",
+          snippet: "selected knowledge only",
+          freshness: "test",
+        },
+      ],
+      citationGroups: [],
+      debugEvidence: createDebugEvidence({
+        knowledgeBaseIds: ["base-a"],
+        mustTerms: ["审批", "流程", "状态"],
+        matchedTerms: ["审批", "流程"],
+      }),
+    });
+
+    const context = await assembleKnowledgeContext("需要审批流程状态", { knowledgeBaseIds: ["base-a"] });
+
+    expect(context.searchEvidence?.coverageDiagnostics).toEqual({
+      selectedKnowledgeBaseIds: ["base-a"],
+      citationCount: 1,
+      matchedCoreTerms: ["审批", "流程"],
+      missingCoreTerms: ["状态"],
+      vectorLaneStatus: { status: "failed", reason: "active-profile-missing" },
+      lexicalEngine: "postgres-native-fts-fallback",
+      lexicalCandidatesScanned: 0,
+      lexicalCandidatesReturned: 0,
+    });
+    expect(JSON.stringify(context.searchEvidence)).not.toMatch(/secret|apiKey|provider/);
+  });
+
   it("returns safe snippets without test passwords", async () => {
     const context = await assembleKnowledgeContext("需要一个新 ticket 创建需求，包含 priority 和 draft");
 
@@ -97,14 +133,18 @@ describe("assembleKnowledgeContext", () => {
   });
 });
 
-function createDebugEvidence(options: { knowledgeBaseIds?: string[] } = {}) {
+function createDebugEvidence(
+  options: { knowledgeBaseIds?: string[]; mustTerms?: string[]; matchedTerms?: string[] } = {}
+) {
+  const mustTerms = options.mustTerms ?? ["审批", "流程"];
+  const matchedTerms = options.matchedTerms ?? [];
   return {
     query: {
       rawQuery: "需要审批流程",
       normalizedQuery: "需要审批流程",
-      lexicalQuery: "需要 审批 流程",
+      lexicalQuery: mustTerms.join(" "),
       embeddingQuery: "需要审批流程",
-      mustTerms: ["审批", "流程"],
+      mustTerms,
       domainEntities: ["审批流程"],
     },
     mode: "hybrid-rrf" as const,
@@ -124,9 +164,9 @@ function createDebugEvidence(options: { knowledgeBaseIds?: string[] } = {}) {
       query: {
         rawQuery: "需要审批流程",
         normalizedQuery: "需要审批流程",
-        lexicalQuery: "需要 审批 流程",
+        lexicalQuery: mustTerms.join(" "),
         embeddingQuery: "需要审批流程",
-        mustTerms: ["审批", "流程"],
+        mustTerms,
         domainEntities: ["审批流程"],
       },
       engine: "postgres-native-fts-fallback" as const,
@@ -139,7 +179,25 @@ function createDebugEvidence(options: { knowledgeBaseIds?: string[] } = {}) {
       candidatesScanned: 0,
       candidatesReturned: 0,
       cap: 3,
-      lexicalHits: [],
+      lexicalHits:
+        matchedTerms.length > 0
+          ? [
+              {
+                snippetId: "snippet-1",
+                sourceId: "kb-source-1",
+                sourceTitle: "Selected base guide",
+                path: "docs/a.md",
+                section: "Guide",
+                rank: 1,
+                engine: "postgres-native-fts-fallback" as const,
+                score: 12,
+                matchedTerms,
+                mustTerms,
+                mustTermsMatched: matchedTerms,
+                lexicalTextSource: "metadata" as const,
+              },
+            ]
+          : [],
     },
     vectorHits: [],
     fusedHits: [],

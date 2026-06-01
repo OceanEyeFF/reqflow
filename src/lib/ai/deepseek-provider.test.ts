@@ -95,6 +95,16 @@ describe("createDeepseekProvider", () => {
           freshness: "test",
         },
       ],
+      coverageDiagnostics: {
+        selectedKnowledgeBaseIds: ["kb-approval"],
+        citationCount: 1,
+        matchedCoreTerms: ["审批", "流程"],
+        missingCoreTerms: ["状态"],
+        vectorLaneStatus: { status: "failed", reason: "active-profile-missing" },
+        lexicalEngine: "postgres-native-fts-fallback",
+        lexicalCandidatesScanned: 12,
+        lexicalCandidatesReturned: 1,
+      },
     });
 
     expect(fetch).toHaveBeenCalledWith(
@@ -110,6 +120,8 @@ describe("createDeepseekProvider", () => {
     expect(body.messages[1].content).toContain("Respond in Chinese.");
     expect(body.messages[1].content).toContain('"maxDrafts":3');
     expect(body.messages[1].content).toContain("draft or drafts");
+    expect(body.messages[1].content).toContain('"missingCoreTerms":["状态"]');
+    expect(body.messages[1].content).not.toMatch(/apiKey|secret|evidence/);
     expect(result).toMatchObject({
       kind: "draft",
       result: { title: "审批流", suggestedPriority: "high" },

@@ -1,4 +1,4 @@
-import type { AiCitationGroup, AiSearchEvidence, DraftCitation, KnowledgeCitation } from "./types";
+import type { AiCitationGroup, AiCoverageDiagnostics, AiSearchEvidence, DraftCitation, KnowledgeCitation } from "./types";
 import { buildHybridContextWindow, type CitationGroup, type ContextWindowResult } from "@/lib/knowledge/retrieval";
 
 const MAX_AI_DRAFT_CONTEXT_CITATIONS = 5;
@@ -168,6 +168,7 @@ export function toSafeCitationGroups(groups: CitationGroup[]): AiCitationGroup[]
 
 export function toSafeSearchEvidence(result: ContextWindowResult): AiSearchEvidence {
   const evidence = result.debugEvidence;
+  const coverageDiagnostics = toCoverageDiagnostics(result);
   return {
     query: {
       normalizedQuery: evidence.query.normalizedQuery,
@@ -244,6 +245,29 @@ export function toSafeSearchEvidence(result: ContextWindowResult): AiSearchEvide
       })),
     },
     citationGroups: toSafeCitationGroups(result.citationGroups),
+    coverageDiagnostics,
+  };
+}
+
+function toCoverageDiagnostics(result: ContextWindowResult): AiCoverageDiagnostics {
+  const evidence = result.debugEvidence;
+  const matchedCoreTerms = Array.from(
+    new Set(evidence.lexicalEvidence.lexicalHits.flatMap((hit) => hit.mustTermsMatched))
+  );
+  const matched = new Set(matchedCoreTerms);
+
+  return {
+    selectedKnowledgeBaseIds: evidence.lexicalEvidence.filters.knowledgeBaseIds,
+    citationCount: result.citations.length,
+    matchedCoreTerms,
+    missingCoreTerms: evidence.query.mustTerms.filter((term) => !matched.has(term)),
+    vectorLaneStatus:
+      evidence.vectorLane.status === "ready"
+        ? { status: "ready", candidatesReturned: evidence.vectorLane.candidatesReturned }
+        : { status: "failed", reason: evidence.vectorLane.reason },
+    lexicalEngine: evidence.lexicalEvidence.engine,
+    lexicalCandidatesScanned: evidence.lexicalEvidence.candidatesScanned,
+    lexicalCandidatesReturned: evidence.lexicalEvidence.candidatesReturned,
   };
 }
 

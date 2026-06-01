@@ -113,6 +113,7 @@ function buildMessages(request: DraftProviderRequest): DeepseekMessage[] {
         languageInstruction: languageInstruction(request.answerLanguage),
         maxDrafts: request.maxDrafts,
         knowledge: request.knowledge,
+        coverageDiagnostics: request.coverageDiagnostics,
         output:
           request.mode === "clarify"
             ? {

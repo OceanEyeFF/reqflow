@@ -29,6 +29,7 @@ export async function generateRequirementDraft(
     answerLanguage: request.answerLanguage ?? "follow_input",
     maxDrafts: parseMaxDrafts(),
     knowledge: knowledgeContext.knowledge,
+    coverageDiagnostics: knowledgeContext.searchEvidence?.coverageDiagnostics,
   });
 
   return {
